@@ -9,6 +9,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Get the query parameters
   const features: string = req.query.features as string;
   const bassboosted: string = req.query.bass as string;
+  const channel: string = req.query.channel as string;
   const tiktok: string = req.query.tiktok as string;
   const format: string = req.query.format as string;
   const artist: string = req.query.artist as string;
@@ -38,21 +39,33 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     tags = `${artist},${title},${title} bass boosted,${title} bass boosted ${artist},${title} ${artist},${title} ${artist} bass boosted,${artist} ${title} bass boosted,${artist} ${title},${artist} - ${title},${artist} - ${title} bass boosted,${title} ${artist} bass boost,${artist} bass boosted,${title} bass boost,bass boost,bass boosted,bass boosted car playlist, bass boost car playlist`;
   } else if (format === "nightcore") {
     // Nightcore/sped up tags
+    tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
   } else if (format === "slowedreverb") {
     // Slowed/reverb tags
-    tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs,slowed tiktok songs`;
+    tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} ${title} slowed,${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
   } else if (format === "none") {
   }
 
+  // Part to generate tags for tiktok option
   if (tiktok === "true") {
-    // Part to generate tags for tiktok option
-    tags += `,${title} tiktok,${artist} tiktok`;
+    if (format === "bassboosted") {
+      // Bass boosted
+    } else if (format === "nightcore") {
+      // Nightcore/sped up
+      tags += `${artist} ${title} sped up tiktok remix,${title} sped up tiktok version`;
+    } else if (format === "slowedreverb") {
+      // Slowed/reverb
+      tags += `,slowed tiktok songs`;
+    } else {
+      // Lyrics
+      tags += `,${title} tiktok,${artist} tiktok`;
+    }
   }
 
   // Probably shouldn't generate tags for features if tiktok is true because there would be too many tags
   // Part to generate tags for features
   if (
-    features !== undefined &&
+    features.trimStart().trimEnd() !== "none" &&
     (tiktok === "false" ||
       tiktok === "" ||
       tiktok !== "true" ||
@@ -83,8 +96,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     tags += ",lyrics";
   }
 
+  if (channel !== undefined) {
+    tags += `,${channel}`;
+  }
+
   // Extras - Generate different title formats
-  let artistArray = artist.split(" ");
+  let artistArray = artist.trimStart().split(" ");
   let titleArray = title.split(" ");
   let computedArtist = "";
   let computedTitle = "";
@@ -92,6 +109,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const trim = (str: string) => str.trim();
 
   // Formats the title to have the first letter of each word capitalized
+
   for (let i = 0; i < titleArray.length; i++) {
     computedTitle += `${titleArray[i][0].toUpperCase()}${titleArray[
       i
@@ -109,16 +127,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   let f: string = "";
 
   // Modify the ending tag based off the selected format
-  if (format === "bassboosted") {
+  if (format.trim() === "bassboosted") {
     endingTag = "BoostedBoosted";
-  } else if (format === "nightcore") {
+  } else if (format.trim() === "nightcore") {
     endingTag = "Nightcore";
-  } else if (format === "slowedreverb") {
+  } else if (format.trim() === "slowedreverb") {
     endingTag = "Slowed";
   }
 
   // Check if there are any features
-  if (features !== undefined) {
+  if (features.toLowerCase() !== "none") {
     const feats: string[] = features
       .split(",")
       .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
@@ -156,7 +174,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     artist: trim(computedArtist),
     t: `${trim(computedArtist)} - ${trim(computedTitle)}`,
     features:
-      features !== undefined
+      features.toLowerCase() !== "none"
         ? features
             .split(",")
             .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`)

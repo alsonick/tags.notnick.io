@@ -17,6 +17,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 export default function Home() {
+  const [channelName, setChannelName] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [features, setFeatures] = useState("");
@@ -41,9 +42,15 @@ export default function Home() {
     // Fetch the tags from the API
     const response = await fetch(
       `
-      /api/gen?title=${title}&artist=${artist}${
-        features ? `&features=${features}` : ""
-      }&tiktok=${
+      /api/gen?title=${title}&artist=${artist.trimStart().trimEnd()}${
+        features.length
+          ? `&features=${features.trimStart().trimEnd()}`
+          : "&features=none"
+      }${
+        channelName.length
+          ? `&channel=${channelName.trimStart().trimEnd()}`
+          : ""
+      } &tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
       }&format=${format}
     `,
@@ -76,8 +83,10 @@ export default function Home() {
       setTags(separated);
       setLoading(false);
 
+      setChannelName("");
       setTitle("");
       setArtist("");
+      setFormat("Lyrics");
       setFeatures("");
       setTiktok("");
     }
@@ -210,10 +219,22 @@ export default function Home() {
           </div>
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
-              <Step step={5} text="Format" />
-              <div className="relative w-fit">
+              <Step step={5} text="Channel" />
+              <Input
+                onChange={(e) => setChannelName(e.target.value)}
+                placeholder="Aquila"
+                value={channelName}
+                required={false}
+              />
+              <p className="text-xs mt-1">
+                Enter the name of the YouTube Channel.
+              </p>
+            </section>
+            <section className="flex flex-col w-full">
+              <Step step={6} text="Format" />
+              <div className="relative w-full">
                 <select
-                  className="appearance-none border rounded-lg p-2 px-4 pr-10 outline-none focus:ring focus:ring-black duration-300"
+                  className="appearance-none border w-full rounded-lg p-2 px-4 pr-10 outline-none focus:ring focus:ring-black duration-300"
                   onChange={(e) => setFormat(e.target.value)}
                   value={format}
                 >
@@ -239,9 +260,10 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
+              <p className="text-xs mt-1">Select the desired format.</p>
             </section>
           </div>
-          <div className="w-full justify-between items-center flex mt-2 border-b pb-4">
+          <div className="w-full justify-between items-center flex mt-6 border-b pb-4">
             <div className="ml-auto flex">
               <Button title="Generate tags">
                 Generate <FiLoader className="ml-2" />

@@ -5,7 +5,7 @@ export const returnComputedFormat = (format: string) => {
     case "nightcore":
       return "Nightcore";
     case "slowedreverb":
-      return "SlowedReverb";
+      return "Slowed";
     default:
       return "Lyrics";
   }
