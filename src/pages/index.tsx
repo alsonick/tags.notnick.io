@@ -19,12 +19,12 @@ import Link from "next/link";
 export default function Home() {
   const [channelName, setChannelName] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [format, setFormat] = useState("Lyrics");
   const [loading, setLoading] = useState(false);
   const [features, setFeatures] = useState("");
   const [data, setData] = useState<Response>();
   const [artist, setArtist] = useState("");
   const [tiktok, setTiktok] = useState("");
-  const [format, setFormat] = useState("");
   const [title, setTitle] = useState("");
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
