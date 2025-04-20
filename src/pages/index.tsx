@@ -49,8 +49,8 @@ export default function Home() {
       }${
         channelName.length
           ? `&channel=${channelName.trimStart().trimEnd()}`
-          : ""
-      } &tiktok=${
+          : "&channel=none"
+      }&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
       }&format=${format}
     `,
@@ -352,6 +352,27 @@ export default function Home() {
               </p>
             )}
             {tags.length > 0 && (
+              <div className="flex flex-col mt-8 border-t pt-4">
+                <h3 className="text-2xl font-bold">Titles:</h3>
+                {data?.extras.titles.split("=").map((title) => (
+                  <div
+                    className="flex items-center justify-between w-full mt-4"
+                    key={title}
+                  >
+                    <h4 className="text-xl">{title}</h4>
+                    <Button
+                      onClick={() => {
+                        copy(title);
+                        toast.success("Copied!");
+                      }}
+                    >
+                      Copy <FiCopy className="ml-2" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {tags.length > 0 && (
               <div className="mt-8 flex flex-col border-t pt-4">
                 <h3 className="text-2xl font-bold">Hashtags:</h3>
                 <div className="flex items-center justify-between w-full">
@@ -381,11 +402,6 @@ export default function Home() {
                 </div>
               </div>
             )}
-            {/* {tags.length > 0 && (
-              <div className="flex flex-col mt-8 border-t pt-4">
-                <h3 className="text-2xl font-bold">Extras</h3>
-              </div>
-            )} */}
           </div>
         )}
         <footer className="bottom-0 left-0 right-0  mt-28 text-center text-sm pb-4">
