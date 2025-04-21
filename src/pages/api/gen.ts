@@ -34,35 +34,31 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Typical tags format you'd use for lyric videos
   let tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},lyrics ${artist} ${title},${artist} lyrics ${title},${title} lyrics ${artist},${title} lyric video,lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title},${artist}, ${title} ${artist}`;
 
-  if (format) {
-    if (format === "bassboosted") {
-      // Bass boosted tags
-      tags = `${artist},${title},${title} bass boosted,${title} bass boosted ${artist},${title} ${artist},${title} ${artist} bass boosted,${artist} ${title} bass boosted,${artist} ${title},${artist} - ${title},${artist} - ${title} bass boosted,${title} ${artist} bass boost,${artist} bass boosted,${title} bass boost,bass boost,bass boosted,bass boosted car playlist, bass boost car playlist`;
-    } else if (format === "nightcore") {
-      // Nightcore/sped up tags
-      tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
-    } else if (format === "slowedreverb") {
-      // Slowed/reverb tags
-      tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} ${title} slowed,${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
-    } else if (format === "none") {
-    }
+  if (format === "bassboosted") {
+    // Bass boosted tags
+    tags = `${artist},${title},${title} bass boosted,${title} bass boosted ${artist},${title} ${artist},${title} ${artist} bass boosted,${artist} ${title} bass boosted,${artist} ${title},${artist} - ${title},${artist} - ${title} bass boosted,${title} ${artist} bass boost,${artist} bass boosted,${title} bass boost,bass boost,bass boosted,bass boosted car playlist, bass boost car playlist`;
+  } else if (format === "nightcore") {
+    // Nightcore/sped up tags
+    tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
+  } else if (format === "slowedreverb") {
+    // Slowed/reverb tags
+    tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} ${title} slowed,${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
+  } else if (format === "none") {
   }
 
   // Part to generate tags for tiktok option
   if (tiktok === "true") {
-    if (format) {
-      if (format === "bassboosted") {
-        // Bass boosted
-      } else if (format === "nightcore") {
-        // Nightcore/sped up
-        tags += `${artist} ${title} sped up tiktok remix,${title} sped up tiktok version`;
-      } else if (format === "slowedreverb") {
-        // Slowed/reverb
-        tags += `,slowed tiktok songs`;
-      } else {
-        // Lyrics
-        tags += `,${title} tiktok,${artist} tiktok`;
-      }
+    if (format === "bassboosted") {
+      // Bass boosted
+    } else if (format === "nightcore") {
+      // Nightcore/sped up
+      tags += `${artist} ${title} sped up tiktok remix,${title} sped up tiktok version`;
+    } else if (format === "slowedreverb") {
+      // Slowed/reverb
+      tags += `,slowed tiktok songs`;
+    } else {
+      // Lyrics
+      tags += `,${title} tiktok,${artist} tiktok`;
     }
   }
 
@@ -96,10 +92,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
-  if (format) {
-    if (format === "lyrics") {
-      tags += ",lyrics";
-    }
+  if (format === "lyrics") {
+    tags += ",lyrics";
   }
 
   if (channel !== "none") {
@@ -131,47 +125,45 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   let endingTag = "Lyrics";
   let f: string = "";
 
-  if (format) {
-    // Modify the ending tag based off the selected format
-    if (format.trim() === "bassboosted") {
-      endingTag = "BoostedBoosted";
-    } else if (format.trim() === "nightcore") {
-      endingTag = "Nightcore";
-    } else if (format.trim() === "slowedreverb") {
-      endingTag = "Slowed";
-    }
+  // Modify the ending tag based off the selected format
+  if (format.trim() === "bassboosted") {
+    endingTag = "BoostedBoosted";
+  } else if (format.trim() === "nightcore") {
+    endingTag = "Nightcore";
+  } else if (format.trim() === "slowedreverb") {
+    endingTag = "Slowed";
+  }
 
-    if (trim(format).toLowerCase() === "lyrics") {
-      // Check if there are any features
-      if (features.toLowerCase() !== "none") {
-        const feats: string[] = features
-          .split(",")
-          .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
+  if (trim(format).toLowerCase() === "lyrics") {
+    // Check if there are any features
+    if (features.toLowerCase() !== "none") {
+      const feats: string[] = features
+        .split(",")
+        .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
 
+      f += `${trim(computedArtist)} - ${trim(
+        computedTitle
+      )} (Lyrics) ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
+        feats[0]
+      )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)}, ${trim(
+        feats[0]
+      )} - ${trim(computedTitle)} (Lyrics)`;
+
+      // If there are two features
+      if (feats.length === 2) {
         f += `${trim(computedArtist)} - ${trim(
           computedTitle
-        )} (Lyrics) ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} (Lyrics)`;
-
-        // If there are two features
-        if (feats.length === 2) {
-          f += `${trim(computedArtist)} - ${trim(
-            computedTitle
-          )} (Lyrics) ft. ${trim(feats[0])}, ${trim(feats[1])}`;
-        }
-
-        // If there are three features
-        if (feats.length === 3) {
-          f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics) ft. ${
-            feats[0]
-          }, ${feats[1]}, ${feats[2]}`;
-        }
-      } else {
-        f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics)`;
+        )} (Lyrics) ft. ${trim(feats[0])}, ${trim(feats[1])}`;
       }
+
+      // If there are three features
+      if (feats.length === 3) {
+        f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics) ft. ${
+          feats[0]
+        }, ${feats[1]}, ${feats[2]}`;
+      }
+    } else {
+      f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics)`;
     }
   }
 
@@ -197,7 +189,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       features
     )}&tiktok=${
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-    }&format=${format ? format.trimStart().trimEnd() : "none"}`,
+    }&format=${format.trimStart().trimEnd()}`,
     length: tags
       .split(",")
       .map((tag) => tag.trim())
