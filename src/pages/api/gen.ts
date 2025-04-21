@@ -44,7 +44,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     // Slowed/reverb tags
     tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} ${title} slowed,${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
   } else if (format === "letra") {
-    tags = `${artist},${title},${artist} ${title} letra,${artist} ${title},${title} ${artist},${title} letra,letra ${title},letra ${title} ${artist},${artist} letra`;
+    tags = `${artist},${title},${artist} ${title} letra,${artist} ${title},${title} ${artist},${title} letra,letra ${title},letra ${title} ${artist},${artist} letra,${artist} letra ${title},${title} letra ${artist},letra ${artist},${artist} - ${title},${artist} - ${title} letra`;
   }
 
   // Part to generate tags for tiktok option
@@ -96,7 +96,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (format === "lyrics") {
     tags += ",lyrics";
   } else if (format === "letra") {
-    tags += ",letra,latin";
+    tags += ",letra,latin,latin music";
   }
 
   if (channel !== "none") {
