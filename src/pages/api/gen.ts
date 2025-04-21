@@ -81,7 +81,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const secondFeat = feats[1];
       }
     } else if (format === "letra") {
-      tags += `${firstFeat} ${title},${title} ${firstFeat},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat}`;
+      tags += `,${firstFeat} ${title},${title} ${firstFeat},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat} ${artist},${firstFeat}`;
     } else if (format === "lyrics") {
       tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
 
