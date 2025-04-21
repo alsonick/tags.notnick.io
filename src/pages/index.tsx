@@ -242,7 +242,7 @@ export default function Home() {
                   <option value="bassboosted">Bass Boosted</option>
                   <option value="nightcore">Nightcore/Sped Up</option>
                   <option value="slowedreverb">Slowed/Reverb</option>
-                  <option value="none">None</option>
+                  <option value="letra">Letra</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <svg

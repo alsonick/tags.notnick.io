@@ -43,7 +43,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   } else if (format === "slowedreverb") {
     // Slowed/reverb tags
     tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} ${title} slowed,${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
-  } else if (format === "none") {
+  } else if (format === "letra") {
+    tags = `${artist},${title},${artist} ${title} letra,${artist} ${title},${title} ${artist},${title} letra,letra ${title},letra ${title} ${artist},${artist} letra`;
   }
 
   // Part to generate tags for tiktok option
@@ -66,34 +67,36 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Part to generate tags for features
   if (
     features.trimStart().trimEnd() !== "none" &&
-    (tiktok === "false" ||
-      tiktok === "" ||
-      tiktok !== "true" ||
-      bassboosted === "true")
+    (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
     let feats = features.split(",").map((feat) => feat.trim());
-
-    // Only generate tags for the first feature
-    if (bassboosted === "true") {
-      // Only generate a few tags for bass boosted features
-      tags += `${feats[0]} ${title} bass boosted,${title} ${feats[0]} bass boosted, ${feats[0]} ${title} bass,${title} ${feats[0]} bass, ${feats[0]} bass`;
-      return;
-    }
-
     const firstFeat = feats[0];
 
-    tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
+    // Only generate tags for the first feature
+    if (format === "bassboosted") {
+      // Only generate a few tags for bass boosted features
+      tags += `${firstFeat} ${title} bass boosted,${title} ${firstFeat} bass boosted, ${firstFeat} ${title} bass,${title} ${firstFeat} bass, ${feats[0]} bass`;
+      if (feats.length >= 2) {
+        // Second feat
+        const secondFeat = feats[1];
+      }
+    } else if (format === "letra") {
+      tags += `${firstFeat} ${title},${title} ${firstFeat},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat}`;
+    } else if (format === "lyrics") {
+      tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
 
-    if (feats.length >= 2) {
-      // So if there's more than two features, only generate tags for the first two features because there would be too many tags otherwise
-      const secondFeat = feats[1];
-
-      tags += `,${artist} ${secondFeat} ${title} lyrics,${secondFeat} ${title} lyrics,lyrics ${secondFeat} ${title},${secondFeat} lyrics,lyrics ${secondFeat}`;
+      if (feats.length >= 2) {
+        // Second feat
+        const secondFeat = feats[1];
+        tags += `,${artist} ${secondFeat} ${title} lyrics,${secondFeat} ${title} lyrics,lyrics ${secondFeat} ${title},${secondFeat} lyrics,lyrics ${secondFeat}`;
+      }
     }
   }
 
   if (format === "lyrics") {
     tags += ",lyrics";
+  } else if (format === "letra") {
+    tags += ",letra,latin";
   }
 
   if (channel !== "none") {
