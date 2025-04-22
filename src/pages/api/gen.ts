@@ -8,7 +8,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   // Get the query parameters
   const features: string = req.query.features as string;
-  const bassboosted: string = req.query.bass as string;
   const channel: string = req.query.channel as string;
   const tiktok: string = req.query.tiktok as string;
   const format: string = req.query.format as string;
@@ -137,20 +136,22 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     endingTag = "Slowed";
   }
 
-  if (trim(format).toLowerCase() === "lyrics") {
-    // Check if there are any features
-    if (features.toLowerCase() !== "none") {
-      const feats: string[] = features
-        .split(",")
-        .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
+  const feats: string[] = features
+    .split(",")
+    .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
 
-      f += `${trim(computedArtist)} - ${trim(
-        computedTitle
-      )} (Lyrics) ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
-        feats[0]
-      )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)}, ${trim(
-        feats[0]
-      )} - ${trim(computedTitle)} (Lyrics)`;
+  if (trim(format).toLowerCase() === "lyrics") {
+    // Lyrics
+    if (features.toLowerCase() !== "none") {
+      if (feats.length === 1) {
+        f += `${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (Lyrics) ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} (Lyrics)`;
+      }
 
       // If there are two features
       if (feats.length === 2) {
@@ -161,12 +162,90 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
       // If there are three features
       if (feats.length === 3) {
-        f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics) ft. ${
-          feats[0]
-        }, ${feats[1]}, ${feats[2]}`;
+        f += `${trim(computedArtist)}, ${feats[0]} - ${trim(
+          computedTitle
+        )} (Lyrics) ft. ${feats[1]}, ${feats[2]}`;
       }
     } else {
       f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics)`;
+    }
+  }
+
+  if (trim(format).toLowerCase() === "bassboosted") {
+    // Bass Boosted
+    if (features.toLowerCase() !== "none") {
+      if (feats.length === 1) {
+        f += `${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (Bass Boosted) ft. ${trim(feats[0])}=${trim(
+          computedArtist
+        )} & ${trim(feats[0])} - ${trim(computedTitle)} (Bass Boosted)=${trim(
+          computedArtist
+        )}, ${trim(feats[0])} - ${trim(computedTitle)} (Bass Boosted)=
+        ${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} 🔥 (Bass Boosted) ft. ${trim(feats[0])}=${trim(
+          computedArtist
+        )} & ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} 🔥 (Bass Boosted)=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} 🔥 (Bass Boosted)=
+        ${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} 🔊 (Bass Boosted) ft. ${trim(feats[0])}=${trim(
+          computedArtist
+        )} & ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} 🔊 (Bass Boosted)=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} 🔊 (Bass Boosted)`;
+      }
+
+      // If there are two features
+      if (feats.length === 2) {
+        f += `${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (Bass Boosted) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
+          computedArtist
+        )}, ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} (Bass Boosted) ft. ${trim(feats[1])}=${trim(
+          computedArtist
+        )} - ${trim(computedTitle)} 🔥 (Bass Boosted) ft. ${trim(
+          feats[0]
+        )}, ${trim(feats[1])}=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} 🔥 (Bass Boosted) ft. ${trim(feats[1])}
+        =${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} 🔊 (Bass Boosted) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
+          computedArtist
+        )}, ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} 🔊 (Bass Boosted) ft. ${trim(feats[1])}`;
+      }
+
+      // If there are three features
+      if (feats.length === 3) {
+        f += `${trim(computedArtist)}, ${feats[0]} - ${trim(
+          computedTitle
+        )} (Bass Boosted) ft. ${feats[1]}, ${feats[2]}=${trim(
+          computedArtist
+        )}, ${feats[0]} - ${trim(computedTitle)} 🔥 (Bass Boosted) ft. ${
+          feats[1]
+        }, ${feats[2]}=${trim(computedArtist)}, ${feats[0]} - ${trim(
+          computedTitle
+        )} 🔊 (Bass Boosted) ft. ${feats[1]}, ${feats[2]}`;
+      }
+    } else {
+      f += `${trim(computedArtist)} - ${trim(
+        computedTitle
+      )} (Bass Boosted)=${trim(computedArtist)} - ${trim(
+        computedTitle
+      )} 🔥 (Bass Boosted)=${trim(computedArtist)} - ${trim(
+        computedTitle
+      )} 🔊 (Bass Boosted)`;
     }
   }
 
