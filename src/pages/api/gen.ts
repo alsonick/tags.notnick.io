@@ -89,6 +89,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const secondFeat = feats[1];
         tags += `,${artist} ${secondFeat} ${title} lyrics,${secondFeat} ${title} lyrics,lyrics ${secondFeat} ${title},${secondFeat} lyrics,lyrics ${secondFeat}`;
       }
+    } else if (format === "slowedreverb") {
+      tags += `,${firstFeat} ${title},${firstFeat} ${title} slowed,${artist} ${firstFeat} ${title} slowed,${firstFeat} ${title} slowed reverb,${firstFeat} slowed`;
     }
   }
 
