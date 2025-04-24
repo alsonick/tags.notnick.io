@@ -140,8 +140,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     .split(",")
     .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
 
+  // Lyrics
   if (trim(format).toLowerCase() === "lyrics") {
-    // Lyrics
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
         f += `${trim(computedArtist)} - ${trim(
@@ -171,8 +171,57 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
+  // Slowed & Reverb
+  if (trim(format).toLowerCase() === "slowedreverb") {
+    if (features.toLowerCase() !== "none") {
+      if (feats.length === 1) {
+        f += `${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (slowed & reverb) ft. ${trim(feats[0])}=${trim(
+          computedArtist
+        )} & ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} (slowed & reverb)=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} (slowed & reverb)`;
+      }
+
+      if (feats.length === 2) {
+        f += `${trim(computedArtist)}, ${feats[0]} & ${feats[1]} - ${trim(
+          computedTitle
+        )} (slowed & reverb)=${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (slowed & reverb) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
+          computedArtist
+        )}, ${feats[0]} - ${trim(computedTitle)} (slowed & reverb) ft. ${trim(
+          feats[1]
+        )}`;
+      }
+
+      if (feats.length === 3) {
+        f += `${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (slowed & reverb) ft. ${trim(feats[0])}, ${trim(feats[1])}, ${trim(
+          feats[2]
+        )}=${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} (slowed & reverb) ft. ${trim(feats[1])}, ${trim(feats[2])}=${trim(
+          computedArtist
+        )}, ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} (slowed & reverb) ft. ${trim(feats[1])} & ${trim(feats[2])}=${trim(
+          computedArtist
+        )} & ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} (slowed & reverb) ft. ${trim(feats[1])}, ${trim(feats[2])}`;
+      }
+    } else {
+      f += `${trim(computedArtist)} - ${trim(computedTitle)} (slowed & reverb)`;
+    }
+  }
+
+  // Bass Boosted
   if (trim(format).toLowerCase() === "bassboosted") {
-    // Bass Boosted
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
         f += `${trim(computedArtist)} - ${trim(
@@ -253,6 +302,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({
     success: true,
     tags: tags.toLowerCase(),
+    tagsToRemove: "",
+    removedTags: "",
     title: trim(computedTitle),
     artist: trim(computedArtist),
     t: `${trim(computedArtist)} - ${trim(computedTitle)}`,
