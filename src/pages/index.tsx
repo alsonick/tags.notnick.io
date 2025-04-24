@@ -84,12 +84,12 @@ export default function Home() {
       setTags(separated);
       setLoading(false);
 
-      // setChannelName("");
-      // setTitle("");
-      // setArtist("");
-      // setFormat("Lyrics");
-      // setFeatures("");
-      // setTiktok("");
+      setChannelName("");
+      setTitle("");
+      setArtist("");
+      setFormat("Lyrics");
+      setFeatures("");
+      setTiktok("");
     }
 
     // Checks if the response is not "ok"
