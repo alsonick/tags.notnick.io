@@ -311,7 +311,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       features.toLowerCase() !== "none"
         ? features
             .split(",")
-            .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`)
+            .map((feat) =>
+              `${feat[0].toUpperCase()}${feat.substring(1)}`.trim()
+            )
         : [],
     extras: {
       titles: f,
