@@ -1,16 +1,16 @@
 import { returnComputedFormat } from "@/lib/return-computed-format";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
+import { FiLoader, FiExternalLink } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import { Button } from "../components/Button";
 import { Response } from "@/types/response";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/Input";
 import { FaGithub } from "react-icons/fa";
-import { FiLoader } from "react-icons/fi";
 import { Step } from "../components/Step";
 import { FiCopy } from "react-icons/fi";
 import { FiX } from "react-icons/fi";
 import copy from "copy-to-clipboard";
-import { useState } from "react";
 
 // Next.js
 import Head from "next/head";
@@ -18,6 +18,7 @@ import Link from "next/link";
 
 export default function Home() {
   const [channelName, setChannelName] = useState("");
+  const [scrolled, setScrolled] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
   const [loading, setLoading] = useState(false);
@@ -99,6 +100,15 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const seoTitle = "Lyrics Tags Generator";
   const seoDescription = "Generate YouTube tags for your lyric videos.";
 
@@ -131,7 +141,11 @@ export default function Home() {
           Whoop. This is awkward! This site only supports desktop size screens.
         </p>
       </div>
-      <nav className="lg:flex items-center justify-between top-0 absolute h-20 w-full px-20 bg-white hidden">
+      <nav
+        className={`lg:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden top-0 z-50 transition-shadow duration-500 ${
+          scrolled ? "fixed shadow-md h-20" : "fixed shadow-none"
+        }`}
+      >
         <Link
           href="https://github.com/alsonick/lyrics-tags-generator"
           target="_blank"
@@ -140,18 +154,18 @@ export default function Home() {
         </Link>
         <div className="flex">
           <Link
-            className="font-semibold hover:underline mr-10"
+            className="font-semibold hover:underline mr-10 flex items-center"
             href="https://github.com/alsonick/lyrics-tags-generator/issues/new?template=Blank+issue"
             target="_blank"
           >
-            Submit Suggestion
+            Submit Suggestion <FiExternalLink className="ml-1 text-xl" />
           </Link>
           <Link
-            className="font-semibold hover:underline"
+            className="font-semibold hover:underline flex items-center"
             href="https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot"
             target="_blank"
           >
-            Invite Discord Bot
+            Invite Discord Bot <FiExternalLink className="ml-1 text-xl" />
           </Link>
         </div>
       </nav>
@@ -174,7 +188,7 @@ export default function Home() {
               />
               <p className="text-xs mt-1">
                 Any special characters are allowed except commas ,.{" "}
-                <span className="text-yellow-600 font-semibold">Required</span>
+                <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
             </section>
             <section className="flex flex-col w-full">
@@ -187,7 +201,7 @@ export default function Home() {
               />
               <p className="text-xs mt-1">
                 Please remove any commas , if there are any.{" "}
-                <span className="text-yellow-600 font-semibold">Required</span>
+                <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
             </section>
           </div>
@@ -260,7 +274,10 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs mt-1">Select the desired format.</p>
+              <p className="text-xs mt-1">
+                Select the desired format.{" "}
+                <span className="text-yellow-600 font-semibold">Required*</span>
+              </p>
             </section>
           </div>
           <div className="w-full justify-between items-center flex mt-6 border-b pb-4">
