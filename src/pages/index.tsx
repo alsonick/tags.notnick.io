@@ -84,12 +84,12 @@ export default function Home() {
       setTags(separated);
       setLoading(false);
 
-      setChannelName("");
-      setTitle("");
-      setArtist("");
-      setFormat("Lyrics");
-      setFeatures("");
-      setTiktok("");
+      // setChannelName("");
+      // setTitle("");
+      // setArtist("");
+      // setFormat("Lyrics");
+      // setFeatures("");
+      // setTiktok("");
     }
 
     // Checks if the response is not "ok"
@@ -161,11 +161,18 @@ export default function Home() {
             Submit Suggestion <FiExternalLink className="ml-1 text-xl" />
           </Link>
           <Link
-            className="font-semibold hover:underline flex items-center"
+            className="font-semibold hover:underline flex items-center mr-10"
             href="https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot"
             target="_blank"
           >
             Invite Discord Bot <FiExternalLink className="ml-1 text-xl" />
+          </Link>
+          <Link
+            className="font-semibold hover:underline flex items-center"
+            href="mailto:hi@notnick.io"
+            target="_blank"
+          >
+            Contact Me <FiExternalLink className="ml-1 text-xl" />
           </Link>
         </div>
       </nav>

@@ -171,6 +171,54 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
+  if (trim(format).toLowerCase() === "letra") {
+    if (features.toLowerCase() !== "none") {
+      if (feats.length === 1) {
+        f += `${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} (Letra)=${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (Letra) ft. ${trim(feats[0])}=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} [Letra]=${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} [Letra] ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} (Letra)=${trim(computedArtist)} & ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} [Letra]`;
+      }
+
+      if (feats.length === 2) {
+        f += `${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} (Letra) ft. ${trim(feats[1])}=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} [Letra] ft. ${trim(feats[1])}=${trim(
+          computedArtist
+        )} - ${trim(computedTitle)} (Letra) ft. ${trim(feats[0])}, ${trim(
+          feats[1]
+        )}=${trim(computedArtist)} - ${trim(computedTitle)} [Letra] ft. ${trim(
+          feats[0]
+        )}, ${trim(feats[1])}=${trim(computedArtist)} & ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} (Letra) ft. ${trim(feats[1])}=${trim(
+          computedArtist
+        )} & ${trim(feats[0])} - ${trim(computedTitle)} [Letra] ft. ${trim(
+          feats[1]
+        )}=${trim(computedArtist)} - ${trim(computedTitle)} (Letra) ft. ${trim(
+          feats[0]
+        )} & ${trim(feats[1])}=${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} [Letra] ft. ${trim(feats[0])}, ${trim(feats[1])}`;
+      }
+    } else {
+      f += `${trim(computedArtist)} - ${trim(computedTitle)} (Letra)=${trim(
+        computedArtist
+      )} - ${trim(computedTitle)} [Letra]`;
+    }
+  }
+
   // Slowed & Reverb
   if (trim(format).toLowerCase() === "slowedreverb") {
     if (features.toLowerCase() !== "none") {
