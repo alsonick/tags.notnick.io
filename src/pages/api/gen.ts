@@ -152,14 +152,34 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           feats[0]
         )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)}, ${trim(
           feats[0]
-        )} - ${trim(computedTitle)} (Lyrics)`;
+        )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} [Lyrics] ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} [Lyrics]=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(computedTitle)} [Lyrics]`;
       }
 
       // If there are two features
       if (feats.length === 2) {
-        f += `${trim(computedArtist)} - ${trim(
+        f += `${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
           computedTitle
-        )} (Lyrics) ft. ${trim(feats[0])}, ${trim(feats[1])}`;
+        )} (Lyrics) ft. ${trim(feats[1])}=${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} (Lyrics) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
+          computedArtist
+        )} - ${trim(computedTitle)} (Lyrics) ft. ${trim(feats[0])} & ${trim(
+          feats[1]
+        )}=${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
+          computedTitle
+        )} [Lyrics] ft. ${trim(feats[1])}=${trim(computedArtist)} - ${trim(
+          computedTitle
+        )} [Lyrics] ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
+          computedArtist
+        )} - ${trim(computedTitle)} [Lyrics] ft. ${trim(feats[0])} & ${trim(
+          feats[1]
+        )}`;
       }
 
       // If there are three features
@@ -169,7 +189,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         )} (Lyrics) ft. ${feats[1]}, ${feats[2]}`;
       }
     } else {
-      f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics)`;
+      f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics)=${trim(
+        computedArtist
+      )} - ${trim(computedTitle)} [Lyrics]`;
     }
   }
 

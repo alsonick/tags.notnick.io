@@ -84,12 +84,12 @@ export default function Home() {
       setTags(separated);
       setLoading(false);
 
-      setChannelName("");
-      setTitle("");
-      setArtist("");
-      setFormat("Lyrics");
-      setFeatures("");
-      setTiktok("");
+      // setChannelName("");
+      // setTitle("");
+      // setArtist("");
+      // setFormat("Lyrics");
+      // setFeatures("");
+      // setTiktok("");
     }
 
     // Checks if the response is not "ok"
@@ -428,8 +428,27 @@ export default function Home() {
             )}
           </div>
         )}
-        <footer className="bottom-0 left-0 right-0  mt-28 text-center text-sm pb-4">
-          <p className="text-gray-600">
+        <footer className="bottom-0 left-0 mt-28 text-sm pb-4">
+          <h1 className="font-bold text-lg text-gray-800">Nicholas Njoki</h1>
+          <p className="text-gray-600 text-xs">
+            © {new Date().getFullYear()} | All rights reserved.
+          </p>
+          <p className="text-gray-600 text-xs">
+            Made with{" "}
+            <Link className="font-bold hover:underline" href="">
+              Next.js
+            </Link>
+            ,{" "}
+            <Link className="font-bold hover:underline" href="">
+              Tailwind
+            </Link>{" "}
+            &{" "}
+            <Link className="font-bold hover:underline" href="">
+              Vercel
+            </Link>
+            .
+          </p>
+          <p className="text-gray-600 text-xs">
             Built with ❤️ by{" "}
             <Link
               href="https://github.com/alsonick"
@@ -439,9 +458,6 @@ export default function Home() {
               Nicholas Njoki
             </Link>
             .
-          </p>
-          <p className="text-gray-600">
-            © {new Date().getFullYear()} | All rights reserved.
           </p>
         </footer>
       </main>
