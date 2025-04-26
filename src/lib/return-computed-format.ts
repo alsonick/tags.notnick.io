@@ -2,6 +2,8 @@ export const returnComputedFormat = (format: string) => {
   switch (format.toLowerCase()) {
     case "bassboosted":
       return "bassboosted";
+    case "bass boosted":
+      return "bassboosted";
     case "nightcore":
       return "nightcore";
     case "slowed":

@@ -227,7 +227,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         } - ${title.trim()} 🔊 (Bass Boosted) ft. ${feats[1]}, ${feats[2]}`;
       }
     } else {
-      f += `${artist.trim()} - ${title.trim()} (Bass Boosted)=${artist.trim()} - ${title.trim()} 🔥 (Bass Boosted)=${artist.trim()} - ${title.trim()} 🔊 (Bass Boosted)`;
+      f += `${artist.trim()} - ${title.trim()} (Bass Boosted)=${artist.trim()} - ${title.trim()} 🔥 (Bass Boosted)=${artist.trim()} - ${title.trim()} 🔊 (Bass Boosted)=${artist.trim()} - ${title.trim()} [Bass Boosted]=${artist.trim()} - ${title.trim()} 🔥 [Bass Boosted]=${artist.trim()} - ${title.trim()} 🔊 [Bass Boosted]`;
     }
   }
 

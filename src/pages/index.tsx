@@ -46,12 +46,18 @@ export default function Home() {
     let finalFormat = format;
     let finalTitle = title;
 
-    if ((artist.includes(",") || artist.includes("-")) && title.length === 0) {
-      const data = artist.split("-");
+    // Modified if statement to check for both standard hyphen and em dash
+    if (
+      (artist.includes(",") || artist.includes("-") || artist.includes("—")) &&
+      title.length === 0
+    ) {
+      // Determine which separator to use for splitting (standard hyphen or em dash)
+      const separator = artist.includes("—") ? "—" : "-";
+      const data = artist.split(separator);
       let mainPart = artist;
       let extractedTitle = "";
 
-      if (artist.includes("-")) {
+      if (artist.includes(separator)) {
         const titleFormatString = data[1].trim();
         mainPart = data[0].trim();
 
@@ -98,7 +104,7 @@ export default function Home() {
     }
 
     // Error if artist includes separators but title is already specified
-    if (artist.includes(",") || artist.includes("-")) {
+    if (artist.includes(",") || artist.includes("-") || artist.includes("—")) {
       if (title.length) {
         toast.error(
           "The artist and title was already provided in the artist field. Please clear the title field!"
