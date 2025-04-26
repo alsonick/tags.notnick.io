@@ -80,7 +80,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const secondFeat = feats[1];
       }
     } else if (format.toLowerCase() === "letra") {
-      tags += `,${firstFeat} ${title},${title} ${firstFeat},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat} ${artist},${firstFeat}`;
+      tags += `,${firstFeat} ${title},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat} ${artist},${firstFeat}`;
     } else if (format.toLowerCase() === "lyrics") {
       tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
 
@@ -257,7 +257,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       features
     )}&tiktok=${
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-    }&format=${format.trimStart().trimEnd()}`,
+    }&format=${format.trimStart().trimEnd()}&channel=${
+      channel ? channel : "none"
+    }`,
     length: tags
       .split(",")
       .map((tag) => tag.trim())

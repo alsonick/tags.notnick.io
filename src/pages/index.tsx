@@ -12,9 +12,9 @@ import { FiCopy } from "react-icons/fi";
 import copy from "copy-to-clipboard";
 
 // Next.js
-import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
+import { removeEmojis } from "@/lib/remove-emojis";
 
 export default function Home() {
   const [channelName, setChannelName] = useState("");
@@ -43,16 +43,43 @@ export default function Home() {
     // Process and compute final values locally without immediately updating state
     let finalArtist = artist;
     let finalFeatures = features;
+    let finalFormat = format;
     let finalTitle = title;
 
     if ((artist.includes(",") || artist.includes("-")) && title.length === 0) {
+      const data = artist.split("-");
       let mainPart = artist;
       let title = "";
 
       if (artist.includes("-")) {
-        const data = artist.split("-");
+        const titleFormatString = data[1].trim();
         mainPart = data[0].trim();
-        title = data[1].trim().split("(")[0].trim();
+
+        if (titleFormatString.includes("(")) {
+          // (Lyrics)
+          title = removeEmojis(titleFormatString.split("(")[0].trim());
+        } else if (titleFormatString.includes("[")) {
+          // [Lyrics]
+          title = removeEmojis(titleFormatString.split("[")[0].trim());
+        }
+
+        if (titleFormatString.includes("(")) {
+          // (Lyrics)
+          const format = titleFormatString
+            .split("(")[1]
+            .replace("(", "")
+            .replace(")", "");
+
+          finalFormat = returnComputedFormat(format).toLowerCase();
+        } else if (titleFormatString.includes("[")) {
+          // [Lyrics]
+          const format = titleFormatString
+            .split("[")[1]
+            .replace("[", "")
+            .replace("]", "");
+
+          finalFormat = returnComputedFormat(format).toLowerCase();
+        }
       }
 
       const artistsArray = mainPart.split(",").map((a) => a.trim());
@@ -92,7 +119,7 @@ export default function Home() {
           : "&channel=none"
       }&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-      }&format=${format}`,
+      }&format=${finalFormat}`,
       {
         method: "GET",
         headers: {
@@ -103,6 +130,7 @@ export default function Home() {
 
     setArtist(finalArtist);
     setFeatures(finalFeatures);
+    setFormat(finalFormat);
     setTitle(finalTitle);
 
     // Check if the response is successful
@@ -125,6 +153,12 @@ export default function Home() {
       setData(data);
       setTags(separated);
       setLoading(false);
+
+      setTitle("");
+      setFeatures("");
+      setArtist("");
+      setTiktok("");
+      setChannelName("");
     }
 
     // Checks if the response is not "ok"
