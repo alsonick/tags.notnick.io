@@ -23,7 +23,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   // Check if there are any commas in the title or artist
-  if (/,/.test(title) || /,/.test(artist)) {
+  if (/,/.test(title)) {
     return res.status(400).send({
       success: false,
       error: "Please remove any commas , from the title or artist.",
@@ -72,16 +72,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const firstFeat = feats[0];
 
     // Only generate tags for the first feature
-    if (format === "bassboosted") {
+    if (format.toLowerCase() === "bassboosted") {
       // Only generate a few tags for bass boosted features
       tags += `${firstFeat} ${title} bass boosted,${title} ${firstFeat} bass boosted, ${firstFeat} ${title} bass,${title} ${firstFeat} bass, ${feats[0]} bass`;
       if (feats.length >= 2) {
         // Second feat
         const secondFeat = feats[1];
       }
-    } else if (format === "letra") {
+    } else if (format.toLowerCase() === "letra") {
       tags += `,${firstFeat} ${title},${title} ${firstFeat},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat} ${artist},${firstFeat}`;
-    } else if (format === "lyrics") {
+    } else if (format.toLowerCase() === "lyrics") {
       tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
 
       if (feats.length >= 2) {
@@ -89,7 +89,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const secondFeat = feats[1];
         tags += `,${artist} ${secondFeat} ${title} lyrics,${secondFeat} ${title} lyrics,lyrics ${secondFeat} ${title},${secondFeat} lyrics,lyrics ${secondFeat}`;
       }
-    } else if (format === "slowedreverb") {
+    } else if (format.toLowerCase() === "slowedreverb") {
       tags += `,${firstFeat} ${title},${firstFeat} ${title} slowed,${artist} ${firstFeat} ${title} slowed,${firstFeat} ${title} slowed reverb,${firstFeat} slowed`;
     }
   }
@@ -186,7 +186,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       if (feats.length === 3) {
         f += `${trim(computedArtist)}, ${feats[0]} - ${trim(
           computedTitle
-        )} (Lyrics) ft. ${feats[1]}, ${feats[2]}`;
+        )} (Lyrics) ft. ${feats[1]}, ${feats[2]}=${trim(
+          computedArtist
+        )} - ${trim(computedTitle)} (Lyrics) ft. ${feats[0]}, ${feats[1]} & ${
+          feats[2]
+        }=${trim(computedArtist)}, ${feats[0]} - ${trim(
+          computedTitle
+        )} (Lyrics) ft. ${feats[1]} & ${feats[2]}=${trim(computedArtist)}, ${
+          feats[0]
+        } - ${trim(computedTitle)} [Lyrics] ft. ${feats[1]}, ${feats[2]}=${trim(
+          computedArtist
+        )} - ${trim(computedTitle)} [Lyrics] ft. ${feats[0]}, ${feats[1]} & ${
+          feats[2]
+        }=${trim(computedArtist)}, ${feats[0]} - ${trim(
+          computedTitle
+        )} [Lyrics] ft. ${feats[1]} & ${feats[2]}`;
       }
     } else {
       f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics)=${trim(
@@ -235,6 +249,27 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         )} & ${trim(feats[1])}=${trim(computedArtist)} - ${trim(
           computedTitle
         )} [Letra] ft. ${trim(feats[0])}, ${trim(feats[1])}`;
+      }
+
+      // Rare
+      if (feats.length === 5) {
+        f += `${trim(computedArtist)} x ${trim(feats[0])} - ${trim(
+          title
+        )} (Letra) ft. ${trim(feats[1])}, ${trim(feats[2])}, ${trim(
+          feats[3]
+        )}, ${trim(feats[4])}=${trim(computedArtist)}, ${trim(
+          feats[0]
+        )} - ${trim(title)} (Letra) ft. ${trim(feats[1])}, ${trim(
+          feats[2]
+        )}, ${trim(feats[3])}, ${trim(feats[4])}=${trim(
+          computedArtist
+        )} x ${trim(feats[0])} - ${trim(title)} [Letra] ft. ${trim(
+          feats[1]
+        )}, ${trim(feats[2])}, ${trim(feats[3])}, ${trim(feats[4])}=${trim(
+          computedArtist
+        )}, ${trim(feats[0])} - ${trim(title)} [Letra] ft. ${trim(
+          feats[1]
+        )}, ${trim(feats[2])}, ${trim(feats[3])}, ${trim(feats[4])}`;
       }
     } else {
       f += `${trim(computedArtist)} - ${trim(computedTitle)} (Letra)=${trim(

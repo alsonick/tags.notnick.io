@@ -2,17 +2,17 @@ import { returnComputedFormat } from "@/lib/return-computed-format";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { FiLoader, FiExternalLink } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
+import { useState, useEffect, useRef } from "react";
+import { FiX, FiRepeat } from "react-icons/fi";
 import { Button } from "../components/Button";
 import { Response } from "@/types/response";
-import { useState, useEffect } from "react";
 import { Input } from "@/components/Input";
-import { FaGithub } from "react-icons/fa";
 import { Step } from "../components/Step";
 import { FiCopy } from "react-icons/fi";
-import { FiX } from "react-icons/fi";
 import copy from "copy-to-clipboard";
 
 // Next.js
+import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -28,24 +28,63 @@ export default function Home() {
   const [tiktok, setTiktok] = useState("");
   const [title, setTitle] = useState("");
 
+  const artistRef = useRef<HTMLInputElement | null>(null);
+  const titleRef = useRef<HTMLInputElement | null>(null);
+
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Check if there are any commas in the title or artist
-    if (/,/.test(title) || /,/.test(artist)) {
+    if (/,/.test(title)) {
       toast.error("Please remove any commas , from the title or artist.");
       return;
+    }
+
+    // Process and compute final values locally without immediately updating state
+    let finalArtist = artist;
+    let finalFeatures = features;
+    let finalTitle = title;
+
+    if ((artist.includes(",") || artist.includes("-")) && title.length === 0) {
+      let mainPart = artist;
+      let computedTitle = "";
+
+      if (artist.includes("-")) {
+        const data = artist.split("-");
+        mainPart = data[0].trim();
+        computedTitle = data[1].trim().split("(")[0].trim();
+      }
+
+      const artistsArray = mainPart.split(",").map((a) => a.trim());
+
+      finalArtist = artistsArray[0];
+      finalFeatures = artistsArray.slice(1).join(", ");
+
+      if (computedTitle) {
+        finalTitle = computedTitle;
+      }
+    }
+
+    if (artist.includes(",") || artist.includes("-")) {
+      if (title.length) {
+        toast.error(
+          "The artist and title was already provided in the artist field. Please clear the title field!"
+        );
+        titleRef.current?.focus();
+        return;
+      }
     }
 
     // Starts the loading
     setLoading(true);
 
-    // Fetch the tags from the API
+    // Use the computed values directly in the API call
     const response = await fetch(
-      `
-      /api/gen?title=${title}&artist=${artist.trimStart().trimEnd()}${
-        features.length
-          ? `&features=${features.trimStart().trimEnd()}`
+      `/api/gen?title=${finalTitle}&artist=${finalArtist
+        .trimStart()
+        .trimEnd()}${
+        finalFeatures.length
+          ? `&features=${finalFeatures.trimStart().trimEnd()}`
           : "&features=none"
       }${
         channelName.length
@@ -53,8 +92,7 @@ export default function Home() {
           : "&channel=none"
       }&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-      }&format=${format}
-    `,
+      }&format=${format}`,
       {
         method: "GET",
         headers: {
@@ -62,6 +100,10 @@ export default function Home() {
         },
       }
     );
+
+    setArtist(finalArtist);
+    setFeatures(finalFeatures);
+    setTitle(finalTitle);
 
     // Check if the response is successful
     if (response.status === 200) {
@@ -83,13 +125,6 @@ export default function Home() {
       setData(data);
       setTags(separated);
       setLoading(false);
-
-      // setChannelName("");
-      // setTitle("");
-      // setArtist("");
-      // setFormat("Lyrics");
-      // setFeatures("");
-      // setTiktok("");
     }
 
     // Checks if the response is not "ok"
@@ -108,6 +143,8 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {}, [tags]);
 
   const seoTitle = "Lyrics Tags Generator";
   const seoDescription = "Generate YouTube tags for your lyric videos.";
@@ -146,12 +183,24 @@ export default function Home() {
           scrolled ? "fixed shadow-md h-20" : "fixed shadow-none"
         }`}
       >
-        <Link
-          href="https://github.com/alsonick/lyrics-tags-generator"
-          target="_blank"
-        >
-          <FaGithub className="text-3xl" />
-        </Link>
+        <div className="flex items-center">
+          {/* <Link
+            href="https://github.com/alsonick/lyrics-tags-generator"
+            target="_blank"
+          >
+            <FaGithub className="text-3xl" />
+          </Link> */}
+          <Image
+            src="/logo.png"
+            width={38}
+            height={38}
+            quality={100}
+            alt="Lyrics Tags Generator Logo"
+          />
+          <h1 className="font-bold tracking-tighter text-xl ml-3">
+            Lyrics Tags Generator
+          </h1>
+        </div>
         <div className="flex">
           <Link
             className="font-semibold hover:underline mr-10 flex items-center"
@@ -166,6 +215,13 @@ export default function Home() {
             target="_blank"
           >
             Invite Discord Bot <FiExternalLink className="ml-1 text-xl" />
+          </Link>
+          <Link
+            className="font-semibold hover:underline flex items-center mr-10"
+            href=""
+            target="_blank"
+          >
+            Documentation <FiExternalLink className="ml-1 text-xl" />
           </Link>
           <Link
             className="font-semibold hover:underline flex items-center"
@@ -185,25 +241,36 @@ export default function Home() {
         </header>
         <form onSubmit={submit} className="flex flex-col">
           <div className="flex w-full gap-6 items-center">
-            <section className="flex flex-col w-full">
+            <section className="flex flex-col h-60 w-full">
               <Step step={1} text="Artist" />
               <Input
                 onChange={(e) => setArtist(e.target.value)}
                 placeholder="The Chainsmokers"
                 required={true}
+                ref={artistRef}
                 value={artist}
               />
               <p className="text-xs mt-1">
                 Any special characters are allowed except commas ,.{" "}
                 <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
+              <br />
+              <i className="text-xs border-l-4 pl-2 opacity-65">
+                {" "}
+                If you've provided the artist field in the format{" "}
+                <b>
+                  `[artist], [feat](optional)... - [title] [format](optional)`
+                </b>{" "}
+                then you can leave out the title field.
+              </i>
             </section>
-            <section className="flex flex-col w-full">
+            <section className="flex flex-col h-60 w-full">
               <Step step={2} text="Title" />
               <Input
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Don't Let Me Down"
-                required={true}
+                required={!artist.length}
+                ref={titleRef}
                 value={title}
               />
               <p className="text-xs mt-1">
@@ -267,7 +334,7 @@ export default function Home() {
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <svg
-                    className="w-4 h-4 text-gray-500"
+                    className="w-4 h-4 text-gray-600"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -289,6 +356,29 @@ export default function Home() {
           </div>
           <div className="w-full justify-between items-center flex mt-6 border-b pb-4">
             <div className="ml-auto flex">
+              <div className="mr-4">
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!tags.length) {
+                      toast.error("Please fill out the required fields.");
+                      return;
+                    }
+
+                    const shuffled = [...tags];
+
+                    for (let i = shuffled.length - 1; i > 0; i--) {
+                      const j = Math.floor(Math.random() * (i + 1));
+                      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                    }
+
+                    setTags(shuffled);
+                    toast.success("Tags shuffled successfully.");
+                  }}
+                >
+                  Shuffle <FiRepeat className="ml-2" />
+                </Button>
+              </div>
               <Button title="Generate tags">
                 Generate <FiLoader className="ml-2" />
               </Button>
@@ -303,7 +393,7 @@ export default function Home() {
           <div className="flex flex-col">
             <div className="border p-4 mt-4 rounded-xl">
               {tags.length > 0 && (
-                <h2 className="text-2xl text-center font-light">
+                <h2 className="text-2xl text-left font-light">
                   Tags generated for <i>{data?.title}</i> by{" "}
                   <b>{data?.artist}</b> 🤖
                 </h2>
@@ -313,6 +403,7 @@ export default function Home() {
                   <>
                     {tags.map((tag) => (
                       <div
+                        key={tag}
                         className="flex items-center border p-2 px-4 rounded-xl
                         hover:cursor-pointer w-fit duration-300 hover:shadow-lg"
                         onClick={() => {
@@ -377,7 +468,7 @@ export default function Home() {
             )}
             {tags.length > 0 && (
               <div className="flex flex-col mt-8 border-t pt-4">
-                <h3 className="text-2xl font-bold">Titles:</h3>
+                <h3 className="text-2xl font-bold">Suggested:</h3>
                 {data?.extras.titles.split("=").map((title) => (
                   <div
                     className="flex items-center justify-between w-full mt-4"
@@ -435,15 +526,27 @@ export default function Home() {
           </p>
           <p className="text-gray-600 text-xs">
             Made with{" "}
-            <Link className="font-bold hover:underline" href="">
+            <Link
+              className="font-bold hover:underline"
+              href="https://nextjs.org/"
+              target="_blank"
+            >
               Next.js
             </Link>
             ,{" "}
-            <Link className="font-bold hover:underline" href="">
+            <Link
+              className="font-bold hover:underline"
+              href="https://tailwindcss.com/"
+              target="_blank"
+            >
               Tailwind
             </Link>{" "}
             &{" "}
-            <Link className="font-bold hover:underline" href="">
+            <Link
+              className="font-bold hover:underline"
+              href="https://vercel.com/"
+              target="_blank"
+            >
               Vercel
             </Link>
             .
