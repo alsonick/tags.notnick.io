@@ -193,7 +193,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         f += `${artist.trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[0].trim()}, ${feats[1].trim()}, ${feats[2].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[1].trim()}, ${feats[2].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[1].trim()} & ${feats[2].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[1].trim()}, ${feats[2].trim()}`;
       }
     } else {
-      f += `${artist.trim()} - ${title.trim()} (slowed & reverb)`;
+      f += `${artist.trim()} - ${title.trim()} (slowed & reverb)=${artist.trim()} - ${title.trim()} [slowed & reverb]`;
     }
   }
 
