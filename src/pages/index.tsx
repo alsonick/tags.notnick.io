@@ -49,49 +49,55 @@ export default function Home() {
     if ((artist.includes(",") || artist.includes("-")) && title.length === 0) {
       const data = artist.split("-");
       let mainPart = artist;
-      let title = "";
+      let extractedTitle = "";
 
       if (artist.includes("-")) {
         const titleFormatString = data[1].trim();
         mainPart = data[0].trim();
 
+        // Extract title before any format indicators
         if (titleFormatString.includes("(")) {
-          // (Lyrics)
-          title = removeEmojis(titleFormatString.split("(")[0].trim());
+          extractedTitle = removeEmojis(titleFormatString.split("(")[0].trim());
         } else if (titleFormatString.includes("[")) {
-          // [Lyrics]
-          title = removeEmojis(titleFormatString.split("[")[0].trim());
+          extractedTitle = removeEmojis(titleFormatString.split("[")[0].trim());
+        } else {
+          extractedTitle = removeEmojis(titleFormatString);
         }
 
+        // Process format from parentheses or brackets
+        let formatText = "";
         if (titleFormatString.includes("(")) {
-          // (Lyrics)
-          const format = titleFormatString
-            .split("(")[1]
-            .replace("(", "")
-            .replace(")", "");
-
-          finalFormat = returnComputedFormat(format).toLowerCase();
+          // Extract text within parentheses
+          const match = titleFormatString.match(/\(([^)]+)\)/);
+          if (match && match[1]) {
+            formatText = match[1].trim();
+          }
         } else if (titleFormatString.includes("[")) {
-          // [Lyrics]
-          const format = titleFormatString
-            .split("[")[1]
-            .replace("[", "")
-            .replace("]", "");
+          // Extract text within brackets
+          const match = titleFormatString.match(/\[([^\]]+)\]/);
+          if (match && match[1]) {
+            formatText = match[1].trim();
+          }
+        }
 
-          finalFormat = returnComputedFormat(format).toLowerCase();
+        // If format text was found, process it
+        if (formatText) {
+          // Get standardized format name and ensure it's lowercase for the API
+          finalFormat = returnComputedFormat(formatText).toLowerCase();
         }
       }
 
+      // Process artist and features from the main part
       const artistsArray = mainPart.split(",").map((a) => a.trim());
-
       finalArtist = artistsArray[0];
       finalFeatures = artistsArray.slice(1).join(", ");
 
-      if (title) {
-        finalTitle = title;
+      if (extractedTitle) {
+        finalTitle = extractedTitle;
       }
     }
 
+    // Error if artist includes separators but title is already specified
     if (artist.includes(",") || artist.includes("-")) {
       if (title.length) {
         toast.error(
@@ -128,6 +134,7 @@ export default function Home() {
       }
     );
 
+    // Update state with the final computed values
     setArtist(finalArtist);
     setFeatures(finalFeatures);
     setFormat(finalFormat);

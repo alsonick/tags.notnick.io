@@ -1,18 +1,18 @@
 export const returnComputedFormat = (format: string) => {
   switch (format.toLowerCase()) {
     case "bassboosted":
-      return "BassBoosted";
+      return "bassboosted";
     case "nightcore":
-      return "Nightcore";
+      return "nightcore";
     case "slowed":
       return "Slowed";
     case "slowed & reverb":
-      return "Slowed";
+      return "slowedreverb";
     case "slowedreverb":
-      return "Slowed";
+      return "slowedreverb";
     case "letra":
-      return "Letra";
+      return "letra";
     default:
-      return "Lyrics";
+      return "lyrics";
   }
 };

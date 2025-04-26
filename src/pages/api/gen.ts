@@ -41,7 +41,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
   } else if (format === "slowedreverb") {
     // Slowed/reverb tags
-    tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} ${title} slowed,${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
+    tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
   } else if (format === "letra") {
     tags = `${artist},${title},${artist} ${title} letra,${artist} ${title},${title} ${artist},${title} letra,letra ${title},letra ${title} ${artist},${artist} letra,${artist} letra ${title},${title} letra ${artist},letra ${artist},${artist} - ${title},${artist} - ${title} letra`;
   }
