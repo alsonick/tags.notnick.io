@@ -94,36 +94,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
-  if (format === "lyrics") {
+  if (format.toLowerCase() === "lyrics") {
     tags += ",lyrics";
-  } else if (format === "letra") {
+  } else if (format.toLowerCase() === "letra") {
     tags += ",letra,latin,latin music";
   }
 
   if (channel !== "none") {
     tags += `,${channel}`;
-  }
-
-  // Extras - Generate different title formats
-  let artistArray = artist.trimStart().split(" ");
-  let titleArray = title.split(" ");
-  let computedArtist = "";
-  let computedTitle = "";
-
-  const trim = (str: string) => str.trim();
-
-  // Formats the title to have the first letter of each word capitalized
-  for (let i = 0; i < titleArray.length; i++) {
-    computedTitle += `${titleArray[i][0].toUpperCase()}${titleArray[
-      i
-    ].substring(1)} `;
-  }
-
-  // Formats the artist to have the first letter of each word capitalized
-  for (let i = 0; i < artistArray.length; i++) {
-    computedArtist += `${artistArray[i][0].toUpperCase()}${artistArray[
-      i
-    ].substring(1)} `;
   }
 
   let endingTag = "Lyrics";
@@ -143,265 +121,113 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
 
   // Lyrics
-  if (trim(format).toLowerCase() === "lyrics") {
+  if (format.trim().toLowerCase() === "lyrics") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
-        f += `${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (Lyrics) ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} (Lyrics)=${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} [Lyrics] ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} [Lyrics]=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} [Lyrics]`;
+        f += `${artist.trim()} - ${title.trim()} (Lyrics) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Lyrics)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Lyrics)=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Lyrics]=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Lyrics]`;
       }
 
       // If there are two features
       if (feats.length === 2) {
-        f += `${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (Lyrics) ft. ${trim(feats[1])}=${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (Lyrics) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
-          computedArtist
-        )} - ${trim(computedTitle)} (Lyrics) ft. ${trim(feats[0])} & ${trim(
-          feats[1]
-        )}=${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} [Lyrics] ft. ${trim(feats[1])}=${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} [Lyrics] ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
-          computedArtist
-        )} - ${trim(computedTitle)} [Lyrics] ft. ${trim(feats[0])} & ${trim(
-          feats[1]
-        )}`;
+        f += `${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Lyrics) ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Lyrics) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Lyrics) ft. ${feats[0].trim()} & ${feats[1].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Lyrics] ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${feats[0].trim()} & ${feats[1].trim()}`;
       }
 
       // If there are three features
       if (feats.length === 3) {
-        f += `${trim(computedArtist)}, ${feats[0]} - ${trim(
-          computedTitle
-        )} (Lyrics) ft. ${feats[1]}, ${feats[2]}=${trim(
-          computedArtist
-        )} - ${trim(computedTitle)} (Lyrics) ft. ${feats[0]}, ${feats[1]} & ${
-          feats[2]
-        }=${trim(computedArtist)}, ${feats[0]} - ${trim(
-          computedTitle
-        )} (Lyrics) ft. ${feats[1]} & ${feats[2]}=${trim(computedArtist)}, ${
+        f += `${artist.trim()}, ${feats[0]} - ${title.trim()} (Lyrics) ft. ${
+          feats[1]
+        }, ${feats[2]}=${artist.trim()} - ${title.trim()} (Lyrics) ft. ${
           feats[0]
-        } - ${trim(computedTitle)} [Lyrics] ft. ${feats[1]}, ${feats[2]}=${trim(
-          computedArtist
-        )} - ${trim(computedTitle)} [Lyrics] ft. ${feats[0]}, ${feats[1]} & ${
+        }, ${feats[1]} & ${feats[2]}=${artist.trim()}, ${
+          feats[0]
+        } - ${title.trim()} (Lyrics) ft. ${feats[1]} & ${
           feats[2]
-        }=${trim(computedArtist)}, ${feats[0]} - ${trim(
-          computedTitle
-        )} [Lyrics] ft. ${feats[1]} & ${feats[2]}`;
+        }=${artist.trim()}, ${feats[0]} - ${title.trim()} [Lyrics] ft. ${
+          feats[1]
+        }, ${feats[2]}=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${
+          feats[0]
+        }, ${feats[1]} & ${feats[2]}=${artist.trim()}, ${
+          feats[0]
+        } - ${title.trim()} [Lyrics] ft. ${feats[1]} & ${feats[2]}`;
       }
     } else {
-      f += `${trim(computedArtist)} - ${trim(computedTitle)} (Lyrics)=${trim(
-        computedArtist
-      )} - ${trim(computedTitle)} [Lyrics]`;
+      f += `${artist.trim()} - ${title.trim()} (Lyrics)=${artist.trim()} - ${title.trim()} [Lyrics]`;
     }
   }
 
-  if (trim(format).toLowerCase() === "letra") {
+  if (format.trim().toLowerCase() === "letra") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
-        f += `${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (Letra)=${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (Letra) ft. ${trim(feats[0])}=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} [Letra]=${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} [Letra] ft. ${trim(feats[0])}=${trim(computedArtist)} & ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} (Letra)=${trim(computedArtist)} & ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} [Letra]`;
+        f += `${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Letra)=${artist.trim()} - ${title.trim()} (Letra) ft. ${feats[0].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Letra]=${artist.trim()} - ${title.trim()} [Letra] ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Letra)=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Letra]`;
       }
 
       if (feats.length === 2) {
-        f += `${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (Letra) ft. ${trim(feats[1])}=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} [Letra] ft. ${trim(feats[1])}=${trim(
-          computedArtist
-        )} - ${trim(computedTitle)} (Letra) ft. ${trim(feats[0])}, ${trim(
-          feats[1]
-        )}=${trim(computedArtist)} - ${trim(computedTitle)} [Letra] ft. ${trim(
-          feats[0]
-        )}, ${trim(feats[1])}=${trim(computedArtist)} & ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} (Letra) ft. ${trim(feats[1])}=${trim(
-          computedArtist
-        )} & ${trim(feats[0])} - ${trim(computedTitle)} [Letra] ft. ${trim(
-          feats[1]
-        )}=${trim(computedArtist)} - ${trim(computedTitle)} (Letra) ft. ${trim(
-          feats[0]
-        )} & ${trim(feats[1])}=${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} [Letra] ft. ${trim(feats[0])}, ${trim(feats[1])}`;
+        f += `${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Letra) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Letra] ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Letra) ft. ${feats[0].trim()} & ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Letra] ft. ${feats[0].trim()}, ${feats[1].trim()}`;
       }
 
       // Rare
       if (feats.length === 5) {
-        f += `${trim(computedArtist)} x ${trim(feats[0])} - ${trim(
-          title
-        )} (Letra) ft. ${trim(feats[1])}, ${trim(feats[2])}, ${trim(
-          feats[3]
-        )}, ${trim(feats[4])}=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(title)} (Letra) ft. ${trim(feats[1])}, ${trim(
-          feats[2]
-        )}, ${trim(feats[3])}, ${trim(feats[4])}=${trim(
-          computedArtist
-        )} x ${trim(feats[0])} - ${trim(title)} [Letra] ft. ${trim(
-          feats[1]
-        )}, ${trim(feats[2])}, ${trim(feats[3])}, ${trim(feats[4])}=${trim(
-          computedArtist
-        )}, ${trim(feats[0])} - ${trim(title)} [Letra] ft. ${trim(
-          feats[1]
-        )}, ${trim(feats[2])}, ${trim(feats[3])}, ${trim(feats[4])}`;
+        f += `${artist.trim()} x ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}=${artist.trim()} x ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}`;
       }
     } else {
-      f += `${trim(computedArtist)} - ${trim(computedTitle)} (Letra)=${trim(
-        computedArtist
-      )} - ${trim(computedTitle)} [Letra]`;
+      f += `${artist.trim()} - ${title.trim()} (Letra)=${artist.trim()} - ${title.trim()} [Letra]`;
     }
   }
 
   // Slowed & Reverb
-  if (trim(format).toLowerCase() === "slowedreverb") {
+  if (format.trim().toLowerCase() === "slowedreverb") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
-        f += `${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (slowed & reverb) ft. ${trim(feats[0])}=${trim(
-          computedArtist
-        )} & ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (slowed & reverb)=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} (slowed & reverb)`;
+        f += `${artist.trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (slowed & reverb)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (slowed & reverb)`;
       }
 
       if (feats.length === 2) {
-        f += `${trim(computedArtist)}, ${feats[0]} & ${feats[1]} - ${trim(
-          computedTitle
-        )} (slowed & reverb)=${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (slowed & reverb) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
-          computedArtist
-        )}, ${feats[0]} - ${trim(computedTitle)} (slowed & reverb) ft. ${trim(
+        f += `${artist.trim()}, ${feats[0]} & ${
           feats[1]
-        )}`;
+        } - ${title.trim()} (slowed & reverb)=${artist.trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()}, ${
+          feats[0]
+        } - ${title.trim()} (slowed & reverb) ft. ${feats[1].trim()}`;
       }
 
       if (feats.length === 3) {
-        f += `${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (slowed & reverb) ft. ${trim(feats[0])}, ${trim(feats[1])}, ${trim(
-          feats[2]
-        )}=${trim(computedArtist)}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (slowed & reverb) ft. ${trim(feats[1])}, ${trim(feats[2])}=${trim(
-          computedArtist
-        )}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (slowed & reverb) ft. ${trim(feats[1])} & ${trim(feats[2])}=${trim(
-          computedArtist
-        )} & ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (slowed & reverb) ft. ${trim(feats[1])}, ${trim(feats[2])}`;
+        f += `${artist.trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[0].trim()}, ${feats[1].trim()}, ${feats[2].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[1].trim()}, ${feats[2].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[1].trim()} & ${feats[2].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[1].trim()}, ${feats[2].trim()}`;
       }
     } else {
-      f += `${trim(computedArtist)} - ${trim(computedTitle)} (slowed & reverb)`;
+      f += `${artist.trim()} - ${title.trim()} (slowed & reverb)`;
     }
   }
 
   // Bass Boosted
-  if (trim(format).toLowerCase() === "bassboosted") {
+  if (format.trim().toLowerCase() === "bassboosted") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
-        f += `${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (Bass Boosted) ft. ${trim(feats[0])}=${trim(
-          computedArtist
-        )} & ${trim(feats[0])} - ${trim(computedTitle)} (Bass Boosted)=${trim(
-          computedArtist
-        )}, ${trim(feats[0])} - ${trim(computedTitle)} (Bass Boosted)=
-        ${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} 🔥 (Bass Boosted) ft. ${trim(feats[0])}=${trim(
-          computedArtist
-        )} & ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} 🔥 (Bass Boosted)=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} 🔥 (Bass Boosted)=
-        ${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} 🔊 (Bass Boosted) ft. ${trim(feats[0])}=${trim(
-          computedArtist
-        )} & ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} 🔊 (Bass Boosted)=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} 🔊 (Bass Boosted)`;
+        f += `${artist.trim()} - ${title.trim()} (Bass Boosted) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Bass Boosted)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Bass Boosted)=
+        ${artist.trim()} - ${title.trim()} 🔥 (Bass Boosted) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} 🔥 (Bass Boosted)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} 🔥 (Bass Boosted)=
+        ${artist.trim()} - ${title.trim()} 🔊 (Bass Boosted) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} 🔊 (Bass Boosted)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} 🔊 (Bass Boosted)`;
       }
 
       // If there are two features
       if (feats.length === 2) {
-        f += `${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} (Bass Boosted) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
-          computedArtist
-        )}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} (Bass Boosted) ft. ${trim(feats[1])}=${trim(
-          computedArtist
-        )} - ${trim(computedTitle)} 🔥 (Bass Boosted) ft. ${trim(
-          feats[0]
-        )}, ${trim(feats[1])}=${trim(computedArtist)}, ${trim(
-          feats[0]
-        )} - ${trim(computedTitle)} 🔥 (Bass Boosted) ft. ${trim(feats[1])}
-        =${trim(computedArtist)} - ${trim(
-          computedTitle
-        )} 🔊 (Bass Boosted) ft. ${trim(feats[0])}, ${trim(feats[1])}=${trim(
-          computedArtist
-        )}, ${trim(feats[0])} - ${trim(
-          computedTitle
-        )} 🔊 (Bass Boosted) ft. ${trim(feats[1])}`;
+        f += `${artist.trim()} - ${title.trim()} (Bass Boosted) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Bass Boosted) ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} 🔥 (Bass Boosted) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} 🔥 (Bass Boosted) ft. ${feats[1].trim()}
+        =${artist.trim()} - ${title.trim()} 🔊 (Bass Boosted) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} 🔊 (Bass Boosted) ft. ${feats[1].trim()}`;
       }
 
       // If there are three features
       if (feats.length === 3) {
-        f += `${trim(computedArtist)}, ${feats[0]} - ${trim(
-          computedTitle
-        )} (Bass Boosted) ft. ${feats[1]}, ${feats[2]}=${trim(
-          computedArtist
-        )}, ${feats[0]} - ${trim(computedTitle)} 🔥 (Bass Boosted) ft. ${
-          feats[1]
-        }, ${feats[2]}=${trim(computedArtist)}, ${feats[0]} - ${trim(
-          computedTitle
-        )} 🔊 (Bass Boosted) ft. ${feats[1]}, ${feats[2]}`;
+        f += `${artist.trim()}, ${
+          feats[0]
+        } - ${title.trim()} (Bass Boosted) ft. ${feats[1]}, ${
+          feats[2]
+        }=${artist.trim()}, ${
+          feats[0]
+        } - ${title.trim()} 🔥 (Bass Boosted) ft. ${feats[1]}, ${
+          feats[2]
+        }=${artist.trim()}, ${
+          feats[0]
+        } - ${title.trim()} 🔊 (Bass Boosted) ft. ${feats[1]}, ${feats[2]}`;
       }
     } else {
-      f += `${trim(computedArtist)} - ${trim(
-        computedTitle
-      )} (Bass Boosted)=${trim(computedArtist)} - ${trim(
-        computedTitle
-      )} 🔥 (Bass Boosted)=${trim(computedArtist)} - ${trim(
-        computedTitle
-      )} 🔊 (Bass Boosted)`;
+      f += `${artist.trim()} - ${title.trim()} (Bass Boosted)=${artist.trim()} - ${title.trim()} 🔥 (Bass Boosted)=${artist.trim()} - ${title.trim()} 🔊 (Bass Boosted)`;
     }
   }
 
@@ -411,9 +237,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     tags: tags.toLowerCase(),
     tagsToRemove: "",
     removedTags: "",
-    title: trim(computedTitle),
-    artist: trim(computedArtist),
-    t: `${trim(computedArtist)} - ${trim(computedTitle)}`,
+    title: title.trim(),
+    artist: artist.trim(),
+    t: `${artist.trim()} - ${title.trim()}`,
     features:
       features.toLowerCase() !== "none"
         ? features
