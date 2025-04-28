@@ -232,8 +232,8 @@ export default function Home() {
           <div className="flex justify-center items-center w-fit h-fit">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="31"
-              height="31"
+              width="29"
+              height="29"
               fill="currentColor"
               className="bi bi-youtube"
               viewBox="0 0 16 16"
