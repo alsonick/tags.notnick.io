@@ -538,7 +538,11 @@ export default function Home() {
                     <p className="text-xl mr-4">
                       #{data?.title.replace("'", "").replaceAll(" ", "")}
                     </p>
-                    <p className="text-xl">#{returnComputedFormat(format)}</p>
+                    <p className="text-xl">
+                      #
+                      {returnComputedFormat(format)[0].toUpperCase() +
+                        format.slice(1)}
+                    </p>
                   </div>
                   <Button
                     onClick={() => {
