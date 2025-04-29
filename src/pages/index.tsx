@@ -232,8 +232,8 @@ export default function Home() {
           <div className="flex justify-center items-center w-fit h-fit">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="29"
-              height="29"
+              width="27"
+              height="27"
               fill="currentColor"
               className="bi bi-youtube"
               viewBox="0 0 16 16"
@@ -242,7 +242,7 @@ export default function Home() {
             </svg>
           </div>
 
-          <h1 className="font-bold tracking-tighter text-xl ml-3">
+          <h1 className="font-bold tracking-tighter mb-[2px] text-xl ml-3">
             Lyrics Tags Generator
           </h1>
         </div>
@@ -395,33 +395,7 @@ export default function Home() {
           </div>
           <div className="w-full justify-between items-center flex mt-6 border-b pb-4">
             <div className="ml-auto flex">
-              <div className="mr-4">
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-
-                    if (!artist.length) {
-                      artistRef.current?.focus();
-                    } else if (!title.length) {
-                      titleRef.current?.focus();
-                    }
-                    if (!tags.length) {
-                      toast.error("Please fill out the required fields.");
-                      return;
-                    }
-                    const shuffled = [...tags];
-                    for (let i = shuffled.length - 1; i > 0; i--) {
-                      const j = Math.floor(Math.random() * (i + 1));
-                      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-                    }
-
-                    setTags(shuffled);
-                    toast.success("Tags shuffled successfully.");
-                  }}
-                >
-                  Shuffle <FiRepeat className="ml-2" />
-                </Button>
-              </div>
+              {" "}
               <Button title="Generate tags">
                 Generate <FiLoader className="ml-2" />
               </Button>
@@ -486,22 +460,51 @@ export default function Home() {
               >
                 {tags.join(",  ").length}/500
               </p>
-              <Button
-                title="Copy generated tags"
-                style={{ marginLeft: "auto" }}
-                onClick={() => {
-                  if (!tags.length) {
-                    toast.error(
-                      "Please generate the tags before you copy to clipboard."
-                    );
-                    return;
-                  }
-                  copy(tags.join(", "));
-                  toast.success("Tags copied to the clipboard.");
-                }}
-              >
-                Copy generated tags <FiCopy className="ml-2" />
-              </Button>
+              <div className="flex items-center ml-auto">
+                <div className="mr-4">
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+
+                      if (!artist.length) {
+                        artistRef.current?.focus();
+                      } else if (!title.length) {
+                        titleRef.current?.focus();
+                      }
+                      if (!tags.length) {
+                        toast.error("Please fill out the required fields.");
+                        return;
+                      }
+                      const shuffled = [...tags];
+                      for (let i = shuffled.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                      }
+
+                      setTags(shuffled);
+                      toast.success("Tags shuffled successfully.");
+                    }}
+                  >
+                    Shuffle <FiRepeat className="ml-2" />
+                  </Button>
+                </div>
+                <Button
+                  title="Copy generated tags"
+                  style={{ marginLeft: "auto" }}
+                  onClick={() => {
+                    if (!tags.length) {
+                      toast.error(
+                        "Please generate the tags before you copy to clipboard."
+                      );
+                      return;
+                    }
+                    copy(tags.join(", "));
+                    toast.success("Tags copied to the clipboard.");
+                  }}
+                >
+                  Copy generated tags <FiCopy className="ml-2" />
+                </Button>
+              </div>
             </div>
             {tags.join(",  ").length > 500 && (
               <p className="mt-4 text-sm text-red-500">
