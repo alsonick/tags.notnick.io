@@ -400,13 +400,16 @@ export default function Home() {
                   onClick={(e) => {
                     e.preventDefault();
 
+                    if (!artist.length) {
+                      artistRef.current?.focus();
+                    } else if (!title.length) {
+                      titleRef.current?.focus();
+                    }
                     if (!tags.length) {
                       toast.error("Please fill out the required fields.");
                       return;
                     }
-
                     const shuffled = [...tags];
-
                     for (let i = shuffled.length - 1; i > 0; i--) {
                       const j = Math.floor(Math.random() * (i + 1));
                       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -483,7 +486,6 @@ export default function Home() {
               >
                 {tags.join(",  ").length}/500
               </p>
-
               <Button
                 title="Copy generated tags"
                 style={{ marginLeft: "auto" }}
