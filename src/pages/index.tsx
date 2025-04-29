@@ -250,7 +250,7 @@ export default function Home() {
         <div className="flex">
           <Link
             className="font-semibold hover:underline mr-10 flex items-center"
-            href="https://github.com/alsonick/lyrics-tags-generator/issues/new?template=Blank+issue"
+            href="https://github.com/alsonick/lyrics-tags-generator-docs/issues/new"
             target="_blank"
           >
             Submit Suggestion <FiExternalLink className="ml-1 text-xl" />
@@ -264,7 +264,7 @@ export default function Home() {
           </Link>
           <Link
             className="font-semibold hover:underline flex items-center"
-            href=""
+            href="https://github.com/alsonick/lyrics-tags-generator-docs"
             target="_blank"
           >
             Documentation <FiExternalLink className="ml-1 text-xl" />
