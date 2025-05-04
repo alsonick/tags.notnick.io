@@ -444,11 +444,6 @@ export default function Home() {
                     onClick={(e) => {
                       e.preventDefault();
 
-                      if (!artist.length) {
-                        artistRef.current?.focus();
-                      } else if (!title.length) {
-                        titleRef.current?.focus();
-                      }
                       if (!tags.length) {
                         toast.error("Please fill out the required fields.");
                         return;
