@@ -7,8 +7,8 @@ export const Button = (
   return (
     <button
       {...props}
-      className="flex items-center justify-center text-white font-semibold duration-300
-      bg-black rounded-lg p-2 px-4 outline-none focus:ring focus:ring-black focus:ring-offset-2"
+      className="flex items-center justify-center text-white font-semibold
+      bg-black p-2 px-4 rounded-md focus:outline-2"
     >
       {props.children}
     </button>
