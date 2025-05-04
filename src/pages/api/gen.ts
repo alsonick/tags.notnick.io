@@ -30,30 +30,37 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
-  // Typical tags format you'd use for lyric videos
-  let tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},lyrics ${artist} ${title},${artist} lyrics ${title},${title} lyrics ${artist},${title} lyric video,lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title},${artist}, ${title} ${artist}`;
+  let formatPureFormat = format.trim().toLowerCase();
+  let tags;
 
-  if (format === "bassboosted") {
-    // Bass boosted tags
+  if (formatPureFormat === "bassboosted") {
+    // Bass Boosted
     tags = `${artist},${title},${title} bass boosted,${title} bass boosted ${artist},${title} ${artist},${title} ${artist} bass boosted,${artist} ${title} bass boosted,${artist} ${title},${artist} - ${title},${artist} - ${title} bass boosted,${title} ${artist} bass boost,${artist} bass boosted,${title} bass boost,bass boost,bass boosted,bass boosted car playlist, bass boost car playlist`;
-  } else if (format === "nightcore") {
-    // Nightcore/sped up tags
+  } else if (formatPureFormat === "nightcore") {
+    // Nightcore/Sped Up
     tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
-  } else if (format === "slowedreverb") {
-    // Slowed/reverb tags
+  } else if (formatPureFormat === "slowedreverb") {
+    // Slowed/Reverb
     tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
-  } else if (format === "letra") {
+  } else if (formatPureFormat === "letra") {
+    // Letra
     tags = `${artist},${title},${artist} ${title} letra,${artist} ${title},${title} ${artist},${title} letra,letra ${title},letra ${title} ${artist},${artist} letra,${artist} letra ${title},${title} letra ${artist},letra ${artist},${artist} - ${title},${artist} - ${title} letra`;
+  } else if (formatPureFormat === "phonk") {
+    // Phonk
+    tags = `${artist},${title},${artist} ${title},${title} ${artist},${title} phonk,${artist} ${title} phonk,${title} ${artist} phonk,${artist} phonk`;
+  } else {
+    // Lyrics
+    tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},lyrics ${artist} ${title},${artist} lyrics ${title},${title} lyrics ${artist},${title} lyric video,lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title},${artist}, ${title} ${artist}`;
   }
 
   // Part to generate tags for tiktok option
   if (tiktok === "true") {
-    if (format === "bassboosted") {
+    if (formatPureFormat === "bassboosted") {
       // Bass boosted
-    } else if (format === "nightcore") {
+    } else if (formatPureFormat === "nightcore") {
       // Nightcore/sped up
       tags += `${artist} ${title} sped up tiktok remix,${title} sped up tiktok version`;
-    } else if (format === "slowedreverb") {
+    } else if (formatPureFormat === "slowedreverb") {
       // Slowed/reverb
       tags += `,slowed tiktok songs`;
     } else {
@@ -94,10 +101,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
-  if (format.toLowerCase() === "lyrics") {
+  if (formatPureFormat === "lyrics") {
     tags += ",lyrics";
-  } else if (format.toLowerCase() === "letra") {
+  } else if (formatPureFormat === "letra") {
     tags += ",letra,latin,latin music";
+  } else if (formatPureFormat === "phonk") {
+    tags += `,phonk,phonk music,phonk ${new Date().getFullYear()},tiktok phonk`;
   }
 
   if (channel !== "none") {
