@@ -130,7 +130,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`);
 
   // Lyrics
-  if (format.trim().toLowerCase() === "lyrics") {
+  if (formatPureFormat === "lyrics") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
         f += `${artist.trim()} - ${title.trim()} (Lyrics) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Lyrics)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Lyrics)=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Lyrics]=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Lyrics]`;
@@ -164,7 +164,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
-  if (format.trim().toLowerCase() === "letra") {
+  if (formatPureFormat === "letra") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
         f += `${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Letra)=${artist.trim()} - ${title.trim()} (Letra) ft. ${feats[0].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Letra]=${artist.trim()} - ${title.trim()} [Letra] ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Letra)=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Letra]`;
@@ -184,7 +184,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   // Slowed & Reverb
-  if (format.trim().toLowerCase() === "slowedreverb") {
+  if (formatPureFormat === "slowedreverb") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
         f += `${artist.trim()} - ${title.trim()} (slowed & reverb) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (slowed & reverb)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (slowed & reverb)`;
@@ -206,8 +206,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
+  // Phonk
+  if (formatPureFormat === "phonk") {
+    if (features.toLowerCase() !== "none") {
+    } else {
+      f += `${artist} - ${title}=${artist} - ${title} [Phonk]`;
+    }
+  }
+
   // Bass Boosted
-  if (format.trim().toLowerCase() === "bassboosted") {
+  if (formatPureFormat === "bassboosted") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
         f += `${artist.trim()} - ${title.trim()} (Bass Boosted) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Bass Boosted)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Bass Boosted)=
