@@ -1,3 +1,4 @@
+import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -35,7 +36,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (formatPureFormat === "bassboosted") {
     // Bass Boosted
-    tags = `${artist},${title},${title} bass boosted,${title} bass boosted ${artist},${title} ${artist},${title} ${artist} bass boosted,${artist} ${title} bass boosted,${artist} ${title},${artist} - ${title},${artist} - ${title} bass boosted,${title} ${artist} bass boost,${artist} bass boosted,${title} bass boost,bass boost,bass boosted,bass boosted car playlist, bass boost car playlist`;
+    tags = bassBoostedTags(artist, title);
   } else if (formatPureFormat === "nightcore") {
     // Nightcore/Sped Up
     tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;

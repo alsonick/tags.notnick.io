@@ -2,10 +2,10 @@ import { returnComputedFormat } from "@/lib/return-computed-format";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { NavYouTubeLogo } from "@/components/NavYouTubeLogo";
 import { FiLoader, FiExternalLink } from "react-icons/fi";
+import { FiX, FiRepeat, FiTrash } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import { useState, useEffect, useRef } from "react";
 import { removeEmojis } from "@/lib/remove-emojis";
-import { FiX, FiRepeat } from "react-icons/fi";
 import { Button } from "../components/Button";
 import { Response } from "@/types/response";
 import { Input } from "@/components/Input";
@@ -249,7 +249,7 @@ export default function Home() {
         </div>
       </nav>
       <main className="lg:flex flex-col py-32 h-full px-2 sm:w-[55rem] w-[95%] hidden">
-        <header className="flex flex-col items-center">
+        <header className="flex flex-col items-center mt-5">
           <h1 className="text-6xl font-bold tracking-tighter">{seoTitle} ✍️</h1>
           <p className="text-gray-800 mt-4 text-xl font-medium">
             {seoDescription}
@@ -257,7 +257,7 @@ export default function Home() {
         </header>
         <form onSubmit={submit} className="flex flex-col">
           <div className="flex w-full gap-6 items-center">
-            <section className="flex flex-col h-60 w-full">
+            <section className="flex flex-col w-full">
               <Step step={1} text="Artist" />
               <Input
                 onChange={(e) => setArtist(e.target.value)}
@@ -270,17 +270,8 @@ export default function Home() {
                 Any special characters are allowed except commas ,.{" "}
                 <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
-              <br />
-              <i className="text-xs border-l-4 pl-2 opacity-65">
-                {" "}
-                If you've provided the artist field in the format{" "}
-                <b>
-                  `[artist], [feat](optional)... - [title] [format](optional)`
-                </b>{" "}
-                then you can leave out the title field.
-              </i>
             </section>
-            <section className="flex flex-col h-60 w-full">
+            <section className="flex flex-col w-full">
               <Step step={2} text="Title" />
               <Input
                 onChange={(e) => setTitle(e.target.value)}
@@ -374,6 +365,20 @@ export default function Home() {
           <div className="w-full justify-between items-center flex mt-6 border-b pb-4">
             <div className="ml-auto flex">
               {" "}
+              <div className="mr-2">
+                <Button
+                  title="Generate tags"
+                  onClick={() => {
+                    if (!tags.length) {
+                      toast.error("There's nothing to clear.");
+                      return;
+                    }
+                    setTags([]);
+                  }}
+                >
+                  Clear <FiTrash className="ml-2" />
+                </Button>
+              </div>
               <Button title="Generate tags">
                 Generate <FiLoader className="ml-2" />
               </Button>
@@ -445,10 +450,25 @@ export default function Home() {
                       e.preventDefault();
 
                       if (!tags.length) {
-                        toast.error("Please fill out the required fields.");
+                        if (!artist.length) {
+                          toast.error("Please fill out the artist field.");
+                          artistRef.current?.focus();
+                          return;
+                        }
+
+                        if (!artist.includes("-") && !artist.includes(",")) {
+                          if (!title.length) {
+                            toast.error("Please fill out the title field.");
+                            titleRef.current?.focus();
+                            return;
+                          }
+                        }
+
+                        toast.error("Please generate the tags first.");
                         return;
                       }
                       const shuffled = [...tags];
+
                       for (let i = shuffled.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
