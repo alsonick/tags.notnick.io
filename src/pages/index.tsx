@@ -368,7 +368,8 @@ export default function Home() {
               <div className="mr-2">
                 <Button
                   title="Generate tags"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     if (!tags.length) {
                       toast.error("There's nothing to clear.");
                       return;

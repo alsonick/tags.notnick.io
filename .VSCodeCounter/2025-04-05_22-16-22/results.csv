@@ -1,0 +1,27 @@
+"filename", "language", "TypeScript", "JSON with Comments", "CSS", "JSON", "Markdown", "TypeScript JSX", "JavaScript", "XML", "comment", "blank", "total"
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\.prettierrc", "JSON", 0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 4
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\LICENSE.md", "Markdown", 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 10
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\README.md", "Markdown", 0, 0, 0, 0, 66, 0, 0, 0, 0, 36, 102
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\next.config.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 0, 0, 1, 3, 9
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\package-lock.json", "JSON", 0, 0, 0, 2247, 0, 0, 0, 0, 0, 1, 2248
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\package.json", "JSON", 0, 0, 0, 27, 0, 0, 0, 0, 0, 1, 28
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\postcss.config.mjs", "JavaScript", 0, 0, 0, 0, 0, 0, 6, 0, 1, 2, 9
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\public\file.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\public\globe.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\public\next.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\public\vercel.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\public\window.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\components\Button.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 1, 17
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\components\Input.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 2, 16
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\components\LoadingIndicator.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 10, 0, 0, 0, 1, 11
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\components\Step.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 1, 22
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\pages\_app.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 3, 10
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\pages\_document.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 2, 14
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\pages\api\gen.ts", "TypeScript", 117, 0, 0, 0, 0, 0, 0, 0, 19, 25, 161
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\pages\api\hello.ts", "TypeScript", 10, 0, 0, 0, 0, 0, 0, 0, 1, 3, 14
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\pages\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 334, 0, 0, 14, 16, 364
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\styles\globals.css", "CSS", 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\src\types\response.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 0, 0, 0, 1, 15
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\tailwind.config.ts", "TypeScript", 17, 0, 0, 0, 0, 0, 0, 0, 0, 2, 19
+"c:\Users\nick\Desktop\dev\lyrics-tags-generator\tsconfig.json", "JSON with Comments", 0, 22, 0, 0, 0, 0, 0, 0, 0, 1, 23
+"Total", "-", 163, 22, 3, 2277, 71, 414, 6, 5, 36, 107, 3104
