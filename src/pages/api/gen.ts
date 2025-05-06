@@ -1,4 +1,9 @@
 import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
+import { letraTags } from "@/lib/helpers/tags/letra-tags";
+import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
+import { nightcoreSpedUpTags } from "@/lib/helpers/tags/nightcore-sped-up-tags";
+import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
+import { slowedReverbTags } from "@/lib/helpers/tags/slowed-reverb-tags";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -39,19 +44,19 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     tags = bassBoostedTags(artist, title);
   } else if (formatPureFormat === "nightcore") {
     // Nightcore/Sped Up
-    tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
+    tags = nightcoreSpedUpTags(artist, title);
   } else if (formatPureFormat === "slowedreverb") {
     // Slowed/Reverb
-    tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
+    tags = slowedReverbTags(artist, title);
   } else if (formatPureFormat === "letra") {
     // Letra
-    tags = `${artist},${title},${artist} ${title} letra,${artist} ${title},${title} ${artist},${title} letra,letra ${title},letra ${title} ${artist},${artist} letra,${artist} letra ${title},${title} letra ${artist},letra ${artist},${artist} - ${title},${artist} - ${title} letra`;
+    tags = letraTags(artist, title);
   } else if (formatPureFormat === "phonk") {
     // Phonk
-    tags = `${artist},${title},${artist} ${title},${title} ${artist},${title} phonk,${artist} ${title} phonk,${title} ${artist} phonk,${artist} phonk`;
+    tags = phonkTags(artist, title);
   } else {
     // Lyrics
-    tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},lyrics ${artist} ${title},${artist} lyrics ${title},${title} lyrics ${artist},${title} lyric video,lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title},${artist}, ${title} ${artist}`;
+    tags = lyricsTags(artist, title);
   }
 
   // Part to generate tags for tiktok option
@@ -73,10 +78,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Probably shouldn't generate tags for features if tiktok is true because there would be too many tags
   // Part to generate tags for features
   if (
-    features.trimStart().trimEnd() !== "none" &&
+    formatPureFormat !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
+    // Features
     let feats = features.split(",").map((feat) => feat.trim());
+
+    // First feat
     const firstFeat = feats[0];
 
     // Only generate tags for the first feature

@@ -1,6 +1,14 @@
+import {
+  ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED,
+  ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
+  TITLE_INPUT_FIELD_CHARACTER_LIMIT,
+  FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
+  CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT,
+} from "@/lib/constants";
 import { returnComputedFormat } from "@/lib/return-computed-format";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { NavYouTubeLogo } from "@/components/NavYouTubeLogo";
+import { CharacterLimit } from "@/components/CharacterLimit";
 import { FiLoader, FiExternalLink } from "react-icons/fi";
 import { FiX, FiRepeat, FiTrash } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,11 +19,11 @@ import { Response } from "@/types/response";
 import { Input } from "@/components/Input";
 import { Step } from "../components/Step";
 import { FiCopy } from "react-icons/fi";
+import { Seo } from "@/components/Seo";
 import copy from "copy-to-clipboard";
 
 // Next.js
 import Link from "next/link";
-import { Seo } from "@/components/Seo";
 
 export default function Home() {
   const [channelName, setChannelName] = useState("");
@@ -29,6 +37,8 @@ export default function Home() {
   const [tiktok, setTiktok] = useState("");
   const [title, setTitle] = useState("");
 
+  const channelNameRef = useRef<HTMLInputElement | null>(null);
+  const featuresRef = useRef<HTMLInputElement | null>(null);
   const artistRef = useRef<HTMLInputElement | null>(null);
   const titleRef = useRef<HTMLInputElement | null>(null);
 
@@ -38,6 +48,42 @@ export default function Home() {
     // Check if there are any commas in the title or artist
     if (/,/.test(title)) {
       toast.error("Please remove any commas , from the title or artist.");
+      return;
+    }
+
+    // Checks if the artist field reaches the character limit
+    if (artist.includes("-") || artist.includes(",")) {
+      if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
+        toast.error("Character limit exceeded.");
+        artistRef.current?.focus();
+        return;
+      }
+    } else {
+      if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT) {
+        toast.error("Character limit exceeded.");
+        artistRef.current?.focus();
+        return;
+      }
+    }
+
+    // Checks if the title field reaches the character limit
+    if (title.length > TITLE_INPUT_FIELD_CHARACTER_LIMIT) {
+      toast.error("Character limit exceeded.");
+      titleRef.current?.focus();
+      return;
+    }
+
+    // Checks if the features field reaches the character limit
+    if (features.length > FEATURES_INPUT_FIELD_CHARACTER_LIMIT) {
+      toast.error("Character limit exceeded.");
+      featuresRef.current?.focus();
+      return;
+    }
+
+    // Checks if the channel name field reaches the character limit
+    if (channelName.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
+      toast.error("Character limit exceeded.");
+      channelNameRef.current?.focus();
       return;
     }
 
@@ -173,15 +219,15 @@ export default function Home() {
 
       // Success
       toast.success("Tags generated successfully.");
-      setData(data);
       setTags(separated);
       setLoading(false);
+      setData(data);
 
-      setTitle("");
+      setChannelName("");
       setFeatures("");
       setArtist("");
       setTiktok("");
-      setChannelName("");
+      setTitle("");
     }
 
     // Checks if the response is not "ok"
@@ -219,12 +265,14 @@ export default function Home() {
       >
         <div className="flex items-center">
           <NavYouTubeLogo />
-          <h1 className="font-bold tracking-tighter mb-[2px] text-xl ml-3">
-            Lyrics Tags Generator
-          </h1>
+          <div className="flex flex-col text-left gap-0 mb-[2px] ">
+            <h1 className="font-bold tracking-tighter text-xl ml-3">
+              Lyrics Tags Generator
+            </h1>
+            <p className="ml-3 text-xs font-semibold">tags.notnick.io</p>
+          </div>
         </div>
-
-        <div className="flex">
+        <div className="flex items-center">
           <Link
             className="font-semibold hover:underline mr-10 flex items-center"
             href="https://github.com/alsonick/lyrics-tags-generator-docs/issues/new"
@@ -270,6 +318,14 @@ export default function Home() {
                 Any special characters are allowed except commas ,.{" "}
                 <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
+              <CharacterLimit
+                limit={
+                  artist.includes("-") || artist.includes(",")
+                    ? ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED
+                    : ARTIST_INPUT_FIELD_CHARACTER_LIMIT
+                }
+                text={artist}
+              />
             </section>
             <section className="flex flex-col w-full">
               <Step step={2} text="Title" />
@@ -284,6 +340,10 @@ export default function Home() {
                 Please remove any commas , if there are any.{" "}
                 <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
+              <CharacterLimit
+                limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT}
+                text={title}
+              />
             </section>
           </div>
           <div className="flex w-full gap-6 items-center">
@@ -292,15 +352,39 @@ export default function Home() {
               <Input
                 onChange={(e) => setFeatures(e.target.value)}
                 placeholder="Daya"
+                ref={featuresRef}
                 value={features}
                 required={false}
               />
               <p className="text-xs mt-1">
                 Please use a comma , to separate feature artists.
               </p>
+              <CharacterLimit
+                limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT}
+                text={features}
+              />
             </section>
             <section className="flex flex-col w-full">
-              <Step step={4} text="TikTok" />
+              <Step step={4} text="Channel" />
+              <Input
+                onChange={(e) => setChannelName(e.target.value)}
+                placeholder="Aquila"
+                ref={channelNameRef}
+                value={channelName}
+                required={false}
+              />
+              <p className="text-xs mt-1">
+                Enter the name of the YouTube Channel.
+              </p>
+              <CharacterLimit
+                limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT}
+                text={channelName}
+              />
+            </section>
+          </div>
+          <div className="flex w-full gap-6 items-center">
+            <section className="flex flex-col w-full">
+              <Step step={5} text="TikTok" />
               <Input
                 onChange={(e) => setTiktok(e.target.value)}
                 placeholder="false"
@@ -309,20 +393,6 @@ export default function Home() {
               />
               <p className="text-xs mt-1">
                 Is the song popular on TikTok? Type "true" if so.{" "}
-              </p>
-            </section>
-          </div>
-          <div className="flex w-full gap-6 items-center">
-            <section className="flex flex-col w-full">
-              <Step step={5} text="Channel" />
-              <Input
-                onChange={(e) => setChannelName(e.target.value)}
-                placeholder="Aquila"
-                value={channelName}
-                required={false}
-              />
-              <p className="text-xs mt-1">
-                Enter the name of the YouTube Channel.
               </p>
             </section>
             <section className="flex flex-col w-full">
@@ -436,15 +506,7 @@ export default function Home() {
               </Link>
             )}
             <div className="flex w-full mt-4 items-center">
-              <p
-                className="text-sm"
-                style={{
-                  color: tags.join(",  ").length > 500 ? "red" : "black",
-                  fontWeight: tags.join(",  ").length > 500 ? "500" : "normal",
-                }}
-              >
-                {tags.join(",  ").length}/500
-              </p>
+              <CharacterLimit text={tags.join(",  ")} limit={500} />
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button

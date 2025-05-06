@@ -8,7 +8,7 @@ interface Props {
 export const Seo = (props: Props) => {
   return (
     <Head>
-      <title>{props.seoTitle} | YouTube</title>
+      <title>{props.seoTitle}</title>
       <meta name="description" content={props.seoDescription} key="desc" />
       <meta property="og:title" content={`${props.seoTitle} | YouTube`} />
       <meta name="theme-color" content="#f54bff" />
