@@ -367,6 +367,7 @@ export default function Home() {
               {" "}
               <div className="mr-2">
                 <Button
+                  type="button"
                   title="Generate tags"
                   onClick={(e) => {
                     e.preventDefault();
@@ -380,7 +381,7 @@ export default function Home() {
                   Clear <FiTrash className="ml-2" />
                 </Button>
               </div>
-              <Button title="Generate tags">
+              <Button type="submit" title="Generate tags">
                 Generate <FiLoader className="ml-2" />
               </Button>
             </div>
