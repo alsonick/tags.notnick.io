@@ -78,7 +78,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Probably shouldn't generate tags for features if tiktok is true because there would be too many tags
   // Part to generate tags for features
   if (
-    formatPureFormat !== "none" &&
+    features.toLowerCase().trim() !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
     // Features
@@ -88,7 +88,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const firstFeat = feats[0];
 
     // Only generate tags for the first feature
-    if (format.toLowerCase() === "bassboosted") {
+    if (formatPureFormat === "bassboosted") {
       // Only generate a few tags for bass boosted features
       tags += `${firstFeat} ${title} bass boosted,${title} ${firstFeat} bass boosted, ${firstFeat} ${title} bass,${title} ${firstFeat} bass, ${feats[0]} bass`;
       if (feats.length >= 2) {
@@ -97,7 +97,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     } else if (format.toLowerCase() === "letra") {
       tags += `,${firstFeat} ${title},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat} ${artist},${firstFeat}`;
-    } else if (format.toLowerCase() === "lyrics") {
+    } else if (formatPureFormat === "lyrics") {
       tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
 
       if (feats.length >= 2) {
