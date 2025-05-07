@@ -173,6 +173,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
+  // Letra
   if (formatPureFormat === "letra") {
     if (features.toLowerCase() !== "none") {
       if (feats.length === 1) {
@@ -219,7 +220,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (formatPureFormat === "phonk") {
     if (features.toLowerCase() !== "none") {
     } else {
-      f += `${artist} - ${title}=${artist} - ${title} [Phonk]`;
+      f += `${artist} - ${title}=${artist} - ${title} [Phonk]=${title}`;
     }
   }
 
