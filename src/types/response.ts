@@ -3,6 +3,8 @@ export interface Response {
   length: number;
   error?: string;
   tags: string;
+  tagsToBeRemoved: string[];
+  removedTags: string;
   title: string;
   artist: string;
   t: string;

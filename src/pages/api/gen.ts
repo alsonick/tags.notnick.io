@@ -12,6 +12,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
 import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
+import { lyricsTitles } from "@/lib/helpers/titles/lyrics-titles";
+import { letraTitles } from "@/lib/helpers/titles/letra-titles";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -163,6 +165,44 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
+  let tagsToBeRemoved: string[] = [];
+  let removedTags = "";
+
+  if (
+    tiktok === "false" &&
+    features.toLowerCase().trim() === "none" &&
+    tags.length > 500
+  ) {
+    tagsToBeRemoved =
+      `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist}`.split(
+        ","
+      );
+    let newTags: string = "";
+    tags.split(",").forEach((tag, index) => {
+      if (tag !== tagsToBeRemoved[index]) {
+        newTags += `,${tag}`;
+      }
+    });
+    removedTags = newTags;
+  } else if (tiktok === "false" && features.toLowerCase().trim() !== "none") {
+    // Features
+    let feats = features.split(",").map((feat) => feat.trim());
+    // First feat
+    const firstFeat = feats[0];
+
+    tagsToBeRemoved =
+      `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},${artist} lyrics,lyrics ${artist},${title} lyric video`.split(
+        ","
+      );
+    let newTags: string = "";
+    tags.split(",").forEach((tag, index) => {
+      if (tag !== tagsToBeRemoved[index]) {
+        newTags += `,${tag}`;
+      }
+    });
+    removedTags = newTags;
+  }
+
   if (formatPureFormat === "lyrics") {
     tags += ",lyrics";
   } else if (formatPureFormat === "letra") {
@@ -193,57 +233,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   // Lyrics
   if (formatPureFormat === "lyrics") {
-    if (features.toLowerCase() !== "none") {
-      if (feats.length === 1) {
-        f += `${artist.trim()} - ${title.trim()} (Lyrics) ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Lyrics)=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Lyrics)=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Lyrics]=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Lyrics]`;
-      }
-
-      // If there are two features
-      if (feats.length === 2) {
-        f += `${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Lyrics) ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Lyrics) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Lyrics) ft. ${feats[0].trim()} & ${feats[1].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Lyrics] ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${feats[0].trim()} & ${feats[1].trim()}`;
-      }
-
-      // If there are three features
-      if (feats.length === 3) {
-        f += `${artist.trim()}, ${feats[0]} - ${title.trim()} (Lyrics) ft. ${
-          feats[1]
-        }, ${feats[2]}=${artist.trim()} - ${title.trim()} (Lyrics) ft. ${
-          feats[0]
-        }, ${feats[1]} & ${feats[2]}=${artist.trim()}, ${
-          feats[0]
-        } - ${title.trim()} (Lyrics) ft. ${feats[1]} & ${
-          feats[2]
-        }=${artist.trim()}, ${feats[0]} - ${title.trim()} [Lyrics] ft. ${
-          feats[1]
-        }, ${feats[2]}=${artist.trim()} - ${title.trim()} [Lyrics] ft. ${
-          feats[0]
-        }, ${feats[1]} & ${feats[2]}=${artist.trim()}, ${
-          feats[0]
-        } - ${title.trim()} [Lyrics] ft. ${feats[1]} & ${feats[2]}`;
-      }
-    } else {
-      f += `${artist.trim()} - ${title.trim()} (Lyrics)=${artist.trim()} - ${title.trim()} [Lyrics]`;
-    }
+    if (feats.includes("None")) feats.pop();
+    f += lyricsTitles(artist, title, feats);
   }
 
   // Letra
   if (formatPureFormat === "letra") {
-    if (features.toLowerCase() !== "none") {
-      if (feats.length === 1) {
-        f += `${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Letra)=${artist.trim()} - ${title.trim()} (Letra) ft. ${feats[0].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Letra]=${artist.trim()} - ${title.trim()} [Letra] ft. ${feats[0].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Letra)=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Letra]`;
-      }
-
-      if (feats.length === 2) {
-        f += `${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Letra) ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Letra] ft. ${feats[0].trim()}, ${feats[1].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}=${artist.trim()} & ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}=${artist.trim()} - ${title.trim()} (Letra) ft. ${feats[0].trim()} & ${feats[1].trim()}=${artist.trim()} - ${title.trim()} [Letra] ft. ${feats[0].trim()}, ${feats[1].trim()}`;
-      }
-
-      // Rare
-      if (feats.length === 5) {
-        f += `${artist.trim()} x ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} (Letra) ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}=${artist.trim()} x ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}=${artist.trim()}, ${feats[0].trim()} - ${title.trim()} [Letra] ft. ${feats[1].trim()}, ${feats[2].trim()}, ${feats[3].trim()}, ${feats[4].trim()}`;
-      }
-    } else {
-      f += `${artist.trim()} - ${title.trim()} (Letra)=${artist.trim()} - ${title.trim()} [Letra]`;
-    }
+    if (feats.includes("None")) feats.pop();
+    f += letraTitles(artist, title, feats);
   }
 
   // Slowed & Reverb
@@ -315,8 +312,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({
     success: true,
     tags: tags.toLowerCase(),
-    tagsToRemove: "",
-    removedTags: "",
+    tagsToBeRemoved,
+    removedTags,
+    removedTagsLength: removedTags.length,
     title: title.trim(),
     artist: artist.trim(),
     t: `${artist.trim()} - ${title.trim()}`,

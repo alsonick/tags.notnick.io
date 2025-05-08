@@ -6,11 +6,11 @@ import {
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
 import { returnComputedFormat } from "@/lib/return-computed-format";
+import { FiX, FiRepeat, FiTrash, FiDelete } from "react-icons/fi";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { NavYouTubeLogo } from "@/components/NavYouTubeLogo";
 import { CharacterLimit } from "@/components/CharacterLimit";
 import { FiLoader, FiExternalLink } from "react-icons/fi";
-import { FiX, FiRepeat, FiTrash } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import { useState, useEffect, useRef } from "react";
 import { removeEmojis } from "@/lib/remove-emojis";
@@ -26,6 +26,7 @@ import copy from "copy-to-clipboard";
 import Link from "next/link";
 
 export default function Home() {
+  const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [channelName, setChannelName] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
@@ -223,6 +224,7 @@ export default function Home() {
       setLoading(false);
       setData(data);
 
+      setOverflowTagsDeleted(false);
       setChannelName("");
       setFeatures("");
       setArtist("");
@@ -505,7 +507,7 @@ export default function Home() {
                 Click to view json representation data.
               </Link>
             )}
-            <div className="flex w-full mt-4 items-center">
+            <div className="flex w-full mt-6 items-center">
               <CharacterLimit text={tags.join(",  ")} limit={500} />
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
@@ -567,6 +569,55 @@ export default function Home() {
               <p className="mt-4 text-sm text-red-500">
                 Please delete the least suitable tags for your case.
               </p>
+            )}
+            {data?.tagsToBeRemoved.length && (
+              <>
+                <div className="border p-4 mt-4 rounded-xl">
+                  <h3 className="text-2xl font-light">
+                    Recommended tags to delete 🤖
+                  </h3>
+                  <div className="flex flex-wrap gap-4 my-4 mt-6">
+                    {data?.tagsToBeRemoved.map((tag) => (
+                      <div
+                        key={tag}
+                        className="flex items-center border p-2 px-4 rounded-xl w-fit"
+                      >
+                        <p className="font-semibold">{tag}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex items-center justify-between mt-6">
+                  {overflowTagsDeleted && (
+                    <p className="text-sm text-green-500">Deleted.</p>
+                  )}
+                  <Button
+                    style={{ marginLeft: "auto" }}
+                    onClick={() => {
+                      let newTags = tags.filter(
+                        (tag) =>
+                          !data?.tagsToBeRemoved?.some(
+                            (tagToRemove) =>
+                              tagToRemove.toLowerCase() === tag.toLowerCase()
+                          )
+                      );
+
+                      setTags(newTags);
+
+                      if (!overflowTagsDeleted) {
+                        toast.success("Tags successfully removed.");
+                      } else {
+                        toast.error(
+                          "Recommended tags have already been removed."
+                        );
+                      }
+                      setOverflowTagsDeleted(true);
+                    }}
+                  >
+                    Delete tags <FiDelete className="ml-2" />
+                  </Button>
+                </div>
+              </>
             )}
             {tags.length > 0 && (
               <div className="flex flex-col mt-8 border-t pt-4">
