@@ -1,9 +1,9 @@
 import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED,
+  CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT,
+  FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
-  FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
-  CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
 import { returnComputedFormat } from "@/lib/return-computed-format";
 import { LoadingIndicator } from "@/components/LoadingIndicator";

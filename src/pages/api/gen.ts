@@ -1,10 +1,17 @@
-import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
-import { letraTags } from "@/lib/helpers/tags/letra-tags";
-import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
+import {
+  ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED,
+  CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT,
+  FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
+  ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
+  TITLE_INPUT_FIELD_CHARACTER_LIMIT,
+} from "@/lib/constants";
 import { nightcoreSpedUpTags } from "@/lib/helpers/tags/nightcore-sped-up-tags";
-import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
 import { slowedReverbTags } from "@/lib/helpers/tags/slowed-reverb-tags";
+import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
+import { letraTags } from "@/lib/helpers/tags/letra-tags";
+import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -26,6 +33,52 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       success: false,
       error: "Please provide all the required fields.",
     });
+  }
+
+  // Checks if the artist field reaches the character limit
+  if (artist.includes("-") || artist.includes(",")) {
+    if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
+      res.status(400).json({
+        success: false,
+        error: "Character limit exceeded.",
+      });
+      return;
+    }
+  } else {
+    if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT) {
+      res.status(400).json({
+        success: false,
+        error: "Character limit exceeded.",
+      });
+      return;
+    }
+  }
+
+  // Checks if the title field reaches the character limit
+  if (title.length > TITLE_INPUT_FIELD_CHARACTER_LIMIT) {
+    res.status(400).json({
+      success: false,
+      error: "Character limit exceeded.",
+    });
+    return;
+  }
+
+  // Checks if the features field reaches the character limit
+  if (features.length > FEATURES_INPUT_FIELD_CHARACTER_LIMIT) {
+    res.status(400).json({
+      success: false,
+      error: "Character limit exceeded.",
+    });
+    return;
+  }
+
+  // Checks if the channel field reaches the character limit
+  if (channel.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
+    res.status(400).json({
+      success: false,
+      error: "Character limit exceeded.",
+    });
+    return;
   }
 
   // Check if there are any commas in the title or artist
@@ -90,7 +143,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     // Only generate tags for the first feature
     if (formatPureFormat === "bassboosted") {
       // Only generate a few tags for bass boosted features
-      tags += `${firstFeat} ${title} bass boosted,${title} ${firstFeat} bass boosted, ${firstFeat} ${title} bass,${title} ${firstFeat} bass, ${feats[0]} bass`;
+      tags += `${firstFeat} ${title} bass boosted,${title} ${firstFeat} bass boosted, ${firstFeat} ${title} bass,${title} ${firstFeat} bass, ${firstFeat} bass`;
       if (feats.length >= 2) {
         // Second feat
         const secondFeat = feats[1];
