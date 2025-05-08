@@ -170,6 +170,22 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (
     tiktok === "false" &&
+    features.toLowerCase() === "none" &&
+    tags.length > 800
+  ) {
+    tagsToBeRemoved =
+      `${title} lyrics ${artist},lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title} ${artist},${title} lyric video,${artist} lyrics ${title},${artist},lyrics`.split(
+        ","
+      );
+    let newTags: string = "";
+    tags.split(",").forEach((tag, index) => {
+      if (tag !== tagsToBeRemoved[index]) {
+        newTags += `,${tag}`;
+      }
+    });
+    removedTags = newTags;
+  } else if (
+    tiktok === "false" &&
     features.toLowerCase().trim() === "none" &&
     tags.length > 500
   ) {

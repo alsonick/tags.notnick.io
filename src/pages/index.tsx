@@ -570,7 +570,7 @@ export default function Home() {
                 Please delete the least suitable tags for your case.
               </p>
             )}
-            {data?.tagsToBeRemoved.length && (
+            {data?.tagsToBeRemoved.length ? (
               <>
                 <div className="border p-4 mt-4 rounded-xl">
                   <h3 className="text-2xl font-light">
@@ -582,7 +582,7 @@ export default function Home() {
                         key={tag}
                         className="flex items-center border p-2 px-4 rounded-xl w-fit"
                       >
-                        <p className="font-semibold">{tag}</p>
+                        <p className="font-semibold">{tag.toLowerCase()}</p>
                       </div>
                     ))}
                   </div>
@@ -618,7 +618,7 @@ export default function Home() {
                   </Button>
                 </div>
               </>
-            )}
+            ) : null}
             {tags.length > 0 && (
               <div className="flex flex-col mt-8 border-t pt-4">
                 <h3 className="text-2xl font-bold">Suggested:</h3>
