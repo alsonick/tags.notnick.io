@@ -200,7 +200,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     });
     removedTags = newTags;
-  } else if (tiktok === "false" && features.toLowerCase().trim() !== "none") {
+  } else if (
+    tiktok === "false" &&
+    features.toLowerCase().trim() !== "none" &&
+    tags.length > 500
+  ) {
     // Features
     let feats = features.split(",").map((feat) => feat.trim());
     // First feat
