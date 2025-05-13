@@ -5,20 +5,19 @@ import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
-import { returnComputedFormat } from "@/lib/return-computed-format";
 import { FiX, FiRepeat, FiTrash, FiDelete } from "react-icons/fi";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
-import { NavYouTubeLogo } from "@/components/NavYouTubeLogo";
 import { CharacterLimit } from "@/components/CharacterLimit";
-import { FiLoader, FiExternalLink } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
-import { useState, useEffect, useRef } from "react";
-import { removeEmojis } from "@/lib/remove-emojis";
 import { Button } from "../components/Button";
+import { Footer } from "@/components/Footer";
 import { Response } from "@/types/response";
 import { Input } from "@/components/Input";
 import { Step } from "../components/Step";
+import { FiLoader } from "react-icons/fi";
+import { useState, useRef } from "react";
 import { FiCopy } from "react-icons/fi";
+import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
 import copy from "copy-to-clipboard";
 
@@ -28,7 +27,6 @@ import Link from "next/link";
 export default function Home() {
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [channelName, setChannelName] = useState("");
-  const [scrolled, setScrolled] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
   const [loading, setLoading] = useState(false);
@@ -53,7 +51,7 @@ export default function Home() {
     }
 
     // Checks if the artist field reaches the character limit
-    if (artist.includes("-") || artist.includes(",")) {
+    if (/[-,]/.test(artist)) {
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
         toast.error("Character limit exceeded.");
         artistRef.current?.focus();
@@ -88,84 +86,10 @@ export default function Home() {
       return;
     }
 
-    // Process and compute final values locally without immediately updating state
-    let finalFeatures = features;
-    let finalArtist = artist;
-    let finalFormat = format;
-    let finalTitle = title;
-
     // Checks if the artist and title is not provided in the artist field.
-    if (!artist.includes("-")) {
+    if (!/-/.test(artist)) {
       if (!title.length) {
         toast.error("Please provide the title.");
-        titleRef.current?.focus();
-        return;
-      }
-    }
-
-    // Modified if statement to check for both standard hyphen and em dash
-    if (
-      (artist.includes(",") || artist.includes("-") || artist.includes("—")) &&
-      title.length === 0
-    ) {
-      // Determine which separator to use for splitting (standard hyphen or em dash)
-      const separator = artist.includes("—") ? "—" : "-";
-      const data = artist.split(separator);
-      let mainPart = artist;
-      let extractedTitle = "";
-
-      if (artist.includes(separator)) {
-        const titleFormatString = data[1].trim();
-        mainPart = data[0].trim();
-
-        // Extract title before any format indicators
-        if (titleFormatString.includes("(")) {
-          extractedTitle = removeEmojis(titleFormatString.split("(")[0].trim());
-        } else if (titleFormatString.includes("[")) {
-          extractedTitle = removeEmojis(titleFormatString.split("[")[0].trim());
-        } else {
-          extractedTitle = removeEmojis(titleFormatString);
-        }
-
-        // Process format from parentheses or brackets
-        let formatText = "";
-        if (titleFormatString.includes("(")) {
-          // Extract text within parentheses
-          const match = titleFormatString.match(/\(([^)]+)\)/);
-          if (match && match[1]) {
-            formatText = match[1].trim();
-          }
-        } else if (titleFormatString.includes("[")) {
-          // Extract text within brackets
-          const match = titleFormatString.match(/\[([^\]]+)\]/);
-          if (match && match[1]) {
-            formatText = match[1].trim();
-          }
-        }
-
-        // If format text was found, process it
-        if (formatText) {
-          // Get standardized format name and ensure it's lowercase for the API
-          finalFormat = returnComputedFormat(formatText).toLowerCase();
-        }
-      }
-
-      // Process artist and features from the main part
-      const artistsArray = mainPart.split(",").map((a) => a.trim());
-      finalArtist = artistsArray[0];
-      finalFeatures = artistsArray.slice(1).join(", ");
-
-      if (extractedTitle) {
-        finalTitle = extractedTitle;
-      }
-    }
-
-    // Error if artist includes separators but title is already specified
-    if (artist.includes(",") || artist.includes("-") || artist.includes("—")) {
-      if (title.length) {
-        toast.error(
-          "The artist and title was already provided in the artist field. Please clear the title field!"
-        );
         titleRef.current?.focus();
         return;
       }
@@ -176,11 +100,11 @@ export default function Home() {
 
     // Use the computed values directly in the API call
     const response = await fetch(
-      `/api/gen?title=${finalTitle}&artist=${finalArtist
-        .trimStart()
-        .trimEnd()}${
-        finalFeatures.length
-          ? `&features=${finalFeatures.trimStart().trimEnd()}`
+      `/api/generate${
+        title.length ? `?title=${title}` : "?title=none"
+      }&artist=${artist}${
+        features.length
+          ? `&features=${features.trimStart().trimEnd()}`
           : "&features=none"
       }${
         channelName.length
@@ -188,7 +112,7 @@ export default function Home() {
           : "&channel=none"
       }&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-      }&format=${finalFormat}`,
+      }&format=${format}`,
       {
         method: "GET",
         headers: {
@@ -196,12 +120,6 @@ export default function Home() {
         },
       }
     );
-
-    // Update state with the final computed values
-    setArtist(finalArtist);
-    setFeatures(finalFeatures);
-    setFormat(finalFormat);
-    setTitle(finalTitle);
 
     // Check if the response is successful
     if (response.status === 200) {
@@ -240,15 +158,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const seoTitle = "Lyrics Tags Generator";
   const seoDescription = "Generate YouTube tags for your lyric videos.";
 
@@ -260,44 +169,7 @@ export default function Home() {
           Whoop. This is awkward! This site only supports desktop size screens.
         </p>
       </div>
-      <nav
-        className={`lg:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden top-0 z-50 transition-shadow duration-500 ${
-          scrolled ? "fixed shadow-md h-20" : "fixed shadow-none"
-        }`}
-      >
-        <div className="flex items-center">
-          <NavYouTubeLogo />
-          <div className="flex flex-col text-left gap-0 mb-[2px] ">
-            <h1 className="font-bold tracking-tighter text-xl ml-3">
-              Lyrics Tags Generator
-            </h1>
-            <p className="ml-3 text-xs font-semibold">tags.notnick.io</p>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <Link
-            className="font-semibold hover:underline mr-10 flex items-center"
-            href="https://github.com/alsonick/lyrics-tags-generator-docs/issues/new"
-            target="_blank"
-          >
-            Submit Suggestion <FiExternalLink className="ml-1 text-xl" />
-          </Link>
-          <Link
-            className="font-semibold hover:underline flex items-center mr-10"
-            href="https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot"
-            target="_blank"
-          >
-            Invite Discord Bot <FiExternalLink className="ml-1 text-xl" />
-          </Link>
-          <Link
-            className="font-semibold hover:underline flex items-center"
-            href="https://github.com/alsonick/lyrics-tags-generator-docs"
-            target="_blank"
-          >
-            Documentation <FiExternalLink className="ml-1 text-xl" />
-          </Link>
-        </div>
-      </nav>
+      <Nav />
       <main className="lg:flex flex-col py-32 h-full px-2 sm:w-[55rem] w-[95%] hidden">
         <header className="flex flex-col items-center mt-5">
           <h1 className="text-6xl font-bold tracking-tighter">{seoTitle} ✍️</h1>
@@ -508,7 +380,7 @@ export default function Home() {
               </Link>
             )}
             <div className="flex w-full mt-6 items-center">
-              <CharacterLimit text={tags.join(",  ")} limit={500} />
+              <CharacterLimit text={tags.join(",")} limit={500} />
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button
@@ -565,7 +437,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            {tags.join(",  ").length > 500 && (
+            {tags.join(",").length > 500 && (
               <p className="mt-4 text-sm text-red-500">
                 Please delete the least suitable tags for your case.
               </p>
@@ -577,7 +449,7 @@ export default function Home() {
                     Recommended tags to delete 🤖
                   </h3>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
-                    {data?.tagsToBeRemoved.map((tag) => (
+                    {data?.tagsToBeRemoved.split(",").map((tag) => (
                       <div
                         key={tag}
                         className="flex items-center border p-2 px-4 rounded-xl w-fit"
@@ -588,30 +460,32 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-6">
-                  {overflowTagsDeleted && (
-                    <p className="text-sm text-green-500">Deleted.</p>
-                  )}
                   <Button
                     style={{ marginLeft: "auto" }}
                     onClick={() => {
-                      let newTags = tags.filter(
-                        (tag) =>
-                          !data?.tagsToBeRemoved?.some(
-                            (tagToRemove) =>
-                              tagToRemove.toLowerCase() === tag.toLowerCase()
-                          )
-                      );
+                      // Check if tagsToBeRemoved exists and is not empty
+                      if (data?.tagsToBeRemoved) {
+                        // Split tagsToBeRemoved into an array since it's a comma-separated string
+                        const tagsToRemove = data.tagsToBeRemoved
+                          .split(",")
+                          .map((tag) => tag.trim().toLowerCase());
 
-                      setTags(newTags);
-
-                      if (!overflowTagsDeleted) {
-                        toast.success("Tags successfully removed.");
-                      } else {
-                        toast.error(
-                          "Recommended tags have already been removed."
+                        // Filter out tags that match any in the tagsToRemove array
+                        let newTags = tags.filter(
+                          (tag) => !tagsToRemove.includes(tag.toLowerCase())
                         );
+
+                        setTags(newTags);
+
+                        if (!overflowTagsDeleted) {
+                          toast.success("Tags successfully removed.");
+                        } else {
+                          toast.error(
+                            "Recommended tags have already been removed."
+                          );
+                        }
+                        setOverflowTagsDeleted(true);
                       }
-                      setOverflowTagsDeleted(true);
                     }}
                   >
                     Delete tags <FiDelete className="ml-2" />
@@ -645,26 +519,18 @@ export default function Home() {
                 <h3 className="text-2xl font-bold">Hashtags:</h3>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex">
-                    <p className="text-xl mr-4">
-                      #{data?.artist.replace(" ", "")}
-                    </p>
-                    <p className="text-xl mr-4">
-                      #{data?.title.replace("'", "").replaceAll(" ", "")}
-                    </p>
-                    <p className="text-xl">
-                      #
-                      {returnComputedFormat(format)[0].toUpperCase() +
-                        format.slice(1)}
-                    </p>
+                    {data?.hashtags.map((hashtag) => (
+                      <p key={hashtag} className="text-xl mr-4">
+                        #{hashtag}
+                      </p>
+                    ))}
                   </div>
                   <Button
                     onClick={() => {
-                      const textToCopy = `#${data?.artist.replace(
-                        " ",
-                        ""
-                      )} #${data?.title
-                        .replace("'", "")
-                        .replaceAll(" ", "")} #${returnComputedFormat(format)}`;
+                      const hashtagArray = data?.hashtags.map(
+                        (hashtag) => `#${hashtag}`
+                      );
+                      const textToCopy = `${hashtagArray?.join(" ")}`;
                       copy(textToCopy);
                       toast.success("Hashtags copied to the clipboard.");
                     }}
@@ -676,50 +542,7 @@ export default function Home() {
             )}
           </div>
         )}
-        <footer className="bottom-0 left-0 mt-28 text-sm pb-4">
-          <h1 className="font-bold text-lg text-gray-800">Nicholas Njoki</h1>
-          <p className="text-gray-600 text-xs">
-            © {new Date().getFullYear()} | All rights reserved.
-          </p>
-          <p className="text-gray-600 text-xs">
-            Made with{" "}
-            <Link
-              className="font-bold hover:underline"
-              href="https://nextjs.org/"
-              target="_blank"
-            >
-              Next.js
-            </Link>
-            ,{" "}
-            <Link
-              className="font-bold hover:underline"
-              href="https://tailwindcss.com/"
-              target="_blank"
-            >
-              Tailwind
-            </Link>{" "}
-            &{" "}
-            <Link
-              className="font-bold hover:underline"
-              href="https://vercel.com/"
-              target="_blank"
-            >
-              Vercel
-            </Link>
-            .
-          </p>
-          <p className="text-gray-600 text-xs">
-            Built with ❤️ by{" "}
-            <Link
-              href="https://github.com/alsonick"
-              className="font-bold hover:underline"
-              target="_blank"
-            >
-              Nicholas Njoki
-            </Link>
-            .
-          </p>
-        </footer>
+        <Footer />
       </main>
       <ToastContainer />
     </div>
