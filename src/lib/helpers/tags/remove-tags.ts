@@ -8,6 +8,7 @@ export const removeTags = (
 ): string => {
   let tagsToBeRemoved = "";
   let del: string[] = [];
+
   // Lyrics
   if (format === "lyrics") {
     // Tags to remove if no features are included
@@ -46,9 +47,7 @@ export const removeTags = (
     // Tags to remove if features are included
     if (features.length && tiktok === "false") {
       if (tags.length > 500) {
-        // Features
         let feats = features.split(",").map((feat) => feat.trim());
-        // First feat
         const firstFeat = feats[0];
 
         del =
@@ -63,18 +62,79 @@ export const removeTags = (
           }
         }
 
-        return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
+        return tagsToBeRemoved.slice(0, -1);
       }
     }
   }
 
+  console.log(format);
+  console.log(tags.length);
   // Slowed
-  if (format === "slowed") {
+  if (format === "slowedreverb") {
     // Tags to remove if no features are included
     if (features.length === 0 && tiktok === "false") {
-      if (tags.length > 500) {
-      } else if (tags.length > 600) {
+      if (tags.length > 900) {
       } else if (tags.length > 700) {
+        del =
+          `${artist} - ${title} slowed,${artist} - ${title},${artist} ${title} slowed and reverb,${artist} - ${title} slowed reverb`
+            .toLowerCase()
+            .split(",");
+
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1);
+      } else if (tags.length > 600) {
+        del =
+          `${artist} - ${title} slowed reverb,${artist} - ${title} slowed,${artist} - ${title}`
+            .toLowerCase()
+            .split(",");
+
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1);
+      } else if (tags.length > 500) {
+        del = `${artist} - ${title}`.toLowerCase().split(",");
+
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1);
+      }
+    }
+
+    if (features.length && tiktok === "false") {
+      let feats = features.split(",").map((feat) => feat.trim());
+      const firstFeat = feats[0];
+      if (tags.length > 800) {
+      } else if (tags.length > 700) {
+      } else if (tags.length > 600) {
+        del =
+          `${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${firstFeat} slowed,${firstFeat} ${title}`
+            .toLowerCase()
+            .split(",");
+
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1);
       }
     }
   }
