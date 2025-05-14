@@ -349,8 +349,8 @@ export default async function handler(
   res.status(200).json({
     success: true,
     tags: tags.toLowerCase(),
-    tagsToBeRemoved,
-    removedTags,
+    tagsToBeRemoved: tagsToBeRemoved.toLowerCase(),
+    removedTags: removedTags.toLowerCase(),
     removedTagsLength: removedTags.length,
     title: finalTitle.trim(),
     artist: finalArtist.trim(),
