@@ -119,6 +119,7 @@ export const removeTags = (
     if (features.length && tiktok === "false") {
       let feats = features.split(",").map((feat) => feat.trim());
       const firstFeat = feats[0];
+
       if (tags.length > 800) {
       } else if (tags.length > 700) {
       } else if (tags.length > 600) {
@@ -135,6 +136,34 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1);
+      }
+    }
+  }
+
+  // Bass Boosted
+  if (format === "bassboosted") {
+    if (features.length && tiktok === "false") {
+      let feats = features.split(",").map((feat) => feat.trim());
+      const firstFeat = feats[0];
+
+      if (tags.length > 800) {
+      } else if (tags.length > 700) {
+      } else if (tags.length > 600) {
+        console.log(`${firstFeat} ${title} bass`.toLowerCase());
+        del =
+          `${artist} - ${title},${title} ${firstFeat} bass,${title} ${firstFeat} bass boosted,${artist} - ${title} bass boosted,${firstFeat} ${title} bass`
+            .toLowerCase()
+            .split(",");
+
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1);
+      } else if (tags.length > 500) {
       }
     }
   }

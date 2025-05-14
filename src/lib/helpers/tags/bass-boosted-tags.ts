@@ -18,7 +18,7 @@ export const bassBoostedTags = (
     features.length &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
-    tags += `${firstFeat} ${title} bass boosted,${title} ${firstFeat} bass boosted, ${firstFeat} ${title} bass,${title} ${firstFeat} bass, ${firstFeat} bass`;
+    tags += `${firstFeat} ${title} bass boosted,${title} ${firstFeat} bass boosted,${firstFeat} ${title} bass,${title} ${firstFeat} bass, ${firstFeat} bass`;
     if (features.length >= 2) {
       // Second feat
       const secondFeat = feats[1];
