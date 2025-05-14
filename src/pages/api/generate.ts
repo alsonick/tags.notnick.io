@@ -149,6 +149,8 @@ export default async function handler(
       if (formatText) {
         // Get standardized format name and ensure it's lowercase for the API
         finalFormat = returnComputedFormat(formatText).toLowerCase();
+      } else {
+        finalFormat = "lyrics";
       }
     }
 
