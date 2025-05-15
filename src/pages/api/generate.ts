@@ -317,7 +317,7 @@ export default async function handler(
             },
             {
               name: "Length:",
-              value: length,
+              value: removedTags.length ? removedTags.length : length,
               inline: true,
             },
             {
