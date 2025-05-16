@@ -15,7 +15,7 @@ export const phonkTags = (
 
   // Features
   if (
-    features.length &&
+    features !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
     if (features.length >= 2) {

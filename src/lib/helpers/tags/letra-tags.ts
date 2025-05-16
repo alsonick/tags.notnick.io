@@ -15,7 +15,7 @@ export const letraTags = (
 
   // Features
   if (
-    features.length &&
+    features !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
     tags += `,${firstFeat} ${title},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat} ${artist},${firstFeat}`;

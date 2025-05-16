@@ -15,7 +15,7 @@ export const slowedReverbTags = (
 
   // Features
   if (
-    features.length &&
+    features !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
     tags += `,${firstFeat} ${title},${firstFeat} ${title} slowed,${artist} ${firstFeat} ${title} slowed,${firstFeat} ${title} slowed reverb,${firstFeat} slowed`;
