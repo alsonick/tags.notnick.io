@@ -12,13 +12,13 @@ import { slowedReverbTags } from "@/lib/helpers/tags/slowed-reverb-tags";
 import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
 import { capitalizeFirstLetter } from "@/lib/capitalize-first-letter";
 import { returnComputedFormat } from "@/lib/return-computed-format";
+import { computeFinalHashtags } from "@/lib/compute-final-hashtag";
 import { lyricsTitles } from "@/lib/helpers/titles/lyrics-titles";
 import { removeTags } from "./../../lib/helpers/tags/remove-tags";
 import { letraTitles } from "@/lib/helpers/titles/letra-titles";
 import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
-import { removeDuplicates } from "@/lib/remove-duplicates";
 import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
 import { removeEmojis } from "@/lib/remove-emojis";
@@ -273,7 +273,7 @@ export default async function handler(
   const hashtags = [
     finalArtist.replaceAll(" ", ""),
     finalTitle.replaceAll(" ", ""),
-    capitalizeFirstLetter(finalFormat),
+    computeFinalHashtags(finalFormat),
   ];
 
   // Send data to discord webhook
