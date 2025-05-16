@@ -7,7 +7,7 @@ export const returnComputedFormat = (format: string) => {
     case "nightcore":
       return "nightcore";
     case "slowed":
-      return "Slowed";
+      return "slowedreverb";
     case "reverb":
       return "slowedreverb";
     case "slowed & reverb":
