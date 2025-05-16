@@ -15,7 +15,7 @@ export const lyricsTags = (
 
   // Features
   if (
-    features.length &&
+    features !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
     tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;

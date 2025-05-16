@@ -178,6 +178,8 @@ export default async function handler(
   let formatPureFormat = finalFormat.trim().toLowerCase();
   let tags: string = "";
 
+  console.log(finalFeatures);
+
   if (formatPureFormat === "bassboosted") {
     // Bass Boosted
     tags = bassBoostedTags(finalArtist, finalTitle, finalFeatures, tiktok);
