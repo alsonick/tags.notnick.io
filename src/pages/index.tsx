@@ -97,17 +97,16 @@ export default function Home() {
 
     // Starts the loading
     setLoading(true);
-
     // Use the computed values directly in the API call
     const response = await fetch(
       `/api/generate${
         title.length ? `?title=${title}` : "?title=none"
       }&artist=${artist}${
-        features.length
+        Boolean(features.length)
           ? `&features=${features.trimStart().trimEnd()}`
           : "&features=none"
       }${
-        channelName.length
+        Boolean(channelName.length)
           ? `&channel=${channelName.trimStart().trimEnd()}`
           : "&channel=none"
       }&tiktok=${
@@ -152,7 +151,6 @@ export default function Home() {
 
     // Checks if the response is not "ok"
     if (!response.ok) {
-      console.log(response);
       toast.error(`${response.statusText}.`);
       setLoading(false);
     }
@@ -380,14 +378,7 @@ export default function Home() {
               </Link>
             )}
             <div className="flex w-full mt-6 items-center">
-              <CharacterLimit
-                text={tags
-                  .join(",")
-                  .split(",")
-                  .map((tag) => tag.trim())
-                  .join(",  ")}
-                limit={500}
-              />
+              <CharacterLimit text={tags.join(",")} limit={500} />
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button
@@ -444,11 +435,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            {tags
-              .join(",")
-              .split(",")
-              .map((tag) => tag.trim())
-              .join(",  ").length > 500 && (
+            {tags.join(",").length > 500 && (
               <p className="mt-4 text-sm text-red-500">
                 Please delete the least suitable tags for your case.
               </p>

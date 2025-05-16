@@ -28,7 +28,7 @@ export const lyricsTags = (
   }
 
   if (tiktok === "true") {
-    tags += `,slowed tiktok songs`;
+    tags += `,lyrics`;
   }
 
   return tags;

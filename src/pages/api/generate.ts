@@ -18,6 +18,7 @@ import { letraTitles } from "@/lib/helpers/titles/letra-titles";
 import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
+import { removeDuplicates } from "@/lib/remove-duplicates";
 import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
 import { removeEmojis } from "@/lib/remove-emojis";
@@ -130,7 +131,7 @@ export default async function handler(
       }
 
       // Process format from parentheses or brackets
-      let formatText = "";
+      let formatText = returnComputedFormat(format);
       if (titleFormatString.includes("(")) {
         // Extract text within parentheses
         const match = titleFormatString.match(/\(([^)]+)\)/);
@@ -149,8 +150,6 @@ export default async function handler(
       if (formatText) {
         // Get standardized format name and ensure it's lowercase for the API
         finalFormat = returnComputedFormat(formatText).toLowerCase();
-      } else {
-        finalFormat = "lyrics";
       }
     }
 
@@ -159,6 +158,10 @@ export default async function handler(
 
     finalArtist = artistsArray[0];
     finalFeatures = artistsArray.slice(1).join(", ");
+
+    if (!finalFeatures) {
+      finalFeatures = "none";
+    }
 
     if (extractedTitle) {
       finalTitle = extractedTitle;
@@ -193,7 +196,7 @@ export default async function handler(
   } else if (formatPureFormat === "phonk") {
     // Phonk
     tags = phonkTags(finalArtist, finalTitle, finalFeatures, tiktok);
-  } else {
+  } else if (formatPureFormat === "lyrics") {
     // Lyrics
     tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok);
   }
@@ -272,12 +275,6 @@ export default async function handler(
     finalTitle.replaceAll(" ", ""),
     capitalizeFirstLetter(finalFormat),
   ];
-
-  // Length of tags
-  const length = tags
-    .split(",")
-    .map((tag) => tag.trim())
-    .join(",  ").length;
 
   // Send data to discord webhook
   const response = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
@@ -369,6 +366,6 @@ export default async function handler(
     }&format=${finalFormat.trimStart().trimEnd()}&channel=${
       channel ? channel : "none"
     }`,
-    length,
+    length: tags.length,
   });
 }

@@ -12,7 +12,7 @@ export const removeTags = (
   // Lyrics
   if (format === "lyrics") {
     // Tags to remove if no features are included
-    if (features.length === 0 && tiktok === "false") {
+    if (features === "none" && tiktok === "false") {
       if (tags.length > 800) {
         del =
           `${title} lyrics ${artist},lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title} ${artist},${title} lyric video,${artist} lyrics ${title},${artist},lyrics`
@@ -45,7 +45,7 @@ export const removeTags = (
     }
 
     // Tags to remove if features are included
-    if (features.length && tiktok === "false") {
+    if (features !== "none" && tiktok === "false") {
       if (tags.length > 500) {
         let feats = features.split(",").map((feat) => feat.trim());
         const firstFeat = feats[0];
@@ -70,8 +70,9 @@ export const removeTags = (
   // Slowed
   if (format === "slowedreverb") {
     // Tags to remove if no features are included
-    if (features.length === 0 && tiktok === "false") {
+    if (features === "none" && tiktok === "false") {
       if (tags.length > 900) {
+        // do something here
       } else if (tags.length > 700) {
         del =
           `${artist} - ${title} slowed,${artist} - ${title},${artist} ${title} slowed and reverb,${artist} - ${title} slowed reverb`
@@ -149,7 +150,6 @@ export const removeTags = (
       if (tags.length > 800) {
       } else if (tags.length > 700) {
       } else if (tags.length > 600) {
-        console.log(`${firstFeat} ${title} bass`.toLowerCase());
         del =
           `${artist} - ${title},${title} ${firstFeat} bass,${title} ${firstFeat} bass boosted,${artist} - ${title} bass boosted,${firstFeat} ${title} bass`
             .toLowerCase()

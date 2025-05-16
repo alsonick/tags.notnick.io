@@ -5,19 +5,15 @@ export const slowedReverbTags = (
   tiktok: string
 ): string => {
   // Tags
-  let tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
+  let tags = `${artist},${title},${artist} ${title},${artist} ${title} slowed,${artist} ${title} slowed reverb,${artist} ${title} slowed to perfection,${title} ${artist},${title} slowed,${artist} - ${title},${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${title} slowed to perfection,${artist} ${title} slowed and reverb,slowed and reverb songs`;
 
-  // Features
-  let feats = features.split(",").map((feat) => feat.trim());
-
-  // First feat
-  const firstFeat = feats[0];
-
-  // Features
   if (
     features !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
+    let feats = features.split(",").map((feat) => feat.trim());
+    const firstFeat = feats[0];
+
     tags += `,${firstFeat} ${title},${firstFeat} ${title} slowed,${artist} ${firstFeat} ${title} slowed,${firstFeat} ${title} slowed reverb,${firstFeat} slowed`;
     if (features.length >= 2) {
       // Second feat
