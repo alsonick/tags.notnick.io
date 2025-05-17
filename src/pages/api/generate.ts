@@ -323,7 +323,7 @@ export default async function handler(
             },
             {
               name: "Tags:",
-              value: tags,
+              value: tags.toLowerCase(),
             },
             {
               name: "Remove:",
