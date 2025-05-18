@@ -203,7 +203,7 @@ export default async function handler(
 
   // Append channel name if included
   if (channel !== "none") {
-    tags += `,${channel}`;
+    tags += `,${channel}`.toLowerCase();
   }
 
   let tagsToBeRemoved = removeTags(
@@ -276,8 +276,8 @@ export default async function handler(
     computeFinalHashtags(finalFormat),
   ];
 
-  // Send data to discord webhook
-  const response = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
+  // Send data to discord webhook (tags)
+  const hook1 = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
     method: "POST",
     body: JSON.stringify({
       embeds: [
@@ -338,7 +338,31 @@ export default async function handler(
     },
   });
 
-  if (response.status >= 400) {
+  // Send data to discord webhook (titles)
+  const hook2 = await fetch(process.env.DISCORD_WEBHOOK_URL_TWO!, {
+    method: "POST",
+    body: JSON.stringify({
+      embeds: [
+        {
+          author: {
+            name: `${finalArtist} - ${finalTitle}`,
+          },
+          fields: [
+            {
+              name: "Titles:",
+              value: titles.length ? titles.replaceAll("=", "\n") : "None",
+              inline: true,
+            },
+          ],
+        },
+      ],
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (hook1.status >= 400 || hook2.status >= 400) {
     return res.json({ success: false, error: "Something went wrong." });
   }
 
