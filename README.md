@@ -1,6 +1,6 @@
 # Lyrics Tags Generator ([tags.notnick.io](https://tags.notnick.io/))
 
-This is a small utility tool for personal use, but you can also use it if you have a music channel on [YouTube](https://www.youtube.com).
+This is a small utility tool for personal use, but you can also use it if you have a music/lyric channel on [YouTube](https://www.youtube.com).
 
 ## What to provide
 
@@ -8,12 +8,34 @@ This is a small utility tool for personal use, but you can also use it if you ha
 - `Title` _(Optional)_
 - `Features` (Optional)
 - `TikTok` (Optional)
+- `Channel` (Optional)
+- `Format` (Optional)
+  - Lyrics
+  - Bass Boosted
+  - Nightcore/Sped Up
+  - Slowed/Reverb
+  - Letra
+  - Phonk
 
-If you think a different format works better, then please [submit an issue](https://github.com/alsonick/lyrics-tags-generator/issues/new?template=Blank+issue) or [email me](mailto:hi@notnick.io).
+If you provide both `artist` and `title` in the `artist` field, you can leave all the other fields empty.
+
+Example:
+
+<img width="550" src="https://github.com/user-attachments/assets/84efdc6d-c556-4299-946b-4e2838edb5d5" />
+
+<img width="550" src="https://github.com/user-attachments/assets/66f32ff3-f84c-4a0d-ab7b-bd6bbdb2012b" />
+
+You can also provide the `format` and it will generate the appropriate tags.
+
+The format will _always_ default to `Lyrics` if it isn't provided.
+
+<img width="550" src="https://github.com/user-attachments/assets/b52492a9-7d63-45e1-b5ef-8f0270110b99" />
+
+<img width="550" src="https://github.com/user-attachments/assets/ba08e054-0149-4728-8dbd-29648335559b" />
 
 ## Data
 
-[Click here to open the json representation.](https://tags.notnick.io/api/gen?title=Don%27t%20Let%20Me%20Down&artist=The%20Chainsmokers&features=Daya&tiktok=false)
+[Click here to open the json representation.](https://tags.notnick.io/api/generate?title=Residuals&artist=Chris%20Brown&features=none&tiktok=false&format=lyrics&channel=none)
 
 ```json
 {
@@ -30,7 +52,7 @@ If you think a different format works better, then please [submit an issue](http
     "titles": "Chris Brown - Residuals (Lyrics)=Chris Brown - Residuals [Lyrics]"
   },
   "url": "/api/generate?title=Residuals&artist=Chris%20Brown&features=none&tiktok=false&format=lyrics&channel=none",
-  "length": 341
+  "length": 340
 }
 ```
 
