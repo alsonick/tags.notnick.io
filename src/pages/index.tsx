@@ -210,7 +210,6 @@ export default function Home() {
               />
               <p className="text-xs mt-1">
                 Please remove any commas , if there are any.{" "}
-                <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
               <CharacterLimit
                 limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT}
