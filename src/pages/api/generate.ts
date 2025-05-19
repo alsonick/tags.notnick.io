@@ -375,7 +375,6 @@ export default async function handler(
     removedTagsLength: removedTags.length,
     title: finalTitle.trim(),
     artist: finalArtist.trim(),
-    t: `${finalArtist.trim()} - ${finalTitle.trim()}`,
     features: finalFeatures !== "none" ? finalFeatures.split(", ") : [],
     hashtags,
     extras: {
