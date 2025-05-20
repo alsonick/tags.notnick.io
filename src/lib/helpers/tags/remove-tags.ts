@@ -41,7 +41,7 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-      } else if (tags.length > 500) {
+      } else if (tags.length > 480) {
         del =
           `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist}`
             .toLowerCase()
