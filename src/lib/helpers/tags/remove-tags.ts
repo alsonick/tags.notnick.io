@@ -27,6 +27,20 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
+      } else if (tags.length > 600) {
+        del =
+          `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist},${title} lyric video`
+            .toLowerCase()
+            .split(",");
+
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
       } else if (tags.length > 500) {
         del =
           `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist}`
