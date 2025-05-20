@@ -42,10 +42,9 @@ export const removeTags = (
 
         return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
       } else if (tags.length > 480) {
-        del =
-          `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist}`
-            .toLowerCase()
-            .split(",");
+        del = `lyrics ${artist},${artist} lyrics,${title} lyrics ${artist}`
+          .toLowerCase()
+          .split(",");
 
         const tagArray = tags.toLowerCase().split(",");
         for (const formatTag of del) {
