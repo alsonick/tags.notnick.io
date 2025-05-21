@@ -239,7 +239,7 @@ export default function Home() {
               <Step step={4} text="Channel" />
               <Input
                 onChange={(e) => setChannelName(e.target.value)}
-                placeholder="Aquila"
+                placeholder="Gold Coast Music"
                 ref={channelNameRef}
                 value={channelName}
                 required={false}
