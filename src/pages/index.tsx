@@ -8,6 +8,7 @@ import {
 import { FiX, FiRepeat, FiTrash, FiDelete } from "react-icons/fi";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { CharacterLimit } from "@/components/CharacterLimit";
+import { countTagsLength } from "@/lib/count-tags-length";
 import { ToastContainer, toast } from "react-toastify";
 import { Button } from "../components/Button";
 import { Footer } from "@/components/Footer";
@@ -377,7 +378,10 @@ export default function Home() {
               </Link>
             )}
             <div className="flex w-full mt-6 items-center">
-              <CharacterLimit text={tags.join(",")} limit={500} />
+              <CharacterLimit
+                count={countTagsLength(tags.join(","))}
+                limit={500}
+              />
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button
@@ -426,7 +430,7 @@ export default function Home() {
                       );
                       return;
                     }
-                    copy(tags.join(", "));
+                    copy(tags.join(","));
                     toast.success("Tags copied to the clipboard.");
                   }}
                 >
@@ -434,7 +438,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            {tags.join(",").length > 500 && (
+            {countTagsLength(tags.join(",")) > 500 && (
               <p className="mt-4 text-sm text-red-500">
                 Please delete the least suitable tags for your case.
               </p>

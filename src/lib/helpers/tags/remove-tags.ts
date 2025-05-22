@@ -1,3 +1,5 @@
+import { countTagsLength } from "@/lib/count-tags-length";
+
 export const removeTags = (
   title: string,
   artist: string,
@@ -6,6 +8,7 @@ export const removeTags = (
   tiktok: string,
   tags: string
 ): string => {
+  const tagsLength = countTagsLength(tags);
   let tagsToBeRemoved = "";
   let del: string[] = [];
 
@@ -13,7 +16,7 @@ export const removeTags = (
   if (format === "lyrics") {
     // Tags to remove if no features are included
     if (features === "none" && tiktok === "false") {
-      if (tags.length > 800) {
+      if (tagsLength > 800) {
         del =
           `${title} lyrics ${artist},lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title} ${artist},${title} lyric video,${artist} lyrics ${title},${artist},lyrics`
             .toLowerCase()
@@ -27,7 +30,7 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-      } else if (tags.length > 600) {
+      } else if (tagsLength > 600) {
         del =
           `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist},${title} lyric video`
             .toLowerCase()
@@ -41,7 +44,7 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-      } else if (tags.length > 480) {
+      } else if (tagsLength > 500) {
         del = `lyrics ${artist},${artist} lyrics,${title} lyrics ${artist}`
           .toLowerCase()
           .split(",");
@@ -59,12 +62,12 @@ export const removeTags = (
 
     // Tags to remove if features are included
     if (features !== "none" && tiktok === "false") {
-      if (tags.length > 500) {
+      if (tagsLength > 500) {
         let feats = features.split(",").map((feat) => feat.trim());
         const firstFeat = feats[0];
 
         del =
-          `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},${artist} lyrics,lyrics ${artist},${title} lyric video`
+          `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist}`
             .toLowerCase()
             .split(",");
 
@@ -84,9 +87,9 @@ export const removeTags = (
   if (format === "slowedreverb") {
     // Tags to remove if no features are included
     if (features === "none" && tiktok === "false") {
-      if (tags.length > 900) {
+      if (tagsLength > 900) {
         // do something here
-      } else if (tags.length > 700) {
+      } else if (tagsLength > 700) {
         del =
           `${artist} - ${title} slowed,${artist} - ${title},${artist} ${title} slowed and reverb,${artist} - ${title} slowed reverb`
             .toLowerCase()
@@ -100,7 +103,7 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1);
-      } else if (tags.length > 600) {
+      } else if (tagsLength > 600) {
         del =
           `${artist} - ${title} slowed reverb,${artist} - ${title} slowed,${artist} - ${title}`
             .toLowerCase()
@@ -114,7 +117,7 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1);
-      } else if (tags.length > 500) {
+      } else if (tagsLength > 500) {
         del = `${artist} - ${title},${artist} - ${title} slowed`
           .toLowerCase()
           .split(",");
@@ -134,9 +137,9 @@ export const removeTags = (
       let feats = features.split(",").map((feat) => feat.trim());
       const firstFeat = feats[0];
 
-      if (tags.length > 800) {
-      } else if (tags.length > 700) {
-      } else if (tags.length > 600) {
+      if (tagsLength > 800) {
+      } else if (tagsLength > 700) {
+      } else if (tagsLength > 600) {
         del =
           `${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${firstFeat} slowed,${firstFeat} ${title}`
             .toLowerCase()
@@ -160,9 +163,9 @@ export const removeTags = (
       let feats = features.split(",").map((feat) => feat.trim());
       const firstFeat = feats[0];
 
-      if (tags.length > 800) {
-      } else if (tags.length > 700) {
-      } else if (tags.length > 600) {
+      if (tagsLength > 800) {
+      } else if (tagsLength > 700) {
+      } else if (tagsLength > 600) {
         del =
           `${artist} - ${title},${title} ${firstFeat} bass,${title} ${firstFeat} bass boosted,${artist} - ${title} bass boosted,${firstFeat} ${title} bass`
             .toLowerCase()
