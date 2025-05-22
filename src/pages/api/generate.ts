@@ -319,7 +319,9 @@ export default async function handler(
             },
             {
               name: "Length:",
-              value: removedTags.length ? removedTags.length : length,
+              value: removedTags.length
+                ? countTagsLength(removedTags)
+                : countTagsLength(tags),
               inline: true,
             },
             {
