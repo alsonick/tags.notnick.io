@@ -108,16 +108,17 @@ export default async function handler(
   // Process and compute final values locally without immediately updating state
   let finalFeatures = features;
   let finalArtist = artist;
-  let finalFormat = format;
+  let extractedTitle = "";
   let finalTitle = title;
+  let finalFormat = "";
+  let formatText = "";
 
   // Modified if statement to check for both standard hyphen and em dash
-  if ((artist.includes(",") || artist.includes("-")) && title === "none") {
+  if (artist.includes(",") || artist.includes("-")) {
     // Determine which separator to use for splitting (standard hyphen or em dash)
     const separator = artist.includes("—") ? "—" : "-";
     const data = artist.split(separator);
 
-    let extractedTitle = "";
     let mainPart = artist;
 
     if (artist.includes(separator)) {
@@ -134,25 +135,14 @@ export default async function handler(
       }
 
       // Process format from parentheses or brackets
-      let formatText = returnComputedFormat(format);
       if (titleFormatString.includes("(")) {
-        // Extract text within parentheses
-        const match = titleFormatString.match(/\(([^)]+)\)/);
-        if (match && match[1]) {
-          formatText = match[1].trim();
-        }
+        formatText = removeEmojis(titleFormatString.replace("(", ""))
+          .replace(extractedTitle, "")
+          .trim();
       } else if (titleFormatString.includes("[")) {
-        // Extract text within brackets
-        const match = titleFormatString.match(/\[([^\]]+)\]/);
-        if (match && match[1]) {
-          formatText = match[1].trim();
-        }
-      }
-
-      // If format text was found, process it
-      if (formatText) {
-        // Get standardized format name and ensure it's lowercase for the API
-        finalFormat = returnComputedFormat(formatText).toLowerCase();
+        formatText = removeEmojis(titleFormatString.replace("[", ""))
+          .replace(extractedTitle, "")
+          .trim();
       }
     }
 
@@ -165,10 +155,20 @@ export default async function handler(
     if (!finalFeatures) {
       finalFeatures = "none";
     }
+  }
 
-    if (extractedTitle) {
-      finalTitle = extractedTitle;
-    }
+  if (extractedTitle.length) {
+    finalTitle = extractedTitle.trim();
+  } else {
+    finalTitle = title.trim();
+  }
+
+  // If format text was found, process it
+  if (formatText.length) {
+    // Get standardized format name and ensure it's lowercase for the API
+    finalFormat = returnComputedFormat(formatText).toLowerCase();
+  } else {
+    finalFormat = format;
   }
 
   // Error if artist includes separators but title is already specified
@@ -312,7 +312,7 @@ export default async function handler(
             },
             {
               name: "Format:",
-              value: capitalizeFirstLetter(finalFormat),
+              value: computeFinalHashtags(finalFormat),
               inline: true,
             },
             {
@@ -396,9 +396,9 @@ export default async function handler(
       finalFeatures
     )}&tiktok=${
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-    }&format=${finalFormat.trimStart().trimEnd()}&channel=${
-      channel ? channel : "none"
-    }&shuffle=${shuffle || shuffle === "true" ? "true" : "false"}`,
+    }&format=${finalFormat}&channel=${channel ? channel : "none"}&shuffle=${
+      shuffle || shuffle === "true" ? "true" : "false"
+    }`,
     length: countTagsLength(tags),
   });
 }

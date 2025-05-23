@@ -83,7 +83,6 @@ export const removeTags = (
     }
   }
 
-  console.log(format, tagsLength);
   // Slowed
   if (format === "slowedreverb") {
     // Tags to remove if no features are included
@@ -142,7 +141,7 @@ export const removeTags = (
       } else if (tagsLength > 700) {
       } else if (tagsLength > 600) {
         del =
-          `${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${firstFeat} slowed,${firstFeat} ${title}`
+          `${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${firstFeat} slowed,${firstFeat} ${title},${artist} - ${title}`
             .toLowerCase()
             .split(",");
 
