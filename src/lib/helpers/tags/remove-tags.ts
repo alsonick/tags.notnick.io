@@ -83,6 +83,7 @@ export const removeTags = (
     }
   }
 
+  console.log(format, tagsLength);
   // Slowed
   if (format === "slowedreverb") {
     // Tags to remove if no features are included

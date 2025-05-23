@@ -204,7 +204,20 @@ export default async function handler(
     tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok);
   }
 
-  let tagsToBeRemoved = removeTags(
+  let tagsToBeRemoved = "";
+  let removedTags = "";
+
+  if (shuffle === "true") {
+    removedTags = shuffleTags(removedTags);
+    tags = shuffleTags(tags);
+  }
+
+  if (channel !== "none") {
+    removedTags += `,${channel}`.toLowerCase();
+    tags += `,${channel}`.toLowerCase();
+  }
+
+  tagsToBeRemoved = removeTags(
     finalTitle,
     finalArtist,
     finalFeatures,
@@ -213,7 +226,7 @@ export default async function handler(
     tags
   );
 
-  let removedTags = tags
+  removedTags = tags
     .split(",")
     .map((tag) => tag.trim())
     .filter((tag) => {
@@ -226,16 +239,6 @@ export default async function handler(
       return !tagsToRemoveArray.includes(tag.toLowerCase());
     })
     .join(",");
-
-  if (shuffle || shuffle === "true") {
-    removedTags = shuffleTags(removedTags);
-    tags = shuffleTags(tags);
-  }
-
-  if (channel !== "none") {
-    removedTags += `,${channel}`.toLowerCase();
-    tags += `,${channel}`.toLowerCase();
-  }
 
   let titles: string = "";
 
@@ -395,7 +398,7 @@ export default async function handler(
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
     }&format=${finalFormat.trimStart().trimEnd()}&channel=${
       channel ? channel : "none"
-    }$shuffle=${shuffle || shuffle === "true" ? "true" : "false"}`,
+    }&shuffle=${shuffle || shuffle === "true" ? "true" : "false"}`,
     length: countTagsLength(tags),
   });
 }
