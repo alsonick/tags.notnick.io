@@ -62,10 +62,23 @@ export const removeTags = (
 
     // Tags to remove if features are included
     if (features !== "none" && tiktok === "false") {
-      if (tagsLength > 500) {
-        let feats = features.split(",").map((feat) => feat.trim());
-        const firstFeat = feats[0];
+      let feats = features.split(",").map((feat) => feat.trim());
+      const firstFeat = feats[0];
+      if (tagsLength > 600) {
+        del =
+          `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},lyrics ${artist},${artist} lyrics`
+            .toLowerCase()
+            .split(",");
 
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1);
+      } else if (tagsLength > 500) {
         del =
           `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist}`
             .toLowerCase()

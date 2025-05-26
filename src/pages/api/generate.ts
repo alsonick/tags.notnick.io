@@ -347,31 +347,8 @@ export default async function handler(
     },
   });
 
-  // Send data to discord webhook (titles)
-  const hook2 = await fetch(process.env.DISCORD_WEBHOOK_URL_TWO!, {
-    method: "POST",
-    body: JSON.stringify({
-      embeds: [
-        {
-          author: {
-            name: `${finalArtist} - ${finalTitle}`,
-          },
-          fields: [
-            {
-              name: "Titles:",
-              value: titles.length ? titles.replaceAll("=", "\n") : "None",
-              inline: true,
-            },
-          ],
-        },
-      ],
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (hook1.status >= 400 || hook2.status >= 400) {
+  // Checks if the hook request went through
+  if (hook1.status >= 400) {
     return res.json({ success: false, error: "Something went wrong." });
   }
 
