@@ -10,7 +10,6 @@ import { slowedReverbTitles } from "@/lib/helpers/titles/slowed-reverb-titles";
 import { bassBoostedTitles } from "@/lib/helpers/titles/bass-boosted-titles";
 import { slowedReverbTags } from "@/lib/helpers/tags/slowed-reverb-tags";
 import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
-import { capitalizeFirstLetter } from "@/lib/capitalize-first-letter";
 import { returnComputedFormat } from "@/lib/return-computed-format";
 import { computeFinalHashtags } from "@/lib/compute-final-hashtag";
 import { lyricsTitles } from "@/lib/helpers/titles/lyrics-titles";
@@ -396,9 +395,9 @@ export default async function handler(
       finalFeatures
     )}&tiktok=${
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-    }&format=${finalFormat}&channel=${channel ? channel : "none"}&shuffle=${
-      shuffle || shuffle === "true" ? "true" : "false"
-    }`,
+    }&format=${finalFormat}&channel=${
+      channel ? encodeURIComponent(channel) : "none"
+    }&shuffle=${shuffle || shuffle === "true" ? "true" : "false"}`,
     length: countTagsLength(tags),
   });
 }
