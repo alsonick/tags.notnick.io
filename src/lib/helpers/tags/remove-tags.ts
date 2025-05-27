@@ -166,6 +166,20 @@ export const removeTags = (
         }
 
         return tagsToBeRemoved.slice(0, -1);
+      } else if (tagsLength > 500) {
+        del =
+          `${artist} - ${title},${firstFeat} slowed,${firstFeat} ${title} slowed reverb,${firstFeat} ${title}`
+            .toLowerCase()
+            .split(",");
+
+        const tagArray = tags.toLowerCase().split(",");
+        for (const formatTag of del) {
+          if (tagArray.includes(formatTag.trim())) {
+            tagsToBeRemoved += `${formatTag.trim()},`;
+          }
+        }
+
+        return tagsToBeRemoved.slice(0, -1);
       }
     }
   }

@@ -129,7 +129,6 @@ export default function Home() {
       if (!data.success) {
         toast.error(data.error);
         setLoading(false);
-        alert(data.error);
         return;
       }
 
