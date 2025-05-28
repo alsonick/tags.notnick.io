@@ -157,9 +157,9 @@ export default async function handler(
   }
 
   if (extractedTitle.length) {
-    finalTitle = extractedTitle.trim();
+    finalTitle = extractedTitle.trim().replaceAll(".", "");
   } else {
-    finalTitle = title.trim();
+    finalTitle = title.trim().replaceAll(".", "");
   }
 
   // If format text was found, process it
