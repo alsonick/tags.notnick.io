@@ -220,7 +220,7 @@ export default async function handler(
     finalTitle,
     finalArtist,
     finalFeatures,
-    finalFormat,
+    finalFormat.toLowerCase(),
     tiktok,
     tags
   );
