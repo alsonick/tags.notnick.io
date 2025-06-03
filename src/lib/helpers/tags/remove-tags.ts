@@ -1,4 +1,7 @@
-import { countTagsLength } from "@/lib/count-tags-length";
+import { slowedReverbTagsRemove } from "./remove/slowed-reverb-tags-remove";
+import { bassBoostedTagsRemove } from "./remove/bass-boosted-tags-remove";
+import { lyricsTagsRemove } from "./remove/lyrics-tags-remove";
+import { FORMAT } from "@/lib/format";
 
 export const removeTags = (
   title: string,
@@ -8,208 +11,20 @@ export const removeTags = (
   tiktok: string,
   tags: string
 ): string => {
-  const tagsLength = countTagsLength(tags);
-  let tagsToBeRemoved = "";
-  let del: string[] = [];
-
   // Lyrics
-  if (format === "lyrics") {
-    // Tags to remove if no features are included
-    if (features === "none" && tiktok === "false") {
-      if (tagsLength > 800) {
-        del =
-          `${title} lyrics ${artist},lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title} ${artist},${title} lyric video,${artist} lyrics ${title},${artist},lyrics`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-      } else if (tagsLength > 600) {
-        del =
-          `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist},${title} lyric video`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-      } else if (tagsLength > 500) {
-        del = `lyrics ${artist},${artist} lyrics,${title} lyrics ${artist}`
-          .toLowerCase()
-          .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-      }
-    }
-
-    // Tags to remove if features are included
-    if (features !== "none" && tiktok === "false") {
-      let feats = features.split(",").map((feat) => feat.trim());
-      const firstFeat = feats[0];
-      if (tagsLength > 600) {
-        del =
-          `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},lyrics ${artist},${artist} lyrics`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      } else if (tagsLength > 500) {
-        del =
-          `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist}`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      }
-    }
+  if (format === FORMAT.lyrics) {
+    return lyricsTagsRemove(title, artist, features, tiktok, tags);
   }
 
   // Slowed
-  if (format === "slowedreverb") {
-    // Tags to remove if no features are included
-    if (features === "none" && tiktok === "false") {
-      if (tagsLength > 900) {
-        // do something here
-      } else if (tagsLength > 700) {
-        del =
-          `${artist} - ${title} slowed,${artist} - ${title},${artist} ${title} slowed and reverb,${artist} - ${title} slowed reverb`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      } else if (tagsLength > 600) {
-        del =
-          `${artist} - ${title} slowed reverb,${artist} - ${title} slowed,${artist} - ${title}`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      } else if (tagsLength > 500) {
-        del = `${artist} - ${title},${artist} - ${title} slowed`
-          .toLowerCase()
-          .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      }
-    }
-
-    if (features.length && tiktok === "false") {
-      let feats = features.split(",").map((feat) => feat.trim());
-      const firstFeat = feats[0];
-
-      if (tagsLength > 800) {
-      } else if (tagsLength > 700) {
-      } else if (tagsLength > 600) {
-        del =
-          `${artist} - ${title} slowed,${artist} - ${title} slowed reverb,${firstFeat} slowed,${firstFeat} ${title},${artist} - ${title}`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      } else if (tagsLength > 500) {
-        del =
-          `${artist} - ${title},${firstFeat} slowed,${firstFeat} ${title} slowed reverb,${firstFeat} ${title}`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      }
-    }
+  if (format === FORMAT.slowedreverb) {
+    return slowedReverbTagsRemove(title, artist, features, tiktok, tags);
   }
 
   // Bass Boosted
-  if (format === "bassboosted") {
-    if (features.length && tiktok === "false") {
-      let feats = features.split(",").map((feat) => feat.trim());
-      const firstFeat = feats[0];
-
-      if (tagsLength > 800) {
-      } else if (tagsLength > 700) {
-      } else if (tagsLength > 600) {
-        del =
-          `${artist} - ${title},${title} ${firstFeat} bass,${title} ${firstFeat} bass boosted,${artist} - ${title} bass boosted,${firstFeat} ${title} bass`
-            .toLowerCase()
-            .split(",");
-
-        const tagArray = tags.toLowerCase().split(",");
-        for (const formatTag of del) {
-          if (tagArray.includes(formatTag.trim())) {
-            tagsToBeRemoved += `${formatTag.trim()},`;
-          }
-        }
-
-        return tagsToBeRemoved.slice(0, -1);
-      } else if (tags.length > 500) {
-      }
-    }
+  if (format === FORMAT.bassboosted) {
+    bassBoostedTagsRemove(title, artist, features, tiktok, tags);
   }
 
-  return tagsToBeRemoved;
+  return "";
 };

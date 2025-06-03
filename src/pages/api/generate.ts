@@ -23,6 +23,7 @@ import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
 import { removeEmojis } from "@/lib/remove-emojis";
 import { shuffleTags } from "@/lib/shuffle-tags";
+import { FORMAT } from "@/lib/format";
 
 export default async function handler(
   req: NextApiRequest,
@@ -51,7 +52,7 @@ export default async function handler(
   }
 
   // Checks if the artist field reaches the character limit
-  if (artist.includes("-") || artist.includes(",")) {
+  if (/,|-/.test(artist)) {
     if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
       res.status(400).json({
         success: false,
@@ -113,7 +114,7 @@ export default async function handler(
   let formatText = "";
 
   // Modified if statement to check for both standard hyphen and em dash
-  if (artist.includes(",") || artist.includes("-")) {
+  if (/,|-/.test(artist)) {
     // Determine which separator to use for splitting (standard hyphen or em dash)
     const separator = artist.includes("—") ? "—" : "-";
     const data = artist.split(separator);
@@ -171,7 +172,7 @@ export default async function handler(
   }
 
   // Error if artist includes separators but title is already specified
-  if (artist.includes(",") || artist.includes("-")) {
+  if (/,|-/.test(artist)) {
     if (title !== "none") {
       return res.status(400).json({
         success: false,
@@ -183,22 +184,22 @@ export default async function handler(
   let formatPureFormat = finalFormat.trim().toLowerCase();
   let tags: string = "";
 
-  if (formatPureFormat === "bassboosted") {
+  if (formatPureFormat === FORMAT.bassboosted) {
     // Bass Boosted
     tags = bassBoostedTags(finalArtist, finalTitle, finalFeatures, tiktok);
-  } else if (formatPureFormat === "nightcore") {
+  } else if (formatPureFormat === FORMAT.nightcore) {
     // Nightcore/Sped Up
     tags = nightcoreSpedUpTags(finalArtist, finalTitle, finalFeatures, tiktok);
-  } else if (formatPureFormat === "slowedreverb") {
+  } else if (formatPureFormat === FORMAT.slowedreverb) {
     // Slowed/Reverb
     tags = slowedReverbTags(finalArtist, finalTitle, finalFeatures, tiktok);
-  } else if (formatPureFormat === "letra") {
+  } else if (formatPureFormat === FORMAT.letra) {
     // Letra
     tags = letraTags(finalArtist, finalTitle, finalFeatures, tiktok);
-  } else if (formatPureFormat === "phonk") {
+  } else if (formatPureFormat === FORMAT.phonk) {
     // Phonk
     tags = phonkTags(finalArtist, finalTitle, finalFeatures, tiktok);
-  } else if (formatPureFormat === "lyrics") {
+  } else if (formatPureFormat === FORMAT.lyrics) {
     // Lyrics
     tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok);
   }
@@ -248,31 +249,31 @@ export default async function handler(
     : [];
 
   // Lyrics
-  if (formatPureFormat === "lyrics") {
+  if (formatPureFormat === FORMAT.lyrics) {
     if (feats.includes("None")) feats.pop();
     titles += lyricsTitles(finalArtist, finalTitle, feats);
   }
 
   // Letra
-  if (formatPureFormat === "letra") {
+  if (formatPureFormat === FORMAT.letra) {
     if (feats.includes("None")) feats.pop();
     titles += letraTitles(finalArtist, finalTitle, feats);
   }
 
   // Slowed & Reverb
-  if (formatPureFormat === "slowedreverb") {
+  if (formatPureFormat === FORMAT.slowedreverb) {
     if (feats.includes("None")) feats.pop();
     titles += slowedReverbTitles(finalArtist, finalTitle, feats);
   }
 
   // Phonk
-  if (formatPureFormat === "phonk") {
+  if (formatPureFormat === FORMAT.phonk) {
     if (feats.includes("None")) feats.pop();
     titles += phonkTitles(finalArtist, finalTitle, feats);
   }
 
   // Bass Boosted
-  if (formatPureFormat === "bassboosted") {
+  if (formatPureFormat === FORMAT.bassboosted) {
     if (feats.includes("None")) feats.pop();
     titles += bassBoostedTitles(finalArtist, finalTitle, feats);
   }
