@@ -23,7 +23,7 @@ export const removeTags = (
 
   // Bass Boosted
   if (format === FORMAT.bassboosted) {
-    bassBoostedTagsRemove(title, artist, features, tiktok, tags);
+    return bassBoostedTagsRemove(title, artist, features, tiktok, tags);
   }
 
   return "";

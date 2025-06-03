@@ -138,10 +138,14 @@ export default async function handler(
       if (titleFormatString.includes("(")) {
         formatText = removeEmojis(titleFormatString.replace("(", ""))
           .replace(extractedTitle, "")
+          .replace("(", "")
+          .replace(")", "")
           .trim();
       } else if (titleFormatString.includes("[")) {
         formatText = removeEmojis(titleFormatString.replace("[", ""))
           .replace(extractedTitle, "")
+          .replace("[", "")
+          .replace("]", "")
           .trim();
       }
     }
