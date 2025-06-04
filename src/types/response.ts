@@ -11,7 +11,7 @@ export interface Response {
   features: string[];
   hashtags: string[];
   extras: {
-    titles: string;
+    titles?: string;
   };
   url: string;
 }

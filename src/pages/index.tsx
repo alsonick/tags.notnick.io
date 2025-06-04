@@ -5,7 +5,7 @@ import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
-import { FiX, FiRepeat, FiTrash, FiDelete } from "react-icons/fi";
+import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit } from "react-icons/fi";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { CharacterLimit } from "@/components/CharacterLimit";
 import { countTagsLength } from "@/lib/count-tags-length";
@@ -27,7 +27,9 @@ import Link from "next/link";
 
 export default function Home() {
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
+  const [originalTitles, setOriginalTitles] = useState<string[]>([]);
   const [channelName, setChannelName] = useState("");
+  const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
   const [loading, setLoading] = useState(false);
@@ -98,7 +100,7 @@ export default function Home() {
 
     // Starts the loading
     setLoading(true);
-    // Use the computed values directly in the API call
+
     const response = await fetch(
       `/api/generate${
         title.length ? `?title=${title}` : "?title=none"
@@ -140,6 +142,11 @@ export default function Home() {
       setTags(separated);
       setLoading(false);
       setData(data);
+
+      if (data.extras.titles) {
+        setOriginalTitles(data.extras.titles.split("="));
+        setTitles(data.extras.titles.split("="));
+      }
 
       setOverflowTagsDeleted(false);
       setChannelName("");
@@ -463,14 +470,11 @@ export default function Home() {
                   <Button
                     style={{ marginLeft: "auto" }}
                     onClick={() => {
-                      // Check if tagsToBeRemoved exists and is not empty
                       if (data?.tagsToBeRemoved) {
-                        // Split tagsToBeRemoved into an array since it's a comma-separated string
                         const tagsToRemove = data.tagsToBeRemoved
                           .split(",")
                           .map((tag) => tag.trim().toLowerCase());
 
-                        // Filter out tags that match any in the tagsToRemove array
                         let newTags = tags.filter(
                           (tag) => !tagsToRemove.includes(tag.toLowerCase())
                         );
@@ -494,9 +498,9 @@ export default function Home() {
               </>
             ) : null}
             {tags.length > 0 && (
-              <div className="flex flex-col mt-8 border-t pt-4">
+              <div className="flex flex-col mt-8 border-t  pt-4">
                 <h3 className="text-2xl font-bold">Suggested:</h3>
-                {data?.extras.titles.split("=").map((title) => (
+                {titles.map((title) => (
                   <div
                     className="flex items-center justify-between w-full mt-4"
                     key={title}
@@ -512,6 +516,54 @@ export default function Home() {
                     </Button>
                   </div>
                 ))}
+                <div className="flex items-center border-t w-full pt-4 mt-4">
+                  <div className="flex items-center ml-auto">
+                    <Button
+                      onClick={() => {
+                        const uppercaseTitles = titles.map((title) =>
+                          title.toUpperCase()
+                        );
+
+                        if (uppercaseTitles === titles) {
+                          return;
+                        }
+
+                        setTitles(uppercaseTitles);
+                      }}
+                    >
+                      Uppercase <FiEdit className="ml-2" />
+                    </Button>
+                    <div className="ml-2">
+                      <Button
+                        onClick={() => {
+                          const lowercaseTitles = titles.map((title) =>
+                            title.toLowerCase()
+                          );
+
+                          if (lowercaseTitles === titles) {
+                            return;
+                          }
+
+                          setTitles(lowercaseTitles);
+                        }}
+                      >
+                        Lowercase <FiEdit className="ml-2" />
+                      </Button>
+                    </div>
+                    <div className="ml-2">
+                      <Button
+                        onClick={() => {
+                          if (originalTitles === titles) {
+                            return;
+                          }
+                          setTitles(originalTitles);
+                        }}
+                      >
+                        Original <FiEdit className="ml-2" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             {tags.length > 0 && (

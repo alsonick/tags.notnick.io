@@ -46,8 +46,8 @@ export default async function handler(
   // Check if all the required fields are provided
   if (!artist || !tiktok) {
     return res.status(400).json({
-      success: false,
       error: "Please provide all the required fields.",
+      success: false,
     });
   }
 
@@ -55,16 +55,16 @@ export default async function handler(
   if (/,|-/.test(artist)) {
     if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
       res.status(400).json({
-        success: false,
         error: "Character limit exceeded.",
+        success: false,
       });
       return;
     }
   } else {
     if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT) {
       res.status(400).json({
-        success: false,
         error: "Character limit exceeded.",
+        success: false,
       });
       return;
     }
@@ -73,8 +73,8 @@ export default async function handler(
   // Checks if the title field reaches the character limit
   if (title.length > TITLE_INPUT_FIELD_CHARACTER_LIMIT) {
     res.status(400).json({
-      success: false,
       error: "Character limit exceeded.",
+      success: false,
     });
     return;
   }
@@ -82,8 +82,8 @@ export default async function handler(
   // Checks if the features field reaches the character limit
   if (features.length > FEATURES_INPUT_FIELD_CHARACTER_LIMIT) {
     res.status(400).json({
-      success: false,
       error: "Character limit exceeded.",
+      success: false,
     });
     return;
   }
@@ -91,8 +91,8 @@ export default async function handler(
   // Checks if the channel field reaches the character limit
   if (channel.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
     res.status(400).json({
-      success: false,
       error: "Character limit exceeded.",
+      success: false,
     });
     return;
   }
@@ -100,8 +100,8 @@ export default async function handler(
   // Check if there are any commas in the title or artist
   if (/,/.test(title)) {
     return res.status(400).send({
-      success: false,
       error: "Please remove any commas , from the title or artist.",
+      success: false,
     });
   }
 
@@ -179,8 +179,8 @@ export default async function handler(
   if (/,|-/.test(artist)) {
     if (title !== "none") {
       return res.status(400).json({
-        success: false,
         error: "The artist and title was already provided in the artist field.",
+        success: false,
       });
     }
   }
@@ -357,7 +357,7 @@ export default async function handler(
     return res.json({ success: false, error: "Something went wrong." });
   }
 
-  // Send the response
+  // Send the response.
   res.status(200).json({
     success: true,
     tags: tags.toLowerCase(),
