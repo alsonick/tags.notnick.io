@@ -220,7 +220,7 @@ export default async function handler(
 
   if (channel !== "none") {
     removedTags += `,${channel}`.toLowerCase();
-    tags += `,${channel}`.toLowerCase();
+    tags += `,${channel.replaceAll(".", "")}`.toLowerCase();
   }
 
   tagsToBeRemoved = removeTags(

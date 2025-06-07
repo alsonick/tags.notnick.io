@@ -62,7 +62,7 @@ export const lyricsTagsRemove = (
     const firstFeat = feats[0];
     if (tagsLength > 600) {
       del =
-        `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},lyrics ${artist},${artist} lyrics,${title} lyric video`
+        `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},lyrics ${artist},${artist} lyrics,${title} lyric video,lyrics`
           .toLowerCase()
           .split(",");
 
