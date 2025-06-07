@@ -158,7 +158,7 @@ export default async function handler(
 
     if (features.length) {
       finalFeatures = features;
-    } else {
+    } else if (!finalFeatures) {
       finalFeatures = "none";
     }
   }
