@@ -5,7 +5,7 @@ export const lyricsTags = (
   tiktok: string
 ): string => {
   // Tags
-  let tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},lyrics ${artist} ${title},${artist} lyrics ${title},${title} lyrics ${artist},${title} lyric video,lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title},${artist},${title} ${artist},lyrics`;
+  let tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},lyrics ${artist} ${title},${artist} lyrics ${title},${title} lyric video,lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title},${artist},${title} ${artist},lyrics`;
 
   // Features
   let feats = features.split(",").map((feat) => feat.trim());

@@ -156,7 +156,9 @@ export default async function handler(
     finalArtist = artistsArray[0];
     finalFeatures = artistsArray.slice(1).join(", ");
 
-    if (!finalFeatures) {
+    if (features.length) {
+      finalFeatures = features;
+    } else {
       finalFeatures = "none";
     }
   }
