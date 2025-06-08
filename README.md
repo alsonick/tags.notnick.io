@@ -10,12 +10,15 @@ This is a small utility tool for personal use, but you can also use it if you ha
 - `TikTok` (Optional)
 - `Channel` (Optional)
 - `Format` (Optional)
-  - Lyrics
+  - Lyrics (Default)
   - Bass Boosted
   - Nightcore/Sped Up
   - Slowed/Reverb
   - Letra
   - Phonk
+- Shuffle _(Optional)_
+
+> The `shuffle` option can only be passed in as a query in the API request endpoint. On the site, there's a button that lets you shuffle your tags, and the [bot version](https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot) shuffles the tags automatically.
 
 If you provide both `artist` and `title` in the `artist` field, you can leave all the other fields empty.
 
@@ -23,15 +26,11 @@ Example:
 
 <img width="550" src="https://github.com/user-attachments/assets/84efdc6d-c556-4299-946b-4e2838edb5d5" />
 
-<img width="550" src="https://github.com/user-attachments/assets/66f32ff3-f84c-4a0d-ab7b-bd6bbdb2012b" />
-
 You can also provide the `format` and it will generate the appropriate tags.
 
 The format will _always_ default to `Lyrics` if it isn't provided.
 
 <img width="550" src="https://github.com/user-attachments/assets/b52492a9-7d63-45e1-b5ef-8f0270110b99" />
-
-<img width="550" src="https://github.com/user-attachments/assets/ba08e054-0149-4728-8dbd-29648335559b" />
 
 ## Data
 
@@ -51,7 +50,7 @@ The format will _always_ default to `Lyrics` if it isn't provided.
   "extras": {
     "titles": "Chris Brown - Residuals (Lyrics)=Chris Brown - Residuals [Lyrics]"
   },
-  "url": "/api/generate?title=Residuals&artist=Chris%20Brown&features=none&tiktok=false&format=lyrics&channel=none",
+  "url": "/api/generate?title=Residuals&artist=Chris%20Brown&features=none&tiktok=false&format=lyrics&channel=none&shuffle=false",
   "length": 340
 }
 ```
@@ -62,13 +61,7 @@ Using the [Discord](https://discord.com/) bot version is probably faster. You mu
 
 [Click here to invite the discord bot to your server.](https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot)
 
-Example:
-
-<img width="450" src="https://github.com/user-attachments/assets/0c4d851b-8146-476f-9722-afd76fde5232" />
-
 All requests are logged for debugging purposes.
-
-<img width="450" src="https://github.com/user-attachments/assets/a1c34a5f-32d4-4881-afd7-ed39e7355450" />
 
 Please [email](mailto:hi@notnick.io) me if you find any bugs.
 
