@@ -60,9 +60,11 @@ export const lyricsTagsRemove = (
   if (features !== "none" && tiktok === "false") {
     let feats = features.split(",").map((feat) => feat.trim());
     const firstFeat = feats[0];
+    const secondFeat = feats[1];
+
     if (tagsLength > 600) {
       del =
-        `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},lyrics ${artist},${artist} lyrics,${title} lyric video,lyrics,lyrics ${firstFeat},${firstFeat} lyrics`
+        `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},lyrics ${artist},${artist} lyrics,${title} lyric video,lyrics,lyrics ${secondFeat},${firstFeat} lyrics`
           .toLowerCase()
           .split(",");
 
