@@ -5,6 +5,6 @@ export const phonkTitles = (
 ): string => {
   switch (feats.length) {
     default:
-      return `${artist} - ${title}=${artist} - ${title} [Phonk]=${title}`;
+      return `${artist} - ${title}=${artist} - ${title} [Phonk]=${title}=${title} Phonk`;
   }
 };
