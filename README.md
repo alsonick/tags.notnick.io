@@ -16,7 +16,7 @@ This is a small utility tool for personal use, but you can also use it if you ha
   - Slowed/Reverb
   - Letra
   - Phonk
-- Shuffle _(Optional)_
+- `Shuffle` _(Optional)_
 
 > The `shuffle` option can only be passed in as a query in the API request endpoint. On the site, there's a button that lets you shuffle your tags, and the [bot version](https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot) shuffles the tags automatically.
 
