@@ -29,7 +29,7 @@ export const lyricsTagsRemove = (
       return tagsToBeRemoved.slice(0, -1);
     } else if (tagsLength > 600) {
       del =
-        `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist},${title} lyric video`
+        `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist},${title} lyric video,${artist} lyrics ${title}`
           .toLowerCase()
           .split(",");
 
