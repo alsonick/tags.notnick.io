@@ -18,7 +18,7 @@ export const lyricsTags = (
     features !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
-    tags += `,${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
+    tags += `,${firstFeat},${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
 
     if (feats.length >= 2) {
       // Second feat
