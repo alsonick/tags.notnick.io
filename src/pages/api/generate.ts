@@ -24,6 +24,7 @@ import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
 import { removeEmojis } from "@/lib/remove-emojis";
 import { shuffleTags } from "@/lib/shuffle-tags";
 import { FORMAT } from "@/lib/format";
+import { error } from "@/lib/error";
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,6 +36,7 @@ export default async function handler(
   }
 
   // Get the query parameters
+  const structure: string = req.query.structure as string;
   const features: string = req.query.features as string;
   const channel: string = req.query.channel as string;
   const shuffle: string = req.query.shuffle as string;
@@ -46,16 +48,24 @@ export default async function handler(
   // Check if all the required fields are provided
   if (!artist || !tiktok) {
     return res.status(400).json({
-      error: "Please provide all the required fields.",
+      error: error.message.provideAllRequiredFields,
       success: false,
     });
   }
 
-  // Checks if the artist field reaches the character limit
+  // Check if the structure query includes one of the valid accepted structures
+  // TODO: Finish this later
+  // if (!["1", "3", "4"].includes(structure)) {
+  //   return res.status(400).json({
+  //     error: "",
+  //   });
+  // }
+
   if (/,|-/.test(artist)) {
+    // Checks if the artist field reaches the character limit
     if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
       res.status(400).json({
-        error: "Character limit exceeded.",
+        error: error.message.characterLimitExceeded,
         success: false,
       });
       return;
@@ -63,7 +73,7 @@ export default async function handler(
   } else {
     if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT) {
       res.status(400).json({
-        error: "Character limit exceeded.",
+        error: error.message.characterLimitExceeded,
         success: false,
       });
       return;
@@ -73,7 +83,7 @@ export default async function handler(
   // Checks if the title field reaches the character limit
   if (title.length > TITLE_INPUT_FIELD_CHARACTER_LIMIT) {
     res.status(400).json({
-      error: "Character limit exceeded.",
+      error: error.message.characterLimitExceeded,
       success: false,
     });
     return;
@@ -82,7 +92,7 @@ export default async function handler(
   // Checks if the features field reaches the character limit
   if (features.length > FEATURES_INPUT_FIELD_CHARACTER_LIMIT) {
     res.status(400).json({
-      error: "Character limit exceeded.",
+      error: error.message.characterLimitExceeded,
       success: false,
     });
     return;
@@ -91,16 +101,16 @@ export default async function handler(
   // Checks if the channel field reaches the character limit
   if (channel.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
     res.status(400).json({
-      error: "Character limit exceeded.",
+      error: error.message.characterLimitExceeded,
       success: false,
     });
     return;
   }
 
-  // Check if there are any commas in the title or artist
+  // Check if there are any commas in the title
   if (/,/.test(title)) {
     return res.status(400).send({
-      error: "Please remove any commas , from the title or artist.",
+      error: error.message.removeCommasFromTitle,
       success: false,
     });
   }
@@ -356,7 +366,10 @@ export default async function handler(
 
   // Checks if the hook request went through
   if (hook1.status >= 400) {
-    return res.json({ success: false, error: "Something went wrong." });
+    return res.json({
+      success: false,
+      error: error.message.somethingWentWrong,
+    });
   }
 
   // Send the response.
@@ -372,6 +385,9 @@ export default async function handler(
     hashtags,
     extras: {
       titles,
+      array: {
+        titles: titles.split("="),
+      },
     },
     url: `/api/generate?title=${encodeURIComponent(
       finalTitle

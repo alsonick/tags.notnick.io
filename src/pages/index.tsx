@@ -18,9 +18,11 @@ import { Step } from "../components/Step";
 import { FiLoader } from "react-icons/fi";
 import { useState, useRef } from "react";
 import { FiCopy } from "react-icons/fi";
+import { success } from "@/lib/success";
 import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
 import copy from "copy-to-clipboard";
+import { error } from "@/lib/error";
 
 // Next.js
 import Link from "next/link";
@@ -47,22 +49,22 @@ export default function Home() {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Check if there are any commas in the title or artist
+    // Check if there are any commas in the title
     if (/,/.test(title)) {
-      toast.error("Please remove any commas , from the title or artist.");
+      toast.error(error.message.removeCommasFromTitle);
       return;
     }
 
     // Checks if the artist field reaches the character limit
     if (/[-,]/.test(artist)) {
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
-        toast.error("Character limit exceeded.");
+        toast.error(error.message.characterLimitExceeded);
         artistRef.current?.focus();
         return;
       }
     } else {
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT) {
-        toast.error("Character limit exceeded.");
+        toast.error(error.message.characterLimitExceeded);
         artistRef.current?.focus();
         return;
       }
@@ -70,21 +72,21 @@ export default function Home() {
 
     // Checks if the title field reaches the character limit
     if (title.length > TITLE_INPUT_FIELD_CHARACTER_LIMIT) {
-      toast.error("Character limit exceeded.");
+      toast.error(error.message.characterLimitExceeded);
       titleRef.current?.focus();
       return;
     }
 
     // Checks if the features field reaches the character limit
     if (features.length > FEATURES_INPUT_FIELD_CHARACTER_LIMIT) {
-      toast.error("Character limit exceeded.");
+      toast.error(error.message.characterLimitExceeded);
       featuresRef.current?.focus();
       return;
     }
 
     // Checks if the channel name field reaches the character limit
     if (channelName.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
-      toast.error("Character limit exceeded.");
+      toast.error(error.message.characterLimitExceeded);
       channelNameRef.current?.focus();
       return;
     }
@@ -92,7 +94,7 @@ export default function Home() {
     // Checks if the artist and title is not provided in the artist field.
     if (!/-/.test(artist)) {
       if (!title.length) {
-        toast.error("Please provide the title.");
+        toast.error(error.message.provideTitle);
         titleRef.current?.focus();
         return;
       }
@@ -138,7 +140,7 @@ export default function Home() {
       const separated = data.tags.split(",").map((tag) => tag.trim());
 
       // Success
-      toast.success("Tags generated successfully.");
+      toast.success(success.message.tagsGeneratedSuccessfully);
       setTags(separated);
       setLoading(false);
       setData(data);
@@ -320,7 +322,7 @@ export default function Home() {
                   onClick={(e) => {
                     e.preventDefault();
                     if (!tags.length) {
-                      toast.error("There's nothing to clear.");
+                      toast.error(error.message.nothingToClear);
                       return;
                     }
                     setTags([]);
@@ -396,20 +398,20 @@ export default function Home() {
 
                       if (!tags.length) {
                         if (!artist.length) {
-                          toast.error("Please fill out the artist field.");
+                          toast.error(error.message.provideArtist);
                           artistRef.current?.focus();
                           return;
                         }
 
                         if (!artist.includes("-") && !artist.includes(",")) {
                           if (!title.length) {
-                            toast.error("Please fill out the title field.");
+                            toast.error(error.message.provideTitle);
                             titleRef.current?.focus();
                             return;
                           }
                         }
 
-                        toast.error("Please generate the tags first.");
+                        toast.error(error.message.generateTagsFirst);
                         return;
                       }
                       const shuffled = [...tags];
@@ -420,7 +422,7 @@ export default function Home() {
                       }
 
                       setTags(shuffled);
-                      toast.success("Tags shuffled successfully.");
+                      toast.success(success.message.shuffledSuccessfully);
                     }}
                   >
                     Shuffle <FiRepeat className="ml-2" />
@@ -432,12 +434,12 @@ export default function Home() {
                   onClick={() => {
                     if (!tags.length) {
                       toast.error(
-                        "Please generate the tags before you copy to clipboard."
+                        error.message.generateTagsBeforeYouCopyToClipboard
                       );
                       return;
                     }
                     copy(tags.join(","));
-                    toast.success("Tags copied to the clipboard.");
+                    toast.success(success.message.tagsCopiedToClipboard);
                   }}
                 >
                   Copy generated tags <FiCopy className="ml-2" />
@@ -482,12 +484,13 @@ export default function Home() {
                         setTags(newTags);
 
                         if (!overflowTagsDeleted) {
-                          toast.success("Tags successfully removed.");
-                        } else {
-                          toast.error(
-                            "Recommended tags have already been removed."
+                          toast.success(
+                            success.message.tagsRemovedSuccessfully
                           );
+                        } else {
+                          toast.error(error.message.tagsAlreadyRemoved);
                         }
+
                         setOverflowTagsDeleted(true);
                       }
                     }}
@@ -509,7 +512,7 @@ export default function Home() {
                     <Button
                       onClick={() => {
                         copy(title);
-                        toast.success("Copied!");
+                        toast.success(success.message.copied);
                       }}
                     >
                       Copy <FiCopy className="ml-2" />
@@ -584,7 +587,7 @@ export default function Home() {
                       );
                       const textToCopy = `${hashtagArray?.join(" ")}`;
                       copy(textToCopy);
-                      toast.success("Hashtags copied to the clipboard.");
+                      toast.success(success.message.hashtagsCopiedToClipboard);
                     }}
                   >
                     Copy <FiCopy className="ml-2" />

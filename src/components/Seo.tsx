@@ -1,3 +1,6 @@
+import { seoKeywords } from "@/lib/seo/seo-keywords";
+
+// Next.js
 import Head from "next/head";
 
 interface Props {
@@ -21,6 +24,7 @@ export const Seo = (props: Props) => {
       <meta property="twitter:site" content="@nick" />
       <meta property="og:url" content="tags.notnick.io" />
       <meta property="og:site_name" content="tags.notnick.io" />
+      <meta name="keywords" content={seoKeywords} />
       <meta property="twitter:creator" content="@heynickn" />
       <meta property="og:type" content="website" />
       <meta name="twitter:image" content="/tags.png" />
