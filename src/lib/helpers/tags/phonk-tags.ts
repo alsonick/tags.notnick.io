@@ -5,7 +5,7 @@ export const phonkTags = (
   tiktok: string
 ): string => {
   // Tags
-  let tags = `${artist},${title},${artist} ${title},${title} ${artist},${title} phonk,${artist} ${title} phonk,${title} ${artist} phonk,${artist} phonk,brazilian phonk,funk,new phonk,tiktok phonk,hard phonk,${title} funk,${artist} funk,${artist} ${title} funk,phonk,phonk music,phonk ${new Date().getFullYear()},tiktok phonk`;
+  let tags = `${artist},${title},${artist} ${title},${title} ${artist},${title} phonk,${artist} ${title} phonk,${title} ${artist} phonk,${artist} phonk,brazilian phonk,funk,new phonk,tiktok phonk,hard phonk,${title} funk,${artist} funk,${artist} ${title} funk,phonk,phonk music,phonk ${new Date().getFullYear()}`;
 
   // Features
   let feats = features.split(",").map((feat) => feat.trim());
