@@ -18,7 +18,7 @@ export const phonkTags = (
     features !== "none" &&
     (tiktok === "false" || tiktok === "" || tiktok !== "true")
   ) {
-    tags += `${firstFeat},${firstFeat} ${title}`;
+    tags += `,${firstFeat},${firstFeat} ${title},${artist} ${firstFeat} ${title}`;
     if (features.length >= 2) {
       // Second feat
       const secondFeat = feats[1];
