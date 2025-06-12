@@ -1,0 +1,9 @@
+export const NoSupportedSizeScreenMessage = () => {
+  return (
+    <div className="flex lg:hidden">
+      <p className="text-2xl text-center font-light">
+        Whoop. This is awkward! This site only supports desktop size screens.
+      </p>
+    </div>
+  );
+};

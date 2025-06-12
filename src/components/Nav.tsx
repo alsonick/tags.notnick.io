@@ -1,5 +1,5 @@
+import { FiExternalLink, FiLink } from "react-icons/fi";
 import { NavYouTubeLogo } from "./NavYouTubeLogo";
-import { FiExternalLink } from "react-icons/fi";
 import { useEffect, useState } from "react";
 
 // Next.js
@@ -52,6 +52,12 @@ export const Nav = () => {
           target="_blank"
         >
           Documentation <FiExternalLink className="ml-1 text-xl" />
+        </Link>
+        <Link
+          className="font-semibold hover:underline flex items-center ml-10"
+          href="/privacy-policy"
+        >
+          Privacy Policy <FiLink className="ml-1 text-xl" />
         </Link>
       </div>
     </nav>

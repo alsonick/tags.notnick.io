@@ -5,11 +5,14 @@ import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
+import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit } from "react-icons/fi";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { CharacterLimit } from "@/components/CharacterLimit";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { ToastContainer, toast } from "react-toastify";
+import { MainWrapper } from "@/components/MainWrapper";
+import { Container } from "@/components/Container";
 import { Button } from "../components/Button";
 import { Footer } from "@/components/Footer";
 import { Response } from "@/types/response";
@@ -23,6 +26,7 @@ import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
 import copy from "copy-to-clipboard";
 import { error } from "@/lib/error";
+import { seo } from "@/lib/seo/seo";
 
 // Next.js
 import Link from "next/link";
@@ -165,23 +169,21 @@ export default function Home() {
     }
   };
 
-  const seoTitle = "Lyrics Tags Generator";
-  const seoDescription = "Generate YouTube tags for your lyric videos.";
-
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <Seo seoTitle={seoTitle} seoDescription={seoDescription} />
-      <div className="flex lg:hidden">
-        <p className="text-2xl text-center font-light">
-          Whoop. This is awkward! This site only supports desktop size screens.
-        </p>
-      </div>
+    <Container>
+      <Seo
+        seoTitle={seo.page.home.title}
+        seoDescription={seo.page.home.description}
+      />
+      <NoSupportedSizeScreenMessage />
       <Nav />
-      <main className="lg:flex flex-col py-32 h-full px-2 sm:w-[55rem] w-[95%] hidden">
+      <MainWrapper>
         <header className="flex flex-col items-center mt-5">
-          <h1 className="text-6xl font-bold tracking-tighter">{seoTitle} ✍️</h1>
+          <h1 className="text-6xl font-bold tracking-tighter">
+            {seo.page.home.title} ✍️
+          </h1>
           <p className="text-gray-800 mt-4 text-xl font-medium">
-            {seoDescription}
+            {seo.page.home.description}
           </p>
         </header>
         <form onSubmit={submit} className="flex flex-col">
@@ -598,8 +600,8 @@ export default function Home() {
           </div>
         )}
         <Footer />
-      </main>
+      </MainWrapper>
       <ToastContainer />
-    </div>
+    </Container>
   );
 }
