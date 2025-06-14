@@ -23,14 +23,12 @@ export const Nav = () => {
         scrolled ? "fixed shadow-md h-20" : "fixed shadow-none"
       }`}
     >
-      <div className="flex items-center">
+      <Link href="/" className="flex items-center">
         <NavYouTubeLogo />
         <div className="flex flex-col text-left gap-0 mb-[3px]">
-          <h1 className="font-bold tracking-tighter text-xl ml-3">
-            Lyrics Tags Generator
-          </h1>
+          <h1 className="font-bold tracking-tighter text-xl ml-3">Lyrics Tags Generator</h1>
         </div>
-      </div>
+      </Link>
       <div className="flex items-center">
         <Link
           className="font-semibold hover:underline mr-10 flex items-center"
@@ -53,10 +51,7 @@ export const Nav = () => {
         >
           Documentation <FiExternalLink className="ml-1 text-xl" />
         </Link>
-        <Link
-          className="font-semibold hover:underline flex items-center ml-10"
-          href="/privacy-policy"
-        >
+        <Link className="font-semibold hover:underline flex items-center ml-10" href="/privacy-policy">
           Privacy Policy <FiLink className="ml-1 text-xl" />
         </Link>
       </div>

@@ -108,17 +108,9 @@ export default function Home() {
     setLoading(true);
 
     const response = await fetch(
-      `/api/generate${
-        title.length ? `?title=${title}` : "?title=none"
-      }&artist=${artist}${
-        Boolean(features.length)
-          ? `&features=${features.trimStart().trimEnd()}`
-          : "&features=none"
-      }${
-        Boolean(channelName.length)
-          ? `&channel=${channelName.trimStart().trimEnd()}`
-          : "&channel=none"
-      }&tiktok=${
+      `/api/generate${title.length ? `?title=${title}` : "?title=none"}&artist=${artist}${
+        Boolean(features.length) ? `&features=${features.trimStart().trimEnd()}` : "&features=none"
+      }${Boolean(channelName.length) ? `&channel=${channelName.trimStart().trimEnd()}` : "&channel=none"}&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
       }&format=${format}`,
       {
@@ -171,20 +163,13 @@ export default function Home() {
 
   return (
     <Container>
-      <Seo
-        seoTitle={seo.page.home.title}
-        seoDescription={seo.page.home.description}
-      />
+      <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
       <NoSupportedSizeScreenMessage />
       <Nav />
       <MainWrapper>
         <header className="flex flex-col items-center mt-5">
-          <h1 className="text-6xl font-bold tracking-tighter">
-            {seo.page.home.title} ✍️
-          </h1>
-          <p className="text-gray-800 mt-4 text-xl font-medium">
-            {seo.page.home.description}
-          </p>
+          <h1 className="text-6xl font-bold tracking-tighter">{seo.page.home.title} ✍️</h1>
+          <p className="text-gray-800 mt-4 text-xl font-medium">{seo.page.home.description}</p>
         </header>
         <form onSubmit={submit} className="flex flex-col">
           <div className="flex w-full gap-6 items-center">
@@ -219,13 +204,8 @@ export default function Home() {
                 ref={titleRef}
                 value={title}
               />
-              <p className="text-xs mt-1">
-                Please remove any commas , if there are any.{" "}
-              </p>
-              <CharacterLimit
-                limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT}
-                text={title}
-              />
+              <p className="text-xs mt-1">Please remove any commas , if there are any. </p>
+              <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
             </section>
           </div>
           <div className="flex w-full gap-6 items-center">
@@ -238,13 +218,8 @@ export default function Home() {
                 value={features}
                 required={false}
               />
-              <p className="text-xs mt-1">
-                Please use a comma , to separate feature artists.
-              </p>
-              <CharacterLimit
-                limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT}
-                text={features}
-              />
+              <p className="text-xs mt-1">Please use a comma , to separate feature artists.</p>
+              <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
             </section>
             <section className="flex flex-col w-full">
               <Step step={4} text="Channel" />
@@ -255,27 +230,15 @@ export default function Home() {
                 value={channelName}
                 required={false}
               />
-              <p className="text-xs mt-1">
-                Enter the name of the YouTube Channel.
-              </p>
-              <CharacterLimit
-                limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT}
-                text={channelName}
-              />
+              <p className="text-xs mt-1">Enter the name of the YouTube Channel.</p>
+              <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channelName} />
             </section>
           </div>
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
               <Step step={5} text="TikTok" />
-              <Input
-                onChange={(e) => setTiktok(e.target.value)}
-                placeholder="false"
-                required={false}
-                value={tiktok}
-              />
-              <p className="text-xs mt-1">
-                Is the song popular on TikTok? Type "true" if so.{" "}
-              </p>
+              <Input onChange={(e) => setTiktok(e.target.value)} placeholder="false" required={false} value={tiktok} />
+              <p className="text-xs mt-1">Is the song popular on TikTok? Type "true" if so. </p>
             </section>
             <section className="flex flex-col w-full">
               <Step step={6} text="Format" />
@@ -293,24 +256,13 @@ export default function Home() {
                   <option value="phonk">Phonk</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                  <svg
-                    className="w-4 h-4 text-gray-600"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      strokeLinejoin="round"
-                      strokeLinecap="round"
-                      d="M19 9l-7 7-7-7"
-                      strokeWidth={2}
-                    />
+                  <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
                   </svg>
                 </div>
               </div>
               <p className="text-xs mt-1">
-                Select the desired format.{" "}
-                <span className="text-yellow-600 font-semibold">Required*</span>
+                Select the desired format. <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
             </section>
           </div>
@@ -347,9 +299,8 @@ export default function Home() {
           <div className="flex flex-col">
             <div className="border p-4 mt-4 rounded-xl">
               {tags.length > 0 && (
-                <h2 className="text-2xl text-left font-light">
-                  Tags generated for <i>{data?.title}</i> by{" "}
-                  <b>{data?.artist}</b> 🤖
+                <h2 className="text-2xl text-left border-b pb-2">
+                  <i>{data?.title}</i> by <b>{data?.artist}</b> 🤖
                 </h2>
               )}
               <div className="flex flex-wrap gap-4 my-4 mt-6">
@@ -360,6 +311,7 @@ export default function Home() {
                         key={tag}
                         className="flex items-center border p-2 px-4 rounded-xl
                         hover:cursor-pointer w-fit duration-300 hover:shadow-lg"
+                        title={`Delete ${tag} tag`}
                         onClick={() => {
                           const filtered = tags.filter((t) => t !== tag);
                           setTags(filtered);
@@ -371,9 +323,7 @@ export default function Home() {
                     ))}
                   </>
                 ) : (
-                  <h3 className="text-2xl font-light">
-                    Click the "Generate" button to generate your tags. 🤖
-                  </h3>
+                  <h3 className="text-2xl">Click the "Generate" button to generate your tags. 🤖</h3>
                 )}
               </div>
             </div>
@@ -388,10 +338,7 @@ export default function Home() {
               </Link>
             )}
             <div className="flex w-full mt-6 items-center">
-              <CharacterLimit
-                count={countTagsLength(tags.join(","))}
-                limit={500}
-              />
+              <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} />
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button
@@ -435,9 +382,7 @@ export default function Home() {
                   style={{ marginLeft: "auto" }}
                   onClick={() => {
                     if (!tags.length) {
-                      toast.error(
-                        error.message.generateTagsBeforeYouCopyToClipboard
-                      );
+                      toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
                       return;
                     }
                     copy(tags.join(","));
@@ -449,22 +394,15 @@ export default function Home() {
               </div>
             </div>
             {countTagsLength(tags.join(",")) > 500 && (
-              <p className="mt-4 text-sm text-red-500">
-                Please delete the least suitable tags for your case.
-              </p>
+              <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
             )}
             {data?.tagsToBeRemoved.length ? (
               <>
                 <div className="border p-4 mt-4 rounded-xl">
-                  <h3 className="text-2xl font-light">
-                    Recommended tags to delete 🤖
-                  </h3>
+                  <h2 className="text-2xl border-b pb-2">Recommended tags to delete 🤖</h2>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
                     {data?.tagsToBeRemoved.split(",").map((tag) => (
-                      <div
-                        key={tag}
-                        className="flex items-center border p-2 px-4 rounded-xl w-fit"
-                      >
+                      <div key={tag} className="flex items-center border p-2 px-4 rounded-xl w-fit">
                         <p className="font-semibold">{tag.toLowerCase()}</p>
                       </div>
                     ))}
@@ -475,20 +413,14 @@ export default function Home() {
                     style={{ marginLeft: "auto" }}
                     onClick={() => {
                       if (data?.tagsToBeRemoved) {
-                        const tagsToRemove = data.tagsToBeRemoved
-                          .split(",")
-                          .map((tag) => tag.trim().toLowerCase());
+                        const tagsToRemove = data.tagsToBeRemoved.split(",").map((tag) => tag.trim().toLowerCase());
 
-                        let newTags = tags.filter(
-                          (tag) => !tagsToRemove.includes(tag.toLowerCase())
-                        );
+                        let newTags = tags.filter((tag) => !tagsToRemove.includes(tag.toLowerCase()));
 
                         setTags(newTags);
 
                         if (!overflowTagsDeleted) {
-                          toast.success(
-                            success.message.tagsRemovedSuccessfully
-                          );
+                          toast.success(success.message.tagsRemovedSuccessfully);
                         } else {
                           toast.error(error.message.tagsAlreadyRemoved);
                         }
@@ -506,10 +438,7 @@ export default function Home() {
               <div className="flex flex-col mt-8 border-t  pt-4">
                 <h3 className="text-2xl font-bold">Suggested:</h3>
                 {titles.map((title) => (
-                  <div
-                    className="flex items-center justify-between w-full mt-4"
-                    key={title}
-                  >
+                  <div className="flex items-center justify-between w-full mt-4" key={title}>
                     <h4 className="text-xl">{title}</h4>
                     <Button
                       onClick={() => {
@@ -525,9 +454,7 @@ export default function Home() {
                   <div className="flex items-center ml-auto">
                     <Button
                       onClick={() => {
-                        const uppercaseTitles = titles.map((title) =>
-                          title.toUpperCase()
-                        );
+                        const uppercaseTitles = titles.map((title) => title.toUpperCase());
 
                         if (uppercaseTitles === titles) {
                           return;
@@ -541,9 +468,7 @@ export default function Home() {
                     <div className="ml-2">
                       <Button
                         onClick={() => {
-                          const lowercaseTitles = titles.map((title) =>
-                            title.toLowerCase()
-                          );
+                          const lowercaseTitles = titles.map((title) => title.toLowerCase());
 
                           if (lowercaseTitles === titles) {
                             return;
@@ -584,9 +509,7 @@ export default function Home() {
                   </div>
                   <Button
                     onClick={() => {
-                      const hashtagArray = data?.hashtags.map(
-                        (hashtag) => `#${hashtag}`
-                      );
+                      const hashtagArray = data?.hashtags.map((hashtag) => `#${hashtag}`);
                       const textToCopy = `${hashtagArray?.join(" ")}`;
                       copy(textToCopy);
                       toast.success(success.message.hashtagsCopiedToClipboard);

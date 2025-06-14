@@ -26,10 +26,7 @@ import { shuffleTags } from "@/lib/shuffle-tags";
 import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
@@ -233,14 +230,7 @@ export default async function handler(
     tags += `,${channel.replaceAll(".", "")}`.toLowerCase();
   }
 
-  tagsToBeRemoved = removeTags(
-    finalTitle,
-    finalArtist,
-    finalFeatures,
-    finalFormat.toLowerCase(),
-    tiktok,
-    tags
-  );
+  tagsToBeRemoved = removeTags(finalTitle, finalArtist, finalFeatures, finalFormat.toLowerCase(), tiktok, tags);
 
   removedTags = tags
     .split(",")
@@ -248,9 +238,7 @@ export default async function handler(
     .filter((tag) => {
       if (!tag) return false;
 
-      const tagsToRemoveArray = tagsToBeRemoved
-        .split(",")
-        .map((t) => t.trim().toLowerCase());
+      const tagsToRemoveArray = tagsToBeRemoved.split(",").map((t) => t.trim().toLowerCase());
 
       return !tagsToRemoveArray.includes(tag.toLowerCase());
     })
@@ -259,9 +247,7 @@ export default async function handler(
   let titles: string = "";
 
   const feats: string[] = finalFeatures.length
-    ? finalFeatures
-        .split(",")
-        .map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`)
+    ? finalFeatures.split(",").map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`)
     : [];
 
   // Lyrics
@@ -294,11 +280,7 @@ export default async function handler(
     titles += bassBoostedTitles(finalArtist, finalTitle, feats);
   }
 
-  const hashtags = [
-    finalArtist.replaceAll(" ", ""),
-    finalTitle.replaceAll(" ", ""),
-    computeFinalHashtags(finalFormat),
-  ];
+  const hashtags = [finalArtist.replaceAll(" ", ""), finalTitle.replaceAll(" ", ""), computeFinalHashtags(finalFormat)];
 
   // Send data to discord webhook (tags)
   const hook1 = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
@@ -338,9 +320,7 @@ export default async function handler(
             },
             {
               name: "Length:",
-              value: removedTags.length
-                ? countTagsLength(removedTags)
-                : countTagsLength(tags),
+              value: removedTags.length ? countTagsLength(removedTags) : countTagsLength(tags),
               inline: true,
             },
             {
@@ -376,7 +356,7 @@ export default async function handler(
   res.status(200).json({
     success: true,
     tags: tags.toLowerCase(),
-    tagsToBeRemoved: tagsToBeRemoved.toLowerCase(),
+    tagsToBeRemoved: tagsToBeRemoved.length ? tagsToBeRemoved.toLowerCase() : [],
     removedTags: removedTags.toLowerCase(),
     removedTagsLength: countTagsLength(removedTags),
     title: finalTitle.trim(),
@@ -386,18 +366,18 @@ export default async function handler(
     extras: {
       titles,
       array: {
+        removedTags: removedTags.toLowerCase().split(","),
         titles: titles.split("="),
+        tags: tags.toLowerCase().split(","),
       },
     },
-    url: `/api/generate?title=${encodeURIComponent(
-      finalTitle
-    )}&artist=${encodeURIComponent(finalArtist)}&features=${encodeURIComponent(
-      finalFeatures
-    )}&tiktok=${
+    url: `/api/generate?title=${encodeURIComponent(finalTitle)}&artist=${encodeURIComponent(
+      finalArtist
+    )}&features=${encodeURIComponent(finalFeatures)}&tiktok=${
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-    }&format=${finalFormat}&channel=${
-      channel ? encodeURIComponent(channel) : "none"
-    }&shuffle=${shuffle || shuffle === "true" ? "true" : "false"}`,
+    }&format=${finalFormat}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${
+      shuffle || shuffle === "true" ? "true" : "false"
+    }`,
     length: countTagsLength(tags),
   });
 }
