@@ -1,4 +1,4 @@
-import { countTagsLength } from "@/lib/count-tags-length";
+import { tagsDeletionAlgorithm } from "./helpers/tags-deletion-algorithm";
 
 export const lyricsTagsRemove = (
   title: string,
@@ -7,91 +7,130 @@ export const lyricsTagsRemove = (
   tiktok: string,
   tags: string
 ): string => {
-  const tagsLength = countTagsLength(tags);
-  let tagsToBeRemoved = "";
-  let del: string[] = [];
-
   if (features === "none" && tiktok === "false") {
-    if (tagsLength > 800) {
-      del =
-        `${title} lyrics ${artist},lyrics ${title} ${artist},${artist} lyrics,lyrics ${artist},${title} ${artist},${title} lyric video,${artist} lyrics ${title},${artist},lyrics`
-          .toLowerCase()
-          .split(",");
+    const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
+      const patterns = [
+        `lyrics ${artist}`,
+        `${artist} lyrics`,
+        `${artist} lyrics ${title}`,
+        `${title} lyric video`,
+        `lyrics ${title}`,
+        `lyrics ${title} ${artist}`,
+        `lyrics`,
+        `lyrics ${artist} ${title}`,
+        `${title} ${artist} lyrics`,
+        `${title} lyrics`,
+        `${artist} ${title}`,
+        `${title} ${artist}`,
+        `${title}`,
+        `${artist}`,
+        `${artist} ${title} lyrics`,
+      ];
 
-      const tagArray = tags.toLowerCase().split(",");
+      return patterns.map((pattern) => pattern.trim().toLowerCase());
+    };
 
-      for (const formatTag of del) {
-        if (tagArray.includes(formatTag.trim())) {
-          tagsToBeRemoved += `${formatTag.trim()},`;
-        }
-      }
+    const concreteLeastEfficientTags = generateConcreteLeastEfficientTags(artist, title);
 
-      return tagsToBeRemoved.slice(0, -1);
-    } else if (tagsLength > 600) {
-      del =
-        `lyrics ${artist},${artist} lyrics,lyrics ${title} ${artist},${title} lyrics ${artist},${title} lyric video,${artist} lyrics ${title}`
-          .toLowerCase()
-          .split(",");
-
-      const tagArray = tags.toLowerCase().split(",");
-      for (const formatTag of del) {
-        if (tagArray.includes(formatTag.trim())) {
-          tagsToBeRemoved += `${formatTag.trim()},`;
-        }
-      }
-
-      return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-    } else if (tagsLength > 500) {
-      del = `lyrics ${artist},${artist} lyrics,${title} lyrics ${artist}`
-        .toLowerCase()
-        .split(",");
-
-      const tagArray = tags.toLowerCase().split(",");
-      for (const formatTag of del) {
-        if (tagArray.includes(formatTag.trim())) {
-          tagsToBeRemoved += `${formatTag.trim()},`;
-        }
-      }
-
-      return tagsToBeRemoved.slice(0, -1); // Remove trailing comma
-    }
+    return tagsDeletionAlgorithm(concreteLeastEfficientTags, tags.toLowerCase());
   }
 
   if (features !== "none" && tiktok === "false") {
-    let feats = features.split(",").map((feat) => feat.trim());
-    const firstFeat = feats[0];
-    const secondFeat = feats[1];
+    const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
+      let feats = features.split(",").map((feat) => feat.trim());
 
-    if (tagsLength > 600) {
-      del =
-        `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist},lyrics ${artist},${artist} lyrics,${title} lyric video,lyrics,lyrics ${secondFeat},${firstFeat} lyrics`
-          .toLowerCase()
-          .split(",");
+      const secondFeature = feats[1];
+      const firstFeature = feats[0];
 
-      const tagArray = tags.toLowerCase().split(",");
-      for (const formatTag of del) {
-        if (tagArray.includes(formatTag.trim())) {
-          tagsToBeRemoved += `${formatTag.trim()},`;
-        }
+      if (feats.length === 1) {
+        const patterns = [
+          `lyrics ${firstFeature} ${title}`,
+          `${firstFeature} ${title} lyrics`,
+          `${firstFeature} lyrics`,
+          `lyrics ${artist}`,
+          `${artist} lyrics`,
+          `${artist} lyrics ${title}`,
+          `${title} lyric video`,
+          `lyrics ${title}`,
+          `lyrics ${title} ${artist}`,
+          `lyrics`,
+          `lyrics ${artist} ${title}`,
+          `${title} ${artist} lyrics`,
+          `${title} lyrics`,
+          `${artist} ${title}`,
+          `${title} ${artist}`,
+          `${title}`,
+          `${artist}`,
+          `${artist} ${title} lyrics`,
+          `${firstFeature}`,
+        ];
+
+        return patterns.map((pattern) => pattern.trim().toLowerCase());
+      } else if (feats.length === 2) {
+        const patterns = [
+          `${secondFeature} ${title} lyrics`,
+          `lyrics ${firstFeature} ${title}`,
+          `${firstFeature} ${title} lyrics`,
+          `${firstFeature} lyrics`,
+          `lyrics ${artist}`,
+          `${artist} lyrics`,
+          `${artist} lyrics ${title}`,
+          `${title} lyric video`,
+          `lyrics ${title}`,
+          `lyrics ${title} ${artist}`,
+          `lyrics`,
+          `lyrics ${artist} ${title}`,
+          `${title} ${artist} lyrics`,
+          `${title} lyrics`,
+          `${artist} ${title}`,
+          `${title} ${artist}`,
+          `${title}`,
+          `${artist}`,
+          `${artist} ${title} lyrics`,
+          `${firstFeature}`,
+          `${secondFeature}`,
+        ];
+
+        return patterns.map((pattern) => pattern.trim().toLowerCase());
+      } else if (feats.length === 3) {
+        const thirdFeature = feats[2];
+
+        const patterns = [
+          `${thirdFeature} ${title} lyrics`,
+          `${secondFeature} ${title} lyrics`,
+          `lyrics ${firstFeature} ${title}`,
+          `${firstFeature} ${title} lyrics`,
+          `${firstFeature} lyrics`,
+          `lyrics ${artist}`,
+          `${artist} lyrics`,
+          `${artist} lyrics ${title}`,
+          `${title} lyric video`,
+          `lyrics ${title}`,
+          `lyrics ${title} ${artist}`,
+          `lyrics`,
+          `lyrics ${artist} ${title}`,
+          `${title} ${artist} lyrics`,
+          `${title} lyrics`,
+          `${artist} ${title}`,
+          `${title} ${artist}`,
+          `${title}`,
+          `${artist}`,
+          `${artist} ${title} lyrics`,
+          `${firstFeature}`,
+          `${secondFeature}`,
+          `${thirdFeature}`,
+        ];
+
+        return patterns.map((pattern) => pattern.trim().toLowerCase());
       }
 
-      return tagsToBeRemoved.slice(0, -1);
-    } else if (tagsLength > 500) {
-      del =
-        `${firstFeat} lyrics,lyrics ${firstFeat} ${title},${title} lyrics ${artist}`
-          .toLowerCase()
-          .split(",");
+      return [];
+    };
 
-      const tagArray = tags.toLowerCase().split(",");
-      for (const formatTag of del) {
-        if (tagArray.includes(formatTag.trim())) {
-          tagsToBeRemoved += `${formatTag.trim()},`;
-        }
-      }
+    const concreteLeastEfficientTags = generateConcreteLeastEfficientTags(artist, title);
 
-      return tagsToBeRemoved.slice(0, -1);
-    }
+    return tagsDeletionAlgorithm(concreteLeastEfficientTags, tags.toLowerCase());
   }
 
-  return tagsToBeRemoved;
+  return "";
 };
