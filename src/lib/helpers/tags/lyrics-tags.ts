@@ -5,7 +5,7 @@ export const lyricsTags = (artist: string, title: string, features: string, tikt
   // Features
   let feats = features.split(",").map((feat) => feat.trim());
 
-  // First feat
+  // First feature
   const firstFeat = feats[0];
 
   // Features
