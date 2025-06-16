@@ -7,7 +7,7 @@ export const slowedReverbTagsRemove = (
   tiktok: string,
   tags: string
 ): string => {
-  if (features === "none" && tiktok === "false") {
+  if (features === "none") {
     const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
       const patterns = [
         `${artist} - ${title} slowed reverb`,
@@ -34,7 +34,7 @@ export const slowedReverbTagsRemove = (
     return tagsDeletionAlgorithm(concreteLeastEfficientTags, tags.toLowerCase());
   }
 
-  if (features !== "none" && tiktok === "false") {
+  if (features !== "none") {
     const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
       let feats = features.split(",").map((feat) => feat.trim());
 
