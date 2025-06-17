@@ -7,55 +7,18 @@ export const bassBoostedTagsRemove = (
   tiktok: string,
   tags: string
 ): string => {
-  const tagsLength = countTagsLength(tags);
-  let tagsToBeRemoved = "";
-  let del: string[] = [];
+  if (features === "none") {
+    const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
+      const patterns = [""];
 
-  if (features === "none" && tiktok === "false") {
-    if (tagsLength > 800) {
-    } else if (tagsLength > 700) {
-    } else if (tagsLength > 600) {
-    } else if (tags.length > 500) {
-      del = `${artist} - ${title},${artist} - ${title} bass boosted`
-        .toLowerCase()
-        .split(",");
+      return patterns.map((pattern) => pattern.trim().toLowerCase());
+    };
 
-      const tagArray = tags.toLowerCase().split(",");
-
-      for (const formatTag of del) {
-        if (tagArray.includes(formatTag.trim())) {
-          tagsToBeRemoved += `${formatTag.trim()},`;
-        }
-      }
-
-      return tagsToBeRemoved.slice(0, -1);
-    }
+    const concreteLeastEfficientTags = generateConcreteLeastEfficientTags(artist, title);
   }
 
-  if (features.length && tiktok === "false") {
-    let feats = features.split(",").map((feat) => feat.trim());
-    const firstFeat = feats[0];
-
-    if (tagsLength > 800) {
-    } else if (tagsLength > 700) {
-    } else if (tagsLength > 600) {
-      del =
-        `${artist} - ${title},${title} ${firstFeat} bass,${title} ${firstFeat} bass boosted,${artist} - ${title} bass boosted,${firstFeat} ${title} bass`
-          .toLowerCase()
-          .split(",");
-
-      const tagArray = tags.toLowerCase().split(",");
-
-      for (const formatTag of del) {
-        if (tagArray.includes(formatTag.trim())) {
-          tagsToBeRemoved += `${formatTag.trim()},`;
-        }
-      }
-
-      return tagsToBeRemoved.slice(0, -1);
-    } else if (tags.length > 500) {
-    }
+  if (features !== "none") {
   }
 
-  return tagsToBeRemoved;
+  return "";
 };

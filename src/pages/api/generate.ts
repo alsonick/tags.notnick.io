@@ -181,7 +181,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Get standardized format name and ensure it's lowercase for the API
     finalFormat = returnComputedFormat(formatText).toLowerCase();
   } else {
-    finalFormat = format;
+    finalFormat = returnComputedFormat(format).toLowerCase();
   }
 
   // Error if artist includes separators but title is already specified
