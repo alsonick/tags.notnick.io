@@ -6,16 +6,16 @@ export const lyricsTags = (artist: string, title: string, features: string, tikt
   let feats = features.split(",").map((feat) => feat.trim());
 
   // First feature
-  const firstFeat = feats[0];
+  const firstFeature = feats[0];
 
   // Features
   if (features !== "none" && (tiktok === "false" || tiktok === "" || tiktok !== "true")) {
-    tags += `,${firstFeat},${firstFeat} ${title} lyrics,lyrics ${firstFeat} ${title},${firstFeat} lyrics`;
+    tags += `,${firstFeature},${firstFeature} ${title} lyrics,lyrics ${firstFeature} ${title},${firstFeature} lyrics`;
 
     // Second feature
     if (feats.length === 2) {
-      const secondFeat = feats[1];
-      tags += `,${secondFeat},${secondFeat} ${title} lyrics`;
+      const secondFeature = feats[1];
+      tags += `,${secondFeature},${secondFeature} ${title} lyrics`;
     }
 
     // Third feature
@@ -26,7 +26,7 @@ export const lyricsTags = (artist: string, title: string, features: string, tikt
   }
 
   if (tiktok === "true") {
-    tags += `,lyrics`;
+    tags += `,tiktok,${title} tiktok,trending tiktok,tiktok songs`;
   }
 
   return tags;
