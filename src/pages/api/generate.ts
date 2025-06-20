@@ -25,6 +25,7 @@ import { removeEmojis } from "@/lib/remove-emojis";
 import { shuffleTags } from "@/lib/shuffle-tags";
 import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
+import { validateProvidedGenre } from "@/lib/validate-provided-genre";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -41,6 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const format: string = req.query.format as string;
   const artist: string = req.query.artist as string;
   const title: string = req.query.title as string;
+  const genre: string = req.query.genre as string;
 
   // Check if all the required fields are provided
   if (!artist || !tiktok) {
@@ -50,6 +52,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
+  if (!validateProvidedGenre(genre)) {
+    return res.status(400).json({
+      error: error.message.provideAValidGenre,
+      success: false,
+    });
+  }
   // Check if the structure query includes one of the valid accepted structures
   // TODO: Finish this later
   // if (!["1", "3", "4"].includes(structure)) {
@@ -219,6 +227,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let tagsToBeRemoved = "";
   let removedTags = "";
+
+  if (genre === "rap" || genre === "hiphop") {
+    tags += `,rap,hiphop,rap ${new Date().getFullYear()},rap music,rap lyrics`;
+  }
 
   if (shuffle === "true") {
     removedTags = shuffleTags(removedTags);

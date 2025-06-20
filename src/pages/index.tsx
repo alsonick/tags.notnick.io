@@ -112,7 +112,7 @@ export default function Home() {
         Boolean(features.length) ? `&features=${features.trimStart().trimEnd()}` : "&features=none"
       }${Boolean(channelName.length) ? `&channel=${channelName.trimStart().trimEnd()}` : "&channel=none"}&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-      }&format=${format}`,
+      }&format=${format}&genre=rap`,
       {
         method: "GET",
         headers: {
