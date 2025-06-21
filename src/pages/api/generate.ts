@@ -10,6 +10,7 @@ import { slowedReverbTitles } from "@/lib/helpers/titles/slowed-reverb-titles";
 import { bassBoostedTitles } from "@/lib/helpers/titles/bass-boosted-titles";
 import { slowedReverbTags } from "@/lib/helpers/tags/slowed-reverb-tags";
 import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
+import { validateProvidedGenre } from "@/lib/validate-provided-genre";
 import { returnComputedFormat } from "@/lib/return-computed-format";
 import { computeFinalHashtags } from "@/lib/compute-final-hashtag";
 import { lyricsTitles } from "@/lib/helpers/titles/lyrics-titles";
@@ -25,6 +26,7 @@ import { removeEmojis } from "@/lib/remove-emojis";
 import { shuffleTags } from "@/lib/shuffle-tags";
 import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
+import { GENRE } from "@/lib/genre";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -33,6 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Get the query parameters
+  const genre: string = (req.query.genre as string) || "none";
   const structure: string = req.query.structure as string;
   const features: string = req.query.features as string;
   const channel: string = req.query.channel as string;
@@ -41,11 +44,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const format: string = req.query.format as string;
   const artist: string = req.query.artist as string;
   const title: string = req.query.title as string;
+  const verse: string = req.query.verse as string;
 
   // Check if all the required fields are provided
   if (!artist || !tiktok) {
     return res.status(400).json({
       error: error.message.provideAllRequiredFields,
+      success: false,
+    });
+  }
+
+  if (typeof verse === "string" && !/^[a-zA-Z ,]*$/.test(verse)) {
+    return res.status(400).json({
+      error: error.message.removeSpecialCharactersAndNumbersExceptCommasVerse,
+      success: false,
+    });
+  }
+
+  if (!validateProvidedGenre(genre)) {
+    return res.status(400).json({
+      error: error.message.provideAValidGenre,
       success: false,
     });
   }
@@ -220,6 +238,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let tagsToBeRemoved = "";
   let removedTags = "";
 
+  const currentYear = new Date().getFullYear();
+
+  let verses = [];
+
+  if (typeof verse === "string" && /,/.test(verse)) {
+    const verseSplit = verse.split(",");
+
+    // If there's more than 3 verses then send back a error response
+    if (verseSplit.length > 3) {
+      return res.status(400).json({
+        error: error.message.threeVersesAreOnlyAllowed,
+        success: false,
+      });
+    }
+
+    // Add each verse to the array
+    verseSplit.forEach((verse) => verses.push(`,${verse}`));
+  } else if (verse) {
+    verses.push(`,${verse}`);
+  }
+
+  if (verses.length) {
+    tags += verses.join("").toLowerCase();
+  }
+
+  if (genre === GENRE.rap || genre === GENRE.hiphop) {
+    tags += `,rap,hiphop,rap ${currentYear},rap music,rap lyrics`;
+  } else if (genre === GENRE.country) {
+    tags += `,country,country ${currentYear},country music,country lyrics`;
+  } else if (genre === GENRE.pop) {
+    tags += `,pop,pop ${currentYear},pop music,trending pop`;
+  } else if (genre === GENRE.funk || genre === GENRE.phonk) {
+    tags += `,phonk,funk,phonk music,phonk ${currentYear},new phonk`;
+  } else if (genre === GENRE.latin) {
+    tags += `,latin lyrics,trending latin`;
+  }
+
   if (shuffle === "true") {
     removedTags = shuffleTags(removedTags);
     tags = shuffleTags(tags);
@@ -377,7 +432,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
     }&format=${finalFormat}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${
       shuffle || shuffle === "true" ? "true" : "false"
-    }`,
+    }&genre=${encodeURIComponent(genre)}`,
     length: countTagsLength(tags),
   });
 }
