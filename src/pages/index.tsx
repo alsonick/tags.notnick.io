@@ -26,6 +26,7 @@ import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
 import copy from "copy-to-clipboard";
 import { error } from "@/lib/error";
+import { GENRE } from "@/lib/genre";
 import { seo } from "@/lib/seo/seo";
 
 // Next.js
@@ -41,13 +42,16 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [features, setFeatures] = useState("");
   const [data, setData] = useState<Response>();
+  const [genre, setGenre] = useState("None");
   const [artist, setArtist] = useState("");
   const [tiktok, setTiktok] = useState("");
   const [title, setTitle] = useState("");
+  const [verse, setVerse] = useState("");
 
   const channelNameRef = useRef<HTMLInputElement | null>(null);
   const featuresRef = useRef<HTMLInputElement | null>(null);
   const artistRef = useRef<HTMLInputElement | null>(null);
+  const verseRef = useRef<HTMLInputElement | null>(null);
   const titleRef = useRef<HTMLInputElement | null>(null);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -88,7 +92,7 @@ export default function Home() {
       return;
     }
 
-    // Checks if the channel name field reaches the character limit
+    // Checks if the channel name field reaches the character limit.
     if (channelName.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
       toast.error(error.message.characterLimitExceeded);
       channelNameRef.current?.focus();
@@ -104,6 +108,25 @@ export default function Home() {
       }
     }
 
+    // Checks if verse contains any numbers or special characters.
+    if (verse.length && !/^[a-zA-Z ,]*$/.test(verse)) {
+      toast.error(error.message.removeSpecialCharactersAndNumbersExceptCommasVerse);
+      verseRef.current?.focus();
+      return;
+    }
+
+    // Checks if verse contains a comma, if does then we split the verses and check if there are more than 3 verses.
+    if (verse.length && /,/.test(verse)) {
+      const verseSplit = verse.split(",");
+
+      // If there's more than 3 verses then send back a error response
+      if (verseSplit.length > 3) {
+        toast.error(error.message.threeVersesAreOnlyAllowed);
+        verseRef.current?.focus();
+        return;
+      }
+    }
+
     // Starts the loading
     setLoading(true);
 
@@ -112,7 +135,7 @@ export default function Home() {
         Boolean(features.length) ? `&features=${features.trimStart().trimEnd()}` : "&features=none"
       }${Boolean(channelName.length) ? `&channel=${channelName.trimStart().trimEnd()}` : "&channel=none"}&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-      }&format=${format}&genre=rap`,
+      }&format=${format}&genre=${genre}${verse.length && `&verse=${verse}`}`,
       {
         method: "GET",
         headers: {
@@ -148,9 +171,12 @@ export default function Home() {
 
       setOverflowTagsDeleted(false);
       setChannelName("");
+      setFormat("Lyrics");
+      setGenre("None");
       setFeatures("");
       setArtist("");
       setTiktok("");
+      setVerse("");
       setTitle("");
     }
 
@@ -167,11 +193,11 @@ export default function Home() {
       <NoSupportedSizeScreenMessage />
       <Nav />
       <MainWrapper>
-        <header className="flex flex-col items-center mt-5">
+        <header className="flex flex-col items-center">
           <h1 className="text-6xl font-bold tracking-tighter">{seo.page.home.title} ✍️</h1>
           <p className="text-gray-800 mt-4 text-xl font-medium">{seo.page.home.description}</p>
         </header>
-        <form onSubmit={submit} className="flex flex-col">
+        <form onSubmit={submit} className="flex flex-col mt-6">
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
               <Step step={1} text="Artist" />
@@ -183,7 +209,7 @@ export default function Home() {
                 value={artist}
               />
               <p className="text-xs mt-1">
-                Any special characters are allowed except commas ,.{" "}
+                Any special characters are allowed except commas.{" "}
                 <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
               <CharacterLimit
@@ -204,7 +230,7 @@ export default function Home() {
                 ref={titleRef}
                 value={title}
               />
-              <p className="text-xs mt-1">Please remove any commas , if there are any. </p>
+              <p className="text-xs mt-1">Please remove any commas if there are any. </p>
               <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
             </section>
           </div>
@@ -218,7 +244,7 @@ export default function Home() {
                 value={features}
                 required={false}
               />
-              <p className="text-xs mt-1">Please use a comma , to separate feature artists.</p>
+              <p className="text-xs mt-1">Please use a comma to separate feature artists.</p>
               <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
             </section>
             <section className="flex flex-col w-full">
@@ -264,6 +290,42 @@ export default function Home() {
               <p className="text-xs mt-1">
                 Select the desired format. <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
+            </section>
+          </div>
+          <div className="flex w-full gap-6 items-center">
+            <section className="flex flex-col w-full">
+              <Step step={7} text="Genre" />
+              <div className="relative w-full">
+                <select
+                  className="appearance-none border w-full p-2 px-4 pr-10 flex items-center rounded-md focus:outline-2"
+                  onChange={(e) => setGenre(e.target.value)}
+                  value={genre}
+                >
+                  <option value={GENRE.none}>None</option>
+                  <option value={GENRE.country}>Country</option>
+                  <option value={GENRE.latin}>Latin</option>
+                  <option value={GENRE.phonk}>Phonk</option>
+                  <option value={GENRE.pop}>Pop</option>
+                  <option value={GENRE.rap}>Rap</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                  <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-xs mt-1">Select the desired genre.</p>
+            </section>
+            <section className="flex flex-col w-full">
+              <Step step={8} text="Verse" />
+              <Input
+                onChange={(e) => setVerse(e.target.value)}
+                placeholder="don't let me down,im in love for the first time"
+                required={false}
+                ref={verseRef}
+                value={verse}
+              />
+              <p className="text-xs mt-1">Popular verse? Paste them in here. Limit is 3, separate them by commas.</p>
             </section>
           </div>
           <div className="w-full justify-between items-center flex mt-6 border-b pb-4">

@@ -9,6 +9,8 @@ export const error = {
     nothingToClear: "There's nothing to clear.",
     provideAValidGenre: "Please provide a valid genre.",
     generateTagsFirst: "Please generate the tags first.",
+    removeSpecialCharactersAndNumbersExceptCommasVerse: "Please remove any numbers or special characters.",
+    threeVersesAreOnlyAllowed: "You can only include 3 verses.",
     generateTagsBeforeYouCopyToClipboard: "Please generate the tags before you copy to clipboard.",
     tagsAlreadyRemoved: "Recommended tags have already been removed.",
   },

@@ -1,20 +1,22 @@
+import { GENRE } from "./genre";
+
 export const validateProvidedGenre = (genre: string): boolean => {
   switch (genre.toLowerCase()) {
-    case "rap":
+    case GENRE.rap:
       return true;
-    case "hiphop":
+    case GENRE.hiphop:
       return true;
-    case "pop":
+    case GENRE.pop:
       return true;
-    case "none":
+    case GENRE.none:
       return true;
-    case "country":
+    case GENRE.country:
       return true;
-    case "funk":
+    case GENRE.funk:
       return true;
-    case "phonk":
+    case GENRE.phonk:
       return true;
-    case "latin":
+    case GENRE.latin:
       return true;
     default:
       return false;

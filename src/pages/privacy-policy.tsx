@@ -20,12 +20,8 @@ export default function PrivacyPolicy() {
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">Privacy Policy</h1>
         <div className="mt-8 text-gray-800">
-          <p className="text-lg">
-            Effective Date: <b>11 May 2025</b>
-          </p>
-          <p className="text-lg">
-            Last Updated: <b>11 May 2025</b>
-          </p>
+          <p className="text-lg">Effective Date: 11 May 2025</p>
+          <p className="text-lg">Last Updated: 11 May 2025</p>
         </div>
         <div className="text-gray-800 mt-8">
           Thank you for visiting{" "}
