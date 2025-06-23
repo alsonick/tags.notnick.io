@@ -36,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // Get the query parameters
   const genre: string = (req.query.genre as string) || "none";
+  const verse: string = (req.query.verse as string) || "none";
   const structure: string = req.query.structure as string;
   const features: string = req.query.features as string;
   const channel: string = req.query.channel as string;
@@ -44,7 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const format: string = req.query.format as string;
   const artist: string = req.query.artist as string;
   const title: string = req.query.title as string;
-  const verse: string = req.query.verse as string;
 
   // Check if all the required fields are provided
   if (!artist || !tiktok) {
