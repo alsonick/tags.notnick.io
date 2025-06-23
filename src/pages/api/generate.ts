@@ -242,7 +242,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let verses = [];
 
-  if (typeof verse === "string" && /,/.test(verse)) {
+  if (typeof verse === "string" && verse !== "none" && /,/.test(verse)) {
     const verseSplit = verse.split(",");
 
     // If there's more than 3 verses then send back a error response
@@ -255,7 +255,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Add each verse to the array
     verseSplit.forEach((verse) => verses.push(`,${verse}`));
-  } else if (verse) {
+  } else if (verse && verse !== "none") {
     verses.push(`,${verse}`);
   }
 
@@ -432,7 +432,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
     }&format=${finalFormat}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${
       shuffle || shuffle === "true" ? "true" : "false"
-    }&genre=${encodeURIComponent(genre)}`,
+    }&genre=${encodeURIComponent(genre).toLowerCase()}&verse=${verse}`,
     length: countTagsLength(tags),
   });
 }

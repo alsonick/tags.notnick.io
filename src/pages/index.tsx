@@ -135,7 +135,7 @@ export default function Home() {
         Boolean(features.length) ? `&features=${features.trimStart().trimEnd()}` : "&features=none"
       }${Boolean(channelName.length) ? `&channel=${channelName.trimStart().trimEnd()}` : "&channel=none"}&tiktok=${
         tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-      }&format=${format}&genre=${genre}${verse.length && `&verse=${verse}`}`,
+      }&format=${format}&genre=${genre}${Boolean(verse.length) ? `&verse=${verse}` : "&verse=none"}`,
       {
         method: "GET",
         headers: {
