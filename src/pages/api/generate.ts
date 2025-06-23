@@ -432,7 +432,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
     }&format=${finalFormat}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${
       shuffle || shuffle === "true" ? "true" : "false"
-    }&genre=${encodeURIComponent(genre).toLowerCase()}&verse=${verse}`,
+    }&genre=${encodeURIComponent(genre.toLowerCase())}&verse=${encodeURIComponent(verse.toLowerCase())}`,
     length: countTagsLength(tags),
   });
 }
