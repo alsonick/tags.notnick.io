@@ -1,26 +1,24 @@
 # Lyrics Tags Generator ([tags.notnick.io](https://tags.notnick.io/))
 
-This is a small utility tool for personal use, but you can also use it if you have a music/lyric channel on [YouTube](https://www.youtube.com).
+This is a small utility tool for personal use, but you can use it if you have a music/lyric channel on [YouTube](https://www.youtube.com).
 
 ## What to provide
 
-- `Artist` _(Required)_
-- `Title` _(Optional)_
-- `Features` (Optional)
-- `TikTok` (Optional)
-- `Channel` (Optional)
-- `Format` (Optional)
-  - Lyrics (Default)
-  - Bass Boosted
-  - Nightcore/Sped Up
-  - Slowed/Reverb
-  - Letra
-  - Phonk
-- `Shuffle` _(Optional)_
-
-> The `shuffle` option can only be passed in as a query in the API request endpoint. On the site, there's a button that lets you shuffle your tags, and the [bot version](https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot) shuffles the tags automatically.
+| Params     | Required | Description / Options                                                                                              |
+| ---------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
+| `Artist`   | ✅ Yes   | Name of the artist.                                                                                                |
+| `Title`    | ❌ No    | Name of the song.                                                                                                  |
+| `Features` | ❌ No    | Featured artists (3 supported).                                                                                    |
+| `TikTok`   | ❌ No    | Boolean flag (`true` / `false`).                                                                                   |
+| `Channel`  | ❌ No    | Name of the YouTube channel.                                                                                       |
+| `Format`   | ❌ No    | • `Lyrics` _(default)_<br>• `Bass Boosted`<br>• `Nightcore/Sped Up`<br>• `Slowed/Reverb`<br>• `Letra`<br>• `Phonk` |
+| `Shuffle`  | ❌ No    | Shuffle tags option (API only).                                                                                    |
+| `Genre`    | ❌ No    | • `None` _(default)_<br>• `Country`<br>• `Latin`<br>• `Phonk`<br>• `Pop`<br>• `Rap`                                |
+| `Verse`    | ❌ No    | Up to 3 short verses.                                                                                              |
 
 If you provide both `artist` and `title` in the `artist` field, you can leave all the other fields empty.
+
+> The `shuffle` option can only be passed in as a query in the API request endpoint. On the site, there's a button that lets you shuffle your tags, and the [bot version](https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot) shuffles the tags automatically.
 
 Example:
 
@@ -32,6 +30,46 @@ The format will _always_ default to `Lyrics` if it isn't provided.
 
 <img width="550" src="https://github.com/user-attachments/assets/b52492a9-7d63-45e1-b5ef-8f0270110b99" />
 
+If the format is provided in both the `artist` and `format` fields, then the format in the `format` field will override the format provided in the `artist` field.
+
+### Important
+
+- The [bot](https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot) version shuffles tags automatically.
+- If you have multiple features, only the first 3 features will be included in the tags.
+- You can only provide 3 verses.
+- You cannot include numbers or special characters in the `verse` field.
+- If the artist, title or even format is included in the `artist` field, then the character limit is `100`.
+- The character limit for the `artist`, `features` and `channel` fields is `30`.
+- Character limit for `title` is `45`.
+- You cannot include special characters in the `artist` field.
+- You cannot include commas in the `title` field.
+
+### Automation
+
+If use decide to use Lyrics Tags Generator in an automation system, then here are a few things you need to do:
+
+- You must remove any unnecessary data when providing it in the params to avoid any character limits, let's say you're pulling your data from a different service and it returns `I Smoked Away My Brain (I'm God x Demons Mashup)` as the title, this violates the `45` character limit for titles and it's not relevant for generating tags (bad SEO), you only want the `I Smoked Away My Brain` part, you must remove the `(I'm God x Demons Mashup)` from your end.
+
+Python example on how to remove unnecessary data:
+
+```py
+title = "I Smoked Away My Brain (I'm God x Demons Mashup)"
+sliced = text[text.find('('):]
+print(sliced) # I Smoked Away My Brain
+```
+
+- You also need to remove any commas found in `title` field.
+
+Python example on how to remove commas:
+
+```py
+text = "apples, oranges, bananas"
+new_text = text.replace(",", "")
+print(new_text)
+```
+
+If your automation software is written in a different programming language, then you must make the changes in that language.
+
 ## Data
 
 [Click here to open the json representation.](https://tags.notnick.io/api/generate?title=Residuals&artist=Chris%20Brown&features=none&tiktok=false&format=lyrics&channel=none)
@@ -39,19 +77,17 @@ The format will _always_ default to `Lyrics` if it isn't provided.
 ```json
 {
   "success": true,
-  "tags": "chris brown residuals,chris brown residuals lyrics,residuals lyrics,residuals chris brown lyrics,lyrics residuals,lyrics chris brown residuals,chris brown lyrics residuals,residuals lyrics chris brown,residuals lyric video,lyrics residuals chris brown,chris brown lyrics,lyrics chris brown,residuals,chris brown,residuals chris brown,lyrics",
-  "tagsToBeRemoved": "",
-  "removedTags": "chris brown residuals,chris brown residuals lyrics,residuals lyrics,residuals chris brown lyrics,lyrics residuals,lyrics chris brown residuals,chris brown lyrics residuals,residuals lyrics chris brown,residuals lyric video,lyrics residuals chris brown,chris brown lyrics,lyrics chris brown,residuals,chris brown,residuals chris brown,lyrics",
-  "removedTagsLength": 340,
+  "tags": "chris brown residuals,chris brown residuals lyrics,residuals lyrics,residuals chris brown lyrics,lyrics residuals,lyrics chris brown residuals,chris brown lyrics residuals,residuals lyric video,lyrics residuals chris brown,chris brown lyrics,lyrics chris brown,residuals,chris brown,residuals chris brown,lyrics",
+  "tagsToBeRemoved": [],
+  "removedTags": "chris brown residuals,chris brown residuals lyrics,residuals lyrics,residuals chris brown lyrics,lyrics residuals,lyrics chris brown residuals,chris brown lyrics residuals,residuals lyric video,lyrics residuals chris brown,chris brown lyrics,lyrics chris brown,residuals,chris brown,residuals chris brown,lyrics",
+  "removedTagsLength": 337,
   "title": "Residuals",
   "artist": "Chris Brown",
   "features": [],
   "hashtags": ["ChrisBrown", "Residuals", "Lyrics"],
-  "extras": {
-    "titles": "Chris Brown - Residuals (Lyrics)=Chris Brown - Residuals [Lyrics]"
-  },
-  "url": "/api/generate?title=Residuals&artist=Chris%20Brown&features=none&tiktok=false&format=lyrics&channel=none&shuffle=false",
-  "length": 340
+  "extras": {},
+  "url": "/api/generate?title=Residuals&artist=Chris%20Brown&features=none&tiktok=false&format=lyrics&channel=none&shuffle=false&genre=none&verse=none",
+  "length": 337
 }
 ```
 
