@@ -195,7 +195,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // If format text was found, process it
-  if (formatText.length) {
+  if (formatText.length && formatText.toLowerCase() !== "lyrics") {
     // Get standardized format name and ensure it's lowercase for the API
     finalFormat = returnComputedFormat(formatText).toLowerCase();
   } else {
