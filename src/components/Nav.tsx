@@ -31,27 +31,27 @@ export const Nav = () => {
       </Link>
       <div className="flex items-center">
         <Link
-          className="font-semibold hover:underline mr-10 flex items-center"
+          className="font-medium hover:underline mr-10 flex items-center"
           href="https://github.com/alsonick/lyrics-tags-generator-docs/issues/new"
           target="_blank"
         >
           Submit Suggestion <FiExternalLink className="ml-1 text-xl" />
         </Link>
         <Link
-          className="font-semibold hover:underline flex items-center mr-10"
+          className="font-medium hover:underline flex items-center mr-10"
           href="https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot"
           target="_blank"
         >
           Invite Discord Bot <FiExternalLink className="ml-1 text-xl" />
         </Link>
         <Link
-          className="font-semibold hover:underline flex items-center"
+          className="font-medium hover:underline flex items-center"
           href="https://github.com/alsonick/lyrics-tags-generator-docs"
           target="_blank"
         >
           Documentation <FiExternalLink className="ml-1 text-xl" />
         </Link>
-        <Link className="font-semibold hover:underline flex items-center ml-10" href="/privacy-policy">
+        <Link className="font-medium hover:underline flex items-center ml-10" href="/privacy-policy">
           Privacy Policy <FiLink className="ml-1 text-xl" />
         </Link>
       </div>

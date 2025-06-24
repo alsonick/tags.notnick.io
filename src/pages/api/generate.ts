@@ -31,7 +31,7 @@ import { GENRE } from "@/lib/genre";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
   if (req.method !== "GET") {
-    return res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({ error: error.message.methodNotAllowed });
   }
 
   // Get the query parameters
@@ -45,6 +45,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const format: string = req.query.format as string;
   const artist: string = req.query.artist as string;
   const title: string = req.query.title as string;
+
+  // Check if the artist field ends with ",-" which means the title wasn't provided.
+  if (/,-$/.test(artist)) {
+    return res.status(400).json({
+      error: error.message.provideTitle,
+      success: false,
+    });
+  }
+
+  // Check if the artist field starts with ",-" which means the title wasn't provided.
+  if (/^,-/.test(artist)) {
+    return res.status(400).json({
+      error: error.message.invalidFormat,
+      success: false,
+    });
+  }
 
   // Check if all the required fields are provided
   if (!artist || !tiktok) {
@@ -335,7 +351,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     titles += bassBoostedTitles(finalArtist, finalTitle, feats);
   }
 
-  const hashtags = [finalArtist.replaceAll(" ", ""), finalTitle.replaceAll(" ", ""), computeFinalHashtags(finalFormat)];
+  const hashtags = [
+    finalArtist.replaceAll(" ", ""),
+    finalTitle.replaceAll(" ", "").replaceAll("'", ""),
+    computeFinalHashtags(finalFormat),
+  ];
 
   // Send data to discord webhook (tags)
   const hook1 = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
@@ -420,6 +440,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     hashtags,
     extras: {
       titles,
+      seo: {
+        text: `${finalArtist},${finalTitle},${finalArtist} ${finalTitle} ${computeFinalHashtags(
+          finalFormat
+        )},${finalTitle} ${computeFinalHashtags(
+          finalFormat
+        )},${finalTitle} ${finalArtist},${finalArtist} ${finalTitle}`,
+      },
       array: {
         removedTags: removedTags.toLowerCase().split(","),
         titles: titles.split("="),

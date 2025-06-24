@@ -13,5 +13,7 @@ export const error = {
     threeVersesAreOnlyAllowed: "You can only include 3 verses.",
     generateTagsBeforeYouCopyToClipboard: "Please generate the tags before you copy to clipboard.",
     tagsAlreadyRemoved: "Recommended tags have already been removed.",
+    invalidFormat: "Invalid format.",
+    methodNotAllowed: "Method Not Allowed",
   },
 };

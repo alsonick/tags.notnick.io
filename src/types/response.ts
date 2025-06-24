@@ -1,17 +1,24 @@
 export interface Response {
-  success: boolean;
-  length: number;
-  error?: string;
-  tags: string;
   tagsToBeRemoved: string;
   removedTags: string;
-  title: string;
-  artist: string;
-  t: string;
   features: string[];
   hashtags: string[];
+  success: boolean;
+  artist: string;
+  length: number;
+  error?: string;
+  title: string;
+  tags: string;
   extras: {
     titles?: string;
+    seo: {
+      text: string;
+    };
+    array: {
+      removedTags: string[];
+      titles: string[];
+      tags: string[];
+    };
   };
   url: string;
 }

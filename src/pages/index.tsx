@@ -31,6 +31,7 @@ import { seo } from "@/lib/seo/seo";
 
 // Next.js
 import Link from "next/link";
+import { FORMAT } from "@/lib/format";
 
 export default function Home() {
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
@@ -42,6 +43,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [features, setFeatures] = useState("");
   const [data, setData] = useState<Response>();
+  const [seoText, setSeoText] = useState("");
   const [genre, setGenre] = useState("None");
   const [artist, setArtist] = useState("");
   const [tiktok, setTiktok] = useState("");
@@ -56,6 +58,20 @@ export default function Home() {
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Check if the artist field ends with ",-" which means the title wasn't provided.
+    if (/,-$/.test(artist)) {
+      toast.error(error.message.provideTitle);
+      artistRef.current?.focus();
+      return;
+    }
+
+    // Check if the artist field starts with ",-" which means the title wasn't provided.
+    if (/^,-/.test(artist)) {
+      toast.error(error.message.invalidFormat);
+      artistRef.current?.focus();
+      return;
+    }
 
     // Check if there are any commas in the title
     if (/,/.test(title)) {
@@ -160,6 +176,7 @@ export default function Home() {
 
       // Success
       toast.success(success.message.tagsGeneratedSuccessfully);
+      setSeoText(data.extras.seo.text);
       setTags(separated);
       setLoading(false);
       setData(data);
@@ -274,12 +291,12 @@ export default function Home() {
                   onChange={(e) => setFormat(e.target.value)}
                   value={format}
                 >
-                  <option value="lyrics">Lyrics</option>
-                  <option value="bassboosted">Bass Boosted</option>
-                  <option value="nightcore">Nightcore/Sped Up</option>
-                  <option value="slowedreverb">Slowed/Reverb</option>
-                  <option value="letra">Letra</option>
-                  <option value="phonk">Phonk</option>
+                  <option value={FORMAT.lyrics}>Lyrics</option>
+                  <option value={FORMAT.bassboosted}>Bass Boosted</option>
+                  <option value={FORMAT.nightcore}>Nightcore/Sped Up</option>
+                  <option value={FORMAT.slowedreverb}>Slowed/Reverb</option>
+                  <option value={FORMAT.letra}>Letra</option>
+                  <option value={FORMAT.phonk}>Phonk</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
@@ -320,7 +337,7 @@ export default function Home() {
               <Step step={8} text="Verse" />
               <Input
                 onChange={(e) => setVerse(e.target.value)}
-                placeholder="don't let me down,im in love for the first time"
+                placeholder="dont let me down,said dont let me down"
                 required={false}
                 ref={verseRef}
                 value={verse}
@@ -499,6 +516,7 @@ export default function Home() {
             {tags.length > 0 && (
               <div className="flex flex-col mt-8 border-t  pt-4">
                 <h3 className="text-2xl font-bold">Suggested:</h3>
+                <p className="mb-6">Generated titles in different formats you can use.</p>
                 {titles.map((title) => (
                   <div className="flex items-center justify-between w-full mt-4" key={title}>
                     <h4 className="text-xl">{title}</h4>
@@ -512,7 +530,7 @@ export default function Home() {
                     </Button>
                   </div>
                 ))}
-                <div className="flex items-center border-t w-full pt-4 mt-4">
+                <div className="flex items-center w-full pt-4 mt-4">
                   <div className="flex items-center ml-auto">
                     <Button
                       onClick={() => {
@@ -558,6 +576,29 @@ export default function Home() {
                 </div>
               </div>
             )}
+            {tags.length ? (
+              <div className="mt-8 flex flex-col border-t pt-4">
+                <h3 className="text-2xl font-bold">Seo:</h3>
+                <p className="mb-6">Typically added at the end of descriptions.</p>
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex flex-col">
+                    {seoText.split(",").map((text) => (
+                      <p className="text-xl">{text}</p>
+                    ))}
+                  </div>
+                </div>
+                <div className="ml-auto">
+                  <Button
+                    onClick={() => {
+                      copy(seoText.replaceAll(",", "\n"));
+                      toast.success(success.message.copied);
+                    }}
+                  >
+                    Copy <FiCopy className="ml-2" />
+                  </Button>
+                </div>
+              </div>
+            ) : null}
             {tags.length > 0 && (
               <div className="mt-8 flex flex-col border-t pt-4">
                 <h3 className="text-2xl font-bold">Hashtags:</h3>
