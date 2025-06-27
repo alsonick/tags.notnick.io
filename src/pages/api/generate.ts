@@ -205,9 +205,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (extractedTitle.length) {
-    finalTitle = extractedTitle.trim().replaceAll(".", "");
+    finalTitle = extractedTitle.trim().replaceAll(".", "").replace("'", "");
   } else {
-    finalTitle = title.trim().replaceAll(".", "");
+    finalTitle = title.trim().replaceAll(".", "").replace("'", "");
   }
 
   // If format text was found, process it
