@@ -153,6 +153,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let finalTitle = title;
   let finalFormat = "";
   let formatText = "";
+  let remix = "";
 
   // Modified if statement to check for both standard hyphen and em dash
   if (/,|-/.test(artist)) {
@@ -174,7 +175,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       } else {
         extractedTitle = removeEmojis(titleFormatString);
       }
-
       // Process format from parentheses or brackets
       if (titleFormatString.includes("(")) {
         formatText = removeEmojis(titleFormatString.replace("(", ""))
@@ -182,12 +182,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .replace("(", "")
           .replace(")", "")
           .trim();
+
+        // Extract remix title
+        if (formatText.toLowerCase().includes("remix")) {
+          remix = formatText.toLowerCase();
+        }
       } else if (titleFormatString.includes("[")) {
         formatText = removeEmojis(titleFormatString.replace("[", ""))
           .replace(extractedTitle, "")
           .replace("[", "")
           .replace("]", "")
           .trim();
+
+        // Extract remix title
+        if (formatText.toLowerCase().includes("remix")) {
+          remix = formatText.toLowerCase();
+        }
       }
     }
 
@@ -205,9 +215,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (extractedTitle.length) {
-    finalTitle = extractedTitle.trim().replaceAll(".", "").replace("'", "");
+    finalTitle = extractedTitle.trim().replaceAll(".", "").replace("'", "").replace(/\(.*$/, "").trim();
   } else {
-    finalTitle = title.trim().replaceAll(".", "").replace("'", "");
+    finalTitle = title.trim().replaceAll(".", "").replace("'", "").replace(/\(.*$/, "").trim();
   }
 
   // If format text was found, process it
@@ -249,6 +259,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else if (formatPureFormat === FORMAT.lyrics) {
     // Lyrics
     tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok);
+  }
+
+  if (remix.length) {
+    tags += `,${remix},${finalTitle} ${remix},${finalArtist} ${remix}`;
   }
 
   let tagsToBeRemoved = "";
