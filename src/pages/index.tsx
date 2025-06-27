@@ -304,9 +304,7 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs mt-1">
-                Select the desired format. <span className="text-yellow-600 font-semibold">Required*</span>
-              </p>
+              <p className="text-xs mt-1">Select the desired format.</p>
             </section>
           </div>
           <div className="flex w-full gap-6 items-center">
