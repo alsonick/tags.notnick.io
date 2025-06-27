@@ -21,15 +21,15 @@ export default function PrivacyPolicy() {
         <h1 className="text-4xl font-black tracking-tight mt-8">Privacy Policy</h1>
         <div className="mt-8 text-gray-800">
           <p className="text-lg">Effective Date: 11 May 2025</p>
-          <p className="text-lg">Last Updated: 11 May 2025</p>
+          <p className="text-lg">Last Updated: 27 Jun 2025</p>
         </div>
         <div className="text-gray-800 mt-8">
           Thank you for visiting{" "}
           <Link className="text-blue-500 font-semibold hover:underline" href="https://tags.notnick.io">
             tags.notnick.io
           </Link>{" "}
-          (“we”, “our”, or “us”). Your privacy matters to us. This Privacy Policy outlines what data we collect (if
-          any), how it’s used, and your rights.
+          (<b>“we”</b>, <b>“our”</b>, or <b>“us”</b>). Your privacy matters to us. This Privacy Policy outlines what
+          data we collect (if any), how it’s used, and your rights.
         </div>
         <section className="my-8">
           <h1 className="text-2xl font-black">What We Collect</h1>
@@ -40,9 +40,10 @@ export default function PrivacyPolicy() {
             <p className="mb-1">What we do collect:</p>
             <ul className="list-disc ml-8">
               <li>
-                Generated tags data; All generated tags data are <i>logged</i> but not stored in a database, we do this
-                to monitor discrepancies with generated tags, such as if the tags overflow the 500 character limit
-                imposed by YouTube, then we can make the changes so this doesn't happen again.
+                <b>Generated tags data</b>; All generated tags data are <i>logged</i> but not stored in a database, we
+                do this to monitor discrepancies with generated tags, such as if the tags overflow the{" "}
+                <b>500 character limit</b> imposed by <b>YouTube</b>, then we can make the necessary changes so this
+                doesn't happen again.
               </li>
             </ul>
             <p className="mt-8">
@@ -73,9 +74,9 @@ export default function PrivacyPolicy() {
             <p>
               This Privacy Policy may be updated or revised from time to time to reflect changes in our practices,
               technology, legal requirements, or for other operational reasons. When we make changes, we will update the
-              “Effective Date” at the top of this page to indicate when those changes take effect. We encourage you to
-              review this Privacy Policy periodically to stay informed about how we are protecting your information and
-              improving our services.
+              <b>“Effective Date”</b> at the top of this page to indicate when those changes take effect. We encourage
+              you to review this Privacy Policy periodically to stay informed about how we are protecting your
+              information and improving our services.
             </p>
           </div>
         </section>
