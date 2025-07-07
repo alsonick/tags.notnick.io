@@ -166,7 +166,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (artist.includes(separator)) {
       const titleFormatString = data[1].trim();
       mainPart = data[0].trim();
-
       // Extract title before any format indicators
       if (titleFormatString.includes("(")) {
         extractedTitle = removeEmojis(titleFormatString.split("(")[0].trim());
@@ -202,15 +201,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Process artist and features from the main part
-    const artistsArray = mainPart.split(",").map((a) => a.trim());
+    let artistsArray = [];
 
-    finalArtist = artistsArray[0];
-    finalFeatures = artistsArray.slice(1).join(", ");
+    // Split by both ',' and '&' as separators
+    artistsArray = mainPart
+      .split(/,|&/)
+      .map((a) => a.trim())
+      .filter(Boolean);
 
+    const [firstArtist, ...otherArtists] = artistsArray;
+
+    finalArtist = firstArtist || "unknown"; // fallback if empty
+    finalFeatures = otherArtists.join(", ") || "none";
+
+    // If features param is provided, override finalFeatures
     if (features !== "none") {
       finalFeatures = features;
-    } else if (!finalFeatures) {
-      finalFeatures = "none";
     }
   }
 
@@ -455,11 +461,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     extras: {
       titles,
       seo: {
-        text: `${finalArtist},${finalTitle},${finalArtist} ${finalTitle} ${computeFinalHashtags(
-          finalFormat
-        )},${finalTitle} ${computeFinalHashtags(
-          finalFormat
-        )},${finalTitle} ${finalArtist},${finalArtist} ${finalTitle}`,
+        text:
+          finalFeatures === "none"
+            ? `${finalArtist}=${finalTitle}=${finalArtist} ${finalTitle} ${computeFinalHashtags(
+                finalFormat
+              )}=${finalTitle} ${computeFinalHashtags(
+                finalFormat
+              )}=${finalTitle} ${finalArtist}=${finalArtist} ${finalTitle}`
+            : `${finalArtist}, ${finalFeatures}=${finalTitle}=${finalArtist}, ${finalFeatures} ${finalTitle} ${computeFinalHashtags(
+                finalFormat
+              )}=${finalTitle} ${computeFinalHashtags(
+                finalFormat
+              )}=${finalTitle} ${finalArtist}, ${finalFeatures}=${finalArtist}, ${finalFeatures} ${finalTitle}`,
       },
       array: {
         removedTags: removedTags.toLowerCase().split(","),

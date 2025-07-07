@@ -147,11 +147,15 @@ export default function Home() {
     setLoading(true);
 
     const response = await fetch(
-      `/api/generate${title.length ? `?title=${title}` : "?title=none"}&artist=${artist}${
-        Boolean(features.length) ? `&features=${features.trimStart().trimEnd()}` : "&features=none"
-      }${Boolean(channelName.length) ? `&channel=${channelName.trimStart().trimEnd()}` : "&channel=none"}&tiktok=${
-        tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-      }&format=${format}&genre=${genre}${Boolean(verse.length) ? `&verse=${verse}` : "&verse=none"}`,
+      `/api/generate${title.length ? `?title=${encodeURIComponent(title)}` : "?title=none"}&artist=${encodeURIComponent(
+        artist
+      )}${Boolean(features.length) ? `&features=${encodeURIComponent(features.trim())}` : "&features=none"}${
+        Boolean(channelName.length) ? `&channel=${encodeURIComponent(channelName.trim())}` : "&channel=none"
+      }&tiktok=${tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"}&format=${encodeURIComponent(
+        format
+      )}&genre=${encodeURIComponent(genre)}${
+        Boolean(verse.length) ? `&verse=${encodeURIComponent(verse)}` : "&verse=none"
+      }`,
       {
         method: "GET",
         headers: {
@@ -580,15 +584,15 @@ export default function Home() {
                 <p className="mb-6">Typically added at the end of descriptions.</p>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex flex-col">
-                    {seoText.split(",").map((text) => (
-                      <p className="text-xl">{text}</p>
+                    {seoText.split("=").map((text) => (
+                      <p className="text-xl mb-2">{text}</p>
                     ))}
                   </div>
                 </div>
                 <div className="ml-auto">
                   <Button
                     onClick={() => {
-                      copy(seoText.replaceAll(",", "\n"));
+                      copy(seoText.replaceAll("=", "\n"));
                       toast.success(success.message.copied);
                     }}
                   >
