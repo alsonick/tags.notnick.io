@@ -211,7 +211,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const [firstArtist, ...otherArtists] = artistsArray;
 
-    finalArtist = firstArtist || "unknown"; // fallback if empty
+    finalArtist = firstArtist.replaceAll("'", "") || "none"; // fallback if empty
     finalFeatures = otherArtists.join(", ") || "none";
 
     // If features param is provided, override finalFeatures
