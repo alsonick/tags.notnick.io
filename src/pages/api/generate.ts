@@ -220,10 +220,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
+  // Replaces special characters in the title.
   if (extractedTitle.length) {
-    finalTitle = extractedTitle.trim().replaceAll(".", "").replace("'", "").replace(/\(.*$/, "").trim();
+    finalTitle = extractedTitle.trim().replaceAll(".", "").replaceAll("'", "").replaceAll(/\(.*$/, "").trim();
   } else {
-    finalTitle = title.trim().replaceAll(".", "").replace("'", "").replace(/\(.*$/, "").trim();
+    finalTitle = title.trim().replaceAll(".", "").replaceAll("'", "").replaceAll(/\(.*$/, "").trim();
   }
 
   // If format text was found, process it
