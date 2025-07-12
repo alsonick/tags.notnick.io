@@ -222,9 +222,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // Replaces special characters in the title.
   if (extractedTitle.length) {
-    finalTitle = extractedTitle.trim().replaceAll(".", "").replaceAll("'", "").replaceAll(/\(.*$/, "").trim();
+    finalTitle = extractedTitle
+      .trim()
+      .replace(/(\.|'|\(.*$)/g, "")
+      .trim();
   } else {
-    finalTitle = title.trim().replaceAll(".", "").replaceAll("'", "").replaceAll(/\(.*$/, "").trim();
+    finalTitle = title
+      .trim()
+      .replace(/(\.|'|\(.*$)/g, "")
+      .trim();
   }
 
   // If format text was found, process it
