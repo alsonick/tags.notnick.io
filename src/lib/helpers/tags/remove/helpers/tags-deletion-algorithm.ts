@@ -2,14 +2,11 @@ import { countTagsLength } from "@/lib/count-tags-length";
 
 export const tagsDeletionAlgorithm = (remove: string[], tags: string): string => {
   let tagsArray = tags.split(",").map((tag) => tag.trim());
-
   let tagsLength = countTagsLength(tags);
   let currentTagsLength = tagsLength;
   let tagsToBeRemoved = "";
 
-  if (currentTagsLength <= 500) {
-    return "";
-  }
+  if (currentTagsLength <= 500) return "";
 
   const currentTagsSet = new Set(tagsArray);
 
@@ -19,13 +16,9 @@ export const tagsDeletionAlgorithm = (remove: string[], tags: string): string =>
 
       if (tagIndex > -1) {
         const removedTag = tagsArray[tagIndex];
-
         tagsArray.splice(tagIndex, 1);
-
         currentTagsSet.delete(removedTag);
-
         currentTagsLength = countTagsLength(tagsArray.join(","));
-
         tagsToBeRemoved += `${removedTag},`;
       }
     }
