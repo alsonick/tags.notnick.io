@@ -24,6 +24,7 @@ import { FiCopy } from "react-icons/fi";
 import { success } from "@/lib/success";
 import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
+import { FORMAT } from "@/lib/format";
 import copy from "copy-to-clipboard";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
@@ -31,7 +32,6 @@ import { seo } from "@/lib/seo/seo";
 
 // Next.js
 import Link from "next/link";
-import { FORMAT } from "@/lib/format";
 
 export default function Home() {
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
@@ -146,23 +146,23 @@ export default function Home() {
     // Starts the loading
     setLoading(true);
 
-    const response = await fetch(
-      `/api/generate${title.length ? `?title=${encodeURIComponent(title)}` : "?title=none"}&artist=${encodeURIComponent(
-        artist
-      )}${Boolean(features.length) ? `&features=${encodeURIComponent(features.trim())}` : "&features=none"}${
-        Boolean(channelName.length) ? `&channel=${encodeURIComponent(channelName.trim())}` : "&channel=none"
-      }&tiktok=${tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"}&format=${encodeURIComponent(
-        format
-      )}&genre=${encodeURIComponent(genre)}${
-        Boolean(verse.length) ? `&verse=${encodeURIComponent(verse)}` : "&verse=none"
-      }`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const queryParams = new URLSearchParams({
+      channel: channelName.trim().length ? channelName.trim() : "none",
+      features: features.trim().length ? features.trim() : "none",
+      title: title.trim().length ? title.trim() : "none",
+      verse: verse.trim().length ? verse.trim() : "none",
+      tiktok: tiktok === "true" ? "true" : "false",
+      format: format.trim(),
+      artist: artist.trim(),
+      genre: genre.trim(),
+    });
+
+    const response = await fetch(`/api/generate?${queryParams.toString()}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     // Check if the response is successful
     if (response.status === 200) {
@@ -291,7 +291,7 @@ export default function Home() {
               <Step step={6} text="Format" />
               <div className="relative w-full">
                 <select
-                  className="appearance-none border w-full p-2 px-4 pr-10 flex items-center rounded-md focus:outline-2"
+                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-md focus:outline-2"
                   onChange={(e) => setFormat(e.target.value)}
                   value={format}
                 >
@@ -316,7 +316,7 @@ export default function Home() {
               <Step step={7} text="Genre" />
               <div className="relative w-full">
                 <select
-                  className="appearance-none border w-full p-2 px-4 pr-10 flex items-center rounded-md focus:outline-2"
+                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-md focus:outline-2"
                   onChange={(e) => setGenre(e.target.value)}
                   value={genre}
                 >

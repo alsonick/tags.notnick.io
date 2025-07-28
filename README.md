@@ -1,4 +1,4 @@
-# Lyrics Tags Generator ([tags.notnick.io](https://tags.notnick.io/))
+# Lyrics Tags Generator | Documentation ([tags.notnick.io](https://tags.notnick.io/))
 
 This is a small utility tool for personal use, but you can use it if you have a music/lyric channel on [YouTube](https://www.youtube.com).
 
@@ -6,15 +6,15 @@ This is a small utility tool for personal use, but you can use it if you have a 
 
 | Params     | Required | Description / Options                                                                                              |
 | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
-| `Artist`   | ✅ Yes   | Name of the artist.                                                                                                |
-| `Title`    | ❌ No    | Name of the song.                                                                                                  |
-| `Features` | ❌ No    | Featured artists (3 supported).                                                                                    |
-| `TikTok`   | ❌ No    | Boolean flag (`true` / `false`).                                                                                   |
-| `Channel`  | ❌ No    | Name of the YouTube channel.                                                                                       |
-| `Format`   | ❌ No    | • `Lyrics` _(default)_<br>• `Bass Boosted`<br>• `Nightcore/Sped Up`<br>• `Slowed/Reverb`<br>• `Letra`<br>• `Phonk` |
-| `Shuffle`  | ❌ No    | Shuffle tags option (API only).                                                                                    |
-| `Genre`    | ❌ No    | • `None` _(default)_<br>• `Country`<br>• `Latin`<br>• `Phonk`<br>• `Pop`<br>• `Rap`                                |
-| `Verse`    | ❌ No    | Up to 3 short verses.                                                                                              |
+| `Artist`   | Yes      | Name of the artist.                                                                                                |
+| `Title`    | No       | Name of the song.                                                                                                  |
+| `Features` | No       | Featured artists (3 supported).                                                                                    |
+| `TikTok`   | No       | Boolean flag (`true` / `false`).                                                                                   |
+| `Channel`  | No       | Name of the YouTube channel.                                                                                       |
+| `Format`   | No       | • `Lyrics` _(default)_<br>• `Bass Boosted`<br>• `Nightcore/Sped Up`<br>• `Slowed/Reverb`<br>• `Letra`<br>• `Phonk` |
+| `Shuffle`  | No       | Shuffle tags option (API only).                                                                                    |
+| `Genre`    | No       | • `None` _(default)_<br>• `Country`<br>• `Latin`<br>• `Phonk`<br>• `Pop`<br>• `Rap`                                |
+| `Verse`    | No       | Up to 3 short verses.                                                                                              |
 
 If you provide both `artist` and `title` in the `artist` field, you can leave all the other fields empty.
 
@@ -22,13 +22,13 @@ If you provide both `artist` and `title` in the `artist` field, you can leave al
 
 Example:
 
-<img width="550" src="https://github.com/user-attachments/assets/84efdc6d-c556-4299-946b-4e2838edb5d5" />
+`Chris Brown - Residuals`
 
 You can also provide the `format` and it will generate the appropriate tags.
 
-The format will _always_ default to `Lyrics` if it isn't provided.
+`Chris Brown - Residuals (Bass Boosted)`
 
-<img width="550" src="https://github.com/user-attachments/assets/b52492a9-7d63-45e1-b5ef-8f0270110b99" />
+The format will _always_ default to `Lyrics` if it isn't provided.
 
 If the format is provided in both the `artist` and `format` fields, then the format in the `format` field will override the format provided in the `artist` field.
 
@@ -43,32 +43,6 @@ If the format is provided in both the `artist` and `format` fields, then the for
 - Character limit for `title` is `45`.
 - You cannot include special characters in the `artist` field.
 - You cannot include commas in the `title` field.
-
-### Automation
-
-If use decide to use Lyrics Tags Generator in an automation system, then here are a few things you need to do:
-
-- You must remove any unnecessary data when providing it in the params to avoid any character limits, let's say you're pulling your data from a different service and it returns `I Smoked Away My Brain (I'm God x Demons Mashup)` as the title, this violates the `45` character limit for titles and it's not relevant for generating tags (bad SEO), you only want the `I Smoked Away My Brain` part, you must remove the `(I'm God x Demons Mashup)` from your end.
-
-Python example on how to remove unnecessary data:
-
-```py
-title = "I Smoked Away My Brain (I'm God x Demons Mashup)"
-sliced = text[text.find('('):]
-print(sliced) # I Smoked Away My Brain
-```
-
-- You also need to remove any commas found in `title` field.
-
-Python example on how to remove commas:
-
-```py
-text = "apples, oranges, bananas"
-new_text = text.replace(",", "")
-print(new_text)
-```
-
-If your automation software is written in a different programming language, then you must make the changes in that language.
 
 ## Data
 
@@ -100,6 +74,10 @@ Using the [Discord](https://discord.com/) bot version is probably faster. You mu
 All requests are logged for debugging purposes.
 
 Please [email](mailto:hi@notnick.io) me if you find any bugs.
+
+## tags-py
+
+I've also developed a small Python script for those who prefer to use the terminal. [Click here to download](https://github.com/alsonick/tags-py).
 
 ## Stack
 

@@ -233,7 +233,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .trim();
   }
 
-  // If format text was found, process it
+  // If format text was found, process it.
   if (formatText.length && formatText.toLowerCase() !== "lyrics") {
     // Get standardized format name and ensure it's lowercase for the API
     finalFormat = returnComputedFormat(formatText).toLowerCase();
@@ -272,6 +272,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else if (formatPureFormat === FORMAT.lyrics) {
     // Lyrics
     tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok);
+  }
+
+  // Checks for the '\' character in the artist field, if one was provided then we need to save
+  if (/\//.test(artist)) {
+    // Example: Calum Hood - Don't Forget You Love Me/{a},{t}
+    const validVariables = ["a", "t", "f1", "f2", "f3"];
+    const customFormat = artist.split("/")[1];
+    console.log(customFormat);
+
+    const individualFormatSplit = customFormat.split(",");
+    let customFormatTags = "";
+
+    for (const format of individualFormatSplit) {
+      if (individualFormatSplit.includes(format)) {
+        // Checks if the provided variable was valid.
+        const containsValid = validVariables.some((v) => format.includes(v));
+
+        if (containsValid) {
+          customFormatTags += `${format},`.trim();
+        } else {
+          return res.status(400).json({
+            error: "The provided variable is not valid.",
+            success: false,
+          });
+        }
+      }
+    }
+    // Remove the trailling comma at the end of the string.
+    customFormatTags = customFormatTags.substring(0, customFormatTags.length - 1);
+    tags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
+    finalTitle = finalTitle.split("/")[0];
   }
 
   if (remix.length) {
