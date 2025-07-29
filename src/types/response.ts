@@ -1,5 +1,7 @@
 export interface Response {
+  artistCustomFormat: string;
   tagsToBeRemoved: string;
+  customFormat: string;
   removedTags: string;
   features: string[];
   hashtags: string[];

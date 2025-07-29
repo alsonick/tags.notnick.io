@@ -229,7 +229,7 @@ export default function Home() {
                 ref={artistRef}
                 value={artist}
               />
-              <p className="text-xs mt-1">
+              <p className="text-xs text-gray-800 mt-1">
                 Any special characters are allowed except commas.{" "}
                 <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
@@ -251,7 +251,7 @@ export default function Home() {
                 ref={titleRef}
                 value={title}
               />
-              <p className="text-xs mt-1">Please remove any commas if there are any. </p>
+              <p className="text-xs text-gray-800 mt-1">Please remove any commas if there are any. </p>
               <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
             </section>
           </div>
@@ -265,7 +265,7 @@ export default function Home() {
                 value={features}
                 required={false}
               />
-              <p className="text-xs mt-1">Please use a comma to separate feature artists.</p>
+              <p className="text-xs text-gray-800 mt-1">Please use a comma to separate feature artists.</p>
               <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
             </section>
             <section className="flex flex-col w-full">
@@ -277,7 +277,7 @@ export default function Home() {
                 value={channelName}
                 required={false}
               />
-              <p className="text-xs mt-1">Enter the name of the YouTube Channel.</p>
+              <p className="text-xs text-gray-800 mt-1">Enter the name of the YouTube Channel.</p>
               <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channelName} />
             </section>
           </div>
@@ -285,7 +285,7 @@ export default function Home() {
             <section className="flex flex-col w-full">
               <Step step={5} text="TikTok" />
               <Input onChange={(e) => setTiktok(e.target.value)} placeholder="false" required={false} value={tiktok} />
-              <p className="text-xs mt-1">Is the song popular on TikTok? Type "true" if so. </p>
+              <p className="text-xs text-gray-800 mt-1">Is the song popular on TikTok? Type "true" if so. </p>
             </section>
             <section className="flex flex-col w-full">
               <Step step={6} text="Format" />
@@ -295,12 +295,24 @@ export default function Home() {
                   onChange={(e) => setFormat(e.target.value)}
                   value={format}
                 >
-                  <option value={FORMAT.lyrics}>Lyrics</option>
-                  <option value={FORMAT.bassboosted}>Bass Boosted</option>
-                  <option value={FORMAT.nightcore}>Nightcore/Sped Up</option>
-                  <option value={FORMAT.slowedreverb}>Slowed/Reverb</option>
-                  <option value={FORMAT.letra}>Letra</option>
-                  <option value={FORMAT.phonk}>Phonk</option>
+                  <option className="font-inter" value={FORMAT.lyrics}>
+                    Lyrics
+                  </option>
+                  <option className="font-inter" value={FORMAT.bassboosted}>
+                    Bass Boosted
+                  </option>
+                  <option className="font-inter" value={FORMAT.nightcore}>
+                    Nightcore/Sped Up
+                  </option>
+                  <option className="font-inter" value={FORMAT.slowedreverb}>
+                    Slowed/Reverb
+                  </option>
+                  <option className="font-inter" value={FORMAT.letra}>
+                    Letra
+                  </option>
+                  <option className="font-inter" value={FORMAT.phonk}>
+                    Phonk
+                  </option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
@@ -308,7 +320,7 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs mt-1">Select the desired format.</p>
+              <p className="text-xs text-gray-800 mt-1">Select the desired format.</p>
             </section>
           </div>
           <div className="flex w-full gap-6 items-center">
@@ -320,12 +332,24 @@ export default function Home() {
                   onChange={(e) => setGenre(e.target.value)}
                   value={genre}
                 >
-                  <option value={GENRE.none}>None</option>
-                  <option value={GENRE.country}>Country</option>
-                  <option value={GENRE.latin}>Latin</option>
-                  <option value={GENRE.phonk}>Phonk</option>
-                  <option value={GENRE.pop}>Pop</option>
-                  <option value={GENRE.rap}>Rap</option>
+                  <option className="font-inter" value={GENRE.none}>
+                    None
+                  </option>
+                  <option className="font-inter" value={GENRE.country}>
+                    Country
+                  </option>
+                  <option className="font-inter" value={GENRE.latin}>
+                    Latin
+                  </option>
+                  <option className="font-inter" value={GENRE.phonk}>
+                    Phonk
+                  </option>
+                  <option className="font-inter" value={GENRE.pop}>
+                    Pop
+                  </option>
+                  <option className="font-inter" value={GENRE.rap}>
+                    Rap
+                  </option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
@@ -333,7 +357,7 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs mt-1">Select the desired genre.</p>
+              <p className="text-xs text-gray-800 mt-1">Select the desired genre.</p>
             </section>
             <section className="flex flex-col w-full">
               <Step step={8} text="Verse" />
@@ -344,7 +368,9 @@ export default function Home() {
                 ref={verseRef}
                 value={verse}
               />
-              <p className="text-xs mt-1">Popular verse? Paste them in here. Limit is 3, separate them by commas.</p>
+              <p className="text-xs text-gray-800 mt-1">
+                Popular verse? Paste them in here. Limit is 3, separate them by commas.
+              </p>
             </section>
           </div>
           <div className="w-full justify-between items-center flex mt-6 border-b pb-4">
@@ -410,8 +436,8 @@ export default function Home() {
             </div>
             {tags.length > 0 && (
               <Link
+                className="text-sm text-center mt-5 underline text-gray-800"
                 title="Click to view json representation data."
-                className="text-sm text-center mt-5 underline"
                 target="_blank"
                 href={data?.url ?? ""}
               >
@@ -518,7 +544,7 @@ export default function Home() {
             {tags.length > 0 && (
               <div className="flex flex-col mt-8 border-t  pt-4">
                 <h3 className="text-2xl font-bold">Suggested:</h3>
-                <p className="mb-6">Generated titles in different formats you can use.</p>
+                <p className="mb-6 text-gray-800">Generated titles in different formats you can use.</p>
                 {titles.map((title) => (
                   <div className="flex items-center justify-between w-full mt-4" key={title}>
                     <h4 className="text-xl">{title}</h4>
@@ -581,7 +607,7 @@ export default function Home() {
             {tags.length ? (
               <div className="mt-8 flex flex-col border-t pt-4">
                 <h3 className="text-2xl font-bold">Seo:</h3>
-                <p className="mb-6">Typically added at the end of descriptions.</p>
+                <p className="mb-6 text-gray-800">Typically added at the end of descriptions.</p>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex flex-col">
                     {seoText.split("=").map((text) => (

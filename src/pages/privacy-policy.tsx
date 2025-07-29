@@ -25,7 +25,11 @@ export default function PrivacyPolicy() {
         </div>
         <div className="text-gray-800 mt-8">
           Thank you for visiting{" "}
-          <Link className="text-blue-500 font-semibold hover:underline" href="https://tags.notnick.io">
+          <Link
+            className="text-blue-500 font-semibold hover:underline"
+            href="https://tags.notnick.io"
+            title="tags.notnick.io"
+          >
             tags.notnick.io
           </Link>{" "}
           (<b>“we”</b>, <b>“our”</b>, or <b>“us”</b>). Your privacy matters to us. This Privacy Policy outlines what
@@ -48,7 +52,11 @@ export default function PrivacyPolicy() {
             </ul>
             <p className="mt-8">
               If you'd like access to logged data then please{" "}
-              <Link className="text-blue-500 font-semibold hover:underline" href="mailto:hi@notnick.io">
+              <Link
+                className="text-blue-500 font-semibold hover:underline"
+                href="mailto:hi@notnick.io"
+                title="contact me"
+              >
                 contact me
               </Link>{" "}
               for more information.
@@ -89,6 +97,7 @@ export default function PrivacyPolicy() {
               <Link
                 className="text-blue-500 font-semibold hover:underline"
                 href="https://x.com/heynickn"
+                title="@heynickn on X"
                 target="_blank"
               >
                 @heynickn on X
@@ -96,18 +105,24 @@ export default function PrivacyPolicy() {
             </p>
             <p>
               Email:{" "}
-              <Link className="text-blue-500 font-semibold hover:underline" href="mailto:hi@notnick.io" target="_blank">
+              <Link
+                className="text-blue-500 font-semibold hover:underline"
+                href="mailto:hi@notnick.io"
+                title="hi@notnick.io"
+                target="_blank"
+              >
                 hi@notnick.io
               </Link>
             </p>
           </div>
         </section>
         <div className="mt-16 flex items-center justify-between">
-          <Link className="text-blue-500 font-semibold hover:underline flex items-center" href="/">
+          <Link className="text-blue-500 font-semibold hover:underline flex items-center" href="/" title="Go back home">
             <FiChevronLeft className="mr-1" />
             Go back home
           </Link>
           <Button
+            title="Download"
             onClick={() => {
               const link = document.createElement("a");
               link.href = `/legal/privacy-policy/${new Date().getFullYear()}/privacy-policy.pdf`;

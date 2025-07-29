@@ -5,7 +5,7 @@ export const Step = ({ step, text, children }: { step: number; text: string; chi
         <div className="flex items-center justify-center text-white bg-black rounded-full text-sm h-10 w-10">
           {step}
         </div>
-        <p className="text-gray-600 ml-2">{text}</p>
+        <p className="text-black ml-2">{text}</p>
       </div>
       {children}
     </div>

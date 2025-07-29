@@ -274,7 +274,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok);
   }
 
-  // Checks for the '\' character in the artist field, if one was provided then we need to save
+  let customFormatString = "";
+  let tagsToBeRemoved = "";
+  let removedTags = "";
+
+  // Checks for the '\' character in the artist field, if one was provided then we need to save it as a custom format
   if (/\//.test(artist)) {
     // Example: Calum Hood - Don't Forget You Love Me/{a},{t}
     const validVariables = ["a", "t", "f1", "f2", "f3"];
@@ -300,7 +304,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     // Remove the trailling comma at the end of the string.
     customFormatTags = customFormatTags.substring(0, customFormatTags.length - 1);
+
+    // Store the custom format and reassign the title.
+    customFormatString = customFormatTags;
     finalTitle = finalTitle.split("/")[0];
+
+    // Set the tags.
+    removedTags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
     tags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
   }
 
@@ -308,11 +318,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += `,${remix},${finalTitle} ${remix},${finalArtist} ${remix}`;
   }
 
-  let tagsToBeRemoved = "";
-  let removedTags = "";
-
   const currentYear = new Date().getFullYear();
-
   let verses = [];
 
   if (typeof verse === "string" && verse !== "none" && /,/.test(verse)) {
@@ -493,6 +499,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     removedTagsLength: countTagsLength(removedTags),
     title: finalTitle.trim(),
     artist: finalArtist.trim(),
+    artistCustomFormat: customFormatString.length && `${artist.trim()}`,
+    customFormat: customFormatString,
     features: finalFeatures !== "none" ? finalFeatures.split(", ") : [],
     hashtags,
     extras: {
@@ -517,13 +525,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         tags: tags.toLowerCase().split(","),
       },
     },
-    url: `/api/generate?title=${encodeURIComponent(finalTitle)}&artist=${encodeURIComponent(
-      finalArtist
+    url: `/api/generate?title=${encodeURIComponent(
+      customFormatString.length ? "none" : finalTitle
+    )}&artist=${encodeURIComponent(
+      customFormatString.length ? `${artist.trim()}` : finalArtist
     )}&features=${encodeURIComponent(finalFeatures)}&tiktok=${
       tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
     }&format=${finalFormat}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${
       shuffle || shuffle === "true" ? "true" : "false"
-    }&genre=${encodeURIComponent(genre.toLowerCase())}&verse=${encodeURIComponent(verse.toLowerCase())}`,
+    }&genre=${encodeURIComponent(genre.toLowerCase())}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${
+      customFormatString ? "true" : "false"
+    }`,
     length: countTagsLength(tags),
   });
 }
