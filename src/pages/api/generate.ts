@@ -279,7 +279,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Example: Calum Hood - Don't Forget You Love Me/{a},{t}
     const validVariables = ["a", "t", "f1", "f2", "f3"];
     const customFormat = artist.split("/")[1];
-    console.log(customFormat);
 
     const individualFormatSplit = customFormat.split(",");
     let customFormatTags = "";
@@ -301,8 +300,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     // Remove the trailling comma at the end of the string.
     customFormatTags = customFormatTags.substring(0, customFormatTags.length - 1);
-    tags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
     finalTitle = finalTitle.split("/")[0];
+    tags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
   }
 
   if (remix.length) {
