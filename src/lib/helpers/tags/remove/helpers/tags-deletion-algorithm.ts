@@ -7,7 +7,6 @@ export const tagsDeletionAlgorithm = (remove: string[], tags: string): string =>
   let tagsToBeRemoved = "";
 
   if (currentTagsLength <= 500) return "";
-
   const currentTagsSet = new Set(tagsArray);
 
   for (const tagPatternToRemove of remove) {
