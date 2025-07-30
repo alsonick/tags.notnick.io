@@ -291,7 +291,7 @@ export default function Home() {
               <Step step={6} text="Format" />
               <div className="relative w-full">
                 <select
-                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-md focus:outline-2"
+                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
                   onChange={(e) => setFormat(e.target.value)}
                   value={format}
                 >
@@ -328,7 +328,7 @@ export default function Home() {
               <Step step={7} text="Genre" />
               <div className="relative w-full">
                 <select
-                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-md focus:outline-2"
+                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
                   onChange={(e) => setGenre(e.target.value)}
                   value={genre}
                 >
@@ -389,11 +389,11 @@ export default function Home() {
                     setTags([]);
                   }}
                 >
-                  Clear <FiTrash className="ml-2" />
+                  Clear <FiTrash className="ml-2 hover:scale-110 duration-150" />
                 </Button>
               </div>
               <Button type="submit" title="Generate tags">
-                Generate <FiLoader className="ml-2" />
+                Generate <FiLoader className="ml-2 hover:scale-110 duration-150" />
               </Button>
             </div>
           </div>
@@ -404,7 +404,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="flex flex-col">
-            <div className="border p-4 mt-4 rounded-xl">
+            <div className="border p-4 mt-4 rounded-lg">
               {tags.length > 0 && (
                 <h2 className="text-2xl text-left border-b pb-2">
                   <i>{data?.title}</i> by <b>{data?.artist}</b> 🤖
@@ -416,7 +416,7 @@ export default function Home() {
                     {tags.map((tag) => (
                       <div
                         key={tag}
-                        className="flex items-center border p-2 px-4 rounded-xl
+                        className="flex items-center border p-2 px-4 rounded-lg
                         hover:cursor-pointer w-fit duration-300 hover:shadow-lg"
                         title={`Delete ${tag} tag`}
                         onClick={() => {
@@ -425,7 +425,7 @@ export default function Home() {
                         }}
                       >
                         <p className="font-semibold">{tag}</p>
-                        <FiX className="text-lg ml-1" />
+                        <FiX className="text-lg ml-1 hover:scale-110 duration-150" />
                       </div>
                     ))}
                   </>
@@ -470,6 +470,7 @@ export default function Home() {
                         toast.error(error.message.generateTagsFirst);
                         return;
                       }
+
                       const shuffled = [...tags];
 
                       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -481,7 +482,7 @@ export default function Home() {
                       toast.success(success.message.shuffledSuccessfully);
                     }}
                   >
-                    Shuffle <FiRepeat className="ml-2" />
+                    Shuffle <FiRepeat className="ml-2 hover:scale-110 duration-150" />
                   </Button>
                 </div>
                 <Button
@@ -496,7 +497,7 @@ export default function Home() {
                     toast.success(success.message.tagsCopiedToClipboard);
                   }}
                 >
-                  Copy generated tags <FiCopy className="ml-2" />
+                  Copy generated tags <FiCopy className="ml-2 hover:scale-110 duration-150" />
                 </Button>
               </div>
             </div>
@@ -505,11 +506,11 @@ export default function Home() {
             )}
             {data?.tagsToBeRemoved.length ? (
               <>
-                <div className="border p-4 mt-4 rounded-xl">
+                <div className="border p-4 mt-4 rounded-lg">
                   <h2 className="text-2xl border-b pb-2">Recommended tags to delete 🤖</h2>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
                     {data?.tagsToBeRemoved.split(",").map((tag) => (
-                      <div key={tag} className="flex items-center border p-2 px-4 rounded-xl w-fit">
+                      <div key={tag} className="flex items-center border p-2 px-4 rounded-lg w-fit">
                         <p className="font-semibold">{tag.toLowerCase()}</p>
                       </div>
                     ))}
@@ -554,7 +555,7 @@ export default function Home() {
                         toast.success(success.message.copied);
                       }}
                     >
-                      Copy <FiCopy className="ml-2" />
+                      Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
                     </Button>
                   </div>
                 ))}
@@ -571,7 +572,7 @@ export default function Home() {
                         setTitles(uppercaseTitles);
                       }}
                     >
-                      Uppercase <FiEdit className="ml-2" />
+                      Uppercase <FiEdit className="ml-2 hover:scale-110 duration-150" />
                     </Button>
                     <div className="ml-2">
                       <Button
@@ -585,7 +586,7 @@ export default function Home() {
                           setTitles(lowercaseTitles);
                         }}
                       >
-                        Lowercase <FiEdit className="ml-2" />
+                        Lowercase <FiEdit className="ml-2 hover:scale-110 duration-150" />
                       </Button>
                     </div>
                     <div className="ml-2">
@@ -597,7 +598,7 @@ export default function Home() {
                           setTitles(originalTitles);
                         }}
                       >
-                        Original <FiEdit className="ml-2" />
+                        Original <FiEdit className="ml-2 hover:scale-110 duration-150" />
                       </Button>
                     </div>
                   </div>
@@ -622,7 +623,7 @@ export default function Home() {
                       toast.success(success.message.copied);
                     }}
                   >
-                    Copy <FiCopy className="ml-2" />
+                    Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
                   </Button>
                 </div>
               </div>
@@ -646,7 +647,7 @@ export default function Home() {
                       toast.success(success.message.hashtagsCopiedToClipboard);
                     }}
                   >
-                    Copy <FiCopy className="ml-2" />
+                    Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
                   </Button>
                 </div>
               </div>

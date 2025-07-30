@@ -118,7 +118,7 @@ export default function PrivacyPolicy() {
         </section>
         <div className="mt-16 flex items-center justify-between">
           <Link className="text-blue-500 font-semibold hover:underline flex items-center" href="/" title="Go back home">
-            <FiChevronLeft className="mr-1" />
+            <FiChevronLeft className="mr-1 hover:scale-110 duration-150" />
             Go back home
           </Link>
           <Button
@@ -132,7 +132,7 @@ export default function PrivacyPolicy() {
               document.body.removeChild(link);
             }}
           >
-            Download <FiDownload className="ml-2" />
+            Download <FiDownload className="ml-2 hover:scale-110 duration-150" />
           </Button>
         </div>
         <Footer />
