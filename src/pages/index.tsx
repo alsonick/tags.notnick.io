@@ -247,7 +247,7 @@ export default function Home() {
               <Input
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Don't Let Me Down"
-                required={artist.length ? false : true}
+                required={artist.length ? true : false}
                 ref={titleRef}
                 value={title}
               />
