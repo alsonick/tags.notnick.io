@@ -322,6 +322,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let verses = [];
 
   if (typeof verse === "string" && verse !== "none" && /,/.test(verse)) {
+    // Splits the verse up with the , character.
     const verseSplit = verse.split(",");
 
     // If there's more than 3 verses then send back a error response
@@ -468,6 +469,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             {
               name: "Tags:",
               value: tags.toLowerCase(),
+            },
+            {
+              name: "cFormat:",
+              value: customFormatString.length ? customFormatString : "none",
             },
             {
               name: "Remove:",

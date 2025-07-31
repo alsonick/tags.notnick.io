@@ -6,7 +6,7 @@ import {
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit } from "react-icons/fi";
+import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave } from "react-icons/fi";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { CharacterLimit } from "@/components/CharacterLimit";
 import { countTagsLength } from "@/lib/count-tags-length";
@@ -206,6 +206,16 @@ export default function Home() {
       toast.error(`${response.statusText}.`);
       setLoading(false);
     }
+  };
+
+  const saveCustomFormat = () => {
+    alert(
+      "You're currently trying to save a custom format, On the browser we save them in localstorage, please provide a key to identify with the custom format, whenever you want to use the custom format then please append '/[KEY]' at the end of the string in the 'artist' field. Click the 'Ok' Button to proceed."
+    );
+
+    const key = prompt("Please enter a key you'd like to use:");
+
+    console.log(key);
   };
 
   return (
@@ -498,6 +508,39 @@ export default function Home() {
                   }}
                 >
                   Copy generated tags <FiCopy className="ml-2 hover:scale-110 duration-150" />
+                </Button>
+              </div>
+            </div>
+            {data?.customFormat && (
+              <div className="border p-4 mt-4 rounded-lg">
+                <h2 className="text-2xl text-left">Custom 🤖</h2>
+                <p className="mt-1 border-b pb-2 text-gray-800">The format used to generate your custom tags.</p>
+                <div className="flex flex-wrap gap-4 my-4 mt-6">
+                  <div className="flex items-center border p-2 px-4 rounded-lg w-fit">
+                    <p className="font-semibold">{data.customFormat}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="flex w-full mt-6 items-center">
+              <div className="flex ml-auto">
+                <div className="mr-4">
+                  <Button
+                    title="Copy custom format"
+                    onClick={() => {
+                      if (!data?.customFormat) {
+                        toast.error("");
+                        return;
+                      }
+                      copy(data?.customFormat);
+                      toast.success(success.message.tagsCopiedToClipboard);
+                    }}
+                  >
+                    Copy custom format <FiCopy className="ml-2 hover:scale-110 duration-150" />
+                  </Button>
+                </div>
+                <Button title="Save custom format" onClick={saveCustomFormat}>
+                  Save custom format <FiSave className="ml-2 hover:scale-110 duration-150" />
                 </Button>
               </div>
             </div>
