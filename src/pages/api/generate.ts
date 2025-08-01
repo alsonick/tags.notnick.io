@@ -38,6 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const genre: string = (req.query.genre as string) || "none";
   const verse: string = (req.query.verse as string) || "none";
   const structure: string = req.query.structure as string;
+  const log: string = (req.query.log as string) || "true";
   const features: string = req.query.features as string;
   const channel: string = req.query.channel as string;
   const shuffle: string = req.query.shuffle as string;
@@ -278,39 +279,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let tagsToBeRemoved = "";
   let removedTags = "";
 
-  // Checks for the '\' character in the artist field, if one was provided then we need to save it as a custom format
+  // Checks for the '/' character in the artist field, if one was provided then we need to save it as a custom format
   if (/\//.test(artist)) {
-    // Example: Calum Hood - Don't Forget You Love Me/{a},{t}
+    const validVariablesStrict = ["{a}", "{t}", "{f1}", "{f2}", "{f3}", "/custom"];
     const validVariables = ["a", "t", "f1", "f2", "f3"];
-    const customFormat = artist.split("/")[1];
 
+    // Check if any valid variable exists in the string.
+    const hasValidVariable = validVariablesStrict.some((variable) => artist.includes(variable));
+
+    if (!hasValidVariable) {
+      return res.status(400).json({
+        error: "You also need to provide variables.",
+        success: false,
+      });
+    }
+
+    if (artist.includes("/custom")) {
+      // TODO: Redis stuff goes here
+    }
+
+    // Example: Calum Hood - Don't Forget You Love Me/{a},{t}
+    const customFormat = artist.split("/")[1];
     const individualFormatSplit = customFormat.split(",");
     let customFormatTags = "";
 
     for (const format of individualFormatSplit) {
-      if (individualFormatSplit.includes(format)) {
-        // Checks if the provided variable was valid.
-        const containsValid = validVariables.some((v) => format.includes(v));
+      const containsValid = validVariables.some((v) => format.includes(v));
 
-        if (containsValid) {
-          customFormatTags += `${format},`.trim();
-        } else {
-          return res.status(400).json({
-            error: "The provided variable is not valid.",
-            success: false,
-          });
-        }
+      if (containsValid) {
+        customFormatTags += `${format},`;
+      } else {
+        return res.status(400).json({
+          error: "The provided variable is not valid.",
+          success: false,
+        });
       }
     }
-    // Remove the trailling comma at the end of the string.
-    customFormatTags = customFormatTags.substring(0, customFormatTags.length - 1);
 
-    // Store the custom format and reassign the title.
+    // Remove trailing comma
+    customFormatTags = customFormatTags.slice(0, -1);
+
+    // Store and assign tags
     customFormatString = customFormatTags;
     finalTitle = finalTitle.split("/")[0];
 
-    // Set the tags.
     removedTags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
+
     tags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
   }
 
@@ -421,78 +435,91 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     computeFinalHashtags(finalFormat),
   ];
 
-  // Send data to discord webhook (tags)
-  const hook1 = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
-    method: "POST",
-    body: JSON.stringify({
-      embeds: [
-        {
-          author: {
-            name: `${finalArtist} - ${finalTitle}`,
+  if (log === "true") {
+    // Send data to discord webhook (tags)
+    const hook1 = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
+      method: "POST",
+      body: JSON.stringify({
+        embeds: [
+          {
+            author: {
+              name: `${finalArtist} - ${finalTitle}`,
+            },
+            timestamp: new Date().toISOString(),
+            fields: [
+              {
+                name: "Artist:",
+                value: finalArtist,
+                inline: true,
+              },
+              {
+                name: "Title:",
+                value: finalTitle,
+                inline: true,
+              },
+              {
+                name: "Tiktok:",
+                value: tiktok,
+                inline: true,
+              },
+              {
+                name: "Format:",
+                value: computeFinalHashtags(finalFormat),
+                inline: true,
+              },
+              {
+                name: "Channel:",
+                value: channel,
+                inline: true,
+              },
+              {
+                name: "Length:",
+                value: removedTags.length ? countTagsLength(removedTags) : countTagsLength(tags),
+                inline: true,
+              },
+              {
+                name: "Features:",
+                value: finalFeatures.length ? finalFeatures : "none",
+                inline: true,
+              },
+              {
+                name: "Log:",
+                value: log,
+                inline: true,
+              },
+              {
+                name: "fCount:",
+                value: finalFeatures.length,
+                inline: true,
+              },
+              {
+                name: "Tags:",
+                value: tags.toLowerCase(),
+              },
+              {
+                name: "Remove:",
+                value: tagsToBeRemoved.length ? tagsToBeRemoved : "none",
+              },
+              {
+                name: "cFormat:",
+                value: customFormatString.length ? customFormatString : "none",
+              },
+            ],
           },
-          timestamp: new Date().toISOString(), // Add ISO timestamp
-          fields: [
-            {
-              name: "Artist:",
-              value: finalArtist,
-              inline: true,
-            },
-            {
-              name: "Title:",
-              value: finalTitle,
-              inline: true,
-            },
-            {
-              name: "Tiktok:",
-              value: tiktok,
-              inline: true,
-            },
-            {
-              name: "Format:",
-              value: computeFinalHashtags(finalFormat),
-              inline: true,
-            },
-            {
-              name: "Channel:",
-              value: channel,
-              inline: true,
-            },
-            {
-              name: "Length:",
-              value: removedTags.length ? countTagsLength(removedTags) : countTagsLength(tags),
-              inline: true,
-            },
-            {
-              name: "Features:",
-              value: finalFeatures.length ? finalFeatures : "none",
-            },
-            {
-              name: "Tags:",
-              value: tags.toLowerCase(),
-            },
-            {
-              name: "cFormat:",
-              value: customFormatString.length ? customFormatString : "none",
-            },
-            {
-              name: "Remove:",
-              value: tagsToBeRemoved.length ? tagsToBeRemoved : "none",
-            },
-          ],
-        },
-      ],
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  // Checks if the hook request went through
-  if (hook1.status >= 400) {
-    return res.json({
-      success: false,
-      error: error.message.somethingWentWrong,
+        ],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
+    // Checks if the hook request went through
+    if (hook1.status >= 400) {
+      return res.json({
+        success: false,
+        error: error.message.somethingWentWrong,
+      });
+    }
   }
 
   // Send the response.
@@ -540,7 +567,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       shuffle || shuffle === "true" ? "true" : "false"
     }&genre=${encodeURIComponent(genre.toLowerCase())}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${
       customFormatString ? "true" : "false"
-    }`,
+    }&log=${log === "true" ? log : "false"}`,
     length: countTagsLength(tags),
   });
 }

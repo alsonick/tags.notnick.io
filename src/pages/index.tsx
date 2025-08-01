@@ -143,6 +143,20 @@ export default function Home() {
       }
     }
 
+    let localStorageCustomFormat = "";
+
+    // Checks if the artist field was given a custom format key.
+    if (artist.includes("/custom") && !artist.includes("{")) {
+      const customFormatKey = artist.split("/")[1];
+      const customFormat = localStorage.getItem(customFormatKey);
+      // Checks if the value is valid.
+      if (customFormat === null || !customFormat.length) {
+        return alert("Something went wrong retrieving the custom format key.");
+      }
+
+      localStorageCustomFormat = customFormat;
+    }
+
     // Starts the loading
     setLoading(true);
 
@@ -153,7 +167,9 @@ export default function Home() {
       verse: verse.trim().length ? verse.trim() : "none",
       tiktok: tiktok === "true" ? "true" : "false",
       format: format.trim(),
-      artist: artist.trim(),
+      artist: localStorageCustomFormat.length
+        ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
+        : artist.trim(),
       genre: genre.trim(),
     });
 
@@ -209,13 +225,27 @@ export default function Home() {
   };
 
   const saveCustomFormat = () => {
+    // Checks if a custom format was used (Yes, I know this check is useless but I'm just like that lol :3).
+    if (!data?.customFormat) {
+      return;
+    }
+
     alert(
-      "You're currently trying to save a custom format, On the browser we save them in localstorage, please provide a key to identify with the custom format, whenever you want to use the custom format then please append '/[KEY]' at the end of the string in the 'artist' field. Click the 'Ok' Button to proceed."
+      "You're currently trying to save a custom format, On the browser we save them in localstorage, please provide a key to identify with the custom format, whenever you want to use the custom format then please append '/[KEY]/custom' (replace [KEY] with your actual key) at the end of the string in the 'artist' field. Click the 'Ok' Button to proceed."
     );
 
+    // Prompts the user to enter in a valid key.
     const key = prompt("Please enter a key you'd like to use:");
 
-    console.log(key);
+    // Validate the user input key.
+    if (!key?.length || key === null) {
+      return alert("Please enter a valid key.");
+    }
+
+    // Set the key and custom format in localStorage.
+    localStorage.setItem(key, data.customFormat);
+
+    toast.success("Saved custom key");
   };
 
   return (
@@ -522,28 +552,30 @@ export default function Home() {
                 </div>
               </div>
             )}
-            <div className="flex w-full mt-6 items-center">
-              <div className="flex ml-auto">
-                <div className="mr-4">
-                  <Button
-                    title="Copy custom format"
-                    onClick={() => {
-                      if (!data?.customFormat) {
-                        toast.error("");
-                        return;
-                      }
-                      copy(data?.customFormat);
-                      toast.success(success.message.tagsCopiedToClipboard);
-                    }}
-                  >
-                    Copy custom format <FiCopy className="ml-2 hover:scale-110 duration-150" />
+            {data?.customFormat && (
+              <div className="flex w-full mt-6 items-center">
+                <div className="flex ml-auto">
+                  <div className="mr-4">
+                    <Button
+                      title="Copy custom format"
+                      onClick={() => {
+                        if (!data?.customFormat) {
+                          toast.error("");
+                          return;
+                        }
+                        copy(data?.customFormat);
+                        toast.success(success.message.tagsCopiedToClipboard);
+                      }}
+                    >
+                      Copy custom format <FiCopy className="ml-2 hover:scale-110 duration-150" />
+                    </Button>
+                  </div>
+                  <Button title="Save custom format" onClick={saveCustomFormat}>
+                    Save custom format <FiSave className="ml-2 hover:scale-110 duration-150" />
                   </Button>
                 </div>
-                <Button title="Save custom format" onClick={saveCustomFormat}>
-                  Save custom format <FiSave className="ml-2 hover:scale-110 duration-150" />
-                </Button>
               </div>
-            </div>
+            )}
             {countTagsLength(tags.join(",")) > 500 && (
               <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
             )}
