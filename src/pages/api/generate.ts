@@ -17,6 +17,7 @@ import { lyricsTitles } from "@/lib/helpers/titles/lyrics-titles";
 import { removeTags } from "./../../lib/helpers/tags/remove-tags";
 import { letraTitles } from "@/lib/helpers/titles/letra-titles";
 import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
+import { discordWebhook } from "@/lib/webhooks/discord-webhook";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
 import { countTagsLength } from "@/lib/count-tags-length";
@@ -24,11 +25,10 @@ import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
 import { removeEmojis } from "@/lib/remove-emojis";
 import { shuffleTags } from "@/lib/shuffle-tags";
+import { urlBuilder } from "@/lib/url-builder";
 import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
-import { discordWebhook } from "@/lib/webhooks/discord-webhook";
-import { urlBuilder } from "@/lib/url-builder";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
