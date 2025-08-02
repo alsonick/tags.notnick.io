@@ -36,7 +36,7 @@ export const discordWebhook = async (
             },
             {
               name: "Title:",
-              value: decodeURIComponent(title),
+              value: decodeURIComponent(title.trim()),
               inline: true,
             },
             {
