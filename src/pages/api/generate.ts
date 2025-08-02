@@ -27,6 +27,8 @@ import { shuffleTags } from "@/lib/shuffle-tags";
 import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
+import { discordWebhook } from "@/lib/webhooks/discord-webhook";
+import { urlBuilder } from "@/lib/url-builder";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -35,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Get the query parameters
+  const discordWebhookLink: string = (req.query.discordwebhook as string) || "none";
   const genre: string = (req.query.genre as string) || "none";
   const verse: string = (req.query.verse as string) || "none";
   const structure: string = req.query.structure as string;
@@ -430,144 +433,106 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const hashtags = [
-    finalArtist.replaceAll(" ", ""),
-    finalTitle.replaceAll(" ", "").replaceAll("'", ""),
-    computeFinalHashtags(finalFormat),
+    decodeURIComponent(finalArtist.replaceAll(" ", "")),
+    decodeURIComponent(finalTitle.replaceAll(" ", "").replaceAll("'", "")),
+    decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
-  if (log === "true") {
-    // Send data to discord webhook (tags)
-    const hook1 = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
-      method: "POST",
-      body: JSON.stringify({
-        embeds: [
-          {
-            author: {
-              name: `${finalArtist} - ${finalTitle}`,
-            },
-            timestamp: new Date().toISOString(),
-            fields: [
-              {
-                name: "Artist:",
-                value: finalArtist,
-                inline: true,
-              },
-              {
-                name: "Title:",
-                value: finalTitle,
-                inline: true,
-              },
-              {
-                name: "Tiktok:",
-                value: tiktok,
-                inline: true,
-              },
-              {
-                name: "Format:",
-                value: computeFinalHashtags(finalFormat),
-                inline: true,
-              },
-              {
-                name: "Channel:",
-                value: channel,
-                inline: true,
-              },
-              {
-                name: "Length:",
-                value: removedTags.length ? countTagsLength(removedTags) : countTagsLength(tags),
-                inline: true,
-              },
-              {
-                name: "Features:",
-                value: finalFeatures.length ? finalFeatures : "none",
-                inline: true,
-              },
-              {
-                name: "Log:",
-                value: log,
-                inline: true,
-              },
-              {
-                name: "fCount:",
-                value: finalFeatures.length,
-                inline: true,
-              },
-              {
-                name: "Tags:",
-                value: tags.toLowerCase(),
-              },
-              {
-                name: "Remove:",
-                value: tagsToBeRemoved.length ? tagsToBeRemoved : "none",
-              },
-              {
-                name: "cFormat:",
-                value: customFormatString.length ? customFormatString : "none",
-              },
-            ],
-          },
-        ],
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const url = urlBuilder(
+    discordWebhookLink,
+    customFormatString,
+    finalFeatures,
+    shuffle,
+    channel,
+    customFormatString.length ? artist.trim() : finalArtist,
+    tiktok,
+    finalFormat,
+    genre,
+    verse,
+    finalTitle,
+    log
+  );
 
-    // Checks if the hook request went through
-    if (hook1.status >= 400) {
-      return res.json({
-        success: false,
-        error: error.message.somethingWentWrong,
-      });
-    }
+  if (log === "true" && discordWebhookLink === "none") {
+    discordWebhook(
+      customFormatString,
+      tagsToBeRemoved,
+      res,
+      removedTags,
+      finalFeatures,
+      channel,
+      process.env.DISCORD_WEBHOOK_URL!,
+      tiktok,
+      finalFormat,
+      finalArtist,
+      finalTitle,
+      tags,
+      log,
+      url
+    );
+  } else if (log === "true" && discordWebhookLink !== "none") {
+    discordWebhook(
+      customFormatString,
+      tagsToBeRemoved,
+      res,
+      removedTags,
+      finalFeatures,
+      channel,
+      discordWebhookLink,
+      tiktok,
+      finalFormat,
+      finalArtist,
+      finalTitle,
+      tags,
+      log,
+      url
+    );
   }
 
   // Send the response.
   res.status(200).json({
     success: true,
-    tags: tags.toLowerCase(),
-    tagsToBeRemoved: tagsToBeRemoved.length ? tagsToBeRemoved.toLowerCase() : [],
-    removedTags: removedTags.toLowerCase(),
+    tags: decodeURIComponent(tags.toLowerCase()),
+    tagsToBeRemoved: tagsToBeRemoved.length ? decodeURIComponent(tagsToBeRemoved.toLowerCase()) : [],
+    removedTags: decodeURIComponent(removedTags.toLowerCase()),
     removedTagsLength: countTagsLength(removedTags),
-    title: finalTitle.trim(),
-    artist: finalArtist.trim(),
-    artistCustomFormat: customFormatString.length && `${artist.trim()}`,
+    title: decodeURIComponent(finalTitle.trim()),
+    artist: decodeURIComponent(finalArtist.trim()),
+    artistCustomFormat: customFormatString.length && `${decodeURIComponent(artist.trim())}`,
     customFormat: customFormatString,
     features: finalFeatures !== "none" ? finalFeatures.split(", ") : [],
     hashtags,
     extras: {
-      titles,
+      titles: decodeURIComponent(titles),
       seo: {
         text:
           finalFeatures === "none"
-            ? `${finalArtist}=${finalTitle}=${finalArtist} ${finalTitle} ${computeFinalHashtags(
+            ? `${decodeURIComponent(finalArtist)}=${decodeURIComponent(finalTitle)}=${decodeURIComponent(
+                finalArtist
+              )} ${decodeURIComponent(finalTitle)} ${computeFinalHashtags(finalFormat)}=${decodeURIComponent(
+                finalTitle
+              )} ${computeFinalHashtags(finalFormat)}=${decodeURIComponent(finalTitle)} ${decodeURIComponent(
+                finalArtist
+              )}=${decodeURIComponent(finalArtist)} ${decodeURIComponent(finalTitle)}`
+            : `${decodeURIComponent(finalArtist)}, ${decodeURIComponent(finalFeatures)}=${decodeURIComponent(
+                finalTitle
+              )}=${decodeURIComponent(finalArtist)}, ${decodeURIComponent(finalFeatures)} ${decodeURIComponent(
+                finalTitle
+              )} ${computeFinalHashtags(finalFormat)}=${decodeURIComponent(finalTitle)} ${computeFinalHashtags(
                 finalFormat
-              )}=${finalTitle} ${computeFinalHashtags(
-                finalFormat
-              )}=${finalTitle} ${finalArtist}=${finalArtist} ${finalTitle}`
-            : `${finalArtist}, ${finalFeatures}=${finalTitle}=${finalArtist}, ${finalFeatures} ${finalTitle} ${computeFinalHashtags(
-                finalFormat
-              )}=${finalTitle} ${computeFinalHashtags(
-                finalFormat
-              )}=${finalTitle} ${finalArtist}, ${finalFeatures}=${finalArtist}, ${finalFeatures} ${finalTitle}`,
+              )}=${decodeURIComponent(finalTitle)} ${decodeURIComponent(finalArtist)}, ${decodeURIComponent(
+                finalFeatures
+              )}=${decodeURIComponent(finalArtist)}, ${decodeURIComponent(finalFeatures)} ${decodeURIComponent(
+                finalTitle
+              )}`,
       },
       array: {
-        removedTags: removedTags.toLowerCase().split(","),
-        titles: titles.split("="),
-        tags: tags.toLowerCase().split(","),
+        removedTags: decodeURIComponent(removedTags).toLowerCase().split(","),
+        titles: decodeURIComponent(titles).split("="),
+        tags: decodeURIComponent(tags).toLowerCase().split(","),
       },
     },
-    url: `/api/generate?title=${encodeURIComponent(
-      customFormatString.length ? "none" : finalTitle
-    )}&artist=${encodeURIComponent(
-      customFormatString.length ? `${artist.trim()}` : finalArtist
-    )}&features=${encodeURIComponent(finalFeatures)}&tiktok=${
-      tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-    }&format=${finalFormat}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${
-      shuffle || shuffle === "true" ? "true" : "false"
-    }&genre=${encodeURIComponent(genre.toLowerCase())}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${
-      customFormatString ? "true" : "false"
-    }&log=${log === "true" ? log : "false"}`,
+    url,
     length: countTagsLength(tags),
   });
 }
