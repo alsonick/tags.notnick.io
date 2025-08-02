@@ -71,7 +71,7 @@ export const discordWebhook = async (
             },
             {
               name: "Count:",
-              value: features === "none" ? 0 : features.length,
+              value: features === "none" ? 0 : features.split(",").length,
               inline: true,
             },
             {
