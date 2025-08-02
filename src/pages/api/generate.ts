@@ -454,7 +454,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   );
 
   if (log === "true" && discordWebhookLink === "none") {
-    discordWebhook(
+    await discordWebhook(
       customFormatString,
       tagsToBeRemoved,
       res,
@@ -471,7 +471,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       url
     );
   } else if (log === "true" && discordWebhookLink !== "none") {
-    discordWebhook(
+    await discordWebhook(
       customFormatString,
       tagsToBeRemoved,
       res,
