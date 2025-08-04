@@ -228,12 +228,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (extractedTitle.length) {
     finalTitle = extractedTitle
       .trim()
-      .replace(/(\.|'|\(.*$)/g, "")
+      .replace(/(\.|'|!|\(.*$)/g, "")
       .trim();
   } else {
     finalTitle = title
       .trim()
-      .replace(/(\.|'|\(.*$)/g, "")
+      .replace(/(\.|'|!|\(.*$)/g, "")
       .trim();
   }
 

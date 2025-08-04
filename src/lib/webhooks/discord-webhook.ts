@@ -31,7 +31,7 @@ export const discordWebhook = async (
           fields: [
             {
               name: "Artist:",
-              value: decodeURIComponent(artist),
+              value: decodeURIComponent(artist.trim()),
               inline: true,
             },
             {
