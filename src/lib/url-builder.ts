@@ -22,5 +22,5 @@ export const urlBuilder = (
     shuffle || shuffle === "true" ? "true" : "false"
   }&genre=${encodeURIComponent(genre.toLowerCase())}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${
     customFormat ? "true" : "false"
-  }&log=${log === "true" ? log : "false"}&discordwebhook=${discordwebhook}`;
+  }&log=${log === "true" ? log : "false"}`;
 };
