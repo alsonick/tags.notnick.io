@@ -46,7 +46,7 @@ export const discordWebhook = async (
             },
             {
               name: "Format:",
-              value: computeFinalHashtags(format),
+              value: computeFinalHashtags(format).replace("SlowedReverb", "Slowed & Reverb"),
               inline: true,
             },
             {
