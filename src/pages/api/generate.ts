@@ -440,6 +440,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
+  // Build URL once
   const url = urlBuilder(
     customFormatString,
     finalFeatures,
@@ -454,33 +455,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     log
   );
 
-  // Helper to send webhook to either Slack or Discord
-  async function sendWebhook(service: "slack" | "discord", link: string, defaultEnvVar: string, contentUrl: string) {
-    const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
-    const webhookLink = link === "none" ? process.env[defaultEnvVar]! : link;
+  // Prevent accidental double execution in the same run
+  let webhooksSent = false;
 
-    await webhookFn(
-      customFormatString,
-      tagsToBeRemoved,
-      res,
-      removedTags,
-      finalFeatures,
-      channel,
-      webhookLink,
-      tiktok,
-      finalFormat,
-      finalArtist,
-      finalTitle,
-      tags,
-      log,
-      contentUrl
-    );
+  async function sendWebhooks(contentUrl: string) {
+    if (webhooksSent) return; // guard
+    webhooksSent = true;
+
+    const targets: { service: "slack" | "discord"; link: string; envVar: string }[] = [
+      { service: "slack", link: slackWebhookLink, envVar: "SLACK_WEBHOOK_URL" },
+      { service: "discord", link: discordWebhookLink, envVar: "DISCORD_WEBHOOK_URL" },
+    ];
+
+    for (const { service, link, envVar } of targets) {
+      const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
+      const webhookLink = link === "none" ? process.env[envVar]! : link;
+
+      await webhookFn(
+        customFormatString,
+        tagsToBeRemoved,
+        res,
+        removedTags,
+        finalFeatures,
+        channel,
+        webhookLink,
+        tiktok,
+        finalFormat,
+        finalArtist,
+        finalTitle,
+        tags,
+        log,
+        contentUrl
+      );
+    }
   }
 
   // Only send if logging is enabled
-  if (log.toLowerCase() === "true") {
-    await sendWebhook("slack", slackWebhookLink, "SLACK_WEBHOOK_URL", url);
-    await sendWebhook("discord", discordWebhookLink, "DISCORD_WEBHOOK_URL", url);
+  if (String(log).toLowerCase() === "true") {
+    await sendWebhooks(url);
   }
 
   // Send the response.
