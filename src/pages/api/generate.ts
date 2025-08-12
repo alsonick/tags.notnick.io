@@ -20,6 +20,7 @@ import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
 import { discordWebhook } from "@/lib/webhooks/discord-webhook";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
+import { slackWebhook } from "@/lib/webhooks/slack-webhook";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
@@ -38,6 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // Get the query parameters
   const discordWebhookLink: string = (req.query.discordwebhook as string) || "none";
+  const slackWebhookLink: string = (req.query.slackwebhook as string) || "none";
   const genre: string = (req.query.genre as string) || "none";
   const verse: string = (req.query.verse as string) || "none";
   const structure: string = req.query.structure as string;
@@ -438,7 +440,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
-  const url = urlBuilder(
+  const discordWebhookContentUrl = urlBuilder(
     discordWebhookLink,
     customFormatString,
     finalFeatures,
@@ -452,6 +454,57 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     finalTitle,
     log
   );
+
+  const slackWebhookContentUrl = urlBuilder(
+    slackWebhookLink,
+    customFormatString,
+    finalFeatures,
+    shuffle,
+    channel,
+    customFormatString.length ? artist.trim() : finalArtist,
+    tiktok,
+    finalFormat,
+    genre,
+    verse,
+    finalTitle,
+    log
+  );
+
+  if (log === "true" && slackWebhookLink === "none") {
+    await slackWebhook(
+      customFormatString,
+      tagsToBeRemoved,
+      res,
+      removedTags,
+      finalFeatures,
+      channel,
+      process.env.SLACK_WEBHOOK_URL!,
+      tiktok,
+      finalFormat,
+      finalArtist,
+      finalTitle,
+      tags,
+      log,
+      slackWebhookContentUrl
+    );
+  } else if (log === "true" && slackWebhookLink !== "none") {
+    await slackWebhook(
+      customFormatString,
+      tagsToBeRemoved,
+      res,
+      removedTags,
+      finalFeatures,
+      channel,
+      slackWebhookLink,
+      tiktok,
+      finalFormat,
+      finalArtist,
+      finalTitle,
+      tags,
+      log,
+      slackWebhookContentUrl
+    );
+  }
 
   if (log === "true" && discordWebhookLink === "none") {
     await discordWebhook(
@@ -468,7 +521,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       finalTitle,
       tags,
       log,
-      url
+      discordWebhookContentUrl
     );
   } else if (log === "true" && discordWebhookLink !== "none") {
     await discordWebhook(
@@ -485,7 +538,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       finalTitle,
       tags,
       log,
-      url
+      discordWebhookContentUrl
     );
   }
 
@@ -532,7 +585,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         tags: decodeURIComponent(tags).toLowerCase().split(","),
       },
     },
-    url,
+    url: discordWebhookContentUrl,
     length: countTagsLength(tags),
   });
 }

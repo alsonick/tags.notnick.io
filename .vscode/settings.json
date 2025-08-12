@@ -1,4 +1,14 @@
 {
-  "cSpell.words": ["bassboosted", "calum", "discordwebhook", "dont", "Letra", "nightcore", "Phonk", "slowedreverb"],
+  "cSpell.words": [
+    "bassboosted",
+    "calum",
+    "discordwebhook",
+    "dont",
+    "Letra",
+    "nightcore",
+    "Phonk",
+    "slackwebhook",
+    "slowedreverb"
+  ],
   "discord.enabled": true
 }
