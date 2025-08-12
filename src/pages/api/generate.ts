@@ -470,76 +470,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     log
   );
 
-  if (log === "true" && slackWebhookLink === "none") {
-    await slackWebhook(
+  // Helper to send webhook to either Slack or Discord
+  async function sendWebhook(service: "slack" | "discord", link: string, defaultEnvVar: string, contentUrl: string) {
+    const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
+    const webhookLink = link === "none" ? process.env[defaultEnvVar]! : link;
+
+    await webhookFn(
       customFormatString,
       tagsToBeRemoved,
       res,
       removedTags,
       finalFeatures,
       channel,
-      process.env.SLACK_WEBHOOK_URL!,
+      webhookLink,
       tiktok,
       finalFormat,
       finalArtist,
       finalTitle,
       tags,
       log,
-      slackWebhookContentUrl
-    );
-  } else if (log === "true" && slackWebhookLink !== "none") {
-    await slackWebhook(
-      customFormatString,
-      tagsToBeRemoved,
-      res,
-      removedTags,
-      finalFeatures,
-      channel,
-      slackWebhookLink,
-      tiktok,
-      finalFormat,
-      finalArtist,
-      finalTitle,
-      tags,
-      log,
-      slackWebhookContentUrl
+      contentUrl
     );
   }
 
-  if (log === "true" && discordWebhookLink === "none") {
-    await discordWebhook(
-      customFormatString,
-      tagsToBeRemoved,
-      res,
-      removedTags,
-      finalFeatures,
-      channel,
-      process.env.DISCORD_WEBHOOK_URL!,
-      tiktok,
-      finalFormat,
-      finalArtist,
-      finalTitle,
-      tags,
-      log,
-      discordWebhookContentUrl
-    );
-  } else if (log === "true" && discordWebhookLink !== "none") {
-    await discordWebhook(
-      customFormatString,
-      tagsToBeRemoved,
-      res,
-      removedTags,
-      finalFeatures,
-      channel,
-      discordWebhookLink,
-      tiktok,
-      finalFormat,
-      finalArtist,
-      finalTitle,
-      tags,
-      log,
-      discordWebhookContentUrl
-    );
+  // Only send if logging is enabled
+  if (log === "true") {
+    await sendWebhook("slack", slackWebhookLink, "SLACK_WEBHOOK_URL", slackWebhookContentUrl);
+    await sendWebhook("discord", discordWebhookLink, "DISCORD_WEBHOOK_URL", discordWebhookContentUrl);
   }
 
   // Send the response.
