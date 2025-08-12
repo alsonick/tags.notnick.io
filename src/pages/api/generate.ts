@@ -463,25 +463,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Prevent accidental double execution within a single run.
   let webhooksSent = false;
 
-  async function sendWebhooks(contentUrl: string) {
-    if (webhooksSent) {
-      return;
-    }
-    webhooksSent = true;
+  // This is the function inside your main handler
+  async function sendWebhooks(contentUrl: string, res: NextApiResponse) {
+    // Check moved to the top of the handler
+    // if (String(log).toLowerCase() !== "true") {
+    //   return;
+    // }
+
+    let webhooksSent = false;
 
     const targets: { service: "slack" | "discord"; link: string; envVar: string }[] = [
       { service: "slack", link: slackWebhookLink, envVar: "SLACK_WEBHOOK_URL" },
       { service: "discord", link: discordWebhookLink, envVar: "DISCORD_WEBHOOK_URL" },
     ];
 
-    // Use Promise.allSettled for more robust error handling
+    if (webhooksSent) {
+      return;
+    }
+    webhooksSent = true;
+
     await Promise.allSettled(
       targets.map(async ({ service, link, envVar }) => {
         try {
           const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
           const webhookLink = link === "none" ? process.env[envVar]! : link;
 
-          // Skip if the webhook link is not available
           if (!webhookLink) {
             console.warn(`Skipping ${service} webhook. No URL found.`);
             return;
@@ -490,7 +496,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           await webhookFn(
             customFormatString,
             tagsToBeRemoved,
-            res,
             removedTags,
             finalFeatures,
             channel,
@@ -510,9 +515,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     );
   }
 
-  // The webhook sending logic is now guaranteed to run only once,
-  // and only if logging is enabled.
-  await sendWebhooks(url);
+  if (String(log).toLowerCase() === "true") {
+    await sendWebhooks(url, res);
+  }
 
   // Send the response.
   res.status(200).json({

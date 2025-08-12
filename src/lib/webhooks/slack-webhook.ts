@@ -6,7 +6,6 @@ import { error } from "../error";
 export const slackWebhook = async (
   customFormatString: string,
   tagsToBeRemoved: string,
-  res: NextApiResponse,
   removedTags: string,
   features: string,
   channel: string,
@@ -73,10 +72,12 @@ export const slackWebhook = async (
     }),
   });
 
+  // Instead of returning res.json(), we simply throw an error or return a boolean.
+  // The calling function (sendWebhooks) will handle the error.
   if (!hook1.ok) {
-    return res.json({
-      success: false,
-      error: error.message.somethingWentWrong,
-    });
+    throw new Error(`Slack webhook failed with status: ${hook1.status}`);
   }
+
+  // The function should return something to signal success.
+  return true;
 };

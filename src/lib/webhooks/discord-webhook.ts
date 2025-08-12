@@ -6,7 +6,6 @@ import { error } from "../error";
 export const discordWebhook = async (
   customFormatString: string,
   tagsToBeRemoved: string,
-  res: NextApiResponse,
   removedTags: string,
   features: string,
   channel: string,
@@ -99,11 +98,9 @@ export const discordWebhook = async (
     },
   });
 
-  // Checks if the hook request went through
+  // Check if the hook request went through
   if (hook1.status >= 400) {
-    return res.json({
-      success: false,
-      error: error.message.somethingWentWrong,
-    });
+    // THROW an error instead of returning a response
+    throw new Error(`Discord webhook failed with status: ${hook1.status}`);
   }
 };
