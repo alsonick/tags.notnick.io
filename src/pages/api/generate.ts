@@ -440,20 +440,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
-  const url = urlBuilder(
-    customFormatString,
-    finalFeatures,
-    shuffle,
-    channel,
-    customFormatString.length ? artist.trim() : finalArtist,
-    tiktok,
-    finalFormat,
-    genre,
-    verse,
-    finalTitle,
-    log
-  );
-
   // Exit early if logging is not enabled.
   // This is the most crucial change to prevent duplicate logs.
   if (String(log).toLowerCase() !== "true") {
@@ -463,24 +449,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Prevent accidental double execution within a single run.
   let webhooksSent = false;
 
-  // This is the function inside your main handler
-  async function sendWebhooks(contentUrl: string, res: NextApiResponse) {
-    // Check moved to the top of the handler
-    // if (String(log).toLowerCase() !== "true") {
-    //   return;
-    // }
-
-    let webhooksSent = false;
+  async function sendWebhooks(contentUrl: string) {
+    // If the log is not true, we don't need to do anything.
+    if (String(log).toLowerCase() !== "true") {
+      return;
+    }
+    // Check if webhooks have already been sent in this specific request.
+    if (webhooksSent) {
+      return;
+    }
+    // Set the flag to true for this request.
+    webhooksSent = true;
 
     const targets: { service: "slack" | "discord"; link: string; envVar: string }[] = [
       { service: "slack", link: slackWebhookLink, envVar: "SLACK_WEBHOOK_URL" },
       { service: "discord", link: discordWebhookLink, envVar: "DISCORD_WEBHOOK_URL" },
     ];
-
-    if (webhooksSent) {
-      return;
-    }
-    webhooksSent = true;
 
     await Promise.allSettled(
       targets.map(async ({ service, link, envVar }) => {
@@ -515,9 +499,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     );
   }
 
-  if (String(log).toLowerCase() === "true") {
-    await sendWebhooks(url, res);
-  }
+  // The rest of the handler logic remains the same.
+  const url = urlBuilder(
+    customFormatString,
+    finalFeatures,
+    shuffle,
+    channel,
+    customFormatString.length ? artist.trim() : finalArtist,
+    tiktok,
+    finalFormat,
+    genre,
+    verse,
+    finalTitle,
+    log
+  );
+
+  // Send the webhooks.
+  await sendWebhooks(url);
 
   // Send the response.
   res.status(200).json({
