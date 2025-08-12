@@ -454,11 +454,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     log
   );
 
-  // Prevent accidental double execution
+  // Exit early if logging is not enabled.
+  // This is the most crucial change to prevent duplicate logs.
+  if (String(log).toLowerCase() !== "true") {
+    return;
+  }
+
+  // Prevent accidental double execution within a single run.
   let webhooksSent = false;
 
   async function sendWebhooks(contentUrl: string) {
-    if (webhooksSent) return;
+    if (webhooksSent) {
+      return;
+    }
     webhooksSent = true;
 
     const targets: { service: "slack" | "discord"; link: string; envVar: string }[] = [
@@ -466,35 +474,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       { service: "discord", link: discordWebhookLink, envVar: "DISCORD_WEBHOOK_URL" },
     ];
 
-    await Promise.all(
+    // Use Promise.allSettled for more robust error handling
+    await Promise.allSettled(
       targets.map(async ({ service, link, envVar }) => {
-        const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
-        const webhookLink = link === "none" ? process.env[envVar]! : link;
+        try {
+          const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
+          const webhookLink = link === "none" ? process.env[envVar]! : link;
 
-        await webhookFn(
-          customFormatString,
-          tagsToBeRemoved,
-          res,
-          removedTags,
-          finalFeatures,
-          channel,
-          webhookLink,
-          tiktok,
-          finalFormat,
-          finalArtist,
-          finalTitle,
-          tags,
-          log,
-          contentUrl
-        );
+          // Skip if the webhook link is not available
+          if (!webhookLink) {
+            console.warn(`Skipping ${service} webhook. No URL found.`);
+            return;
+          }
+
+          await webhookFn(
+            customFormatString,
+            tagsToBeRemoved,
+            res,
+            removedTags,
+            finalFeatures,
+            channel,
+            webhookLink,
+            tiktok,
+            finalFormat,
+            finalArtist,
+            finalTitle,
+            tags,
+            log,
+            contentUrl
+          );
+        } catch (error) {
+          console.error(`Error sending ${service} webhook:`, error);
+        }
       })
     );
   }
 
-  // Only send if logging is enabled
-  if (String(log).toLowerCase() === "true") {
-    await sendWebhooks(url);
-  }
+  // The webhook sending logic is now guaranteed to run only once,
+  // and only if logging is enabled.
+  await sendWebhooks(url);
 
   // Send the response.
   res.status(200).json({
