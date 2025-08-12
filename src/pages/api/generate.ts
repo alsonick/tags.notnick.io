@@ -440,23 +440,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
-  const discordWebhookContentUrl = urlBuilder(
-    discordWebhookLink,
-    customFormatString,
-    finalFeatures,
-    shuffle,
-    channel,
-    customFormatString.length ? artist.trim() : finalArtist,
-    tiktok,
-    finalFormat,
-    genre,
-    verse,
-    finalTitle,
-    log
-  );
-
-  const slackWebhookContentUrl = urlBuilder(
-    slackWebhookLink,
+  const url = urlBuilder(
     customFormatString,
     finalFeatures,
     shuffle,
@@ -494,9 +478,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Only send if logging is enabled
-  if (log === "true") {
-    await sendWebhook("slack", slackWebhookLink, "SLACK_WEBHOOK_URL", slackWebhookContentUrl);
-    await sendWebhook("discord", discordWebhookLink, "DISCORD_WEBHOOK_URL", discordWebhookContentUrl);
+  if (log.toLowerCase() === "true") {
+    await sendWebhook("slack", slackWebhookLink, "SLACK_WEBHOOK_URL", url);
+    await sendWebhook("discord", discordWebhookLink, "DISCORD_WEBHOOK_URL", url);
   }
 
   // Send the response.
@@ -542,7 +526,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         tags: decodeURIComponent(tags).toLowerCase().split(","),
       },
     },
-    url: discordWebhookContentUrl,
+    url,
     length: countTagsLength(tags),
   });
 }

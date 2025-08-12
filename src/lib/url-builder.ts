@@ -1,5 +1,4 @@
 export const urlBuilder = (
-  discordwebhook: string,
   customFormat: string,
   features: string,
   shuffle: string,
@@ -12,15 +11,13 @@ export const urlBuilder = (
   title: string,
   log: string
 ): string => {
-  return `/api/generate?title=${encodeURIComponent(
-    customFormat.length ? "none" : encodeURIComponent(title)
-  )}&artist=${encodeURIComponent(
-    customFormat.length ? encodeURIComponent(`${artist.trim()}`) : encodeURIComponent(artist)
-  )}&features=${encodeURIComponent(features)}&tiktok=${
-    tiktok === "" ? "false" : tiktok !== "true" ? "false" : "true"
-  }&format=${format}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${
-    shuffle || shuffle === "true" ? "true" : "false"
-  }&genre=${encodeURIComponent(genre.toLowerCase())}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${
-    customFormat ? "true" : "false"
-  }&log=${log === "true" ? log : "false"}`;
+  return `/api/generate?title=${encodeURIComponent(customFormat.length ? "none" : title)}&artist=${encodeURIComponent(
+    customFormat.length ? artist.trim() : artist
+  )}&features=${encodeURIComponent(features)}&tiktok=${tiktok === "true"}&format=${encodeURIComponent(
+    format
+  )}&channel=${channel ? encodeURIComponent(channel) : "none"}&shuffle=${shuffle === "true"}&genre=${encodeURIComponent(
+    genre.toLowerCase()
+  )}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${customFormat ? "true" : "false"}&log=${
+    log.toLowerCase() === "true" ? "true" : "false"
+  }`;
 };
