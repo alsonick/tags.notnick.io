@@ -440,7 +440,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
-  // Build URL once
   const url = urlBuilder(
     customFormatString,
     finalFeatures,
@@ -455,11 +454,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     log
   );
 
-  // Prevent accidental double execution in the same run
+  // Prevent accidental double execution
   let webhooksSent = false;
 
   async function sendWebhooks(contentUrl: string) {
-    if (webhooksSent) return; // guard
+    if (webhooksSent) return;
     webhooksSent = true;
 
     const targets: { service: "slack" | "discord"; link: string; envVar: string }[] = [
@@ -467,27 +466,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       { service: "discord", link: discordWebhookLink, envVar: "DISCORD_WEBHOOK_URL" },
     ];
 
-    for (const { service, link, envVar } of targets) {
-      const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
-      const webhookLink = link === "none" ? process.env[envVar]! : link;
+    await Promise.all(
+      targets.map(async ({ service, link, envVar }) => {
+        const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
+        const webhookLink = link === "none" ? process.env[envVar]! : link;
 
-      await webhookFn(
-        customFormatString,
-        tagsToBeRemoved,
-        res,
-        removedTags,
-        finalFeatures,
-        channel,
-        webhookLink,
-        tiktok,
-        finalFormat,
-        finalArtist,
-        finalTitle,
-        tags,
-        log,
-        contentUrl
-      );
-    }
+        await webhookFn(
+          customFormatString,
+          tagsToBeRemoved,
+          res,
+          removedTags,
+          finalFeatures,
+          channel,
+          webhookLink,
+          tiktok,
+          finalFormat,
+          finalArtist,
+          finalTitle,
+          tags,
+          log,
+          contentUrl
+        );
+      })
+    );
   }
 
   // Only send if logging is enabled
