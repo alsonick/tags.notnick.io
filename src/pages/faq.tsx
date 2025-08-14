@@ -156,8 +156,8 @@ export default function FAQ() {
           </Accordion>
           <Link
             className="text-blue-500 mt-16 font-semibold hover:underline flex items-center"
-            href="/"
             title="Go back home"
+            href="/"
           >
             <FiChevronLeft className="mr-1 hover:scale-110 duration-150" />
             Go back home
