@@ -11,23 +11,28 @@
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
     "copy-to-clipboard": "^3.3.3",
+    "ioredis": "^5.7.0",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
-    "react-toastify": "^11.0.3"
+    "react-toastify": "^11.0.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
+    "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
-    "@types/node": "^20",
+    "@types/node": "^24.3.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
+    "node-mocks-http": "^1.17.2",
     "postcss": "^8",
+    "strip-ansi": "^7.1.0",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"

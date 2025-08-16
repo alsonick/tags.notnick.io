@@ -149,6 +149,7 @@ export default function Home() {
     if (artist.includes("/custom") && !artist.includes("{")) {
       const customFormatKey = artist.split("/")[1];
       const customFormat = localStorage.getItem(customFormatKey);
+
       // Checks if the value is valid.
       if (customFormat === null || !customFormat.length) {
         return alert("Something went wrong retrieving the custom format key.");
@@ -161,15 +162,15 @@ export default function Home() {
     setLoading(true);
 
     const queryParams = new URLSearchParams({
+      artist: localStorageCustomFormat.length
+        ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
+        : artist.trim(),
       channel: channelName.trim().length ? channelName.trim() : "none",
       features: features.trim().length ? features.trim() : "none",
       title: title.trim().length ? title.trim() : "none",
       verse: verse.trim().length ? verse.trim() : "none",
       tiktok: tiktok === "true" ? "true" : "false",
       format: format.trim(),
-      artist: localStorageCustomFormat.length
-        ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
-        : artist.trim(),
       genre: genre.trim(),
     });
 

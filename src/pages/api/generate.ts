@@ -17,10 +17,9 @@ import { lyricsTitles } from "@/lib/helpers/titles/lyrics-titles";
 import { removeTags } from "./../../lib/helpers/tags/remove-tags";
 import { letraTitles } from "@/lib/helpers/titles/letra-titles";
 import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
-import { discordWebhook } from "@/lib/webhooks/discord-webhook";
+import { sendDiscordWebhook } from "@/lib/send-discord-webhook";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
-import { slackWebhook } from "@/lib/webhooks/slack-webhook";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
@@ -30,6 +29,7 @@ import { urlBuilder } from "@/lib/url-builder";
 import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
+import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -38,8 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Get the query parameters
-  const discordWebhookLink: string = (req.query.discordwebhook as string) || "none";
-  const slackWebhookLink: string = (req.query.slackwebhook as string) || "none";
+  const webhook: string = (req.query.webhook as string) || "none";
   const genre: string = (req.query.genre as string) || "none";
   const verse: string = (req.query.verse as string) || "none";
   const structure: string = req.query.structure as string;
@@ -440,68 +439,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
-  // Exit early if logging is not enabled.
-  // This is the most crucial change to prevent duplicate logs.
-  if (String(log).toLowerCase() !== "true") {
-    return;
-  }
+  const requestId = uuidv4();
 
-  // Prevent accidental double execution within a single run.
-  let webhooksSent = false;
-
-  async function sendWebhooks(contentUrl: string) {
-    // If the log is not true, we don't need to do anything.
-    if (String(log).toLowerCase() !== "true") {
-      return;
-    }
-    // Check if webhooks have already been sent in this specific request.
-    if (webhooksSent) {
-      return;
-    }
-    // Set the flag to true for this request.
-    webhooksSent = true;
-
-    const targets: { service: "slack" | "discord"; link: string; envVar: string }[] = [
-      { service: "slack", link: slackWebhookLink, envVar: "SLACK_WEBHOOK_URL" },
-      { service: "discord", link: discordWebhookLink, envVar: "DISCORD_WEBHOOK_URL" },
-    ];
-
-    await Promise.allSettled(
-      targets.map(async ({ service, link, envVar }) => {
-        try {
-          const webhookFn = service === "slack" ? slackWebhook : discordWebhook;
-          const webhookLink = link === "none" ? process.env[envVar]! : link;
-
-          if (!webhookLink) {
-            console.warn(`Skipping ${service} webhook. No URL found.`);
-            return;
-          }
-
-          await webhookFn(
-            customFormatString,
-            tagsToBeRemoved,
-            removedTags,
-            finalFeatures,
-            channel,
-            webhookLink,
-            tiktok,
-            finalFormat,
-            finalArtist,
-            finalTitle,
-            tags,
-            log,
-            contentUrl
-          );
-        } catch (error) {
-          console.error(`Error sending ${service} webhook:`, error);
-        }
-      })
-    );
-  }
-
-  // The rest of the handler logic remains the same.
   const url = urlBuilder(
     customFormatString,
+    requestId,
     finalFeatures,
     shuffle,
     channel,
@@ -514,8 +456,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     log
   );
 
-  // Send the webhooks.
-  await sendWebhooks(url);
+  const webhookUrl = webhook === "none" ? process.env.DISCORD_WEBHOOK_URL! : webhook;
+
+  await sendDiscordWebhook(
+    customFormatString,
+    tagsToBeRemoved,
+    res,
+    requestId,
+    removedTags,
+    finalFeatures,
+    channel,
+    webhookUrl,
+    tiktok,
+    finalFormat,
+    finalArtist,
+    finalTitle,
+    tags,
+    log,
+    url
+  );
 
   // Send the response.
   res.status(200).json({
@@ -561,6 +520,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     },
     url,
+    requestId,
     length: countTagsLength(tags),
   });
 }

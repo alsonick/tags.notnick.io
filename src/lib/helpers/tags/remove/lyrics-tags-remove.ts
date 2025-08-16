@@ -12,6 +12,8 @@ export const lyricsTagsRemove = (
       const patterns = [
         `lyrics ${artist}`,
         `lyrics ${title}`,
+        `lyrics ${title} ${artist}`,
+        `lyrics ${artist} ${title}`,
         `${artist} lyrics`,
         `${artist} lyrics ${title}`,
         `${title} lyric video`,
@@ -41,6 +43,8 @@ export const lyricsTagsRemove = (
 
       if (feats.length === 1) {
         const patterns = [
+          `lyrics ${title} ${artist}`,
+          `lyrics ${artist} ${title}`,
           `lyrics ${firstFeature} ${title}`,
           `${firstFeature} lyrics`,
           `lyrics ${artist}`,
@@ -62,6 +66,8 @@ export const lyricsTagsRemove = (
         return patterns.map((pattern) => pattern.trim().toLowerCase());
       } else if (feats.length === 2) {
         const patterns = [
+          `lyrics ${title} ${artist}`,
+          `lyrics ${artist} ${title}`,
           `lyrics ${firstFeature} ${title}`,
           `${firstFeature} lyrics`,
           `lyrics ${artist}`,
@@ -87,6 +93,8 @@ export const lyricsTagsRemove = (
         const thirdFeature = feats[2];
 
         const patterns = [
+          `lyrics ${title} ${artist}`,
+          `lyrics ${artist} ${title}`,
           `${thirdFeature} ${title} lyrics`,
           `lyrics ${firstFeature} ${title}`,
           `${firstFeature} ${title} lyrics`,

@@ -1,5 +1,6 @@
 export const urlBuilder = (
   customFormat: string,
+  requestId: string,
   features: string,
   shuffle: string,
   channel: string,
@@ -19,5 +20,5 @@ export const urlBuilder = (
     genre.toLowerCase()
   )}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${customFormat ? "true" : "false"}&log=${
     log.toLowerCase() === "true" ? "true" : "false"
-  }`;
+  }&request=${requestId}`;
 };
