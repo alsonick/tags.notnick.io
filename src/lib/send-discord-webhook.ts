@@ -28,7 +28,6 @@ export const sendDiscordWebhook = async (
           author: {
             name: `${decodeURIComponent(artist)} - ${decodeURIComponent(title)}`,
           },
-          timestamp: new Date().toISOString(),
           fields: [
             {
               name: "Artist:",
@@ -76,11 +75,6 @@ export const sendDiscordWebhook = async (
               inline: true,
             },
             {
-              name: "Request:",
-              value: requestId,
-              inline: true,
-            },
-            {
               name: "Tags:",
               value: decodeURIComponent(tags.toLowerCase()),
             },
@@ -97,6 +91,9 @@ export const sendDiscordWebhook = async (
               value: customFormatString.length ? customFormatString : "none",
             },
           ],
+          footer: {
+            text: `${requestId} - ${new Date().toLocaleString()}`,
+          },
         },
       ],
     }),
