@@ -439,11 +439,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
-  const requestId = uuidv4();
+  const responseId = uuidv4();
 
   const url = urlBuilder(
     customFormatString,
-    requestId,
+    responseId,
     finalFeatures,
     shuffle,
     channel,
@@ -462,7 +462,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     customFormatString,
     tagsToBeRemoved,
     res,
-    requestId,
+    responseId,
     removedTags,
     finalFeatures,
     channel,
@@ -520,7 +520,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     },
     url,
-    requestId,
+    responseId,
     length: countTagsLength(tags),
   });
 }

@@ -5,6 +5,7 @@ export interface Response {
   removedTags: string;
   features: string[];
   hashtags: string[];
+  responseId: string;
   success: boolean;
   artist: string;
   length: number;

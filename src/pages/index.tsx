@@ -475,6 +475,7 @@ export default function Home() {
                 )}
               </div>
             </div>
+            <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
             {tags.length > 0 && (
               <Link
                 className="text-sm text-center mt-5 underline text-gray-800"

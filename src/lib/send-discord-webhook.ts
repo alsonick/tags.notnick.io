@@ -7,7 +7,7 @@ export const sendDiscordWebhook = async (
   customFormatString: string,
   tagsToBeRemoved: string,
   res: NextApiResponse,
-  requestId: string,
+  responseId: string,
   removedTags: string,
   features: string,
   channel: string,
@@ -92,7 +92,7 @@ export const sendDiscordWebhook = async (
             },
           ],
           footer: {
-            text: `${requestId} - ${new Date().toLocaleString()}`,
+            text: `${responseId}`,
           },
         },
       ],
