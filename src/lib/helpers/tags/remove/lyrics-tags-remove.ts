@@ -24,6 +24,7 @@ export const lyricsTagsRemove = (
         `${title}`,
         `${artist}`,
         `${artist} ${title} lyrics`,
+        `lyrics`,
       ];
 
       return patterns.map((pattern) => pattern.trim().toLowerCase());
@@ -61,6 +62,7 @@ export const lyricsTagsRemove = (
           `${artist} ${title} lyrics`,
           `${firstFeature}`,
           `${firstFeature} ${title} lyrics`,
+          `lyrics`,
         ];
 
         return patterns.map((pattern) => pattern.trim().toLowerCase());
@@ -86,6 +88,7 @@ export const lyricsTagsRemove = (
           `${secondFeature}`,
           `${secondFeature} ${title} lyrics`,
           `${firstFeature} ${title} lyrics`,
+          `lyrics`,
         ];
 
         return patterns.map((pattern) => pattern.trim().toLowerCase());
@@ -115,6 +118,7 @@ export const lyricsTagsRemove = (
           `${secondFeature}`,
           `${thirdFeature}`,
           `${secondFeature} ${title} lyrics`,
+          `lyrics`,
         ];
 
         return patterns.map((pattern) => pattern.trim().toLowerCase());
