@@ -484,6 +484,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     removedTags: decodeURIComponent(removedTags.toLowerCase()),
     removedTagsLength: countTagsLength(removedTags),
     title: decodeURIComponent(finalTitle.trim()),
+    genre,
     artist: decodeURIComponent(finalArtist.trim()),
     artistCustomFormat: customFormatString.length && `${decodeURIComponent(artist.trim())}`,
     customFormat: customFormatString,
