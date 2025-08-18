@@ -491,6 +491,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     customFormat: customFormatString,
     features: finalFeatures !== "none" ? finalFeatures.split(", ") : [],
     hashtags,
+    tiktok,
+    channel,
+    log: log,
     extras: {
       titles: decodeURIComponent(titles),
       seo: {
