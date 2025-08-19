@@ -288,11 +288,17 @@ export default function Home() {
               <Input
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Don't Let Me Down"
-                required={artist.length ? false : true}
+                required={artist.length && artist.includes("-") ? false : true}
                 ref={titleRef}
                 value={title}
               />
-              <p className="text-xs text-gray-800 mt-1">Please remove any commas if there are any. </p>
+
+              <p className="text-xs text-gray-800 mt-1">
+                Please remove any commas if there are any.{" "}
+                {artist.length && artist.includes("-") ? null : (
+                  <span className="text-yellow-600 font-semibold">Required*</span>
+                )}
+              </p>
               <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
             </section>
           </div>
@@ -420,7 +426,7 @@ export default function Home() {
               <div className="mr-2">
                 <Button
                   type="button"
-                  title="Generate tags"
+                  title="Clear"
                   onClick={(e) => {
                     e.preventDefault();
                     if (!tags.length) {
@@ -433,7 +439,7 @@ export default function Home() {
                   Clear <FiTrash className="ml-2 hover:scale-110 duration-150" />
                 </Button>
               </div>
-              <Button type="submit" title="Generate tags">
+              <Button type="submit" title="Generate">
                 Generate <FiLoader className="ml-2 hover:scale-110 duration-150" />
               </Button>
             </div>
@@ -475,7 +481,7 @@ export default function Home() {
                 )}
               </div>
             </div>
-            <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
+            {tags.length ? <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p> : null}
             {tags.length > 0 && (
               <Link
                 className="text-sm text-center mt-5 underline text-gray-800"
@@ -491,6 +497,8 @@ export default function Home() {
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button
+                    type="button"
+                    title="Shuffle"
                     onClick={(e) => {
                       e.preventDefault();
 
@@ -627,6 +635,8 @@ export default function Home() {
                   <div className="flex items-center justify-between w-full mt-4" key={title}>
                     <h4 className="text-xl">{title}</h4>
                     <Button
+                      type="button"
+                      title="Copy"
                       onClick={() => {
                         copy(title);
                         toast.success(success.message.copied);
@@ -639,6 +649,8 @@ export default function Home() {
                 <div className="flex items-center w-full pt-4 mt-4">
                   <div className="flex items-center ml-auto">
                     <Button
+                      type="button"
+                      title="Uppercase"
                       onClick={() => {
                         const uppercaseTitles = titles.map((title) => title.toUpperCase());
 
@@ -653,6 +665,8 @@ export default function Home() {
                     </Button>
                     <div className="ml-2">
                       <Button
+                        type="button"
+                        title="Lowercase"
                         onClick={() => {
                           const lowercaseTitles = titles.map((title) => title.toLowerCase());
 
@@ -668,6 +682,8 @@ export default function Home() {
                     </div>
                     <div className="ml-2">
                       <Button
+                        type="button"
+                        title="Original"
                         onClick={() => {
                           if (originalTitles === titles) {
                             return;
@@ -695,6 +711,8 @@ export default function Home() {
                 </div>
                 <div className="ml-auto">
                   <Button
+                    type="button"
+                    title="Copy"
                     onClick={() => {
                       copy(seoText.replaceAll("=", "\n"));
                       toast.success(success.message.copied);
@@ -717,6 +735,8 @@ export default function Home() {
                     ))}
                   </div>
                   <Button
+                    type="button"
+                    title="Copy "
                     onClick={() => {
                       const hashtagArray = data?.hashtags.map((hashtag) => `#${hashtag}`);
                       const textToCopy = `${hashtagArray?.join(" ")}`;
