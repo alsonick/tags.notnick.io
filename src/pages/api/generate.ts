@@ -10,6 +10,7 @@ import { slowedReverbTitles } from "@/lib/helpers/titles/slowed-reverb-titles";
 import { bassBoostedTitles } from "@/lib/helpers/titles/bass-boosted-titles";
 import { slowedReverbTags } from "@/lib/helpers/tags/slowed-reverb-tags";
 import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
+import { capitalizeFirstLetter } from "@/lib/capitalize-first-letter";
 import { validateProvidedGenre } from "@/lib/validate-provided-genre";
 import { returnComputedFormat } from "@/lib/return-computed-format";
 import { computeFinalHashtags } from "@/lib/compute-final-hashtag";
@@ -30,7 +31,6 @@ import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
 import { v4 as uuidv4 } from "uuid";
-import { capitalizeFirstLetter } from "@/lib/capitalize-first-letter";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET

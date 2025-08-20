@@ -5,8 +5,8 @@ import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
+import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave, FiMousePointer } from "react-icons/fi";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave } from "react-icons/fi";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { CharacterLimit } from "@/components/CharacterLimit";
 import { countTagsLength } from "@/lib/count-tags-length";
@@ -18,7 +18,6 @@ import { Footer } from "@/components/Footer";
 import { Response } from "@/types/response";
 import { Input } from "@/components/Input";
 import { Step } from "../components/Step";
-import { FiLoader } from "react-icons/fi";
 import { useState, useRef } from "react";
 import { FiCopy } from "react-icons/fi";
 import { success } from "@/lib/success";
@@ -36,13 +35,13 @@ import Link from "next/link";
 export default function Home() {
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
-  const [channelName, setChannelName] = useState("");
   const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
   const [loading, setLoading] = useState(false);
   const [features, setFeatures] = useState("");
   const [data, setData] = useState<Response>();
+  const [channel, setChannel] = useState("");
   const [seoText, setSeoText] = useState("");
   const [genre, setGenre] = useState("None");
   const [artist, setArtist] = useState("");
@@ -50,26 +49,29 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [verse, setVerse] = useState("");
 
-  const channelNameRef = useRef<HTMLInputElement | null>(null);
-  const featuresRef = useRef<HTMLInputElement | null>(null);
-  const artistRef = useRef<HTMLInputElement | null>(null);
-  const verseRef = useRef<HTMLInputElement | null>(null);
-  const titleRef = useRef<HTMLInputElement | null>(null);
+  const refs = {
+    features: useRef<HTMLInputElement>(null),
+    channel: useRef<HTMLInputElement>(null),
+    artist: useRef<HTMLInputElement>(null),
+    verse: useRef<HTMLInputElement>(null),
+    title: useRef<HTMLInputElement>(null),
+  };
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent the default form submission behavior
     e.preventDefault();
 
     // Check if the artist field ends with ",-" which means the title wasn't provided.
     if (/,-$/.test(artist)) {
       toast.error(error.message.provideTitle);
-      artistRef.current?.focus();
+      refs.artist.current?.focus();
       return;
     }
 
     // Check if the artist field starts with ",-" which means the title wasn't provided.
     if (/^,-/.test(artist)) {
       toast.error(error.message.invalidFormat);
-      artistRef.current?.focus();
+      refs.artist.current?.focus();
       return;
     }
 
@@ -83,13 +85,13 @@ export default function Home() {
     if (/[-,]/.test(artist)) {
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
         toast.error(error.message.characterLimitExceeded);
-        artistRef.current?.focus();
+        refs.artist.current?.focus();
         return;
       }
     } else {
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT) {
         toast.error(error.message.characterLimitExceeded);
-        artistRef.current?.focus();
+        refs.artist.current?.focus();
         return;
       }
     }
@@ -97,21 +99,21 @@ export default function Home() {
     // Checks if the title field reaches the character limit
     if (title.length > TITLE_INPUT_FIELD_CHARACTER_LIMIT) {
       toast.error(error.message.characterLimitExceeded);
-      titleRef.current?.focus();
+      refs.title.current?.focus();
       return;
     }
 
     // Checks if the features field reaches the character limit
     if (features.length > FEATURES_INPUT_FIELD_CHARACTER_LIMIT) {
       toast.error(error.message.characterLimitExceeded);
-      featuresRef.current?.focus();
+      refs.features.current?.focus();
       return;
     }
 
     // Checks if the channel name field reaches the character limit.
-    if (channelName.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
+    if (channel.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
       toast.error(error.message.characterLimitExceeded);
-      channelNameRef.current?.focus();
+      refs.channel.current?.focus();
       return;
     }
 
@@ -119,7 +121,7 @@ export default function Home() {
     if (!/-/.test(artist)) {
       if (!title.length) {
         toast.error(error.message.provideTitle);
-        titleRef.current?.focus();
+        refs.title.current?.focus();
         return;
       }
     }
@@ -127,7 +129,7 @@ export default function Home() {
     // Checks if verse contains any numbers or special characters.
     if (verse.length && !/^[a-zA-Z ,]*$/.test(verse)) {
       toast.error(error.message.removeSpecialCharactersAndNumbersExceptCommasVerse);
-      verseRef.current?.focus();
+      refs.verse.current?.focus();
       return;
     }
 
@@ -138,7 +140,7 @@ export default function Home() {
       // If there's more than 3 verses then send back a error response
       if (verseSplit.length > 3) {
         toast.error(error.message.threeVersesAreOnlyAllowed);
-        verseRef.current?.focus();
+        refs.verse.current?.focus();
         return;
       }
     }
@@ -165,7 +167,7 @@ export default function Home() {
       artist: localStorageCustomFormat.length
         ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
         : artist.trim(),
-      channel: channelName.trim().length ? channelName.trim() : "none",
+      channel: channel.trim().length ? channel.trim() : "none",
       features: features.trim().length ? features.trim() : "none",
       title: title.trim().length ? title.trim() : "none",
       verse: verse.trim().length ? verse.trim() : "none",
@@ -207,11 +209,12 @@ export default function Home() {
         setTitles(data.extras.titles.split("="));
       }
 
+      // Reset state
       setOverflowTagsDeleted(false);
-      setChannelName("");
       setFormat("Lyrics");
       setGenre("None");
       setFeatures("");
+      setChannel("");
       setArtist("");
       setTiktok("");
       setVerse("");
@@ -246,6 +249,7 @@ export default function Home() {
     // Set the key and custom format in localStorage.
     localStorage.setItem(key, data.customFormat);
 
+    // Notify the user that the custom key was saved
     toast.success("Saved custom key");
   };
 
@@ -267,11 +271,11 @@ export default function Home() {
                 onChange={(e) => setArtist(e.target.value)}
                 placeholder="The Chainsmokers"
                 required={true}
-                ref={artistRef}
+                ref={refs.artist}
                 value={artist}
               />
               <p className="text-xs text-gray-800 mt-1">
-                Any special characters are allowed except commas.{" "}
+                Any special characters are allowed except <b>commas</b>.{" "}
                 <span className="text-yellow-600 font-semibold">Required*</span>
               </p>
               <CharacterLimit
@@ -289,12 +293,12 @@ export default function Home() {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Don't Let Me Down"
                 required={artist.length && artist.includes("-") ? false : true}
-                ref={titleRef}
+                ref={refs.title}
                 value={title}
               />
 
               <p className="text-xs text-gray-800 mt-1">
-                Please remove any commas if there are any.{" "}
+                Please remove any <b>commas</b> if there are any.{" "}
                 {artist.length && artist.includes("-") ? null : (
                   <span className="text-yellow-600 font-semibold">Required*</span>
                 )}
@@ -308,31 +312,37 @@ export default function Home() {
               <Input
                 onChange={(e) => setFeatures(e.target.value)}
                 placeholder="Daya"
-                ref={featuresRef}
+                ref={refs.features}
                 value={features}
                 required={false}
               />
-              <p className="text-xs text-gray-800 mt-1">Please use a comma to separate feature artists.</p>
+              <p className="text-xs text-gray-800 mt-1">
+                Please use <b>commas</b> to separate feature artists.
+              </p>
               <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
             </section>
             <section className="flex flex-col w-full">
               <Step step={4} text="Channel" />
               <Input
-                onChange={(e) => setChannelName(e.target.value)}
+                onChange={(e) => setChannel(e.target.value)}
                 placeholder="Gold Coast Music"
-                ref={channelNameRef}
-                value={channelName}
+                ref={refs.channel}
+                value={channel}
                 required={false}
               />
-              <p className="text-xs text-gray-800 mt-1">Enter the name of the YouTube Channel.</p>
-              <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channelName} />
+              <p className="text-xs text-gray-800 mt-1">
+                Type the name of the <b>YouTube Channel</b>.
+              </p>
+              <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
             </section>
           </div>
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
               <Step step={5} text="TikTok" />
               <Input onChange={(e) => setTiktok(e.target.value)} placeholder="false" required={false} value={tiktok} />
-              <p className="text-xs text-gray-800 mt-1">Is the song popular on TikTok? Type "true" if so. </p>
+              <p className="text-xs text-gray-800 mt-1">
+                Is the song popular on TikTok? Type <b>"true"</b> if so.{" "}
+              </p>
             </section>
             <section className="flex flex-col w-full">
               <Step step={6} text="Format" />
@@ -352,7 +362,7 @@ export default function Home() {
                     Nightcore/Sped Up
                   </option>
                   <option className="font-inter" value={FORMAT.slowedreverb}>
-                    Slowed/Reverb
+                    Slowed & Reverb
                   </option>
                   <option className="font-inter" value={FORMAT.letra}>
                     Letra
@@ -367,7 +377,9 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs text-gray-800 mt-1">Select the desired format.</p>
+              <p className="text-xs text-gray-800 mt-1">
+                Select the desired <b>format</b>.
+              </p>
             </section>
           </div>
           <div className="flex w-full gap-6 items-center">
@@ -404,7 +416,9 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs text-gray-800 mt-1">Select the desired genre.</p>
+              <p className="text-xs text-gray-800 mt-1">
+                Select the desired <b>genre</b>.
+              </p>
             </section>
             <section className="flex flex-col w-full">
               <Step step={8} text="Verse" />
@@ -412,15 +426,15 @@ export default function Home() {
                 onChange={(e) => setVerse(e.target.value)}
                 placeholder="dont let me down,said dont let me down"
                 required={false}
-                ref={verseRef}
+                ref={refs.verse}
                 value={verse}
               />
               <p className="text-xs text-gray-800 mt-1">
-                Popular verse? Paste them in here. Limit is 3, separate them by commas.
+                Popular verse? Paste them in here. Limit is <b>3</b>, separate them by <b>commas</b>.
               </p>
             </section>
           </div>
-          <div className="w-full justify-between items-center flex mt-6 border-b pb-4">
+          <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
             <div className="ml-auto flex">
               {" "}
               <div className="mr-2">
@@ -428,11 +442,17 @@ export default function Home() {
                   type="button"
                   title="Clear"
                   onClick={(e) => {
+                    // Prevent the default form submission behavior (e.g., page reload)
                     e.preventDefault();
+
+                    // Check if there are any tags to clear
                     if (!tags.length) {
+                      // If the tag list is already empty, show an error message and exit
                       toast.error(error.message.nothingToClear);
                       return;
                     }
+
+                    // Clear all tags by setting the state to an empty array
                     setTags([]);
                   }}
                 >
@@ -440,7 +460,18 @@ export default function Home() {
                 </Button>
               </div>
               <Button type="submit" title="Generate">
-                Generate <FiLoader className="ml-2 hover:scale-110 duration-150" />
+                Generate <FiMousePointer className="ml-2 hover:scale-110 duration-150" />
+              </Button>
+            </div>
+            <div className="ml-auto mt-3">
+              <Button
+                title="Generate Example Response"
+                type="submit"
+                onClick={() => {
+                  setArtist("Rex Orange County - Pluto Projector");
+                }}
+              >
+                Generate Example Response <FiMousePointer className="ml-2 hover:scale-110 duration-150" />
               </Button>
             </div>
           </div>
@@ -467,7 +498,12 @@ export default function Home() {
                         hover:cursor-pointer w-fit duration-300 hover:shadow-lg"
                         title={`Delete ${tag} tag`}
                         onClick={() => {
+                          // Create a new array of tags excluding the one to be removed
+                          // `filter` returns a new array containing only tags that are not equal to `tag`
                           const filtered = tags.filter((t) => t !== tag);
+
+                          // Update the state with the filtered array
+                          // This effectively removes the specified tag from the list
                           setTags(filtered);
                         }}
                       >
@@ -484,7 +520,7 @@ export default function Home() {
             {tags.length ? <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p> : null}
             {tags.length > 0 && (
               <Link
-                className="text-sm text-center mt-5 underline text-gray-800"
+                className="text-sm text-center mt-6 underline text-gray-800"
                 title="Click to view json representation data."
                 target="_blank"
                 href={data?.url ?? ""}
@@ -500,35 +536,46 @@ export default function Home() {
                     type="button"
                     title="Shuffle"
                     onClick={(e) => {
+                      // Prevent the default form submission behavior
                       e.preventDefault();
 
+                      // If no tags exist, run validation checks
                       if (!tags.length) {
+                        // If no artist name is provided → show error and focus the artist input
                         if (!artist.length) {
                           toast.error(error.message.provideArtist);
-                          artistRef.current?.focus();
+                          refs.artist.current?.focus();
                           return;
                         }
 
+                        // If artist name doesn’t contain "-" or "," (meaning it's a single artist/band name),
+                        // then require a title to be provided as well
                         if (!artist.includes("-") && !artist.includes(",")) {
                           if (!title.length) {
                             toast.error(error.message.provideTitle);
-                            titleRef.current?.focus();
+                            refs.title.current?.focus();
                             return;
                           }
                         }
 
+                        // If we reach this point, tags are still missing → show generic error
                         toast.error(error.message.generateTagsFirst);
                         return;
                       }
 
+                      // Copy current tags into a new array for shuffling
                       const shuffled = [...tags];
 
+                      // Fisher–Yates shuffle algorithm: randomize array order
                       for (let i = shuffled.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                       }
 
+                      // Update state with shuffled tags
                       setTags(shuffled);
+
+                      // Show success message after shuffle
                       toast.success(success.message.shuffledSuccessfully);
                     }}
                   >
@@ -539,11 +586,18 @@ export default function Home() {
                   title="Copy generated tags"
                   style={{ marginLeft: "auto" }}
                   onClick={() => {
+                    // Check if there are any tags to copy
                     if (!tags.length) {
+                      // If no tags exist, show an error message and stop execution
                       toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
                       return;
                     }
+
+                    // Join all tags into a single string separated by commas
+                    // Example: ["tag1", "tag2"] → "tag1,tag2"
                     copy(tags.join(","));
+
+                    // Show a success toast confirming the tags were copied to the clipboard
                     toast.success(success.message.tagsCopiedToClipboard);
                   }}
                 >
@@ -569,11 +623,17 @@ export default function Home() {
                     <Button
                       title="Copy custom format"
                       onClick={() => {
+                        // If there is no custom format in the response data
                         if (!data?.customFormat) {
+                          // Show an error toast (currently an empty string as the message)
                           toast.error("");
-                          return;
+                          return; // Exit early so nothing else runs
                         }
+
+                        // Copy the custom format string to the clipboard
                         copy(data?.customFormat);
+
+                        // Show a success toast confirming the copy action
                         toast.success(success.message.tagsCopiedToClipboard);
                       }}
                     >
@@ -605,19 +665,26 @@ export default function Home() {
                   <Button
                     style={{ marginLeft: "auto" }}
                     onClick={() => {
+                      // Check if the response data contains tags that need to be removed
                       if (data?.tagsToBeRemoved) {
+                        // Split the string of tags by comma, trim whitespace, and convert them to lowercase
                         const tagsToRemove = data.tagsToBeRemoved.split(",").map((tag) => tag.trim().toLowerCase());
 
+                        // Create a new list of tags by filtering out the ones that should be removed
+                        // Compare in lowercase to ensure case-insensitive matching
                         let newTags = tags.filter((tag) => !tagsToRemove.includes(tag.toLowerCase()));
 
+                        // Update state with the cleaned tag list
                         setTags(newTags);
 
+                        // Show a toast depending on whether overflow tags were previously deleted
                         if (!overflowTagsDeleted) {
-                          toast.success(success.message.tagsRemovedSuccessfully);
+                          toast.success(success.message.tagsRemovedSuccessfully); // First removal → success
                         } else {
-                          toast.error(error.message.tagsAlreadyRemoved);
+                          toast.error(error.message.tagsAlreadyRemoved); // Trying to remove again → error
                         }
 
+                        // Mark that we've removed tags once (prevents multiple success toasts)
                         setOverflowTagsDeleted(true);
                       }
                     }}
@@ -638,7 +705,10 @@ export default function Home() {
                       type="button"
                       title="Copy"
                       onClick={() => {
+                        // Copy the current title string to the clipboard
                         copy(title);
+
+                        // Show a success toast notification confirming the copy action
                         toast.success(success.message.copied);
                       }}
                     >
@@ -649,15 +719,19 @@ export default function Home() {
                 <div className="flex items-center w-full pt-4 mt-4">
                   <div className="flex items-center ml-auto">
                     <Button
-                      type="button"
                       title="Uppercase"
+                      type="button"
                       onClick={() => {
+                        // Convert all titles in the array to uppercase
                         const uppercaseTitles = titles.map((title) => title.toUpperCase());
 
+                        // Check if the transformed array is the same as the current titles
+                        // (Prevents unnecessary re-renders / state updates)
                         if (uppercaseTitles === titles) {
                           return;
                         }
 
+                        // Update state only if there was a change
                         setTitles(uppercaseTitles);
                       }}
                     >
@@ -665,15 +739,19 @@ export default function Home() {
                     </Button>
                     <div className="ml-2">
                       <Button
-                        type="button"
                         title="Lowercase"
+                        type="button"
                         onClick={() => {
+                          // Create a new array where every title is converted to lowercase
                           const lowercaseTitles = titles.map((title) => title.toLowerCase());
 
+                          // Check if the new array is exactly the same reference as the old one
+                          // This will almost always be false, since .map() creates a new array
                           if (lowercaseTitles === titles) {
-                            return;
+                            return; // Skip updating if they are the same (but in practice, this won't trigger)
                           }
 
+                          // Update state with the lowercase version of the titles
                           setTitles(lowercaseTitles);
                         }}
                       >
@@ -682,12 +760,15 @@ export default function Home() {
                     </div>
                     <div className="ml-2">
                       <Button
-                        type="button"
                         title="Original"
+                        type="button"
                         onClick={() => {
+                          // Check if originalTitles and titles are the same array reference
                           if (originalTitles === titles) {
-                            return;
+                            return; // Do nothing if they're the same reference
                           }
+
+                          // Otherwise, update titles state with the originalTitles array
                           setTitles(originalTitles);
                         }}
                       >
@@ -714,7 +795,12 @@ export default function Home() {
                     type="button"
                     title="Copy"
                     onClick={() => {
+                      // Copy the SEO text to the clipboard
+                      // Replace all "=" characters with line breaks ("\n")
+                      // so the copied text is formatted nicely
                       copy(seoText.replaceAll("=", "\n"));
+
+                      // Show a success toast to confirm the text was copied
                       toast.success(success.message.copied);
                     }}
                   >
@@ -738,9 +824,18 @@ export default function Home() {
                     type="button"
                     title="Copy "
                     onClick={() => {
+                      // Take the list of hashtags from the API response (if available)
+                      // and prepend "#" to each one
                       const hashtagArray = data?.hashtags.map((hashtag) => `#${hashtag}`);
+
+                      // Join the hashtags into a single string separated by spaces
+                      // Example: ["#music", "#lyrics"] → "#music #lyrics"
                       const textToCopy = `${hashtagArray?.join(" ")}`;
+
+                      // Copy the final hashtag string to the clipboard
                       copy(textToCopy);
+
+                      // Show a success toast to let the user know copying worked
                       toast.success(success.message.hashtagsCopiedToClipboard);
                     }}
                   >
