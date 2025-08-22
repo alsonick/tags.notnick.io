@@ -39,6 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Get the query parameters
+  const example: string = (req.query.example as string) || "false";
   const webhook: string = (req.query.webhook as string) || "none";
   const genre: string = (req.query.genre as string) || "none";
   const verse: string = (req.query.verse as string) || "none";
@@ -251,7 +252,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (/,|-/.test(artist)) {
     if (title !== "none") {
       return res.status(400).json({
-        error: "The artist and title was already provided in the artist field.",
+        error: error.message.artistAndTitleAlreadyProvidedInTheArtistField,
         success: false,
       });
     }
@@ -294,7 +295,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (!hasValidVariable) {
       return res.status(400).json({
-        error: "You also need to provide variables.",
+        error: error.message.needToProvideAllValidVariables,
         success: false,
       });
     }
@@ -306,6 +307,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Example: Calum Hood - Don't Forget You Love Me/{a},{t}
     const customFormat = artist.split("/")[1];
     const individualFormatSplit = customFormat.split(",");
+
     let customFormatTags = "";
 
     for (const format of individualFormatSplit) {
@@ -315,7 +317,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         customFormatTags += `${format},`;
       } else {
         return res.status(400).json({
-          error: "The provided variable is not valid.",
+          error: error.message.providedVariablesNotValid,
           success: false,
         });
       }
@@ -326,6 +328,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Store and assign tags
     customFormatString = customFormatTags;
+
     finalTitle = finalTitle.split("/")[0];
 
     removedTags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
@@ -338,6 +341,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const currentYear = new Date().getFullYear();
+
   let verses = [];
 
   if (typeof verse === "string" && verse !== "none" && /,/.test(verse)) {
@@ -446,6 +450,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     customFormatString,
     responseId,
     finalFeatures,
+    example,
     shuffle,
     channel,
     customFormatString.length ? artist.trim() : finalArtist,

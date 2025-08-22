@@ -33,6 +33,7 @@ import { seo } from "@/lib/seo/seo";
 import Link from "next/link";
 
 export default function Home() {
+  const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
   const [titles, setTitles] = useState<string[]>([]);
@@ -60,6 +61,8 @@ export default function Home() {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent the default form submission behavior
     e.preventDefault();
+
+    setUsedGenerateExampleResponse(false);
 
     // Check if the artist field ends with ",-" which means the title wasn't provided.
     if (/,-$/.test(artist)) {
@@ -154,7 +157,7 @@ export default function Home() {
 
       // Checks if the value is valid.
       if (customFormat === null || !customFormat.length) {
-        return alert("Something went wrong retrieving the custom format key.");
+        return alert(error.message.somethingWentWrongRetrievingCustomFormatKey);
       }
 
       localStorageCustomFormat = customFormat;
@@ -167,8 +170,9 @@ export default function Home() {
       artist: localStorageCustomFormat.length
         ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
         : artist.trim(),
-      channel: channel.trim().length ? channel.trim() : "none",
       features: features.trim().length ? features.trim() : "none",
+      channel: channel.trim().length ? channel.trim() : "none",
+      example: usedGenerateExampleResponse ? "true" : "false",
       title: title.trim().length ? title.trim() : "none",
       verse: verse.trim().length ? verse.trim() : "none",
       tiktok: tiktok === "true" ? "true" : "false",
@@ -229,7 +233,7 @@ export default function Home() {
   };
 
   const saveCustomFormat = () => {
-    // Checks if a custom format was used (Yes, I know this check is useless but I'm just like that lol :3).
+    // Checks if a custom format was used (Yes, I know this check is useless but I'm just like that lol :3)
     if (!data?.customFormat) {
       return;
     }
@@ -238,19 +242,19 @@ export default function Home() {
       "You're currently trying to save a custom format, On the browser we save them in localstorage, please provide a key to identify with the custom format, whenever you want to use the custom format then please append '/[KEY]/custom' (replace [KEY] with your actual key) at the end of the string in the 'artist' field. Click the 'Ok' Button to proceed."
     );
 
-    // Prompts the user to enter in a valid key.
+    // Prompts the user to enter in a valid key
     const key = prompt("Please enter a key you'd like to use:");
 
-    // Validate the user input key.
+    // Validate the user input key
     if (!key?.length || key === null) {
-      return alert("Please enter a valid key.");
+      return alert(error.message.enterValidKey);
     }
 
-    // Set the key and custom format in localStorage.
+    // Set the key and custom format in localStorage
     localStorage.setItem(key, data.customFormat);
 
     // Notify the user that the custom key was saved
-    toast.success("Saved custom key");
+    toast.success(success.message.savedCustomKey);
   };
 
   return (
@@ -468,7 +472,11 @@ export default function Home() {
                 title="Generate Example Response"
                 type="submit"
                 onClick={() => {
+                  // Set the artist field to 'Rex Orange County - Pluto Projector'
                   setArtist("Rex Orange County - Pluto Projector");
+
+                  // Set the 'usedGenerateExampleResponse' state to true
+                  setUsedGenerateExampleResponse(true);
                 }}
               >
                 Generate Example Response <FiMousePointer className="ml-2 hover:scale-110 duration-150" />
@@ -522,8 +530,8 @@ export default function Home() {
               <Link
                 className="text-sm text-center mt-6 underline text-gray-800"
                 title="Click to view json representation data."
-                target="_blank"
                 href={data?.url ?? ""}
+                target="_blank"
               >
                 Click to view json representation data.
               </Link>
@@ -533,8 +541,8 @@ export default function Home() {
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button
-                    type="button"
                     title="Shuffle"
+                    type="button"
                     onClick={(e) => {
                       // Prevent the default form submission behavior
                       e.preventDefault();
@@ -583,8 +591,8 @@ export default function Home() {
                   </Button>
                 </div>
                 <Button
-                  title="Copy generated tags"
                   style={{ marginLeft: "auto" }}
+                  title="Copy generated tags"
                   onClick={() => {
                     // Check if there are any tags to copy
                     if (!tags.length) {

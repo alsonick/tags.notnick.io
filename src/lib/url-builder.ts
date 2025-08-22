@@ -2,6 +2,7 @@ export const urlBuilder = (
   customFormat: string,
   responseId: string,
   features: string,
+  example: string,
   shuffle: string,
   channel: string,
   artist: string,
@@ -20,5 +21,5 @@ export const urlBuilder = (
     genre.toLowerCase()
   )}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${customFormat ? "true" : "false"}&log=${
     log.toLowerCase() === "true" ? "true" : "false"
-  }&response=${responseId}`;
+  }&response=${responseId}&example=${example}`;
 };

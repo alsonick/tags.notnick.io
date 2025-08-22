@@ -5,6 +5,7 @@ export const success = {
     tagsCopiedToClipboard: "Tags copied to the clipboard.",
     tagsRemovedSuccessfully: "Tags successfully removed.",
     hashtagsCopiedToClipboard: "Hashtags copied to the clipboard.",
+    savedCustomKey: "Saved custom key.",
     copied: "Copied!",
   },
 };
