@@ -5,7 +5,7 @@ import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
-import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave, FiMousePointer } from "react-icons/fi";
+import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave, FiCornerDownRight } from "react-icons/fi";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { CharacterLimit } from "@/components/CharacterLimit";
@@ -439,35 +439,8 @@ export default function Home() {
             </section>
           </div>
           <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
-            <div className="ml-auto flex">
+            <div className="ml-auto flex justify-between w-full items-center">
               {" "}
-              <div className="mr-2">
-                <Button
-                  type="button"
-                  title="Clear"
-                  onClick={(e) => {
-                    // Prevent the default form submission behavior (e.g., page reload)
-                    e.preventDefault();
-
-                    // Check if there are any tags to clear
-                    if (!tags.length) {
-                      // If the tag list is already empty, show an error message and exit
-                      toast.error(error.message.nothingToClear);
-                      return;
-                    }
-
-                    // Clear all tags by setting the state to an empty array
-                    setTags([]);
-                  }}
-                >
-                  Clear <FiTrash className="ml-2 hover:scale-110 duration-150" />
-                </Button>
-              </div>
-              <Button type="submit" title="Generate">
-                Generate <FiMousePointer className="ml-2 hover:scale-110 duration-150" />
-              </Button>
-            </div>
-            <div className="ml-auto mt-3">
               <Button
                 title="Generate Example Response"
                 type="submit"
@@ -479,9 +452,37 @@ export default function Home() {
                   setUsedGenerateExampleResponse(true);
                 }}
               >
-                Generate Example Response <FiMousePointer className="ml-2 hover:scale-110 duration-150" />
+                Generate Example Response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
               </Button>
+              <div className="flex">
+                <div className="mr-2">
+                  <Button
+                    type="button"
+                    title="Clear"
+                    onClick={(e) => {
+                      // Prevent the default form submission behavior (e.g., page reload)
+                      e.preventDefault();
+
+                      // Check if there are any tags to clear
+                      if (!tags.length) {
+                        // If the tag list is already empty, show an error message and exit
+                        toast.error(error.message.nothingToClear);
+                        return;
+                      }
+
+                      // Clear all tags by setting the state to an empty array
+                      setTags([]);
+                    }}
+                  >
+                    Clear <FiTrash className="ml-2 hover:scale-110 duration-150" />
+                  </Button>
+                </div>
+                <Button type="submit" title="Generate">
+                  Generate <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
+                </Button>
+              </div>
             </div>
+            <div className="ml-auto mt-3"></div>
           </div>
         </form>
         {loading ? (
@@ -490,7 +491,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="flex flex-col">
-            <div className="border p-4 mt-4 rounded-lg">
+            <div className="border p-4 mt-6 rounded-lg">
               {tags.length > 0 && (
                 <h2 className="text-2xl text-left border-b pb-2">
                   <i>{data?.title}</i> by <b>{data?.artist}</b> 🤖

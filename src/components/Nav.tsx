@@ -61,6 +61,14 @@ export const Nav = () => {
         >
           Privacy Policy <FiLink className="ml-1 text-xl" />
         </Link>
+        <Link
+          className="font-medium hover:underline flex items-center ml-10 text-gray-800 hover:scale-110 hover:text-black duration-150"
+          href="https://notnick.io/tools/lyrics-tags-generator/feedback"
+          title="Feedback"
+          target="_blank"
+        >
+          Feedback <FiExternalLink className="ml-1 text-xl" />
+        </Link>
       </div>
     </nav>
   );
