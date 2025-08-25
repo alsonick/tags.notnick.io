@@ -538,7 +538,7 @@ export default function Home() {
               </Link>
             )}
             <div className="flex w-full mt-6 items-center">
-              <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} />
+              {tags.length ? <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} /> : null}
               <div className="flex items-center ml-auto">
                 <div className="mr-4">
                   <Button
