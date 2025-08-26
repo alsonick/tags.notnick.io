@@ -22,5 +22,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
-  return res.status(200).json({ length: countTagsLength(tags) });
+  return res.status(200).json({ success: true, length: countTagsLength(tags) });
 }
