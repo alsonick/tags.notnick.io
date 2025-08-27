@@ -263,22 +263,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (formatPureFormat === FORMAT.bassboosted) {
     // Bass Boosted
-    tags = bassBoostedTags(finalArtist, finalTitle, finalFeatures, tiktok);
+    tags = bassBoostedTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
   } else if (formatPureFormat === FORMAT.nightcore) {
     // Nightcore/Sped Up
-    tags = nightcoreSpedUpTags(finalArtist, finalTitle, finalFeatures, tiktok);
+    tags = nightcoreSpedUpTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
   } else if (formatPureFormat === FORMAT.slowedreverb) {
     // Slowed/Reverb
-    tags = slowedReverbTags(finalArtist, finalTitle, finalFeatures, tiktok);
+    tags = slowedReverbTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
   } else if (formatPureFormat === FORMAT.letra) {
     // Letra
-    tags = letraTags(finalArtist, finalTitle, finalFeatures, tiktok);
+    tags = letraTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
   } else if (formatPureFormat === FORMAT.phonk) {
     // Phonk
-    tags = phonkTags(finalArtist, finalTitle, finalFeatures, tiktok);
+    tags = phonkTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
   } else if (formatPureFormat === FORMAT.lyrics) {
     // Lyrics
-    tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok);
+    tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
   }
 
   let customFormatString = "";
