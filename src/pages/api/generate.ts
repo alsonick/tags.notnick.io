@@ -31,6 +31,7 @@ import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
 import { v4 as uuidv4 } from "uuid";
+import { computeTikTokValue } from "@/lib/compute-tiktok-value";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -263,22 +264,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (formatPureFormat === FORMAT.bassboosted) {
     // Bass Boosted
-    tags = bassBoostedTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
+    tags = bassBoostedTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   } else if (formatPureFormat === FORMAT.nightcore) {
     // Nightcore/Sped Up
-    tags = nightcoreSpedUpTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
+    tags = nightcoreSpedUpTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   } else if (formatPureFormat === FORMAT.slowedreverb) {
     // Slowed/Reverb
-    tags = slowedReverbTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
+    tags = slowedReverbTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   } else if (formatPureFormat === FORMAT.letra) {
     // Letra
-    tags = letraTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
+    tags = letraTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   } else if (formatPureFormat === FORMAT.phonk) {
     // Phonk
-    tags = phonkTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
+    tags = phonkTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   } else if (formatPureFormat === FORMAT.lyrics) {
     // Lyrics
-    tags = lyricsTags(finalArtist, finalTitle, finalFeatures, tiktok.toLowerCase() === "t" ? "true" : "true");
+    tags = lyricsTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   }
 
   let customFormatString = "";
