@@ -9,14 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.12",
     "@vercel/analytics": "^1.5.0",
+    "class-variance-authority": "^0.7.1",
     "copy-to-clipboard": "^3.3.3",
     "ioredis": "^5.7.0",
+    "lucide-react": "^0.542.0",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
     "react-toastify": "^11.0.3",
+    "tailwind-merge": "^3.3.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
