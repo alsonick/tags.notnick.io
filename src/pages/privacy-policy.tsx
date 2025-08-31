@@ -118,7 +118,7 @@ export default function PrivacyPolicy() {
         </section>
         <div className="mt-16 flex items-center justify-between">
           <Link className="text-blue-500 font-semibold hover:underline flex items-center" href="/" title="Go back home">
-            <FiChevronLeft className="mr-1 hover:scale-110 duration-150" />
+            <FiChevronLeft className="mr-1 hover:scale-110 text-xl duration-150" />
             Go back home
           </Link>
           <Button

@@ -154,14 +154,44 @@ export default function FAQ() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <Link
-            className="text-blue-500 mt-16 font-semibold hover:underline flex items-center"
-            title="Go back home"
-            href="/"
-          >
-            <FiChevronLeft className="mr-1 hover:scale-110 duration-150" />
-            Go back home
-          </Link>
+          <section className="mb-auto mt-16">
+            <h1 className="text-2xl font-black text-black">Contact</h1>
+            <div className="mt-4 text-gray-800">
+              <p className="mb-4">For any questions about this policy, feel free to reach out:</p>
+              <p>
+                Twitter:{" "}
+                <Link
+                  className="text-blue-500 font-semibold hover:underline"
+                  href="https://x.com/heynickn"
+                  title="@heynickn on X"
+                  target="_blank"
+                >
+                  @heynickn on X
+                </Link>
+              </p>
+              <p>
+                Email:{" "}
+                <Link
+                  className="text-blue-500 font-semibold hover:underline"
+                  href="mailto:hi@notnick.io"
+                  title="hi@notnick.io"
+                  target="_blank"
+                >
+                  hi@notnick.io
+                </Link>
+              </p>
+            </div>
+          </section>
+          <div className="mt-16 flex items-center justify-between">
+            <Link
+              className="text-blue-500 font-semibold hover:underline flex items-center"
+              href="/"
+              title="Go back home"
+            >
+              <FiChevronLeft className="mr-1 text-xl hover:scale-110 duration-150" />
+              Go back home
+            </Link>
+          </div>
         </div>
         <Footer />
       </MainWrapper>
