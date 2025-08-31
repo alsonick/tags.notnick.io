@@ -34,7 +34,6 @@ import Link from "next/link";
 
 export default function Home() {
   const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
-  const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
   const [titles, setTitles] = useState<string[]>([]);
@@ -59,11 +58,100 @@ export default function Home() {
     title: useRef<HTMLInputElement>(null),
   };
 
+  const generate = async (example: boolean) => {
+    let localStorageCustomFormat = "";
+
+    // Checks if the artist field was given a custom format key.
+    if (artist.includes("/custom") && !artist.includes("{")) {
+      const customFormatKey = artist.split("/")[1];
+      const customFormat = localStorage.getItem(customFormatKey);
+
+      // Checks if the value is valid.
+      if (customFormat === null || !customFormat.length) {
+        return alert(error.message.somethingWentWrongRetrievingCustomFormatKey);
+      }
+
+      localStorageCustomFormat = customFormat;
+    }
+
+    // Starts the loading
+    setLoading(true);
+
+    const queryParams = new URLSearchParams({
+      artist: example
+        ? "Rex Orange County - Pluto Projector"
+        : localStorageCustomFormat.length
+        ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
+        : artist.trim(),
+      features: features.trim().length ? features.trim() : "none",
+      channel: channel.trim().length ? channel.trim() : "none",
+      example: example ? "true" : "false",
+      title: title.trim().length ? title.trim() : "none",
+      verse: verse.trim().length ? verse.trim() : "none",
+      tiktok: tiktok === "true" ? "true" : "false",
+      format: format.trim(),
+      genre: genre.trim(),
+    });
+
+    const response = await fetch(`/api/generate?${queryParams.toString()}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Check if the response is successful
+    if (response.status === 200) {
+      const data: Response = await response.json();
+
+      // Check if the response isn't successful
+      if (!data.success) {
+        toast.error(data.error);
+        setLoading(false);
+        return;
+      }
+
+      // Split the tags by commas and trim them
+      const separated = data.tags.split(",").map((tag) => tag.trim());
+
+      // Success
+      toast.success(success.message.tagsGeneratedSuccessfully);
+      setSeoText(data.extras.seo.text);
+      setTags(separated);
+      setLoading(false);
+      setData(data);
+
+      if (data.length > 500) {
+        setShowRecommendedTagsToBeDeleteSection(true);
+      }
+
+      if (data.extras.titles) {
+        setOriginalTitles(data.extras.titles.split("="));
+        setTitles(data.extras.titles.split("="));
+      }
+
+      // Reset state
+      setOverflowTagsDeleted(false);
+      setFormat("Lyrics");
+      setGenre("None");
+      setFeatures("");
+      setChannel("");
+      setArtist("");
+      setTiktok("");
+      setVerse("");
+      setTitle("");
+    }
+
+    // Checks if the response is not "ok"
+    if (!response.ok) {
+      toast.error(`${response.statusText}.`);
+      setLoading(false);
+    }
+  };
+
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent the default form submission behavior
     e.preventDefault();
-
-    setUsedGenerateExampleResponse(false);
 
     // Check if the artist field ends with ",-" which means the title wasn't provided.
     if (/,-$/.test(artist)) {
@@ -149,92 +237,7 @@ export default function Home() {
       }
     }
 
-    let localStorageCustomFormat = "";
-
-    // Checks if the artist field was given a custom format key.
-    if (artist.includes("/custom") && !artist.includes("{")) {
-      const customFormatKey = artist.split("/")[1];
-      const customFormat = localStorage.getItem(customFormatKey);
-
-      // Checks if the value is valid.
-      if (customFormat === null || !customFormat.length) {
-        return alert(error.message.somethingWentWrongRetrievingCustomFormatKey);
-      }
-
-      localStorageCustomFormat = customFormat;
-    }
-
-    // Starts the loading
-    setLoading(true);
-
-    const queryParams = new URLSearchParams({
-      artist: localStorageCustomFormat.length
-        ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
-        : artist.trim(),
-      features: features.trim().length ? features.trim() : "none",
-      channel: channel.trim().length ? channel.trim() : "none",
-      example: usedGenerateExampleResponse ? "true" : "false",
-      title: title.trim().length ? title.trim() : "none",
-      verse: verse.trim().length ? verse.trim() : "none",
-      tiktok: tiktok === "true" ? "true" : "false",
-      format: format.trim(),
-      genre: genre.trim(),
-    });
-
-    const response = await fetch(`/api/generate?${queryParams.toString()}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    // Check if the response is successful
-    if (response.status === 200) {
-      const data: Response = await response.json();
-
-      // Check if the response isn't successful
-      if (!data.success) {
-        toast.error(data.error);
-        setLoading(false);
-        return;
-      }
-
-      // Split the tags by commas and trim them
-      const separated = data.tags.split(",").map((tag) => tag.trim());
-
-      // Success
-      toast.success(success.message.tagsGeneratedSuccessfully);
-      setSeoText(data.extras.seo.text);
-      setTags(separated);
-      setLoading(false);
-      setData(data);
-
-      if (data.length > 500) {
-        setShowRecommendedTagsToBeDeleteSection(true);
-      }
-
-      if (data.extras.titles) {
-        setOriginalTitles(data.extras.titles.split("="));
-        setTitles(data.extras.titles.split("="));
-      }
-
-      // Reset state
-      setOverflowTagsDeleted(false);
-      setFormat("Lyrics");
-      setGenre("None");
-      setFeatures("");
-      setChannel("");
-      setArtist("");
-      setTiktok("");
-      setVerse("");
-      setTitle("");
-    }
-
-    // Checks if the response is not "ok"
-    if (!response.ok) {
-      toast.error(`${response.statusText}.`);
-      setLoading(false);
-    }
+    generate(false);
   };
 
   const saveCustomFormat = () => {
@@ -459,78 +462,8 @@ export default function Home() {
                   // Prevent the default form submission behavior
                   e.preventDefault();
 
-                  // Set the 'usedGenerateExampleResponse' state to true
-                  setUsedGenerateExampleResponse(true);
-
-                  // Starts the loading
-                  setLoading(true);
-
-                  const queryParams = new URLSearchParams({
-                    artist: "Rex Orange County - Pluto Projector",
-                    features: features.trim().length ? features.trim() : "none",
-                    channel: channel.trim().length ? channel.trim() : "none",
-                    example: usedGenerateExampleResponse ? "true" : "false",
-                    title: title.trim().length ? title.trim() : "none",
-                    verse: verse.trim().length ? verse.trim() : "none",
-                    tiktok: tiktok === "true" ? "true" : "false",
-                    format: format.trim(),
-                    genre: genre.trim(),
-                  });
-
-                  const response = await fetch(`/api/generate?${queryParams.toString()}`, {
-                    method: "GET",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  });
-
-                  // Check if the response is successful
-                  if (response.status === 200) {
-                    const data: Response = await response.json();
-
-                    // Check if the response isn't successful
-                    if (!data.success) {
-                      toast.error(data.error);
-                      setLoading(false);
-                      return;
-                    }
-
-                    // Split the tags by commas and trim them
-                    const separated = data.tags.split(",").map((tag) => tag.trim());
-
-                    // Success
-                    toast.success(success.message.tagsGeneratedSuccessfully);
-                    setSeoText(data.extras.seo.text);
-                    setTags(separated);
-                    setLoading(false);
-                    setData(data);
-
-                    if (data.length > 500) {
-                      setShowRecommendedTagsToBeDeleteSection(true);
-                    }
-
-                    if (data.extras.titles) {
-                      setOriginalTitles(data.extras.titles.split("="));
-                      setTitles(data.extras.titles.split("="));
-                    }
-
-                    // Reset state
-                    setOverflowTagsDeleted(false);
-                    setFormat("Lyrics");
-                    setGenre("None");
-                    setFeatures("");
-                    setChannel("");
-                    setArtist("");
-                    setTiktok("");
-                    setVerse("");
-                    setTitle("");
-                  }
-
-                  // Checks if the response is not "ok"
-                  if (!response.ok) {
-                    toast.error(`${response.statusText}.`);
-                    setLoading(false);
-                  }
+                  // This is the main api call
+                  generate(true);
                 }}
               >
                 Generate Example Response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
