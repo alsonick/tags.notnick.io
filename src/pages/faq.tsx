@@ -115,7 +115,7 @@ export default function FAQ() {
                     "Rex Orange County Pluto Projector",
                   ].map((tag) => (
                     <div
-                      className="flex items-center border p-2 px-4 rounded-lg hover:cursor-pointer w-fit duration-300 hover:shadow-lg"
+                      className="flex items-center border p-2 px-4 rounded-lg w-fit duration-300 hover:shadow-lg"
                       key={tag}
                     >
                       <p className="font-semibold text-base">{tag.toLowerCase()}</p>
