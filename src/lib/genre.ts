@@ -1,5 +1,6 @@
 export const GENRE = {
   country: "country",
+  italian: "italian",
   hiphop: "hiphop",
   phonk: "phonk",
   latin: "latin",

@@ -371,6 +371,9 @@ export default function Home() {
                   <option className="font-inter" value={FORMAT.letra}>
                     Letra
                   </option>
+                  <option className="font-inter" value={FORMAT.testo}>
+                    Testo
+                  </option>
                   <option className="font-inter" value={FORMAT.phonk}>
                     Phonk
                   </option>
@@ -403,6 +406,9 @@ export default function Home() {
                   </option>
                   <option className="font-inter" value={GENRE.latin}>
                     Latin
+                  </option>
+                  <option className="font-inter" value={GENRE.italian}>
+                    Italian
                   </option>
                   <option className="font-inter" value={GENRE.phonk}>
                     Phonk

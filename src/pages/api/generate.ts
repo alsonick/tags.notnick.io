@@ -19,8 +19,11 @@ import { removeTags } from "./../../lib/helpers/tags/remove-tags";
 import { letraTitles } from "@/lib/helpers/titles/letra-titles";
 import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
 import { sendDiscordWebhook } from "@/lib/send-discord-webhook";
+import { computeTikTokValue } from "@/lib/compute-tiktok-value";
+import { testoTitles } from "@/lib/helpers/titles/testo-titles";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
+import { testoTags } from "@/lib/helpers/tags/testo-lyrics";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
@@ -31,7 +34,6 @@ import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
 import { v4 as uuidv4 } from "uuid";
-import { computeTikTokValue } from "@/lib/compute-tiktok-value";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -274,6 +276,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else if (formatPureFormat === FORMAT.letra) {
     // Letra
     tags = letraTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
+  } else if (formatPureFormat === FORMAT.testo) {
+    // Testo
+    tags = testoTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   } else if (formatPureFormat === FORMAT.phonk) {
     // Phonk
     tags = phonkTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
@@ -377,6 +382,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += `,phonk,funk,phonk music,phonk ${currentYear},new phonk`;
   } else if (genre === GENRE.latin) {
     tags += `,latin lyrics,trending latin`;
+  } else if (genre === GENRE.italian) {
+    tags += `,italian lyrics,italian music,trending italian`;
   }
 
   if (shuffle === "true") {
@@ -419,6 +426,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (formatPureFormat === FORMAT.letra) {
     if (feats.includes("None")) feats.pop();
     titles += letraTitles(finalArtist, finalTitle, feats);
+  }
+
+  // Testo
+  if (formatPureFormat === FORMAT.testo) {
+    if (feats.includes("None")) feats.pop();
+    titles += testoTitles(finalArtist, finalTitle, feats);
   }
 
   // Slowed & Reverb

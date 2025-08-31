@@ -14,6 +14,8 @@ export const returnComputedFormat = (format: string) => {
       return "slowedreverb";
     case "slowedreverb":
       return "slowedreverb";
+    case "testo":
+      return "testo";
     case "phonk":
       return "phonk";
     case "letra":

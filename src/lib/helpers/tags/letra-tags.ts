@@ -1,9 +1,4 @@
-export const letraTags = (
-  artist: string,
-  title: string,
-  features: string,
-  tiktok: string
-): string => {
+export const letraTags = (artist: string, title: string, features: string, tiktok: string): string => {
   // Tags
   let tags = `${artist},${title},${artist} ${title} letra,${artist} ${title},${title} ${artist},${title} letra,letra ${title},letra ${title} ${artist},${artist} letra,${artist} letra ${title},${title} letra ${artist},letra ${artist},${artist} - ${title},${artist} - ${title} letra,letra,latin,latin music`;
 
@@ -14,10 +9,7 @@ export const letraTags = (
   const firstFeat = feats[0];
 
   // Features
-  if (
-    features !== "none" &&
-    (tiktok === "false" || tiktok === "" || tiktok !== "true")
-  ) {
+  if (features !== "none" && (tiktok === "false" || tiktok === "" || tiktok !== "true")) {
     tags += `,${firstFeat} ${title},${artist} ${firstFeat} ${title},${firstFeat} ${title} letra,${title} ${firstFeat},${artist} ${firstFeat},${firstFeat} ${artist},${firstFeat}`;
     if (features.length >= 2) {
       // Second feat
