@@ -1,6 +1,7 @@
 import { slowedReverbTagsRemove } from "./remove/slowed-reverb-tags-remove";
 import { bassBoostedTagsRemove } from "./remove/bass-boosted-tags-remove";
 import { lyricsTagsRemove } from "./remove/lyrics-tags-remove";
+import { testoTagsRemove } from "./remove/testo-tags-remove";
 import { FORMAT } from "@/lib/format";
 
 export const removeTags = (
@@ -16,7 +17,7 @@ export const removeTags = (
     return lyricsTagsRemove(title, artist, features, tiktok, tags);
   }
 
-  // Slowed
+  // Slowed & Reverb
   if (format === FORMAT.slowedreverb) {
     return slowedReverbTagsRemove(title, artist, features, tiktok, tags);
   }
@@ -24,6 +25,11 @@ export const removeTags = (
   // Bass Boosted
   if (format === FORMAT.bassboosted) {
     return bassBoostedTagsRemove(title, artist, features, tiktok, tags);
+  }
+
+  // Testo
+  if (format === FORMAT.testo) {
+    return testoTagsRemove(title, artist, features, tiktok, tags);
   }
 
   return "";

@@ -18,6 +18,8 @@ export const validateProvidedGenre = (genre: string): boolean => {
       return true;
     case GENRE.latin:
       return true;
+    case GENRE.italian:
+      return true;
     default:
       return false;
   }

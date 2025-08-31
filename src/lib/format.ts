@@ -3,6 +3,7 @@ export const FORMAT = {
   bassboosted: "bassboosted",
   nightcore: "nightcore",
   lyrics: "lyrics",
+  testo: "testo",
   phonk: "phonk",
   letra: "letra",
 };
