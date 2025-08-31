@@ -449,7 +449,7 @@ export default function Home() {
               {" "}
               <Button
                 title="Generate Example Response"
-                type="submit"
+                type="button"
                 onClick={(e) => {
                   // Prevent the default form submission behavior
                   e.preventDefault();
