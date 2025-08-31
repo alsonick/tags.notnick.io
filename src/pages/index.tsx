@@ -450,7 +450,10 @@ export default function Home() {
               <Button
                 title="Generate Example Response"
                 type="submit"
-                onClick={() => {
+                onClick={(e) => {
+                  // Prevent the default form submission behavior
+                  e.preventDefault();
+
                   // Set the artist field to 'Rex Orange County - Pluto Projector'
                   setArtist("Rex Orange County - Pluto Projector");
 
@@ -466,7 +469,7 @@ export default function Home() {
                     type="button"
                     title="Clear"
                     onClick={(e) => {
-                      // Prevent the default form submission behavior (e.g., page reload)
+                      // Prevent the default form submission behavior
                       e.preventDefault();
 
                       // Check if there are any tags to clear
