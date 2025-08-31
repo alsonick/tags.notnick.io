@@ -33,6 +33,7 @@ import { seo } from "@/lib/seo/seo";
 import Link from "next/link";
 
 export default function Home() {
+  const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
   const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
@@ -207,6 +208,10 @@ export default function Home() {
       setTags(separated);
       setLoading(false);
       setData(data);
+
+      if (data.length > 500) {
+        setShowRecommendedTagsToBeDeleteSection(true);
+      }
 
       if (data.extras.titles) {
         setOriginalTitles(data.extras.titles.split("="));
@@ -479,6 +484,8 @@ export default function Home() {
                         return;
                       }
 
+                      setShowRecommendedTagsToBeDeleteSection(false);
+
                       // Clear all tags by setting the state to an empty array
                       setTags([]);
                     }}
@@ -667,10 +674,10 @@ export default function Home() {
             {countTagsLength(tags.join(",")) > 500 && (
               <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
             )}
-            {data?.tagsToBeRemoved.length ? (
+            {showRecommendedTagsToBeDeleteSection ? (
               <>
                 <div className="border p-4 mt-4 rounded-lg">
-                  <h2 className="text-2xl border-b pb-2">Recommended tags to delete 🤖</h2>
+                  <h2 className="text-2xl border-b pb-2">Recommended tags too delete 🤖</h2>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
                     {data?.tagsToBeRemoved.split(",").map((tag) => (
                       <div key={tag} className="flex items-center border p-2 px-4 rounded-lg w-fit">
