@@ -1,5 +1,5 @@
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { FiDownload, FiChevronLeft } from "react-icons/fi";
+import { FiDownload, FiArrowLeft } from "react-icons/fi";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
@@ -118,7 +118,7 @@ export default function PrivacyPolicy() {
         </section>
         <div className="mt-16 flex items-center justify-between">
           <Link className="text-blue-500 font-semibold hover:underline flex items-center" href="/" title="Go back home">
-            <FiChevronLeft className="mr-1 hover:scale-110 text-xl duration-150" />
+            <FiArrowLeft className="mr-1 text-xl" />
             Go back home
           </Link>
           <Button

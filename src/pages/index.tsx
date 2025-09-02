@@ -33,7 +33,9 @@ import { seo } from "@/lib/seo/seo";
 import Link from "next/link";
 
 export default function Home() {
+  const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
   const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
+  const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
   const [titles, setTitles] = useState<string[]>([]);
@@ -59,27 +61,46 @@ export default function Home() {
   };
 
   const generate = async (example: boolean) => {
+    // Store custom format from localStorage if needed
     let localStorageCustomFormat = "";
 
-    // Checks if the artist field was given a custom format key.
+    // Reset example state when generating real data
+    if (example === false) {
+      // Allow example button to be used again
+      setUsedGenerateExampleResponse(false);
+    } else {
+      // Prevent multiple example generations
+      if (usedGenerateExampleResponse) {
+        // Show error if already generated
+        toast.error(error.message.youHaveAlreadyGeneratedTheExampleResponse);
+        return;
+      }
+    }
+
+    // Checks if the artist field was given a custom format key
     if (artist.includes("/custom") && !artist.includes("{")) {
+      // Extract the key from the artist string (format: "artist/key/custom")
       const customFormatKey = artist.split("/")[1];
+      // Retrieve the saved custom format from localStorage using the key
       const customFormat = localStorage.getItem(customFormatKey);
 
-      // Checks if the value is valid.
+      // Checks if the value is valid
       if (customFormat === null || !customFormat.length) {
+        // Show error and exit if custom format key doesn't exist or is empty
         return alert(error.message.somethingWentWrongRetrievingCustomFormatKey);
       }
 
+      // Store the retrieved custom format for use in API request
       localStorageCustomFormat = customFormat;
     }
 
     // Starts the loading
     setLoading(true);
 
+    // Build query parameters for the API request
     const queryParams = new URLSearchParams({
       artist: example
-        ? "Rex Orange County - Pluto Projector"
+        ? "Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}"
         : localStorageCustomFormat.length
         ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
         : artist.trim(),
@@ -93,6 +114,7 @@ export default function Home() {
       genre: genre.trim(),
     });
 
+    // Make API request to generate tags with the provided parameters
     const response = await fetch(`/api/generate?${queryParams.toString()}`, {
       method: "GET",
       headers: {
@@ -102,6 +124,7 @@ export default function Home() {
 
     // Check if the response is successful
     if (response.status === 200) {
+      // Parse the JSON response data from the API
       const data: Response = await response.json();
 
       // Check if the response isn't successful
@@ -121,10 +144,16 @@ export default function Home() {
       setLoading(false);
       setData(data);
 
+      // Show tag deletion section if response is too long (over 500 characters)
       if (data.length > 500) {
         setShowRecommendedTagsToBeDeleteSection(true);
       }
 
+      // Show custom format section if the response contains a custom format string
+      if (data.customFormat.length > 0) {
+        setShowCustomFormatStringTemplateSection(true);
+      }
+      // Parse and set title suggestions if provided in the response
       if (data.extras.titles) {
         setOriginalTitles(data.extras.titles.split("="));
         setTitles(data.extras.titles.split("="));
@@ -153,14 +182,20 @@ export default function Home() {
     // Prevent the default form submission behavior
     e.preventDefault();
 
-    // Check if the artist field ends with ",-" which means the title wasn't provided.
+    // Hide custom format section before generating new tags
+    setShowCustomFormatStringTemplateSection(false);
+
+    // Hide recommended tags deletion section before generating new tags
+    setShowRecommendedTagsToBeDeleteSection(false);
+
+    // Check if the artist field ends with ",-" which means the title wasn't provided
     if (/,-$/.test(artist)) {
       toast.error(error.message.provideTitle);
       refs.artist.current?.focus();
       return;
     }
 
-    // Check if the artist field starts with ",-" which means the title wasn't provided.
+    // Check if the artist field starts with ",-" which means the title wasn't provided
     if (/^,-/.test(artist)) {
       toast.error(error.message.invalidFormat);
       refs.artist.current?.focus();
@@ -237,6 +272,7 @@ export default function Home() {
       }
     }
 
+    // Generates the example response tags
     generate(false);
   };
 
@@ -247,7 +283,7 @@ export default function Home() {
     }
 
     alert(
-      "You're currently trying to save a custom format, On the browser we save them in localstorage, please provide a key to identify with the custom format, whenever you want to use the custom format then please append '/[KEY]/custom' (replace [KEY] with your actual key) at the end of the string in the 'artist' field. Click the 'Ok' Button to proceed."
+      "You're currently trying to save a custom format, On the browser we save them in localstorage, please provide a key to identify with the custom format, whenever you want to use the custom format then please append '/[KEY]/' (replace [KEY] with your actual key) at the end of the string in the 'artist' field. Click the 'Ok' Button to proceed."
     );
 
     // Prompts the user to enter in a valid key
@@ -462,7 +498,10 @@ export default function Home() {
                   // Prevent the default form submission behavior
                   e.preventDefault();
 
-                  // This is the main api call
+                  // Mark example button as used
+                  setUsedGenerateExampleResponse(true);
+
+                  // Generates the example response tags
                   generate(true);
                 }}
               >
@@ -484,8 +523,16 @@ export default function Home() {
                         return;
                       }
 
+                      // Hide the recommended tags deletion section
                       setShowRecommendedTagsToBeDeleteSection(false);
 
+                      // Hide the custom format section when clearing
+                      setShowCustomFormatStringTemplateSection(false);
+
+                      // Reset example response state to allow the example button to be used again
+                      setUsedGenerateExampleResponse(false);
+
+                      // Show success message to user
                       toast.success("Cleared.");
 
                       // Clear all tags by setting the state to an empty array
@@ -546,14 +593,16 @@ export default function Home() {
             </div>
             {tags.length ? <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p> : null}
             {tags.length > 0 && (
-              <Link
-                className="text-sm text-center mt-6 underline text-gray-800"
-                title="Click to view json representation data."
-                href={data?.url ?? ""}
-                target="_blank"
-              >
-                Click to view json representation data.
-              </Link>
+              <div className="flex items-center justify-center w-100 mt-6">
+                <Link
+                  className="text-sm text-center w-fit underline hover:no-underline text-gray-800"
+                  title="Click to view json representation data."
+                  href={data?.url ?? ""}
+                  target="_blank"
+                >
+                  Click to view json representation data.
+                </Link>
+              </div>
             )}
             <div className="flex w-full mt-6 items-center">
               {tags.length ? <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} /> : null}
@@ -632,18 +681,20 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            {data?.customFormat && (
+            {showCustomFormatStringTemplateSection ? (
               <div className="border p-4 mt-4 rounded-lg">
                 <h2 className="text-2xl text-left">Custom 🤖</h2>
-                <p className="mt-1 border-b pb-2 text-gray-800">The format used to generate your custom tags.</p>
+                <p className="mt-1 border-b pb-2 text-gray-800">
+                  The format string template used to generate your custom tags.
+                </p>
                 <div className="flex flex-wrap gap-4 my-4 mt-6">
                   <div className="flex items-center border p-2 px-4 rounded-lg w-fit">
-                    <p className="font-semibold">{data.customFormat}</p>
+                    <p className="font-semibold">{data?.customFormat}</p>
                   </div>
                 </div>
               </div>
-            )}
-            {data?.customFormat && (
+            ) : null}
+            {showCustomFormatStringTemplateSection ? (
               <div className="flex w-full mt-6 items-center">
                 <div className="flex ml-auto">
                   <div className="mr-4">
@@ -672,11 +723,11 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
-            )}
+            ) : null}
             {countTagsLength(tags.join(",")) > 500 && (
               <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
             )}
-            {showRecommendedTagsToBeDeleteSection ? (
+            {showRecommendedTagsToBeDeleteSection && data?.tagsToBeRemoved.length ? (
               <>
                 <div className="border p-4 mt-4 rounded-lg">
                   <h2 className="text-2xl border-b pb-2">Recommended tags too delete 🤖</h2>

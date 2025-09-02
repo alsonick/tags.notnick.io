@@ -310,7 +310,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // TODO: Redis stuff goes here
     }
 
-    // Example: Calum Hood - Don't Forget You Love Me/{a},{t}
+    // Example: Rex Orange County - Pluto Projector/{a},{t}
     const customFormat = artist.split("/")[1];
     const individualFormatSplit = customFormat.split(",");
 
@@ -500,7 +500,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.status(200).json({
     success: true,
     tags: decodeURIComponent(tags.toLowerCase()),
-    tagsToBeRemoved: tagsToBeRemoved.length ? decodeURIComponent(tagsToBeRemoved.toLowerCase()) : [],
+    tagsToBeRemoved: tagsToBeRemoved.length ? decodeURIComponent(tagsToBeRemoved.toLowerCase()) : "",
     removedTags: decodeURIComponent(removedTags.toLowerCase()),
     removedTagsLength: countTagsLength(removedTags),
     title: decodeURIComponent(finalTitle.trim()),
