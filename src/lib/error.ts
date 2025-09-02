@@ -17,6 +17,7 @@ export const error = {
     needToProvideAllValidVariables: "You need to provide the valid variables.",
     providedVariablesNotValid: "The provided variable is not valid.",
     somethingWentWrongRetrievingCustomFormatKey: "Something went wrong retrieving the custom format key.",
+    youHaveAlreadyGeneratedTheExampleResponse: "You've already generated the example response.",
     enterValidKey: "Please enter a valid key.",
     invalidFormat: "Invalid format.",
     methodNotAllowed: "Method Not Allowed",
