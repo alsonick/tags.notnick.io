@@ -2,19 +2,22 @@
 
 This is a small utility tool for personal use, but you can use it if you have a music/lyric channel on [YouTube](https://www.youtube.com).
 
-## What to provide
+## Params
 
-| Params     | Required | Description / Options                                                                                              |
-| ---------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
-| `Artist`   | Yes      | Name of the artist.                                                                                                |
-| `Title`    | No       | Name of the song.                                                                                                  |
-| `Features` | No       | Featured artists (3 supported).                                                                                    |
-| `TikTok`   | No       | Boolean flag (`true` / `false`).                                                                                   |
-| `Channel`  | No       | Name of the YouTube channel.                                                                                       |
-| `Format`   | No       | • `Lyrics` _(default)_<br>• `Bass Boosted`<br>• `Nightcore/Sped Up`<br>• `Slowed/Reverb`<br>• `Letra`<br>• `Phonk` |
-| `Shuffle`  | No       | Shuffle tags option (API only).                                                                                    |
-| `Genre`    | No       | • `None` _(default)_<br>• `Country`<br>• `Latin`<br>• `Phonk`<br>• `Pop`<br>• `Rap`                                |
-| `Verse`    | No       | Up to 3 short verses.                                                                                              |
+| Params     | Required | Description                                                                                                                                                                                                                                 |
+| ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `artist`   | Yes      | Name of the artist, but you can also provide both the artist and title within this parameter, like this: `Rex Orange County - Pluto Projector`.                                                                                             |
+| `title`    | Yes/No   | Name of the song, not required if both the artist and title components are provided in the `artist` parameter.                                                                                                                              |
+| `features` | No       | Featured artists, if you provide more than 3 featuring artists, then only the first 3 features will be used when generating the tags.                                                                                                       |
+| `tiktok`   | No       | Provides addiontal tags related to TikTok, It's recommended for songs that are performing well on TikTok. (`true` / `false`). You can also pass in the short form (`t` / `f`).                                                              |
+| `channel`  | No       | Name of the YouTube channel you want featured in the generated tags.                                                                                                                                                                        |
+| `format`   | No       | • `Lyrics` _(default)_<br>• `Bass Boosted`<br>• `Nightcore/Sped Up`<br>• `Slowed/Reverb`<br>• `Letra`<br>• `Phonk`<br>• `Testo`                                                                                                             |
+| `shuffle`  | No       | An option that shuffles the generated tags, the parameter value should either be `true` or `false`.                                                                                                                                         |
+| `genre`    | No       | • `None` _(default)_<br>• `Country`<br>• `Latin`<br>• `Phonk`<br>• `Pop`<br>• `Rap`<br>• `Italian`                                                                                                                                          |
+| `verse`    | No       | Up to 3 short popular verses, each verse should be separated by commas.                                                                                                                                                                     |
+| `custom`   | No       | The custom format string template that you want to use for your tags.                                                                                                                                                                       |
+| `log`      | No       | All request data is logged for debugging purposes, if you wish to not have your data logged, then provide `false` as the parameter value.                                                                                                   |
+| `webhook`  | No       | We use private Discord channels to log request data, if you'd like to have your data logged in your own private channel, then provide us with your webhook link. Don't worry, your provided webhook link is never logged or stored with us. |
 
 If you provide both `artist` and `title` in the `artist` field, you can leave all the other fields empty.
 
@@ -77,7 +80,7 @@ Please [email](mailto:hi@notnick.io) me if you find any bugs.
 
 ## tags-py
 
-I've also developed a small Python script for those who prefer to use the terminal. [Click here to download](https://github.com/alsonick/tags-py).
+We've also developed a small Python script that interacts with Lyrics Tags Generator for those who prefer to use the terminal. [Click here for instructions on how to setup the Python script](https://github.com/alsonick/tags-py).
 
 ## Stack
 
