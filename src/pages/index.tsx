@@ -41,7 +41,7 @@ export default function Home() {
   const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [features, setFeatures] = useState("");
   const [data, setData] = useState<Response>();
   const [channel, setChannel] = useState("");
