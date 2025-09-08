@@ -7,12 +7,12 @@ import {
 } from "@/lib/constants";
 import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave, FiCornerDownRight } from "react-icons/fi";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { LoadingIndicator } from "@/components/LoadingIndicator";
 import { CharacterLimit } from "@/components/CharacterLimit";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { ToastContainer, toast } from "react-toastify";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
+import { Skeleton } from "@/components/skeleton";
 import { Button } from "../components/Button";
 import { Footer } from "@/components/Footer";
 import { Response } from "@/types/response";
@@ -551,8 +551,14 @@ export default function Home() {
           </div>
         </form>
         {loading ? (
-          <div className="mt-28 flex justify-center items-center">
-            <LoadingIndicator />
+          <div className="mt-6 flex justify-center items-center">
+            <div className="border w-full p-4 rounded-lg">
+              <div className="flex flex-wrap gap-4 my-4 mt-6">
+                {[340, 240, 140, 340, 220, 400, 240, 140, 540, 340, 300, 240, 340, 180, 400].map((skeleton, index) => (
+                  <Skeleton key={index} className={`h-[42px] rounded-lg w-[${skeleton}px] animate-pulse`} />
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           <div className="flex flex-col">
