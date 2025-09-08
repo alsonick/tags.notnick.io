@@ -41,7 +41,7 @@ export default function Home() {
   const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [features, setFeatures] = useState("");
   const [data, setData] = useState<Response>();
   const [channel, setChannel] = useState("");
@@ -554,8 +554,8 @@ export default function Home() {
           <div className="mt-6 flex justify-center items-center">
             <div className="border w-full p-4 rounded-lg">
               <div className="flex flex-wrap gap-4 my-4 mt-6">
-                {[340, 240, 140, 340, 220, 400, 240, 140, 540, 340, 300, 240, 340, 180, 400].map((skeleton, index) => (
-                  <Skeleton key={index} className={`h-[42px] rounded-lg w-[${skeleton}px] animate-pulse`} />
+                {[340, 240, 140, 340, 220, 400, 240, 140, 540, 340, 300, 240, 340, 180, 400].map((width, index) => (
+                  <Skeleton key={index} className="h-[42px]" style={{ width }} />
                 ))}
               </div>
             </div>
