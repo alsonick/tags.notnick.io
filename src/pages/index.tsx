@@ -106,12 +106,12 @@ export default function Home() {
         : artist.trim(),
       features: features.trim().length ? features.trim() : "none",
       channel: channel.trim().length ? channel.trim() : "none",
-      example: example ? "true" : "false",
       title: title.trim().length ? title.trim() : "none",
       verse: verse.trim().length ? verse.trim() : "none",
       tiktok: tiktok === "true" ? "true" : "false",
       format: format.trim(),
       genre: genre.trim(),
+      source: "web",
     });
 
     // Make API request to generate tags with the provided parameters

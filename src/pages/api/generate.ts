@@ -42,6 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Get the query parameters
+  const source: string = (req.query.source as string) || "unknown";
   const example: string = (req.query.example as string) || "false";
   const webhook: string = (req.query.webhook as string) || "none";
   const genre: string = (req.query.genre as string) || "none";
@@ -467,6 +468,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     example,
     shuffle,
     channel,
+    source,
     customFormatString.length ? artist.trim() : finalArtist,
     tiktok,
     finalFormat,

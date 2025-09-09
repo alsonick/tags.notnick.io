@@ -5,6 +5,7 @@ export const urlBuilder = (
   example: string,
   shuffle: string,
   channel: string,
+  source: string,
   artist: string,
   tiktok: string,
   format: string,
@@ -21,5 +22,5 @@ export const urlBuilder = (
     genre.toLowerCase()
   )}&verse=${encodeURIComponent(verse.toLowerCase())}&custom=${customFormat ? "true" : "false"}&log=${
     log.toLowerCase() === "true" ? "true" : "false"
-  }&response=${responseId}&example=${example}`;
+  }&response=${responseId}&example=${example}&source=${source}`;
 };
