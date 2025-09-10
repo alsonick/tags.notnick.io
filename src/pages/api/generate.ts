@@ -480,23 +480,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const webhookUrl = webhook === "none" ? process.env.DISCORD_WEBHOOK_URL! : webhook;
 
-  await sendDiscordWebhook(
-    customFormatString,
-    tagsToBeRemoved,
-    res,
-    responseId,
-    removedTags,
-    finalFeatures,
-    channel,
-    webhookUrl,
-    tiktok,
-    finalFormat,
-    finalArtist,
-    finalTitle,
-    tags,
-    log,
-    url
-  );
+  if (log.toLowerCase() === "true") {
+    await sendDiscordWebhook(
+      customFormatString,
+      tagsToBeRemoved,
+      res,
+      responseId,
+      removedTags,
+      finalFeatures,
+      channel,
+      webhookUrl,
+      tiktok,
+      finalFormat,
+      finalArtist,
+      finalTitle,
+      tags,
+      log,
+      url
+    );
+  }
 
   // Send the response.
   res.status(200).json({

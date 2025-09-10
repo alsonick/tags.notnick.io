@@ -8,12 +8,14 @@ import {
 import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave, FiCornerDownRight } from "react-icons/fi";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { CharacterLimit } from "@/components/CharacterLimit";
+import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { ToastContainer, toast } from "react-toastify";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
 import { Skeleton } from "@/components/skeleton";
 import { Button } from "../components/Button";
+import { Switch } from "@/components/switch";
 import { Footer } from "@/components/Footer";
 import { Response } from "@/types/response";
 import { Input } from "@/components/Input";
@@ -33,11 +35,14 @@ import { seo } from "@/lib/seo/seo";
 import Link from "next/link";
 
 export default function Home() {
+  const [clearAfterResponse, setClearAfterResponse] = useState(process.env.NODE_ENV === "development" ? false : true);
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
   const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
   const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
+  const [displayResponse, setDisplayResponse] = useState(true);
+  const [enableLogging, setEnableLogging] = useState(false);
   const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
@@ -104,13 +109,14 @@ export default function Home() {
         : localStorageCustomFormat.length
         ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
         : artist.trim(),
+      log: process.env.NODE_ENV === "development" ? `${enableLogging}` : "true",
       features: features.trim().length ? features.trim() : "none",
       channel: channel.trim().length ? channel.trim() : "none",
       title: title.trim().length ? title.trim() : "none",
       verse: verse.trim().length ? verse.trim() : "none",
       tiktok: tiktok === "true" ? "true" : "false",
-      format: format.trim(),
-      genre: genre.trim(),
+      format: format.toLowerCase().trim(),
+      genre: genre.toLowerCase().trim(),
       source: "web",
     });
 
@@ -160,15 +166,17 @@ export default function Home() {
       }
 
       // Reset state
-      setOverflowTagsDeleted(false);
-      setFormat("Lyrics");
-      setGenre("None");
-      setFeatures("");
-      setChannel("");
-      setArtist("");
-      setTiktok("");
-      setVerse("");
-      setTitle("");
+      if (clearAfterResponse) {
+        setOverflowTagsDeleted(false);
+        setFormat("Lyrics");
+        setGenre("None");
+        setFeatures("");
+        setChannel("");
+        setArtist("");
+        setTiktok("");
+        setVerse("");
+        setTitle("");
+      }
     }
 
     // Checks if the response is not "ok"
@@ -305,6 +313,7 @@ export default function Home() {
     <Container>
       <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
       <NoSupportedSizeScreenMessage />
+      <DevelopmentNav />
       <Nav />
       <MainWrapper>
         <header className="flex flex-col items-center">
@@ -547,7 +556,31 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="ml-auto mt-3"></div>
+            {process.env.NODE_ENV === "development" ? (
+              <div className="flex flex-col w-full items-center mt-8 font-light">
+                <div className="flex items-center justify-between w-full">
+                  <p>
+                    <b>[{process.env.NODE_ENV.toUpperCase()}]</b> Clear After Response:
+                  </p>
+                  <Switch
+                    onCheckedChange={() => setClearAfterResponse(!clearAfterResponse)}
+                    checked={clearAfterResponse}
+                  />
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <p>
+                    <b>[{process.env.NODE_ENV.toUpperCase()}]</b> Display Response:
+                  </p>
+                  <Switch checked={displayResponse} onCheckedChange={() => setDisplayResponse(!displayResponse)} />
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <p>
+                    <b>[{process.env.NODE_ENV.toUpperCase()}]</b> Enable Logging:
+                  </p>
+                  <Switch checked={enableLogging} onCheckedChange={() => setEnableLogging(!enableLogging)} />
+                </div>
+              </div>
+            ) : null}
           </div>
         </form>
         {loading ? (
@@ -564,7 +597,7 @@ export default function Home() {
           <div className="flex flex-col">
             <div className="border p-4 mt-6 rounded-lg">
               {tags.length > 0 && (
-                <h2 className="text-2xl text-left border-b pb-2">
+                <h2 className="text-2xl text-left  border-b pb-2">
                   <i>{data?.title}</i> by <b>{data?.artist}</b> 🤖
                 </h2>
               )}
@@ -593,11 +626,15 @@ export default function Home() {
                     ))}
                   </>
                 ) : (
-                  <h3 className="text-2xl">Click the "Generate" button to generate your tags. 🤖</h3>
+                  <h3 className="text-2xl">
+                    Click the <b>"Generate"</b> button to generate your tags. 🤖
+                  </h3>
                 )}
               </div>
             </div>
-            {tags.length ? <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p> : null}
+            {tags.length && displayResponse ? (
+              <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
+            ) : null}
             {tags.length > 0 && (
               <div className="flex items-center justify-center w-100 mt-6">
                 <Link
@@ -613,7 +650,7 @@ export default function Home() {
             <div className="flex w-full mt-6 items-center">
               {tags.length ? <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} /> : null}
               <div className="flex items-center ml-auto">
-                <div className="mr-4">
+                <div className="mr-2">
                   <Button
                     title="Shuffle"
                     type="button"
@@ -703,7 +740,7 @@ export default function Home() {
             {showCustomFormatStringTemplateSection ? (
               <div className="flex w-full mt-6 items-center">
                 <div className="flex ml-auto">
-                  <div className="mr-4">
+                  <div className="mr-2">
                     <Button
                       title="Copy custom format"
                       onClick={() => {
@@ -718,7 +755,7 @@ export default function Home() {
                         copy(data?.customFormat);
 
                         // Show a success toast confirming the copy action
-                        toast.success(success.message.tagsCopiedToClipboard);
+                        toast.success(success.message.copied);
                       }}
                     >
                       Copy custom format <FiCopy className="ml-2 hover:scale-110 duration-150" />
@@ -780,8 +817,8 @@ export default function Home() {
             ) : null}
             {tags.length > 0 && (
               <div className="flex flex-col mt-8 border-t  pt-4">
-                <h3 className="text-2xl font-bold">Suggested:</h3>
-                <p className="mb-6 text-gray-800">Generated titles in different formats you can use.</p>
+                <h3 className="text-2xl font-bold">Suggested titles:</h3>
+                <p className="mb-6 text-gray-800">Titles in different formats you can use.</p>
                 {titles.map((title) => (
                   <div className="flex items-center justify-between w-full mt-4" key={title}>
                     <h4 className="text-xl">{title}</h4>
@@ -800,7 +837,7 @@ export default function Home() {
                     </Button>
                   </div>
                 ))}
-                <div className="flex items-center w-full pt-4 mt-4">
+                <div className="flex items-center w-full mt-4">
                   <div className="flex items-center ml-auto">
                     <Button
                       title="Uppercase"
@@ -865,8 +902,8 @@ export default function Home() {
             )}
             {tags.length ? (
               <div className="mt-8 flex flex-col border-t pt-4">
-                <h3 className="text-2xl font-bold">Seo:</h3>
-                <p className="mb-6 text-gray-800">Typically added at the end of descriptions.</p>
+                <h3 className="text-2xl font-bold">Seo keywords:</h3>
+                <p className="mb-6 text-gray-800">Typically added at the end of your YouTube description.</p>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex flex-col">
                     {seoText.split("=").map((text) => (

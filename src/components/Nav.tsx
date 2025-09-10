@@ -19,9 +19,9 @@ export const Nav = () => {
 
   return (
     <nav
-      className={`lg:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden top-0 z-50 transition-shadow duration-500 ${
-        scrolled ? "fixed shadow-md h-20" : "fixed shadow-none"
-      }`}
+      className={`lg:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden ${
+        process.env.NODE_ENV === "development" ? "top-5" : "top-0"
+      } z-50 transition-shadow duration-500 ${scrolled ? "fixed shadow-md h-20" : "fixed shadow-none"}`}
     >
       <Link href="/" className="flex items-center">
         <NavYouTubeLogo />

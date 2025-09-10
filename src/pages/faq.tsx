@@ -1,5 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/accordion";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
+import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
@@ -17,6 +18,7 @@ export default function FAQ() {
     <Container>
       <Seo seoTitle={seo.page.faq.title} seoDescription={seo.page.faq.description} />
       <NoSupportedSizeScreenMessage />
+      <DevelopmentNav />
       <Nav />
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">FAQ</h1>
@@ -117,11 +119,8 @@ export default function FAQ() {
                     "lyrics Pluto Projector",
                     "Rex Orange County Pluto Projector",
                   ].map((tag) => (
-                    <div
-                      className="flex items-center border p-2 px-4 rounded-lg w-fit duration-300 hover:shadow-lg"
-                      key={tag}
-                    >
-                      <p className="font-semibold text-base">{tag.toLowerCase()}</p>
+                    <div className="flex items-center border p-2 px-4 rounded-lg w-fit duration-300" key={tag}>
+                      <p className="font-semibold text-base text-black">{tag.toLowerCase()}</p>
                     </div>
                   ))}
                 </div>

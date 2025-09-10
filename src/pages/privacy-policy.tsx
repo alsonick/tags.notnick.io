@@ -1,4 +1,5 @@
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
+import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { FiDownload, FiArrowLeft } from "react-icons/fi";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
@@ -16,6 +17,7 @@ export default function PrivacyPolicy() {
     <Container>
       <Seo seoTitle={seo.page.privacyPolicy.title} seoDescription={seo.page.privacyPolicy.description} />
       <NoSupportedSizeScreenMessage />
+      <DevelopmentNav />
       <Nav />
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">Privacy Policy</h1>
