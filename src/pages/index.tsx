@@ -32,10 +32,15 @@ import { GENRE } from "@/lib/genre";
 import { seo } from "@/lib/seo/seo";
 
 // Next.js
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Home() {
-  const [clearAfterResponse, setClearAfterResponse] = useState(process.env.NODE_ENV === "development" ? false : true);
+  const router = useRouter();
+
+  const [clearAfterResponse, setClearAfterResponse] = useState(
+    process.env.NODE_ENV === "development" || router.query.debug === "true" ? false : true
+  );
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
   const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
   const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
@@ -109,7 +114,7 @@ export default function Home() {
         : localStorageCustomFormat.length
         ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
         : artist.trim(),
-      log: process.env.NODE_ENV === "development" ? `${enableLogging}` : "true",
+      log: process.env.NODE_ENV === "development" || router.query.debug === "true" ? `${enableLogging}` : "true",
       features: features.trim().length ? features.trim() : "none",
       channel: channel.trim().length ? channel.trim() : "none",
       title: title.trim().length ? title.trim() : "none",
@@ -556,7 +561,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            {process.env.NODE_ENV === "development" ? (
+            {process.env.NODE_ENV === "development" || router.query.debug === "true" ? (
               <div className="flex flex-col w-full items-center mt-8 font-light">
                 <div className="flex items-center justify-between w-full">
                   <p>
