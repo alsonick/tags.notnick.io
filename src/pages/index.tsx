@@ -314,6 +314,9 @@ export default function Home() {
     toast.success(success.message.savedCustomKey);
   };
 
+  const environmentModeSetting =
+    process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `${router.query.debug}`.toUpperCase();
+
   return (
     <Container>
       <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
@@ -565,7 +568,7 @@ export default function Home() {
               <div className="flex flex-col w-full items-center mt-8 font-light">
                 <div className="flex items-center justify-between w-full">
                   <p>
-                    <b>[{process.env.NODE_ENV.toUpperCase()}]</b> Clear After Response:
+                    <b>[{environmentModeSetting}]</b> Clear After Response:
                   </p>
                   <Switch
                     onCheckedChange={() => setClearAfterResponse(!clearAfterResponse)}
@@ -574,13 +577,13 @@ export default function Home() {
                 </div>
                 <div className="flex items-center justify-between w-full">
                   <p>
-                    <b>[{process.env.NODE_ENV.toUpperCase()}]</b> Display Response:
+                    <b>[{environmentModeSetting}]</b> Display Response:
                   </p>
                   <Switch checked={displayResponse} onCheckedChange={() => setDisplayResponse(!displayResponse)} />
                 </div>
                 <div className="flex items-center justify-between w-full">
                   <p>
-                    <b>[{process.env.NODE_ENV.toUpperCase()}]</b> Enable Logging:
+                    <b>[{environmentModeSetting}]</b> Enable Logging:
                   </p>
                   <Switch checked={enableLogging} onCheckedChange={() => setEnableLogging(!enableLogging)} />
                 </div>
