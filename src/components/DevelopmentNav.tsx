@@ -11,11 +11,7 @@ export const DevelopmentNav = () => {
             {" "}
             You're currently in{" "}
             <b>
-              [
-              {process.env.NODE_ENV === "development"
-                ? process.env.NODE_ENV.toUpperCase()
-                : `${router.query.debug}`.toUpperCase()}
-              ]
+              [{process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `debug`.toUpperCase()}]
             </b>{" "}
             mode.{" "}
           </span>

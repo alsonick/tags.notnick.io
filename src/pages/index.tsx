@@ -315,7 +315,7 @@ export default function Home() {
   };
 
   const environmentModeSetting =
-    process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `${router.query.debug}`.toUpperCase();
+    process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `debug`.toUpperCase();
 
   return (
     <Container>
