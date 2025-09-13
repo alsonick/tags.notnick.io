@@ -10,10 +10,7 @@ export const DevelopmentNav = () => {
           <span className="text-white text-sm">
             {" "}
             You're currently in{" "}
-            <b>
-              [{process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `debug`.toUpperCase()}]
-            </b>{" "}
-            mode.{" "}
+            <b>[{process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `DEBUG`}]</b> mode.{" "}
           </span>
         </div>
       ) : null}

@@ -38,7 +38,7 @@ export default function PrivacyPolicy() {
           data we collect (if any), how it’s used, and your rights.
         </div>
         <section className="my-8">
-          <h1 className="text-2xl font-black">What We Collect</h1>
+          <h1 className="text-2xl font-bold">What We Collect</h1>
           <div className="mt-4 text-gray-800 ">
             <p className="mb-4">
               We do not collect, store, or process any <i>personal information</i>.
@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
           </div>
         </section>
         <section className="mb-8">
-          <h1 className="text-2xl font-black">Analytics and Cookies</h1>
+          <h1 className="text-2xl font-bold">Analytics and Cookies</h1>
           <div className="mt-4 text-gray-800">
             <p className="mb-4">We may collect anonymous usage data.</p>
             <p className="mb-1">This may include:</p>
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
           </div>
         </section>
         <section className="mb-8">
-          <h1 className="text-2xl font-black">Changes To This Policy</h1>
+          <h1 className="text-2xl font-bold">Changes To This Policy</h1>
           <div className="mt-4 text-gray-800">
             <p>
               This Privacy Policy may be updated or revised from time to time to reflect changes in our practices,
@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
           </div>
         </section>
         <section className="mb-auto">
-          <h1 className="text-2xl font-black">Contact</h1>
+          <h1 className="text-2xl font-bold">Contact</h1>
           <div className="mt-4 text-gray-800">
             <p className="mb-4">For any questions about this policy, feel free to reach out:</p>
             <p>

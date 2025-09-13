@@ -120,7 +120,7 @@ export default function FAQ() {
                     "Rex Orange County Pluto Projector",
                   ].map((tag) => (
                     <div className="flex items-center border p-2 px-4 rounded-lg w-fit duration-300" key={tag}>
-                      <p className="font-semibold text-base text-black">{tag.toLowerCase()}</p>
+                      <p className="text-base text-black">{tag.toLowerCase()}</p>
                     </div>
                   ))}
                 </div>
