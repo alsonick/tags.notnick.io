@@ -23,6 +23,7 @@ import { Step } from "../components/Step";
 import { useState, useRef } from "react";
 import { FiCopy } from "react-icons/fi";
 import { success } from "@/lib/success";
+import { useRouter } from "next/router";
 import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
 import { FORMAT } from "@/lib/format";
@@ -32,7 +33,6 @@ import { GENRE } from "@/lib/genre";
 import { seo } from "@/lib/seo/seo";
 
 // Next.js
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Home() {
@@ -45,7 +45,9 @@ export default function Home() {
   const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
   const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
+  const [useAutoDeletedTags, setUseAutoDeletedTags] = useState(false);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
+  const [autoShuffleTags, setAutoShuffleTags] = useState(false);
   const [displayResponse, setDisplayResponse] = useState(true);
   const [enableLogging, setEnableLogging] = useState(false);
   const [titles, setTitles] = useState<string[]>([]);
@@ -120,6 +122,7 @@ export default function Home() {
       title: title.trim().length ? title.trim() : "none",
       verse: verse.trim().length ? verse.trim() : "none",
       tiktok: tiktok === "true" ? "true" : "false",
+      shuffle: autoShuffleTags ? "true" : "false",
       format: format.toLowerCase().trim(),
       genre: genre.toLowerCase().trim(),
       source: "web",
@@ -146,7 +149,16 @@ export default function Home() {
       }
 
       // Split the tags by commas and trim them
-      const separated = data.tags.split(",").map((tag) => tag.trim());
+      let separated: string[];
+
+      // If auto-deleted tags mode is on, use the "removedTags" field
+      if (useAutoDeletedTags) {
+        // Split the comma-separated string into an array, trimming whitespace
+        separated = data.removedTags.split(",").map((tag) => tag.trim());
+      } else {
+        // Otherwise, use the normal "tags" field
+        separated = data.tags.split(",").map((tag) => tag.trim());
+      }
 
       // Success
       toast.success(success.message.tagsGeneratedSuccessfully);
@@ -565,26 +577,31 @@ export default function Home() {
               </div>
             </div>
             {process.env.NODE_ENV === "development" || router.query.debug === "true" ? (
-              <div className="flex flex-col w-full items-center mt-8 font-light">
+              <div className="flex flex-col w-full items-center mt-8">
                 <div className="flex items-center justify-between w-full">
-                  <p>
-                    <b>[{environmentModeSetting}]</b> Clear After Response:
-                  </p>
+                  <p>[{environmentModeSetting}] Clear After Response:</p>
                   <Switch
                     onCheckedChange={() => setClearAfterResponse(!clearAfterResponse)}
                     checked={clearAfterResponse}
                   />
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p>
-                    <b>[{environmentModeSetting}]</b> Display Response:
-                  </p>
+                  <p>[{environmentModeSetting}] Display Response:</p>
                   <Switch checked={displayResponse} onCheckedChange={() => setDisplayResponse(!displayResponse)} />
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p>
-                    <b>[{environmentModeSetting}]</b> Enable Logging:
-                  </p>
+                  <p>[{environmentModeSetting}] Use Auto Deleted Tags:</p>
+                  <Switch
+                    checked={useAutoDeletedTags}
+                    onCheckedChange={() => setUseAutoDeletedTags(!useAutoDeletedTags)}
+                  />
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <p>[{environmentModeSetting}] Auto Shuffle Tags:</p>
+                  <Switch checked={autoShuffleTags} onCheckedChange={() => setAutoShuffleTags(!autoShuffleTags)} />
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <p>[{environmentModeSetting}] Enable Logging:</p>
                   <Switch checked={enableLogging} onCheckedChange={() => setEnableLogging(!enableLogging)} />
                 </div>
               </div>
@@ -605,7 +622,7 @@ export default function Home() {
           <div className="flex flex-col">
             <div className="border p-4 mt-6 rounded-lg">
               {tags.length > 0 && (
-                <h2 className="text-2xl text-left  border-b pb-2">
+                <h2 className="text-2xl text-left font-medium border-b pb-2">
                   <i>{data?.title}</i> by <b>{data?.artist}</b> 🤖
                 </h2>
               )}
@@ -628,13 +645,13 @@ export default function Home() {
                           setTags(filtered);
                         }}
                       >
-                        <p className="font-semibold">{tag}</p>
+                        <p className="">{tag}</p>
                         <FiX className="text-lg ml-1 hover:scale-110 duration-150" />
                       </div>
                     ))}
                   </>
                 ) : (
-                  <h3 className="text-2xl">
+                  <h3 className="text-2xl font-light">
                     Click the <b>"Generate"</b> button to generate your tags. 🤖
                   </h3>
                 )}
@@ -657,90 +674,92 @@ export default function Home() {
             )}
             <div className="flex w-full mt-6 items-center">
               {tags.length ? <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} /> : null}
-              <div className="flex items-center ml-auto">
-                <div className="mr-2">
-                  <Button
-                    title="Shuffle"
-                    type="button"
-                    onClick={(e) => {
-                      // Prevent the default form submission behavior
-                      e.preventDefault();
+              {tags.length ? (
+                <div className="flex items-center ml-auto">
+                  <div className="mr-2">
+                    <Button
+                      title="Shuffle"
+                      type="button"
+                      onClick={(e) => {
+                        // Prevent the default form submission behavior
+                        e.preventDefault();
 
-                      // If no tags exist, run validation checks
-                      if (!tags.length) {
-                        // If no artist name is provided → show error and focus the artist input
-                        if (!artist.length) {
-                          toast.error(error.message.provideArtist);
-                          refs.artist.current?.focus();
+                        // If no tags exist, run validation checks
+                        if (!tags.length) {
+                          // If no artist name is provided → show error and focus the artist input
+                          if (!artist.length) {
+                            toast.error(error.message.provideArtist);
+                            refs.artist.current?.focus();
+                            return;
+                          }
+
+                          // If artist name doesn’t contain "-" or "," (meaning it's a single artist/band name),
+                          // then require a title to be provided as well
+                          if (!artist.includes("-") && !artist.includes(",")) {
+                            if (!title.length) {
+                              toast.error(error.message.provideTitle);
+                              refs.title.current?.focus();
+                              return;
+                            }
+                          }
+
+                          // If we reach this point, tags are still missing → show generic error
+                          toast.error(error.message.generateTagsFirst);
                           return;
                         }
 
-                        // If artist name doesn’t contain "-" or "," (meaning it's a single artist/band name),
-                        // then require a title to be provided as well
-                        if (!artist.includes("-") && !artist.includes(",")) {
-                          if (!title.length) {
-                            toast.error(error.message.provideTitle);
-                            refs.title.current?.focus();
-                            return;
-                          }
+                        // Copy current tags into a new array for shuffling
+                        const shuffled = [...tags];
+
+                        // Fisher–Yates shuffle algorithm: randomize array order
+                        for (let i = shuffled.length - 1; i > 0; i--) {
+                          const j = Math.floor(Math.random() * (i + 1));
+                          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                         }
 
-                        // If we reach this point, tags are still missing → show generic error
-                        toast.error(error.message.generateTagsFirst);
+                        // Update state with shuffled tags
+                        setTags(shuffled);
+
+                        // Show success message after shuffle
+                        toast.success(success.message.shuffledSuccessfully);
+                      }}
+                    >
+                      Shuffle <FiRepeat className="ml-2 hover:scale-110 duration-150" />
+                    </Button>
+                  </div>
+                  <Button
+                    style={{ marginLeft: "auto" }}
+                    title="Copy generated tags"
+                    onClick={() => {
+                      // Check if there are any tags to copy
+                      if (!tags.length) {
+                        // If no tags exist, show an error message and stop execution
+                        toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
                         return;
                       }
 
-                      // Copy current tags into a new array for shuffling
-                      const shuffled = [...tags];
+                      // Join all tags into a single string separated by commas
+                      // Example: ["tag1", "tag2"] → "tag1,tag2"
+                      copy(tags.join(","));
 
-                      // Fisher–Yates shuffle algorithm: randomize array order
-                      for (let i = shuffled.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-                      }
-
-                      // Update state with shuffled tags
-                      setTags(shuffled);
-
-                      // Show success message after shuffle
-                      toast.success(success.message.shuffledSuccessfully);
+                      // Show a success toast confirming the tags were copied to the clipboard
+                      toast.success(success.message.tagsCopiedToClipboard);
                     }}
                   >
-                    Shuffle <FiRepeat className="ml-2 hover:scale-110 duration-150" />
+                    Copy generated tags <FiCopy className="ml-2 hover:scale-110 duration-150" />
                   </Button>
                 </div>
-                <Button
-                  style={{ marginLeft: "auto" }}
-                  title="Copy generated tags"
-                  onClick={() => {
-                    // Check if there are any tags to copy
-                    if (!tags.length) {
-                      // If no tags exist, show an error message and stop execution
-                      toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
-                      return;
-                    }
-
-                    // Join all tags into a single string separated by commas
-                    // Example: ["tag1", "tag2"] → "tag1,tag2"
-                    copy(tags.join(","));
-
-                    // Show a success toast confirming the tags were copied to the clipboard
-                    toast.success(success.message.tagsCopiedToClipboard);
-                  }}
-                >
-                  Copy generated tags <FiCopy className="ml-2 hover:scale-110 duration-150" />
-                </Button>
-              </div>
+              ) : null}
             </div>
             {showCustomFormatStringTemplateSection ? (
               <div className="border p-4 mt-4 rounded-lg">
-                <h2 className="text-2xl text-left">Custom 🤖</h2>
+                <h2 className="text-2xl font-medium text-left">Custom 🤖</h2>
                 <p className="mt-1 border-b pb-2 text-gray-800">
                   The format string template used to generate your custom tags.
                 </p>
                 <div className="flex flex-wrap gap-4 my-4 mt-6">
                   <div className="flex items-center border p-2 px-4 rounded-lg w-fit">
-                    <p className="font-semibold">{data?.customFormat}</p>
+                    <p>{data?.customFormat}</p>
                   </div>
                 </div>
               </div>
@@ -778,14 +797,16 @@ export default function Home() {
             {countTagsLength(tags.join(",")) > 500 && (
               <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
             )}
-            {showRecommendedTagsToBeDeleteSection && data?.tagsToBeRemoved.length ? (
+            {showRecommendedTagsToBeDeleteSection &&
+            data?.tagsToBeRemoved.length &&
+            countTagsLength(tags.join(",")) > 500 ? (
               <>
                 <div className="border p-4 mt-4 rounded-lg">
-                  <h2 className="text-2xl border-b pb-2">Recommended tags too delete 🤖</h2>
+                  <h2 className="text-2xl border-b font-medium pb-2">Recommended tags too delete 🤖</h2>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
                     {data?.tagsToBeRemoved.split(",").map((tag) => (
                       <div key={tag} className="flex items-center border p-2 px-4 rounded-lg w-fit">
-                        <p className="font-semibold">{tag.toLowerCase()}</p>
+                        <p>{tag.toLowerCase()}</p>
                       </div>
                     ))}
                   </div>
@@ -825,7 +846,7 @@ export default function Home() {
             ) : null}
             {tags.length > 0 && (
               <div className="flex flex-col mt-8 border-t  pt-4">
-                <h3 className="text-2xl font-bold">Suggested titles:</h3>
+                <h3 className="text-2xl font-medium">Suggested titles:</h3>
                 <p className="mb-6 text-gray-800">Titles in different formats you can use.</p>
                 {titles.map((title) => (
                   <div className="flex items-center justify-between w-full mt-4" key={title}>
@@ -910,7 +931,7 @@ export default function Home() {
             )}
             {tags.length ? (
               <div className="mt-8 flex flex-col border-t pt-4">
-                <h3 className="text-2xl font-bold">Seo keywords:</h3>
+                <h3 className="text-2xl font-medium">Seo keywords:</h3>
                 <p className="mb-6 text-gray-800">Typically added at the end of your YouTube description.</p>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex flex-col">
@@ -940,7 +961,7 @@ export default function Home() {
             ) : null}
             {tags.length > 0 && (
               <div className="mt-8 flex flex-col border-t pt-4">
-                <h3 className="text-2xl font-bold">Hashtags:</h3>
+                <h3 className="text-2xl font-medium">Hashtags:</h3>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex">
                     {data?.hashtags.map((hashtag) => (
