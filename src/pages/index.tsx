@@ -337,6 +337,9 @@ export default function Home() {
       // Show the JSON view for easier debugging
       setShowJSONView(true);
     }
+
+    // Set it to false to be safe
+    setShowJSONView(false);
   }, []); // Empty dependency array → run only once on mount
 
   return (
