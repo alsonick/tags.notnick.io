@@ -47,7 +47,7 @@ export default function Home() {
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
   const [autoShuffleTags, setAutoShuffleTags] = useState(false);
   const [displayResponse, setDisplayResponse] = useState(true);
-  const [enableLogging, setEnableLogging] = useState(false);
+  const [enableLogging, setEnableLogging] = useState(true);
   const [showJSONView, setShowJSONView] = useState(true);
   const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
