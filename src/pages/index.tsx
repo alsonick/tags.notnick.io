@@ -599,10 +599,6 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p>[{environmentModeSetting}] Display Response:</p>
-                  <Switch checked={displayResponse} onCheckedChange={() => setDisplayResponse(!displayResponse)} />
-                </div>
-                <div className="flex items-center justify-between w-full">
                   <p>[{environmentModeSetting}] Use Auto Deleted Tags:</p>
                   <Switch
                     checked={useAutoDeletedTags}
@@ -620,6 +616,10 @@ export default function Home() {
                 <div className="flex items-center justify-between w-full">
                   <p>[{environmentModeSetting}] Show JSON View:</p>
                   <Switch checked={showJSONView} onCheckedChange={() => setShowJSONView(!showJSONView)} />
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <p>[{environmentModeSetting}] Display Response:</p>
+                  <Switch checked={displayResponse} onCheckedChange={() => setDisplayResponse(!displayResponse)} />
                 </div>
               </div>
             ) : null}
