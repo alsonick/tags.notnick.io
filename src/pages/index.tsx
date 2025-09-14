@@ -12,6 +12,7 @@ import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { ToastContainer, toast } from "react-toastify";
 import { MainWrapper } from "@/components/MainWrapper";
+import { useState, useRef, useEffect } from "react";
 import { Container } from "@/components/Container";
 import { Skeleton } from "@/components/skeleton";
 import { Button } from "../components/Button";
@@ -20,7 +21,6 @@ import { Footer } from "@/components/Footer";
 import { Response } from "@/types/response";
 import { Input } from "@/components/Input";
 import { Step } from "../components/Step";
-import { useState, useRef } from "react";
 import { FiCopy } from "react-icons/fi";
 import { success } from "@/lib/success";
 import { useRouter } from "next/router";
@@ -38,18 +38,17 @@ import Link from "next/link";
 export default function Home() {
   const router = useRouter();
 
-  const [clearAfterResponse, setClearAfterResponse] = useState(
-    process.env.NODE_ENV === "development" || router.query.debug === "true" ? false : true
-  );
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
   const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
   const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
   const [overflowTagsDeleted, setOverflowTagsDeleted] = useState(false);
   const [useAutoDeletedTags, setUseAutoDeletedTags] = useState(false);
+  const [clearAfterResponse, setClearAfterResponse] = useState(true);
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
   const [autoShuffleTags, setAutoShuffleTags] = useState(false);
   const [displayResponse, setDisplayResponse] = useState(true);
   const [enableLogging, setEnableLogging] = useState(false);
+  const [showJSONView, setShowJSONView] = useState(true);
   const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState("Lyrics");
@@ -329,6 +328,17 @@ export default function Home() {
   const environmentModeSetting =
     process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `debug`.toUpperCase();
 
+  useEffect(() => {
+    // Checks if the app is running in development mode
+    if (process.env.NODE_ENV === "development" || router.query.debug === "true") {
+      // Don’t auto-clear after response when debugging
+      setClearAfterResponse(false);
+
+      // Show the JSON view for easier debugging
+      setShowJSONView(true);
+    }
+  }, []); // Empty dependency array → run only once on mount
+
   return (
     <Container>
       <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
@@ -604,6 +614,10 @@ export default function Home() {
                   <p>[{environmentModeSetting}] Enable Logging:</p>
                   <Switch checked={enableLogging} onCheckedChange={() => setEnableLogging(!enableLogging)} />
                 </div>
+                <div className="flex items-center justify-between w-full">
+                  <p>[{environmentModeSetting}] Show JSON View:</p>
+                  <Switch checked={showJSONView} onCheckedChange={() => setShowJSONView(!showJSONView)} />
+                </div>
               </div>
             ) : null}
           </div>
@@ -659,6 +673,11 @@ export default function Home() {
             </div>
             {tags.length && displayResponse ? (
               <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
+            ) : null}
+            {tags.length && showJSONView ? (
+              <div className="border p-4 mt-6 rounded-lg">
+                <p className="whitespace-normal break-all">{JSON.stringify(data)}</p>
+              </div>
             ) : null}
             {tags.length > 0 && (
               <div className="flex items-center justify-center w-100 mt-6">
