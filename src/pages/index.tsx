@@ -128,7 +128,7 @@ export default function Home() {
     });
 
     // Make API request to generate tags with the provided parameters
-    const response = await fetch(`/api/generate?${queryParams.toString()}`, {
+    const response = await fetch(`/api/v1/generate?${queryParams.toString()}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
