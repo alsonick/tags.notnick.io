@@ -34,6 +34,8 @@ import { seo } from "@/lib/seo/seo";
 
 // Next.js
 import Link from "next/link";
+import { Custom } from "@/components/Custom";
+import { Header } from "@/components/Header";
 
 export default function Home() {
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
@@ -332,7 +334,7 @@ export default function Home() {
     // Checks if the app is running in development mode
     if (process.env.NODE_ENV === "development" || router.query.debug === "true") {
       // Don’t auto-clear after response when debugging
-      setClearAfterResponse(false);
+      // setClearAfterResponse(false);
 
       // Show the JSON view for easier debugging
       setShowJSONView(true);
@@ -342,6 +344,14 @@ export default function Home() {
     }
   }, []); // Empty dependency array → run only once on mount
 
+  useEffect(() => {
+    // Run this effect whenever the tags array changes
+    if (tags.length === 0) {
+      // If there are no tags, reset example response usage
+      setUsedGenerateExampleResponse(false);
+    }
+  }, [tags]); // Dependency: re-run when tags changes (when they're deleted)
+
   return (
     <Container>
       <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
@@ -349,10 +359,7 @@ export default function Home() {
       <DevelopmentNav />
       <Nav />
       <MainWrapper>
-        <header className="flex flex-col items-center">
-          <h1 className="text-6xl font-bold tracking-tighter">{seo.page.home.title} ✍️</h1>
-          <p className="text-gray-800 mt-4 text-xl font-medium">{seo.page.home.description}</p>
-        </header>
+        <Header />
         <form onSubmit={submit} className="flex flex-col mt-6">
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
@@ -590,7 +597,11 @@ export default function Home() {
               </div>
             </div>
             {process.env.NODE_ENV === "development" || router.query.debug === "true" ? (
-              <div className="flex flex-col w-full items-center mt-8">
+              <div className="flex flex-col w-full text-gray-800 items-center border p-4 rounded-lg mt-8">
+                <p className="mb-4 border-b pb-1 text-black">
+                  A set of tools provided if you're in <b>[DEVELOPMENT]</b> or <b>[DEBUG]</b> mode to give you more
+                  functionality.
+                </p>
                 <div className="flex items-center justify-between w-full">
                   <p>[{environmentModeSetting}] Clear After Response:</p>
                   <Switch
@@ -773,20 +784,8 @@ export default function Home() {
                 </div>
               ) : null}
             </div>
-            {showCustomFormatStringTemplateSection ? (
-              <div className="border p-4 mt-4 rounded-lg">
-                <h2 className="text-2xl font-medium text-left">Custom 🤖</h2>
-                <p className="mt-1 border-b pb-2 text-gray-800">
-                  The format string template used to generate your custom tags.
-                </p>
-                <div className="flex flex-wrap gap-4 my-4 mt-6">
-                  <div className="flex items-center border p-2 px-4 rounded-lg w-fit">
-                    <p>{data?.customFormat}</p>
-                  </div>
-                </div>
-              </div>
-            ) : null}
-            {showCustomFormatStringTemplateSection ? (
+            {showCustomFormatStringTemplateSection && data && tags.length ? <Custom data={data} /> : null}
+            {showCustomFormatStringTemplateSection && data && tags.length ? (
               <div className="flex w-full mt-6 items-center">
                 <div className="flex ml-auto">
                   <div className="mr-2">
