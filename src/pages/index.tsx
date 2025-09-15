@@ -36,8 +36,6 @@ import { seo } from "@/lib/seo/seo";
 import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
-
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
   const [showRecommendedTagsToBeDeleteSection, setShowRecommendedTagsToBeDeleteSection] = useState(false);
   const [usedGenerateExampleResponse, setUsedGenerateExampleResponse] = useState(false);
@@ -70,6 +68,8 @@ export default function Home() {
     verse: useRef<HTMLInputElement>(null),
     title: useRef<HTMLInputElement>(null),
   };
+
+  const router = useRouter();
 
   const generate = async (example: boolean) => {
     // Store custom format from localStorage if needed
