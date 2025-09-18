@@ -7,17 +7,22 @@ import {
 } from "@/lib/constants";
 import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave, FiCornerDownRight } from "react-icons/fi";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
+import { SuggestedTitlesSection } from "@/components/sections/SuggestedTitlesSection";
+import { SeoKeywordsSection } from "@/components/sections/SeoKeywordsSection";
+import { HashtagsSection } from "@/components/sections/HashtagsSection";
 import { CharacterLimit } from "@/components/CharacterLimit";
 import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { countTagsLength } from "@/lib/count-tags-length";
+import { Skeleton } from "@/components/shadcn/skeleton";
 import { ToastContainer, toast } from "react-toastify";
 import { MainWrapper } from "@/components/MainWrapper";
 import { useState, useRef, useEffect } from "react";
+import { Switch } from "@/components/shadcn/switch";
 import { Container } from "@/components/Container";
-import { Skeleton } from "@/components/skeleton";
 import { Button } from "../components/Button";
-import { Switch } from "@/components/switch";
+import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Custom } from "@/components/Custom";
 import { Response } from "@/types/response";
 import { Input } from "@/components/Input";
 import { Step } from "../components/Step";
@@ -31,11 +36,7 @@ import copy from "copy-to-clipboard";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
 import { seo } from "@/lib/seo/seo";
-
-// Next.js
 import Link from "next/link";
-import { Custom } from "@/components/Custom";
-import { Header } from "@/components/Header";
 
 export default function Home() {
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
@@ -71,6 +72,7 @@ export default function Home() {
     title: useRef<HTMLInputElement>(null),
   };
 
+  // Initialize router
   const router = useRouter();
 
   const generate = async (example: boolean) => {
@@ -352,6 +354,16 @@ export default function Home() {
     }
   }, [tags]); // Dependency: re-run when tags changes (when they're deleted)
 
+  // Toggle option for debug and development modes
+  const toggles = [
+    { label: "Clear After Response", state: clearAfterResponse, setState: setClearAfterResponse },
+    { label: "Use Auto Deleted Tags", state: useAutoDeletedTags, setState: setUseAutoDeletedTags },
+    { label: "Auto Shuffle Tags", state: autoShuffleTags, setState: setAutoShuffleTags },
+    { label: "Enable Logging", state: enableLogging, setState: setEnableLogging },
+    { label: "Show JSON View", state: showJSONView, setState: setShowJSONView },
+    { label: "Display Response", state: displayResponse, setState: setDisplayResponse },
+  ];
+
   return (
     <Container>
       <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
@@ -449,27 +461,19 @@ export default function Home() {
                   onChange={(e) => setFormat(e.target.value)}
                   value={format}
                 >
-                  <option className="font-inter" value={FORMAT.lyrics}>
-                    Lyrics
-                  </option>
-                  <option className="font-inter" value={FORMAT.bassboosted}>
-                    Bass Boosted
-                  </option>
-                  <option className="font-inter" value={FORMAT.nightcore}>
-                    Nightcore/Sped Up
-                  </option>
-                  <option className="font-inter" value={FORMAT.slowedreverb}>
-                    Slowed & Reverb
-                  </option>
-                  <option className="font-inter" value={FORMAT.letra}>
-                    Letra
-                  </option>
-                  <option className="font-inter" value={FORMAT.testo}>
-                    Testo
-                  </option>
-                  <option className="font-inter" value={FORMAT.phonk}>
-                    Phonk
-                  </option>
+                  {[
+                    { value: FORMAT.lyrics, text: "Lyrics" },
+                    { value: FORMAT.bassboosted, text: "Bass Boosted" },
+                    { value: FORMAT.nightcore, text: "Nightcore/Sped Up" },
+                    { value: FORMAT.slowedreverb, text: "Slowed & Reverb" },
+                    { value: FORMAT.letra, text: "Letra" },
+                    { value: FORMAT.testo, text: "Testo" },
+                    { value: FORMAT.phonk, text: "Phonk" },
+                  ].map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.text}
+                    </option>
+                  ))}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
@@ -491,27 +495,19 @@ export default function Home() {
                   onChange={(e) => setGenre(e.target.value)}
                   value={genre}
                 >
-                  <option className="font-inter" value={GENRE.none}>
-                    None
-                  </option>
-                  <option className="font-inter" value={GENRE.country}>
-                    Country
-                  </option>
-                  <option className="font-inter" value={GENRE.latin}>
-                    Latin
-                  </option>
-                  <option className="font-inter" value={GENRE.italian}>
-                    Italian
-                  </option>
-                  <option className="font-inter" value={GENRE.phonk}>
-                    Phonk
-                  </option>
-                  <option className="font-inter" value={GENRE.pop}>
-                    Pop
-                  </option>
-                  <option className="font-inter" value={GENRE.rap}>
-                    Rap
-                  </option>
+                  {[
+                    { value: GENRE.none, text: "None" },
+                    { value: GENRE.country, text: "Country" },
+                    { value: GENRE.latin, text: "Latin" },
+                    { value: GENRE.italian, text: "Italian" },
+                    { value: GENRE.phonk, text: "Phonk" },
+                    { value: GENRE.pop, text: "Pop" },
+                    { value: GENRE.rap, text: "Rap" },
+                  ].map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.text}
+                    </option>
+                  ))}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
@@ -602,36 +598,14 @@ export default function Home() {
                   A set of tools provided if you're in <b>[DEVELOPMENT]</b> or <b>[DEBUG]</b> mode to give you more
                   functionality.
                 </p>
-                <div className="flex items-center justify-between w-full">
-                  <p>[{environmentModeSetting}] Clear After Response:</p>
-                  <Switch
-                    onCheckedChange={() => setClearAfterResponse(!clearAfterResponse)}
-                    checked={clearAfterResponse}
-                  />
-                </div>
-                <div className="flex items-center justify-between w-full">
-                  <p>[{environmentModeSetting}] Use Auto Deleted Tags:</p>
-                  <Switch
-                    checked={useAutoDeletedTags}
-                    onCheckedChange={() => setUseAutoDeletedTags(!useAutoDeletedTags)}
-                  />
-                </div>
-                <div className="flex items-center justify-between w-full">
-                  <p>[{environmentModeSetting}] Auto Shuffle Tags:</p>
-                  <Switch checked={autoShuffleTags} onCheckedChange={() => setAutoShuffleTags(!autoShuffleTags)} />
-                </div>
-                <div className="flex items-center justify-between w-full">
-                  <p>[{environmentModeSetting}] Enable Logging:</p>
-                  <Switch checked={enableLogging} onCheckedChange={() => setEnableLogging(!enableLogging)} />
-                </div>
-                <div className="flex items-center justify-between w-full">
-                  <p>[{environmentModeSetting}] Show JSON View:</p>
-                  <Switch checked={showJSONView} onCheckedChange={() => setShowJSONView(!showJSONView)} />
-                </div>
-                <div className="flex items-center justify-between w-full">
-                  <p>[{environmentModeSetting}] Display Response:</p>
-                  <Switch checked={displayResponse} onCheckedChange={() => setDisplayResponse(!displayResponse)} />
-                </div>
+                {toggles.map(({ label, state, setState }) => (
+                  <div key={label} className="flex items-center justify-between w-full">
+                    <p>
+                      [{environmentModeSetting}] {label}:
+                    </p>
+                    <Switch checked={state} onCheckedChange={() => setState(!state)} />
+                  </div>
+                ))}
               </div>
             ) : null}
           </div>
@@ -865,156 +839,11 @@ export default function Home() {
                 </div>
               </>
             ) : null}
-            {tags.length > 0 && (
-              <div className="flex flex-col mt-8 border-t  pt-4">
-                <h3 className="text-2xl font-medium">Suggested titles:</h3>
-                <p className="mb-6 text-gray-800">Titles in different formats you can use.</p>
-                {titles.map((title) => (
-                  <div className="flex items-center justify-between w-full mt-4" key={title}>
-                    <h4 className="text-xl">{title}</h4>
-                    <Button
-                      type="button"
-                      title="Copy"
-                      onClick={() => {
-                        // Copy the current title string to the clipboard
-                        copy(title);
-
-                        // Show a success toast notification confirming the copy action
-                        toast.success(success.message.copied);
-                      }}
-                    >
-                      Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
-                    </Button>
-                  </div>
-                ))}
-                <div className="flex items-center w-full mt-4">
-                  <div className="flex items-center ml-auto">
-                    <Button
-                      title="Uppercase"
-                      type="button"
-                      onClick={() => {
-                        // Convert all titles in the array to uppercase
-                        const uppercaseTitles = titles.map((title) => title.toUpperCase());
-
-                        // Check if the transformed array is the same as the current titles
-                        // (Prevents unnecessary re-renders / state updates)
-                        if (uppercaseTitles === titles) {
-                          return;
-                        }
-
-                        // Update state only if there was a change
-                        setTitles(uppercaseTitles);
-                      }}
-                    >
-                      Uppercase <FiEdit className="ml-2 hover:scale-110 duration-150" />
-                    </Button>
-                    <div className="ml-2">
-                      <Button
-                        title="Lowercase"
-                        type="button"
-                        onClick={() => {
-                          // Create a new array where every title is converted to lowercase
-                          const lowercaseTitles = titles.map((title) => title.toLowerCase());
-
-                          // Check if the new array is exactly the same reference as the old one
-                          // This will almost always be false, since .map() creates a new array
-                          if (lowercaseTitles === titles) {
-                            return; // Skip updating if they are the same (but in practice, this won't trigger)
-                          }
-
-                          // Update state with the lowercase version of the titles
-                          setTitles(lowercaseTitles);
-                        }}
-                      >
-                        Lowercase <FiEdit className="ml-2 hover:scale-110 duration-150" />
-                      </Button>
-                    </div>
-                    <div className="ml-2">
-                      <Button
-                        title="Original"
-                        type="button"
-                        onClick={() => {
-                          // Check if originalTitles and titles are the same array reference
-                          if (originalTitles === titles) {
-                            return; // Do nothing if they're the same reference
-                          }
-
-                          // Otherwise, update titles state with the originalTitles array
-                          setTitles(originalTitles);
-                        }}
-                      >
-                        Original <FiEdit className="ml-2 hover:scale-110 duration-150" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
             {tags.length ? (
-              <div className="mt-8 flex flex-col border-t pt-4">
-                <h3 className="text-2xl font-medium">Seo keywords:</h3>
-                <p className="mb-6 text-gray-800">Typically added at the end of your YouTube description.</p>
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex flex-col">
-                    {seoText.split("=").map((text) => (
-                      <p className="text-xl mb-2">{text}</p>
-                    ))}
-                  </div>
-                </div>
-                <div className="ml-auto">
-                  <Button
-                    type="button"
-                    title="Copy"
-                    onClick={() => {
-                      // Copy the SEO text to the clipboard
-                      // Replace all "=" characters with line breaks ("\n")
-                      // so the copied text is formatted nicely
-                      copy(seoText.replaceAll("=", "\n"));
-
-                      // Show a success toast to confirm the text was copied
-                      toast.success(success.message.copied);
-                    }}
-                  >
-                    Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
-                  </Button>
-                </div>
-              </div>
+              <SuggestedTitlesSection setTitles={setTitles} originalTitles={originalTitles} titles={titles} />
             ) : null}
-            {tags.length > 0 && (
-              <div className="mt-8 flex flex-col border-t pt-4">
-                <h3 className="text-2xl font-medium">Hashtags:</h3>
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex">
-                    {data?.hashtags.map((hashtag) => (
-                      <p key={hashtag} className="text-xl mr-4">
-                        #{hashtag}
-                      </p>
-                    ))}
-                  </div>
-                  <Button
-                    type="button"
-                    title="Copy "
-                    onClick={() => {
-                      // Take the list of hashtags from the API response (if available)
-                      // and prepend "#" to each one
-                      const hashtagArray = data?.hashtags.map((hashtag) => `#${hashtag}`);
-
-                      // Join the hashtags into a single string separated by spaces
-                      // Example: ["#music", "#lyrics"] → "#music #lyrics"
-                      const textToCopy = `${hashtagArray?.join(" ")}`;
-
-                      // Copy the final hashtag string to the clipboard
-                      copy(textToCopy);
-
-                      // Show a success toast to let the user know copying worked
-                      toast.success(success.message.hashtagsCopiedToClipboard);
-                    }}
-                  >
-                    Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
-                  </Button>
-                </div>
-              </div>
-            )}
+            {tags.length ? <HashtagsSection hashtags={data ? data.hashtags : []} /> : null}
+            {tags.length ? <SeoKeywordsSection seoText={seoText} /> : null}
           </div>
         )}
         <Footer />
