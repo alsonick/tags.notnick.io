@@ -1,16 +1,14 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/accordion";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
+import { Badge } from "@/components/shadcn/badge";
 import { Footer } from "@/components/Footer";
 import { FiArrowLeft } from "react-icons/fi";
-import { Badge } from "@/components/badge";
 import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
 import { seo } from "@/lib/seo/seo";
-
-// Next.js
 import Link from "next/link";
 
 export default function FAQ() {
