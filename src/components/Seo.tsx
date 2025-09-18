@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const Seo = (props: Props) => {
-  // Use absolute URL for social images
   const imageUrl = "https://tags.notnick.io/tags.png";
   const siteUrl = "https://tags.notnick.io";
 
