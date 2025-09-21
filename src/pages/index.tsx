@@ -5,7 +5,7 @@ import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
-import { FiX, FiRepeat, FiTrash, FiDelete, FiEdit, FiSave, FiCornerDownRight } from "react-icons/fi";
+import { FiX, FiRepeat, FiTrash, FiDelete, FiSave, FiCornerDownRight } from "react-icons/fi";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { SuggestedTitlesSection } from "@/components/sections/SuggestedTitlesSection";
 import { SeoKeywordsSection } from "@/components/sections/SeoKeywordsSection";
