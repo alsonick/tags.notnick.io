@@ -470,7 +470,7 @@ export default function Home() {
                     { value: FORMAT.testo, text: "Testo" },
                     { value: FORMAT.phonk, text: "Phonk" },
                   ].map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option className="font-inter" key={option.value} value={option.value}>
                       {option.text}
                     </option>
                   ))}
@@ -504,7 +504,7 @@ export default function Home() {
                     { value: GENRE.pop, text: "Pop" },
                     { value: GENRE.rap, text: "Rap" },
                   ].map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option className="font-inter" key={option.value} value={option.value}>
                       {option.text}
                     </option>
                   ))}
