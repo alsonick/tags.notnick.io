@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { FiArrowLeft } from "react-icons/fi";
 import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
+import { Tag } from "@/components/Tag";
 import { seo } from "@/lib/seo/seo";
 import Link from "next/link";
 
@@ -117,9 +118,7 @@ export default function FAQ() {
                     "lyrics Pluto Projector",
                     "Rex Orange County Pluto Projector",
                   ].map((tag) => (
-                    <div className="flex items-center border p-2 px-4 rounded-lg w-fit duration-300" key={tag}>
-                      <p className="text-base text-black">{tag.toLowerCase()}</p>
-                    </div>
+                    <Tag deletable={false} tag={tag.toLowerCase()} />
                   ))}
                 </div>
                 You can also create your own custom format string template, though this feature is only available on the
