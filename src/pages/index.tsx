@@ -5,7 +5,7 @@ import {
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
 } from "@/lib/constants";
-import { FiX, FiRepeat, FiTrash, FiDelete, FiSave, FiCornerDownRight } from "react-icons/fi";
+import { FiRepeat, FiTrash, FiDelete, FiSave, FiCornerDownRight } from "react-icons/fi";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { SuggestedTitlesSection } from "@/components/sections/SuggestedTitlesSection";
 import { SeoKeywordsSection } from "@/components/sections/SeoKeywordsSection";
@@ -31,6 +31,7 @@ import { success } from "@/lib/success";
 import { useRouter } from "next/router";
 import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
+import { Tag } from "@/components/Tag";
 import { FORMAT } from "@/lib/format";
 import copy from "copy-to-clipboard";
 import { error } from "@/lib/error";
@@ -64,12 +65,13 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [verse, setVerse] = useState("");
 
+  // References to input fields for focusing and validation
   const refs = {
-    features: useRef<HTMLInputElement>(null),
-    channel: useRef<HTMLInputElement>(null),
-    artist: useRef<HTMLInputElement>(null),
-    verse: useRef<HTMLInputElement>(null),
-    title: useRef<HTMLInputElement>(null),
+    features: useRef<HTMLInputElement>(null), // Features input field
+    channel: useRef<HTMLInputElement>(null), // Channel input field
+    artist: useRef<HTMLInputElement>(null), // Artist input field
+    verse: useRef<HTMLInputElement>(null), // Verse input field
+    title: useRef<HTMLInputElement>(null), // Title input field
   };
 
   // Initialize router
@@ -86,8 +88,10 @@ export default function Home() {
     } else {
       // Prevent multiple example generations
       if (usedGenerateExampleResponse) {
-        // Show error if already generated
+        // Show error toast when the example response has already been generated
         toast.error(error.message.youHaveAlreadyGeneratedTheExampleResponse);
+
+        // Stop further execution
         return;
       }
     }
@@ -146,8 +150,13 @@ export default function Home() {
 
       // Check if the response isn't successful
       if (!data.success) {
+        // Show error toast with the error message from the response
         toast.error(data.error);
+
+        // Stop loading state
         setLoading(false);
+
+        // Stop further execution
         return;
       }
 
@@ -172,17 +181,22 @@ export default function Home() {
 
       // Show tag deletion section if response is too long (over 500 characters)
       if (data.length > 500) {
+        // Show the section for recommended tags that can be deleted
         setShowRecommendedTagsToBeDeleteSection(true);
       }
 
       // Show custom format section if the response contains a custom format string
       if (data.customFormat.length > 0) {
+        // Show the custom format string template section in the UI
         setShowCustomFormatStringTemplateSection(true);
       }
       // Parse and set title suggestions if provided in the response
       if (data.extras.titles) {
-        setOriginalTitles(data.extras.titles.split("="));
-        setTitles(data.extras.titles.split("="));
+        // Split the titles string by '=' using regex
+        setOriginalTitles(data.extras.titles.split(/=/));
+
+        // Split the titles string by '=' using regex (for editing or display)
+        setTitles(data.extras.titles.split(/=/));
       }
 
       // Reset state
@@ -201,7 +215,10 @@ export default function Home() {
 
     // Checks if the response is not "ok"
     if (!response.ok) {
+      // Show error toast with the response status text
       toast.error(`${response.statusText}.`);
+
+      // Stop loading state
       setLoading(false);
     }
   };
@@ -218,73 +235,123 @@ export default function Home() {
 
     // Check if the artist field ends with ",-" which means the title wasn't provided
     if (/,-$/.test(artist)) {
+      // Show error toast when title is missing
       toast.error(error.message.provideTitle);
+
+      // Move cursor to the artist input field
       refs.artist.current?.focus();
+
+      // Stop further execution
       return;
     }
 
     // Check if the artist field starts with ",-" which means the title wasn't provided
     if (/^,-/.test(artist)) {
+      // Show error toast when the artist input format is invalid
       toast.error(error.message.invalidFormat);
+
+      // Move cursor to the artist input field
       refs.artist.current?.focus();
+
+      // Stop further execution
       return;
     }
 
     // Check if there are any commas in the title
     if (/,/.test(title)) {
+      // Show error toast when title contains commas
       toast.error(error.message.removeCommasFromTitle);
+
+      // Stop further execution
       return;
     }
 
     // Checks if the artist field reaches the character limit
     if (/[-,]/.test(artist)) {
+      // Check if artist input exceeds formatted character limit
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
+        // Show error toast when character limit is exceeded
         toast.error(error.message.characterLimitExceeded);
+
+        // Move cursor to the artist input field
         refs.artist.current?.focus();
+
+        // Stop further execution
         return;
       }
     } else {
+      // Check if artist input exceeds character limit
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT) {
+        // Show error toast when character limit is exceeded
         toast.error(error.message.characterLimitExceeded);
+
+        // Move cursor to the artist input field
         refs.artist.current?.focus();
+
+        // Stop further execution
         return;
       }
     }
 
     // Checks if the title field reaches the character limit
     if (title.length > TITLE_INPUT_FIELD_CHARACTER_LIMIT) {
+      // Show error toast when character limit is exceeded
       toast.error(error.message.characterLimitExceeded);
+
+      // Move cursor to the title input field
       refs.title.current?.focus();
+
+      // Stop further execution
       return;
     }
 
     // Checks if the features field reaches the character limit
     if (features.length > FEATURES_INPUT_FIELD_CHARACTER_LIMIT) {
+      // Show error toast when character limit is exceeded
       toast.error(error.message.characterLimitExceeded);
+
+      // Move cursor to the features input field
       refs.features.current?.focus();
+
+      // Stop further execution
       return;
     }
 
     // Checks if the channel name field reaches the character limit.
     if (channel.length > CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT) {
+      // Show error toast when character limit is exceeded
       toast.error(error.message.characterLimitExceeded);
+
+      // Move cursor to the channel input field
       refs.channel.current?.focus();
+
+      // Stop further execution
       return;
     }
 
     // Checks if the artist and title is not provided in the artist field.
     if (!/-/.test(artist)) {
       if (!title.length) {
+        // Show error toast for missing title
         toast.error(error.message.provideTitle);
+
+        // Move cursor to the title input field
         refs.title.current?.focus();
+
+        // Stop further execution
         return;
       }
     }
 
     // Checks if verse contains any numbers or special characters.
     if (verse.length && !/^[a-zA-Z ,]*$/.test(verse)) {
+      // Show error toast for invalid characters in the verse
       toast.error(error.message.removeSpecialCharactersAndNumbersExceptCommasVerse);
+
+      // Move cursor to the verse input field
       refs.verse.current?.focus();
+
+      // Stop further execution
       return;
     }
 
@@ -294,8 +361,13 @@ export default function Home() {
 
       // If there's more than 3 verses then send back a error response
       if (verseSplit.length > 3) {
+        // Show error toast when more than three verses are added
         toast.error(error.message.threeVersesAreOnlyAllowed);
+
+        // Move cursor to the verse input field
         refs.verse.current?.focus();
+
+        // Stop further execution
         return;
       }
     }
@@ -307,6 +379,7 @@ export default function Home() {
   const saveCustomFormat = () => {
     // Checks if a custom format was used (Yes, I know this check is useless but I'm just like that lol :3)
     if (!data?.customFormat) {
+      // Stop further execution
       return;
     }
 
@@ -632,24 +705,7 @@ export default function Home() {
                 {tags.length ? (
                   <>
                     {tags.map((tag) => (
-                      <div
-                        key={tag}
-                        className="flex items-center border p-2 px-4 rounded-lg
-                        hover:cursor-pointer w-fit duration-300 hover:shadow-lg"
-                        title={`Delete ${tag} tag`}
-                        onClick={() => {
-                          // Create a new array of tags excluding the one to be removed
-                          // `filter` returns a new array containing only tags that are not equal to `tag`
-                          const filtered = tags.filter((t) => t !== tag);
-
-                          // Update the state with the filtered array
-                          // This effectively removes the specified tag from the list
-                          setTags(filtered);
-                        }}
-                      >
-                        <p className="">{tag}</p>
-                        <FiX className="text-lg ml-1 hover:scale-110 duration-150" />
-                      </div>
+                      <Tag deletable={true} setTags={setTags} tags={tags} tag={tag} />
                     ))}
                   </>
                 ) : (
@@ -664,7 +720,7 @@ export default function Home() {
             ) : null}
             {tags.length && showJSONView ? (
               <div className="border p-4 mt-6 rounded-lg">
-                <p className="whitespace-normal break-all">{JSON.stringify(data)}</p>
+                <p className="whitespace-normal break-all text-gray-800">{JSON.stringify(data)}</p>
               </div>
             ) : null}
             {tags.length > 0 && (
@@ -695,23 +751,36 @@ export default function Home() {
                         if (!tags.length) {
                           // If no artist name is provided → show error and focus the artist input
                           if (!artist.length) {
+                            // Show error toast for missing artist
                             toast.error(error.message.provideArtist);
+
+                            // Move cursor to the artist input field
                             refs.artist.current?.focus();
+
+                            // Stop further execution
                             return;
                           }
 
                           // If artist name doesn’t contain "-" or "," (meaning it's a single artist/band name),
                           // then require a title to be provided as well
                           if (!artist.includes("-") && !artist.includes(",")) {
+                            // If no title name is provided → show error and focus the title input
                             if (!title.length) {
+                              // Show error toast for missing title
                               toast.error(error.message.provideTitle);
+
+                              // Move cursor to the title input field
                               refs.title.current?.focus();
+
+                              // Stop further execution
                               return;
                             }
                           }
 
                           // If we reach this point, tags are still missing → show generic error
                           toast.error(error.message.generateTagsFirst);
+
+                          // Stop further execution
                           return;
                         }
 
@@ -720,7 +789,10 @@ export default function Home() {
 
                         // Fisher–Yates shuffle algorithm: randomize array order
                         for (let i = shuffled.length - 1; i > 0; i--) {
+                          // Generate a random index between 0 and i (inclusive)
                           const j = Math.floor(Math.random() * (i + 1));
+
+                          // Swap elements at indices i and j to shuffle the array
                           [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                         }
 
@@ -800,9 +872,7 @@ export default function Home() {
                   <h2 className="text-2xl border-b font-medium pb-2">Recommended tags too delete 🤖</h2>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
                     {data?.tagsToBeRemoved.split(",").map((tag) => (
-                      <div key={tag} className="flex items-center border p-2 px-4 rounded-lg w-fit">
-                        <p>{tag.toLowerCase()}</p>
-                      </div>
+                      <Tag deletable={false} tag={tag} />
                     ))}
                   </div>
                 </div>
@@ -824,9 +894,11 @@ export default function Home() {
 
                         // Show a toast depending on whether overflow tags were previously deleted
                         if (!overflowTagsDeleted) {
-                          toast.success(success.message.tagsRemovedSuccessfully); // First removal → success
+                          // First removal → success
+                          toast.success(success.message.tagsRemovedSuccessfully);
                         } else {
-                          toast.error(error.message.tagsAlreadyRemoved); // Trying to remove again → error
+                          // Trying to remove again → error
+                          toast.error(error.message.tagsAlreadyRemoved);
                         }
 
                         // Mark that we've removed tags once (prevents multiple success toasts)
@@ -842,8 +914,8 @@ export default function Home() {
             {tags.length ? (
               <SuggestedTitlesSection setTitles={setTitles} originalTitles={originalTitles} titles={titles} />
             ) : null}
-            {tags.length ? <HashtagsSection hashtags={data ? data.hashtags : []} /> : null}
             {tags.length ? <SeoKeywordsSection seoText={seoText} /> : null}
+            {tags.length ? <HashtagsSection hashtags={data ? data.hashtags : []} /> : null}
           </div>
         )}
         <Footer />
