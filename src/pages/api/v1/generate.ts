@@ -382,7 +382,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else if (genre === GENRE.funk || genre === GENRE.phonk) {
     tags += `,phonk,funk,phonk music,phonk ${currentYear},new phonk`;
   } else if (genre === GENRE.latin) {
-    tags += `,latin lyrics,trending latin`;
+    tags += `,letra,latin,latin music,trending latin`;
   } else if (genre === GENRE.italian) {
     tags += `,italian lyrics,italian music,trending italian`;
   }
