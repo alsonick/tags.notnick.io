@@ -15,12 +15,14 @@ export const lyricsTags = (artist: string, title: string, features: string, tikt
     // Second feature
     if (feats.length === 2) {
       const secondFeature = feats[1];
+
       tags += `,${secondFeature},${secondFeature} ${title} lyrics,${secondFeature} ${title},${artist} ${secondFeature},${title} ${secondFeature}`;
     }
 
     // Third feature
     if (feats.length === 3) {
       const thirdFeature = feats[2];
+
       tags += `,${thirdFeature},${thirdFeature} ${title} lyrics,${thirdFeature} ${title},${artist} ${thirdFeature},${title} ${thirdFeature}`;
     }
   }

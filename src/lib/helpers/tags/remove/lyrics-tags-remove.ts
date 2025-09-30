@@ -9,7 +9,7 @@ export const lyricsTagsRemove = (
 ): string => {
   if (features === "none") {
     const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
-      const patterns = [
+      const patterns: string[] = [
         `lyrics ${artist}`,
         `lyrics ${title}`,
         `lyrics ${title} ${artist}`,
@@ -43,7 +43,7 @@ export const lyricsTagsRemove = (
       const firstFeature = feats[0];
 
       if (feats.length === 1) {
-        const patterns = [
+        const patterns: string[] = [
           `lyrics ${title} ${artist}`,
           `lyrics ${artist} ${title}`,
           `lyrics ${firstFeature} ${title}`,
@@ -95,7 +95,7 @@ export const lyricsTagsRemove = (
       } else if (feats.length === 3) {
         const thirdFeature = feats[2];
 
-        const patterns = [
+        const patterns: string[] = [
           `lyrics ${title} ${artist}`,
           `lyrics ${artist} ${title}`,
           `${thirdFeature} ${title} lyrics`,
