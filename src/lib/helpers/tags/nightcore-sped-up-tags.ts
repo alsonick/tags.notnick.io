@@ -1,26 +1,29 @@
-export const nightcoreSpedUpTags = (
-  artist: string,
-  title: string,
-  features: string,
-  tiktok: string
-): string => {
+export const nightcoreSpedUpTags = (artist: string, title: string, features: string, tiktok: string): string => {
   // Tags
   let tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
 
   // Features
   let feats = features.split(",").map((feat) => feat.trim());
 
-  // First feat
-  const firstFeat = feats[0];
+  // First feature
+  const firstFeature = feats[0];
 
   // Features
-  if (
-    features !== "none" &&
-    (tiktok === "false" || tiktok === "" || tiktok !== "true")
-  ) {
-    if (features.length >= 2) {
-      // Second feat
-      const secondFeat = feats[1];
+  if (features !== "none" && (tiktok === "false" || tiktok === "" || tiktok !== "true")) {
+    tags += `,${firstFeature},${artist} ${firstFeature},${firstFeature} ${title},title ${firstFeature}`;
+
+    // Second feature
+    if (feats.length === 2) {
+      const secondFeature = feats[1];
+
+      tags += `,${secondFeature},${artist} ${secondFeature},${secondFeature} ${title},title ${secondFeature}`;
+    }
+
+    // Third feature
+    if (feats.length === 3) {
+      const thirdFeature = feats[2];
+
+      tags += `,${thirdFeature},${artist} ${thirdFeature},${thirdFeature} ${title},title ${thirdFeature}`;
     }
   }
 
