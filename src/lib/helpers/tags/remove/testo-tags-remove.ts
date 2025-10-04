@@ -69,6 +69,77 @@ export const testoTagsRemove = (
         ];
 
         return patterns.map((pattern) => pattern.trim().toLowerCase());
+      } else if (feats.length === 2) {
+        const patterns: string[] = [
+          `testo ${artist}`,
+          `${secondFeature} ${title} testo`,
+          `testo ${title} ${artist}`,
+          `${firstFeature} ${title} testo`,
+          `${artist} - ${title} testo`,
+          `${artist} ${firstFeature} ${title}`,
+          `${artist} - ${title}`,
+          `testo ${title}`,
+          `${artist} ${title} testo`,
+          `${secondFeature} ${title}`,
+          `${artist} ${secondFeature}`,
+          `${title} ${secondFeature}`,
+          `${title} testo ${artist}`,
+          `${artist} testo ${title}`,
+          `${title} ${artist}`,
+          `${artist} ${title}`,
+          `${artist} testo`,
+          `${title} testo`,
+          `${artist}`,
+          `${title}`,
+          `testo`,
+          `${firstFeature} ${title}`,
+          `${title} ${firstFeature}`,
+          `${artist} ${firstFeature}`,
+          `${firstFeature} ${artist}`,
+          `${secondFeature}`,
+          `${firstFeature}`,
+        ];
+
+        return patterns.map((pattern) => pattern.trim().toLowerCase());
+      } else if (feats.length === 3) {
+        const thirdFeature = feats[2];
+
+        const patterns: string[] = [
+          `testo ${artist}`,
+          `${secondFeature} ${title} testo`,
+          `testo ${title} ${artist}`,
+          `${firstFeature} ${title} testo`,
+          `${artist} - ${title} testo`,
+          `${artist} ${firstFeature} ${title}`,
+          `${thirdFeature} ${title} testo`,
+          `${artist} - ${title}`,
+          `testo ${title}`,
+          `${artist} ${title} testo`,
+          `${secondFeature} ${title}`,
+          `${artist} ${secondFeature}`,
+          `${title} ${secondFeature}`,
+          `${thirdFeature} ${title}`,
+          `${artist} ${thirdFeature}`,
+          `${title} ${thirdFeature}`,
+          `${title} testo ${artist}`,
+          `${artist} testo ${title}`,
+          `${title} ${artist}`,
+          `${artist} ${title}`,
+          `${artist} testo`,
+          `${title} testo`,
+          `${artist}`,
+          `${title}`,
+          `testo`,
+          `${firstFeature} ${title}`,
+          `${title} ${firstFeature}`,
+          `${artist} ${firstFeature}`,
+          `${firstFeature} ${artist}`,
+          `${thirdFeature}`,
+          `${secondFeature}`,
+          `${firstFeature}`,
+        ];
+
+        return patterns.map((pattern) => pattern.trim().toLowerCase());
       }
 
       return [];
