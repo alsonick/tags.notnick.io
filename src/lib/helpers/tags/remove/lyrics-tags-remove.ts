@@ -67,7 +67,7 @@ export const lyricsTagsRemove = (
 
         return patterns.map((pattern) => pattern.trim().toLowerCase());
       } else if (feats.length === 2) {
-        const patterns = [
+        const patterns: string[] = [
           `lyrics ${title} ${artist}`,
           `lyrics ${artist} ${title}`,
           `lyrics ${firstFeature} ${title}`,
