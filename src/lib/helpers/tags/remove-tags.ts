@@ -1,3 +1,4 @@
+import { nightcoreSpedUpTagsRemove } from "./remove/nightcore-sped-up-tags-remove";
 import { slowedReverbTagsRemove } from "./remove/slowed-reverb-tags-remove";
 import { bassBoostedTagsRemove } from "./remove/bass-boosted-tags-remove";
 import { lyricsTagsRemove } from "./remove/lyrics-tags-remove";
@@ -26,6 +27,11 @@ export const removeTags = (
   // Bass Boosted
   if (format === FORMAT.bassboosted) {
     return bassBoostedTagsRemove(title, artist, features, tiktok, tags);
+  }
+
+  // Nightcore / Sped Up
+  if (format === FORMAT.nightcore) {
+    return nightcoreSpedUpTagsRemove(title, artist, features, tiktok, tags);
   }
 
   // Letra
