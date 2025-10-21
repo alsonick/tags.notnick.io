@@ -4,6 +4,7 @@ import { bassBoostedTagsRemove } from "./remove/bass-boosted-tags-remove";
 import { lyricsTagsRemove } from "./remove/lyrics-tags-remove";
 import { testoTagsRemove } from "./remove/testo-tags-remove";
 import { letraTagsRemove } from "./remove/letra-tags-remove";
+import { phonkTagsRemove } from "./remove/phonk-tags-remove";
 import { FORMAT } from "@/lib/format";
 
 export const removeTags = (
@@ -42,6 +43,11 @@ export const removeTags = (
   // Testo
   if (format === FORMAT.testo) {
     return testoTagsRemove(title, artist, features, tiktok, tags);
+  }
+
+  // Phonk
+  if (format === FORMAT.phonk) {
+    return phonkTagsRemove(title, artist, features, tiktok, tags);
   }
 
   return "";
