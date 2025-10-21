@@ -5,19 +5,30 @@ export const phonkTags = (artist: string, title: string, features: string, tikto
   // Features
   let feats = features.split(",").map((feat) => feat.trim());
 
-  // First feat
-  const firstFeat = feats[0];
+  // First feature
+  const firstFeature = feats[0];
 
   // Features
   if (features !== "none" && (tiktok === "false" || tiktok === "" || tiktok !== "true")) {
-    tags += `,${firstFeat},${firstFeat} ${title},${artist} ${firstFeat} ${title}`;
-    if (features.length >= 2) {
-      // Second feat
-      const secondFeat = feats[1];
+    tags += `,${firstFeature},${firstFeature} ${title},${artist} ${firstFeature} ${title}`;
+
+    // Second feature
+    if (feats.length === 2) {
+      const secondFeature = feats[1];
+
+      tags += `,${secondFeature},${secondFeature} ${title} phonk,${secondFeature} ${title},${artist} ${secondFeature},${title} ${secondFeature}`;
+    }
+
+    // Third feature
+    if (feats.length === 3) {
+      const thirdFeature = feats[2];
+
+      tags += `,${thirdFeature},${thirdFeature} ${title} phonk,${thirdFeature} ${title},${artist} ${thirdFeature},${title} ${thirdFeature}`;
     }
   }
 
   if (tiktok === "true") {
+    tags += `,tiktok,${title} tiktok,trending tiktok,tiktok songs,phonk tiktok,trending phonk`;
   }
 
   return tags;
