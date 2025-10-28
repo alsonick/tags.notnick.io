@@ -43,15 +43,6 @@ export default function PrivacyPolicy() {
             <p className="mb-4">
               We do not collect, store, or process any <i>personal information</i>.
             </p>
-            <p className="mb-1">What we do collect:</p>
-            <ul className="list-disc ml-8">
-              <li>
-                <b>Generated tags data</b>; All generated tags data are <i>logged</i> but not stored in a database, we
-                do this to monitor discrepancies with generated tags, such as if the tags overflow the{" "}
-                <b>500 character limit</b> imposed by <b>YouTube</b>, then we can make the necessary changes so this
-                doesn't happen again.
-              </li>
-            </ul>
             <p className="mt-8">
               If you'd like access to logged data then please{" "}
               <Link
