@@ -43,8 +43,9 @@ export default function PrivacyPolicy() {
             <p className="mb-4">
               We do not collect, store, or process any <i>personal information</i>.
             </p>
-            <p className="mt-8">
-              If you'd like access to logged data then please{" "}
+            <p>
+              We do however collect generated tags data, If you do not wish to have your tags collected then set the
+              'log' query to 'false'. If you'd like access to logged data then please{" "}
               <Link
                 className="text-blue-500 font-semibold hover:underline"
                 href="mailto:hi@notnick.io"
