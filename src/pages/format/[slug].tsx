@@ -6,6 +6,7 @@ import { Container } from "@/components/Container";
 import { useRouter } from "next/router";
 import { Nav } from "@/components/Nav";
 import { NextPage } from "next";
+import { Seo } from "@/components/Seo";
 
 const Slug: NextPage = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const Slug: NextPage = () => {
 
   return (
     <Container>
+      <Seo seoTitle={`${format} Format | Lyrics Tags Generator`} seoDescription="" />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />
