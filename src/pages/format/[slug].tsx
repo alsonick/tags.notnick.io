@@ -3,15 +3,12 @@ import { returnComputedFormatText } from "@/lib/return-computed-format-text";
 import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
-import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 import { Nav } from "@/components/Nav";
-import { NextPage } from "next";
 import { Seo } from "@/components/Seo";
+import { NextPage } from "next";
 
-const Slug: NextPage = () => {
-  const router = useRouter();
-  const slug = router.query.slug as string;
-
+const Slug: NextPage<{ slug: string }> = ({ slug }) => {
   const format = returnComputedFormatText(slug);
 
   return (
@@ -25,6 +22,11 @@ const Slug: NextPage = () => {
       </MainWrapper>
     </Container>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { slug } = context.params!;
+  return { props: { slug } };
 };
 
 export default Slug;
