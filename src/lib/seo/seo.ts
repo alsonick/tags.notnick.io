@@ -9,10 +9,17 @@ export const seo = {
     privacyPolicy: {
       title: "Privacy Policy | Lyrics Tags Generator",
       description: "Privacy Policy",
+      heading: "Privacy Policy",
     },
     faq: {
       title: "FAQ | Lyrics Tags Generator",
       description: "FAQ",
+      heading: "FAQ",
+    },
+    format: {
+      title: "Format | Lyrics Tags Generator",
+      description: "Format",
+      heading: "Format",
     },
   },
 };

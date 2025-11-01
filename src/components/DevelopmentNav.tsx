@@ -6,7 +6,7 @@ export const DevelopmentNav = () => {
   return (
     <>
       {process.env.NODE_ENV === "development" || router.query.debug === "true" ? (
-        <div className="flex fixed items-center font-light justify-center top-0 z-50 w-full bg-green-600">
+        <div className="xl:flex hidden fixed items-center font-light justify-center top-0 z-50 w-full bg-green-600">
           <span className="text-white text-sm">
             {" "}
             You're currently in{" "}

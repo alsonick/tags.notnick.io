@@ -1,10 +1,9 @@
 import { FiExternalLink, FiLink } from "react-icons/fi";
 import { NavYouTubeLogo } from "./NavYouTubeLogo";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
-// Custom Hook for scroll state
 const useScrolled = (offset: number = 20) => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -17,18 +16,17 @@ const useScrolled = (offset: number = 20) => {
   return scrolled;
 };
 
-// Config-driven navigation
 const NAV_LINKS = [
   {
     label: "Submit Suggestion",
     href: "https://github.com/alsonick/lyrics-tags-generator-docs/issues/new",
     external: true,
   },
-  {
-    label: "Invite Discord Bot",
-    href: "https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot",
-    external: true,
-  },
+  // {
+  //   label: "Invite Discord Bot",
+  //   href: "https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot",
+  //   external: true,
+  // },
   {
     label: "Documentation",
     href: "https://github.com/alsonick/lyrics-tags-generator-docs",
@@ -57,18 +55,16 @@ export const Nav = () => {
 
   return (
     <nav
-      className={`lg:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden 
+      className={`xl:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden 
         ${process.env.NODE_ENV === "development" || router.query.debug === "true" ? "top-5" : "top-0"} 
         z-50 transition-shadow duration-500 ${scrolled ? "shadow-md" : "shadow-none"}`}
     >
-      {/* Logo */}
       <Link href="/" className="flex items-center">
         <NavYouTubeLogo />
-        <div className="flex flex-col text-left gap-0 mb-[3px]">
+        <div className="flex flex-col text-left gap-0">
           <h1 className="font-bold tracking-tighter text-xl ml-3">Lyrics Tags Generator</h1>
         </div>
       </Link>
-      {/* Links */}
       <div className="flex items-center space-x-8">
         {NAV_LINKS.map(({ label, href, external }) => (
           <Link

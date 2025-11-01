@@ -38,8 +38,8 @@ export default function FAQ() {
                   Application Programming Interface
                 </Link>{" "}
                 is completely free to use, Our available endpoints are:{" "}
-                <Badge variant={"secondary"}>GET /generate</Badge> & <Badge variant={"secondary"}>GET /length</Badge>.
-                Please refer to our official{" "}
+                <Badge variant={"secondary"}>GET /v1/generate</Badge> &{" "}
+                <Badge variant={"secondary"}>GET /v1/length</Badge>. Please refer to our official{" "}
                 <Link
                   href="https://github.com/alsonick/lyrics-tags-generator-docs"
                   className="text-blue-500 font-semibold hover:underline"
@@ -62,6 +62,33 @@ export default function FAQ() {
           </Accordion>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
+              <AccordionTrigger className="text-xl text-black">Does anyone use Lyrics Tags Generator?</AccordionTrigger>
+              <AccordionContent className="text-lg text-gray-800">
+                Yes! The collective group{" "}
+                <Link
+                  className="text-blue-500 font-semibold hover:underline"
+                  href="https://earlyentry.io"
+                  title="earlyentry.io"
+                  target="_blank"
+                >
+                  earlyentry.io
+                </Link>{" "}
+                are using Lyrics Tags Generator in their uploading automation system, they specifically use it to
+                generate metadata such as tags for some of their collective channels on{" "}
+                <Link
+                  className="text-blue-500 font-semibold hover:underline"
+                  href="https://www.youtube.com/"
+                  title="YouTube"
+                  target="_blank"
+                >
+                  YouTube
+                </Link>
+                .
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black">Is Lyrics Tags Generator open source?</AccordionTrigger>
               <AccordionContent className="text-lg text-gray-800">
                 No. All our source code is proprietary software except for our Python script that interacts with Lyrics
@@ -74,7 +101,16 @@ export default function FAQ() {
                 >
                   tags.py
                 </Link>
-                ), which is under the{" "}
+                ), and the implementation our tags deletion algorithm (
+                <Link
+                  href="https://github.com/Lyrics-Tags-Generator/tags-deletion-algorithm"
+                  className="text-blue-500 font-semibold hover:underline"
+                  title="Tags Deletion Algorithm"
+                  target="_blank"
+                >
+                  Tags Deletion Algorithm
+                </Link>
+                ) which is under the{" "}
                 <Link
                   href="https://github.com/alsonick/tags-py/blob/main/LICENSE"
                   className="text-blue-500 font-semibold hover:underline"
@@ -84,6 +120,15 @@ export default function FAQ() {
                   MIT License
                 </Link>
                 .{" "}
+                <Link
+                  className="text-blue-500 font-semibold hover:underline"
+                  href="https://github.com/Lyrics-Tags-Generator"
+                  title="Our GitHub Page"
+                  target="_blank"
+                >
+                  Click here
+                </Link>{" "}
+                to view our open source software.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -151,7 +196,7 @@ export default function FAQ() {
                 </Link>
                 , whether you’re managing a single channel or an entire collective. We know that typing out metadata
                 like tags, titles, and hashtags for every video can get pretty repetitive. All you need to do is give us
-                the necessary data about a song, and we’ll handle the rest.
+                the necessary metadata about a song, and we’ll handle the rest.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
