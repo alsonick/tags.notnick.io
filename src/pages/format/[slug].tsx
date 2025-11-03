@@ -4,11 +4,13 @@ import { returnComputedFormatText } from "@/lib/return-computed-format-text";
 import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
+import { FiArrowLeft } from "react-icons/fi";
 import { Footer } from "@/components/Footer";
 import { GetServerSideProps } from "next";
 import { Nav } from "@/components/Nav";
 import { Seo } from "@/components/Seo";
 import { NextPage } from "next";
+import Link from "next/link";
 
 const Slug: NextPage<{ slug: string }> = ({ slug }) => {
   const computedFormatTextLyricsTemplateTitle = returnComputedFormatText(slug);
@@ -35,6 +37,16 @@ const Slug: NextPage<{ slug: string }> = ({ slug }) => {
                 </div>
               ))
             : null}
+        </div>
+        <div className="mt-16 flex items-center justify-between">
+          <Link
+            className="text-blue-500 font-semibold hover:underline flex items-center"
+            title="Go back"
+            href="/format"
+          >
+            <FiArrowLeft className="mr-1 text-lg" />
+            Go back
+          </Link>
         </div>
         <Footer />
       </MainWrapper>
