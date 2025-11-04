@@ -4,7 +4,6 @@ import { generateRandomId } from "./generate-random-id";
 export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
   {
     id: generateRandomId(),
-    format: "Lyrics",
     filter: "lyrics",
     formats: [
       {
