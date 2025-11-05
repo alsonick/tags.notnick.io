@@ -55,4 +55,54 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
       },
     ],
   },
+  {
+    id: generateRandomId(),
+    filter: "bassboosted",
+    formats: [
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::[default]",
+        template:
+          "{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::[feature-1]",
+        template: "{firstFeature},{firstFeature} {title} bass boosted",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::includes[default]&&[feature-1]",
+        template:
+          "{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::[feature-2]",
+        template: "{secondFeature},{secondFeature} {title} bass boosted",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::includes[default]&&[feature-1]&&[feature-2]",
+        template:
+          "{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted,{secondFeature},{secondFeature} {title} bass boosted",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::[feature-3]",
+        template: "{thirdFeature},{thirdFeature} {title} bass boosted",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]",
+        template:
+          "{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted,{secondFeature},{secondFeature} {title} bass boosted,{thirdFeature},{thirdFeature} {title} bass boosted",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(bassboosted)::[@tiktok=true@]",
+        template: "tiktok,{title} tiktok,trending tiktok,tiktok songs",
+      },
+    ],
+  },
 ];
