@@ -3,7 +3,7 @@ import Link from "next/link";
 export const Footer = () => {
   return (
     <footer className="bottom-0 left-0 mt-16 text-sm pb-1 border-t pt-4">
-      <h1 className="font-bold text-lg text-gray-800">Lyrics Tags Generator</h1>
+      <h1 className="font-bold text-lg text-black">Lyrics Tags Generator</h1>
       <p className="text-gray-800 text-xs">© {new Date().getFullYear()} | All rights reserved.</p>
       <p className="text-gray-800 text-xs">
         Made with{" "}
