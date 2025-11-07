@@ -698,7 +698,7 @@ export default function Home() {
             <div className="border p-4 mt-6 rounded-lg">
               {tags.length > 0 && (
                 <h2 className="text-2xl text-left font-medium border-b pb-2">
-                  <i>{data?.title}</i> by <b>{data?.artist}</b> 🤖
+                  <i>{data?.title}</i> by <b>{data?.artist}</b>
                 </h2>
               )}
               <div className="flex flex-wrap gap-4 my-4 mt-6">
@@ -710,7 +710,7 @@ export default function Home() {
                   </>
                 ) : (
                   <h3 className="text-2xl font-light">
-                    Click the <b>"Generate"</b> button to generate your tags. 🤖
+                    Click the <b>"Generate"</b> button to generate your tags.
                   </h3>
                 )}
               </div>
@@ -869,7 +869,7 @@ export default function Home() {
             countTagsLength(tags.join(",")) > 500 ? (
               <>
                 <div className="border p-4 mt-4 rounded-lg">
-                  <h2 className="text-2xl border-b font-medium pb-2">Recommended tags too delete 🤖</h2>
+                  <h2 className="text-2xl border-b font-medium pb-2">Recommended tags too delete</h2>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
                     {data?.tagsToBeRemoved.split(",").map((tag) => (
                       <Tag deletable={false} tag={tag} />
