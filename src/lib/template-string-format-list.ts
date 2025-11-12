@@ -105,4 +105,54 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
       },
     ],
   },
+  {
+    id: generateRandomId(),
+    filter: "nightcore",
+    formats: [
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::[default]",
+        template:
+          "{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::[feature-1]",
+        template: "{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::includes[default]&&[feature-1]",
+        template:
+          "{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::[feature-2]",
+        template: "{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::includes[default]&&[feature-1]&&[feature-2]",
+        template:
+          "{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::[feature-3]",
+        template: "{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},title {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]",
+        template:
+          "{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature},{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},title {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(nightcore)::[@tiktok=true@]",
+        template: "{artist} {title} sped up tiktok remix,{title} sped up tiktok version",
+      },
+    ],
+  },
 ];
