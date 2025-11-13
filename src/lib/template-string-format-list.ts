@@ -155,4 +155,54 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
       },
     ],
   },
+  {
+    id: generateRandomId(),
+    filter: "slowed",
+    formats: [
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::[default]",
+        template:
+          "{artist},{title},{artist} {title},{artist} {title} slowed,{artist} {title} slowed reverb,{artist} {title} slowed to perfection,{title} {artist},{title} slowed,{artist} - {title},{artist} - {title} slowed,{artist} - {title} slowed reverb,{title} slowed to perfection,{artist} {title} slowed and reverb,slowed and reverb songs",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::[feature-1]",
+        template: "{firstFeature} {title} slowed,{artist} {firstFeature} {title} slowed,{firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::includes[default]&&[feature-1]",
+        template:
+          "{artist},{title},{artist} {title},{artist} {title} slowed,{artist} {title} slowed reverb,{artist} {title} slowed to perfection,{title} {artist},{title} slowed,{artist} - {title},{artist} - {title} slowed,{artist} - {title} slowed reverb,{title} slowed to perfection,{artist} {title} slowed and reverb,slowed and reverb songs,{firstFeature} {title} slowed,{artist} {firstFeature} {title} slowed,{firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::[feature-2]",
+        template: "{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::includes[default]&&[feature-1]&&[feature-2]",
+        template:
+          "{artist},{title},{artist} {title},{artist} {title} slowed,{artist} {title} slowed reverb,{artist} {title} slowed to perfection,{title} {artist},{title} slowed,{artist} - {title},{artist} - {title} slowed,{artist} - {title} slowed reverb,{title} slowed to perfection,{artist} {title} slowed and reverb,slowed and reverb songs,{firstFeature} {title} slowed,{artist} {firstFeature} {title} slowed,{firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::[feature-3]",
+        template: "{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},title {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]",
+        template:
+          "{artist},{title},{artist} {title},{artist} {title} slowed,{artist} {title} slowed reverb,{artist} {title} slowed to perfection,{title} {artist},{title} slowed,{artist} - {title},{artist} - {title} slowed,{artist} - {title} slowed reverb,{title} slowed to perfection,{artist} {title} slowed and reverb,slowed and reverb songs,{firstFeature} {title} slowed,{artist} {firstFeature} {title} slowed,{firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature},{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},title {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(slowed)::[@tiktok=true@]",
+        template: "slowed tiktok songs,{title} slowed down tiktok version",
+      },
+    ],
+  },
 ];

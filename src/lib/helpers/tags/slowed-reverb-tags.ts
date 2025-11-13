@@ -6,26 +6,27 @@ export const slowedReverbTags = (artist: string, title: string, features: string
   let feats = features.split(",").map((feat) => feat.trim());
 
   // First feature
-  const firstFeat = feats[0];
+  const firstFeature = feats[0];
 
   if (features !== "none" && (tiktok === "false" || tiktok === "" || tiktok !== "true")) {
-    tags += `,${firstFeat} ${title} slowed,${artist} ${firstFeat} ${title} slowed,${firstFeat}`;
+    tags += `,${firstFeature} ${title} slowed,${artist} ${firstFeature} ${title} slowed,${firstFeature}`;
 
     // Second Feature
     if (features.length === 2) {
-      const secondFeat = feats[1];
-      tags += `,${secondFeat}`;
+      const secondFeature = feats[1];
+
+      tags += `,${secondFeature},${artist} ${secondFeature},${secondFeature} ${title},title ${secondFeature}`;
     }
 
     // Third feature
     if (feats.length === 3) {
       const thirdFeature = feats[2];
-      tags += `,${thirdFeature}`;
+      tags += `,${thirdFeature},${artist} ${thirdFeature},${thirdFeature} ${title},title ${thirdFeature}`;
     }
   }
 
   if (tiktok === "true") {
-    tags += `,slowed tiktok songs`;
+    tags += `,slowed tiktok songs,${title} slowed down tiktok version`;
   }
 
   return tags;
