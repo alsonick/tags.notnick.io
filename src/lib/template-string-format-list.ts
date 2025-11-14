@@ -205,4 +205,58 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
       },
     ],
   },
+  {
+    id: generateRandomId(),
+    filter: "letra",
+    formats: [
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::[default]",
+        template:
+          "{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::[feature-1]",
+        template:
+          "{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::includes[default]&&[feature-1]",
+        template:
+          "{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::[feature-2]",
+        template:
+          "{secondFeature},{secondFeature} {title} letra,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}",
+      },
+
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::includes[default]&&[feature-1]&&[feature-2]",
+        template:
+          "{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} letra,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::[feature-3]",
+        template:
+          "{thirdFeature},{thirdFeature} {title} letra,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]",
+        template:
+          "{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} letra,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} letra,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(letra)::[@tiktok=true@]",
+        template: "{title} tiktok,{artist} tiktok,latin tiktok",
+      },
+    ],
+  },
 ];
