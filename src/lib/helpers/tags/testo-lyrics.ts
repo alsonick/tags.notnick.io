@@ -28,7 +28,7 @@ export const testoTags = (artist: string, title: string, features: string, tikto
   }
 
   if (tiktok === "true") {
-    tags += `,${title} tiktok,${artist} tiktok`;
+    tags += `,${title} tiktok,${artist} tiktok, testo tiktok, italian tiktok`;
   }
 
   return tags;

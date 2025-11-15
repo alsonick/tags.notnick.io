@@ -259,4 +259,57 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
       },
     ],
   },
+  {
+    id: generateRandomId(),
+    filter: "testo",
+    formats: [
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::[default]",
+        template:
+          "{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::[feature-1]",
+        template:
+          "{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::includes[default]&&[feature-1]",
+        template:
+          "{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::[feature-2]",
+        template:
+          "{secondFeature},{secondFeature} {title} testo,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::includes[default]&&[feature-1]&&[feature-2]",
+        template:
+          "{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} testo,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::[feature-3]",
+        template:
+          "{thirdFeature},{thirdFeature} {title} testo,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]",
+        template:
+          "{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} testo,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} testo,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(testo)::[@tiktok=true@]",
+        template: "{title} tiktok,{artist} tiktok, testo tiktok, italian tiktok",
+      },
+    ],
+  },
 ];
