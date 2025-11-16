@@ -312,4 +312,56 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
       },
     ],
   },
+  {
+    id: generateRandomId(),
+    filter: "phonk",
+    formats: [
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::[default]",
+        template:
+          "{artist},{title},{artist} {title},{title} {artist},{title} phonk,{artist} {title} phonk,{title} {artist} phonk,{artist} phonk,brazilian phonk,tiktok phonk,hard phonk,{title} funk,{artist} funk,{artist} {title} funk",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::[feature-1]",
+        template: "{firstFeature},{firstFeature} {title},{artist} {firstFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::includes[default]&&[feature-1]",
+        template:
+          "{artist},{title},{artist} {title},{title} {artist},{title} phonk,{artist} {title} phonk,{title} {artist} phonk,{artist} phonk,brazilian phonk,tiktok phonk,hard phonk,{title} funk,{artist} funk,{artist} {title} funk,{firstFeature},{firstFeature} {title},{artist} {firstFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::[feature-2]",
+        template:
+          "{secondFeature},{secondFeature} {title} phonk,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::includes[default]&&[feature-1]&&[feature-2]",
+        template:
+          "{artist},{title},{artist} {title},{title} {artist},{title} phonk,{artist} {title} phonk,{title} {artist} phonk,{artist} phonk,brazilian phonk,tiktok phonk,hard phonk,{title} funk,{artist} funk,{artist} {title} funk,{firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{secondFeature},{secondFeature} {title} phonk,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::[feature-3]",
+        template:
+          "{thirdFeature},{thirdFeature} {title} phonk,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]",
+        template:
+          "{artist},{title},{artist} {title},{title} {artist},{title} phonk,{artist} {title} phonk,{title} {artist} phonk,{artist} phonk,brazilian phonk,tiktok phonk,hard phonk,{title} funk,{artist} funk,{artist} {title} funk,{firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{secondFeature},{secondFeature} {title} phonk,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} phonk,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(phonk)::[@tiktok=true@]",
+        template: "tiktok,{title} tiktok,trending tiktok,tiktok songs,phonk tiktok,trending phonk",
+      },
+    ],
+  },
 ];
