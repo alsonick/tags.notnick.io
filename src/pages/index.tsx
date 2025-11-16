@@ -448,10 +448,10 @@ export default function Home() {
         <form onSubmit={submit} className="flex flex-col mt-6">
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
-              <Step step={1} text="Artist" />
+              <Step step={1} text="Song" />
               <Input
                 onChange={(e) => setArtist(e.target.value)}
-                placeholder="The Chainsmokers"
+                placeholder="The Chainsmokers, Daya - Don't Let Me Down"
                 required={true}
                 ref={refs.artist}
                 value={artist}
@@ -470,6 +470,20 @@ export default function Home() {
               />
             </section>
             <section className="flex flex-col w-full">
+              <Step step={2} text="Channel" />
+              <Input
+                onChange={(e) => setChannel(e.target.value)}
+                placeholder="Gold Coast Music"
+                ref={refs.channel}
+                value={channel}
+                required={false}
+              />
+              <p className="text-xs text-gray-800 mt-1">
+                Type the name of the <b>YouTube Channel</b>.
+              </p>
+              <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
+            </section>
+            {/* <section className="flex flex-col w-full">
               <Step step={2} text="Title" />
               <Input
                 onChange={(e) => setTitle(e.target.value)}
@@ -486,10 +500,10 @@ export default function Home() {
                 )}
               </p>
               <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
-            </section>
+            </section> */}
           </div>
           <div className="flex w-full gap-6 items-center">
-            <section className="flex flex-col w-full">
+            {/* <section className="flex flex-col w-full">
               <Step step={3} text="Features" />
               <Input
                 onChange={(e) => setFeatures(e.target.value)}
@@ -502,32 +516,18 @@ export default function Home() {
                 Please use <b>commas</b> to separate feature artists.
               </p>
               <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
-            </section>
-            <section className="flex flex-col w-full">
-              <Step step={4} text="Channel" />
-              <Input
-                onChange={(e) => setChannel(e.target.value)}
-                placeholder="Gold Coast Music"
-                ref={refs.channel}
-                value={channel}
-                required={false}
-              />
-              <p className="text-xs text-gray-800 mt-1">
-                Type the name of the <b>YouTube Channel</b>.
-              </p>
-              <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
-            </section>
+            </section> */}
           </div>
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
-              <Step step={5} text="TikTok" />
+              <Step step={3} text="TikTok" />
               <Input onChange={(e) => setTiktok(e.target.value)} placeholder="false" required={false} value={tiktok} />
               <p className="text-xs text-gray-800 mt-1">
                 Is the song popular on TikTok? Type <b>"true"</b> if so.{" "}
               </p>
             </section>
             <section className="flex flex-col w-full">
-              <Step step={6} text="Format" />
+              <Step step={4} text="Format" />
               <div className="relative w-full">
                 <select
                   className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
@@ -561,7 +561,7 @@ export default function Home() {
           </div>
           <div className="flex w-full gap-6 items-center">
             <section className="flex flex-col w-full">
-              <Step step={7} text="Genre" />
+              <Step step={5} text="Genre" />
               <div className="relative w-full">
                 <select
                   className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
@@ -593,7 +593,7 @@ export default function Home() {
               </p>
             </section>
             <section className="flex flex-col w-full">
-              <Step step={8} text="Verse" />
+              <Step step={6} text="Verse" />
               <Input
                 onChange={(e) => setVerse(e.target.value)}
                 placeholder="dont let me down,said dont let me down"
@@ -869,7 +869,7 @@ export default function Home() {
             countTagsLength(tags.join(",")) > 500 ? (
               <>
                 <div className="border p-4 mt-4 rounded-lg">
-                  <h2 className="text-2xl border-b font-medium pb-2">Recommended tags too delete</h2>
+                  <h2 className="text-2xl border-b font-medium pb-2">Recommended tags to delete</h2>
                   <div className="flex flex-wrap gap-4 my-4 mt-6">
                     {data?.tagsToBeRemoved.split(",").map((tag) => (
                       <Tag deletable={false} tag={tag} />

@@ -43,6 +43,11 @@ const NAV_LINKS = [
     external: true,
   },
   {
+    label: "Format",
+    href: "/format",
+    external: false,
+  },
+  {
     label: "FAQ",
     href: "/faq",
     external: false,
