@@ -42,11 +42,11 @@ const NAV_LINKS = [
     href: "https://notnick.io/tools/lyrics-tags-generator/feedback",
     external: true,
   },
-  {
-    label: "Format",
-    href: "/format",
-    external: false,
-  },
+  // {
+  //   label: "Format",
+  //   href: "/format",
+  //   external: false,
+  // },
   {
     label: "FAQ",
     href: "/faq",
