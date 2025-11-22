@@ -19,6 +19,7 @@ export default function Format() {
       <Nav />
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.format.heading}</h1>
+        <p className="mt-4 text-gray-800">Our format string templates for all the supported formats.</p>
         <div className="grid items-center gap-4 mt-8 grid-cols-2 mb-auto">
           {FORMAT_LIST.map((format) => (
             <Link
