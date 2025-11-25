@@ -34,6 +34,7 @@ import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
 import { v4 as uuidv4 } from "uuid";
+import { SourceTextModule } from "vm";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -265,6 +266,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let formatPureFormat = finalFormat.trim().toLowerCase();
   let tags: string = "";
 
+  const slicedTitleString = finalTitle.split("\\");
+  const additionalFormat = slicedTitleString[1];
+  finalTitle = slicedTitleString[0];
+
   if (formatPureFormat === FORMAT.bassboosted) {
     // Bass Boosted
     tags = bassBoostedTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
@@ -345,6 +350,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (remix.length) {
     tags += `,${remix},${finalTitle} ${remix},${finalArtist} ${remix}`;
+  }
+
+  if (additionalFormat != undefined) {
+    // Christmas
+    const validAdditionalFormatTextListChristmas = ["christmas", "xmas", "noel", "yule", "christmastime"];
+    // Halloween
+    const validAdditionalFormatTextListHalloween = ["halloween", "spooky", "scary", "ghost"];
+
+    // Lower case the text
+    const additionalFormatLowercase = additionalFormat.toLowerCase();
+
+    if (validAdditionalFormatTextListChristmas.includes(additionalFormatLowercase)) {
+      tags += `,christmas songs,christmas music,christmas ${new Date().getFullYear()},christmas playlist`;
+    } else if (validAdditionalFormatTextListHalloween.includes(additionalFormatLowercase)) {
+      tags += `,halloween songs,halloween music,halloween ${new Date().getFullYear()},halloween playlist`;
+    }
   }
 
   const currentYear = new Date().getFullYear();
