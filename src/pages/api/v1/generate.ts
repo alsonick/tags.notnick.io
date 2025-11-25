@@ -34,7 +34,6 @@ import { FORMAT } from "@/lib/format";
 import { error } from "@/lib/error";
 import { GENRE } from "@/lib/genre";
 import { v4 as uuidv4 } from "uuid";
-import { SourceTextModule } from "vm";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
