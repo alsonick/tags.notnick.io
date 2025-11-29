@@ -21,5 +21,10 @@ export const seo = {
       description: "Format",
       heading: "Format",
     },
+    documentation: {
+      title: "Documentation | Lyrics Tags Generator",
+      description: "Documentation",
+      heading: "Documentation",
+    },
   },
 };
