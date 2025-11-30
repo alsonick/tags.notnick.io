@@ -1,4 +1,6 @@
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
+import { DocumentationSection } from "@/components/documentation/DocumentationSection";
+import { WhatToProvide } from "@/components/documentation/sections/WhatToProvide";
 import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
@@ -17,7 +19,14 @@ export default function Documentation() {
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.documentation.heading}</h1>
         <p className="mt-4 text-gray-800">Our official documentation.</p>
-        <div className="flex flex-col mb-auto"></div>
+        <div className="flex flex-col mb-auto">
+          <DocumentationSection heading="What To Provide">
+            <p className="mb-4 text-gray-800">
+              If you plan to consume our public Application Programming Interface (API) then
+            </p>
+            <WhatToProvide />
+          </DocumentationSection>
+        </div>
         <Footer />
       </MainWrapper>
     </Container>
