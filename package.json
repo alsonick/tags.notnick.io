@@ -16,7 +16,7 @@
     "copy-to-clipboard": "^3.3.3",
     "ioredis": "^5.7.0",
     "lucide-react": "^0.542.0",
-    "next": "15.1.6",
+    "next": "15.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
