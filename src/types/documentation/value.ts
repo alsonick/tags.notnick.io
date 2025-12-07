@@ -1,3 +1,4 @@
 export interface Value {
-  placeholder: string;
+  placeholder?: string;
+  list?: string[];
 }

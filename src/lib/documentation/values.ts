@@ -73,4 +73,57 @@ export const VALUES: Value[] = [
     placeholder:
       "The name of the YouTube channel you want featured in the generated tags. Example: `Polaris Lyrics` or `Aquila`.",
   },
+  // Format
+  {
+    placeholder: "format",
+  },
+  {
+    placeholder: "No",
+  },
+  {
+    placeholder: "Lyrics",
+  },
+  {
+    list: ["Lyrics", "Bass Boosted", "Nightcore/Sped Up", "Slowed/Reverb", "Letra", "Phonk", "Testo"],
+  },
+  // Shuffle
+  {
+    placeholder: "shuffle",
+  },
+  {
+    placeholder: "No",
+  },
+  {
+    placeholder: "false",
+  },
+  {
+    placeholder:
+      "An option that shuffles the generated tags, the parameter value should either be `true` or `false`. You can also pass in the short form (`t` / `f`).",
+  },
+  // Genre
+  {
+    placeholder: "genre",
+  },
+  {
+    placeholder: "No",
+  },
+  {
+    placeholder: "None",
+  },
+  {
+    list: ["None", "Country", "Latin", "Phonk", "Pop", "Rap", "Italian"],
+  },
+  // Verse
+  {
+    placeholder: "verse",
+  },
+  {
+    placeholder: "No",
+  },
+  {
+    placeholder: "None",
+  },
+  {
+    placeholder: "3 short verses. Each individual verse should be separated by a comma.",
+  },
 ];
