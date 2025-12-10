@@ -126,4 +126,45 @@ export const VALUES: Value[] = [
   {
     placeholder: "3 short verses. Each individual verse should be separated by a comma.",
   },
+  // Custom
+  {
+    placeholder: "custom",
+  },
+  {
+    placeholder: "No",
+  },
+  {
+    placeholder: "None",
+  },
+  {
+    placeholder: "The custom format string template that you want to use for your generated tags.",
+  },
+  // Log
+  {
+    placeholder: "log",
+  },
+  {
+    placeholder: "No",
+  },
+  {
+    placeholder: "true",
+  },
+  {
+    placeholder:
+      "All request data is logged for debugging purposes, if you wish to not have your data logged, then provide `false` as the parameter value.",
+  },
+  // Webhook
+  {
+    placeholder: "webhook",
+  },
+  {
+    placeholder: "No",
+  },
+  {
+    placeholder: "None",
+  },
+  {
+    placeholder:
+      "We use private Discord channels to log request data, if you'd like to have your data logged in your own private channel, then provide us with your webhook link. Don't worry, your provided webhook link is never logged or stored with us.",
+  },
 ];

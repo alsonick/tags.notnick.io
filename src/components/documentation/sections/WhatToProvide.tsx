@@ -38,7 +38,7 @@ export const WhatToProvide = () => {
               <>
                 {value.list ? (
                   <TdElement col={colIndex}>
-                    <ul className="list-disc ml-4">
+                    <ul className="list-disc ml-6">
                       {value.list.map((val) => (
                         <li>{val}</li>
                       ))}
