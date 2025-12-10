@@ -2,7 +2,23 @@ import { Value } from "@/types/documentation/value";
 
 // Params, Required, Default, Description
 
-export const VALUES: Value[] = [
+export const VALUES_LENGTH: Value[] = [
+  // Tags
+  {
+    placeholder: "tags",
+  },
+  {
+    placeholder: "Yes",
+  },
+  {
+    placeholder: "None",
+  },
+  {
+    placeholder: "The generated tags you want to find the length for.",
+  },
+];
+
+export const VALUES_GENERATE: Value[] = [
   // Artist
   {
     placeholder: "artist",

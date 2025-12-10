@@ -30,7 +30,11 @@ export default function Documentation() {
               If you plan to consume our public Application Programming Interface (API) then here are some of the
               available parameters that you can provide when making requests to our <b>`/v1/generate`</b> endpoint.
             </p>
-            <WhatToProvide />
+            <WhatToProvide endpoint="generate" />
+            <p className="my-4 text-gray-800">
+              For the <b>`/v1/length`</b> endpoint, here's what you need to provide:
+            </p>
+            <WhatToProvide endpoint="length" />
           </DocumentationSection>
         </div>
         <Footer />

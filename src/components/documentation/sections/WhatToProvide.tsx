@@ -1,5 +1,5 @@
+import { VALUES_GENERATE, VALUES_LENGTH } from "@/lib/documentation/values";
 import { PARAMS } from "@/lib/documentation/params";
-import { VALUES } from "@/lib/documentation/values";
 
 const TdElement = (props: { children: React.ReactNode; col: number }) => {
   return (
@@ -13,13 +13,7 @@ const TdElement = (props: { children: React.ReactNode; col: number }) => {
   );
 };
 
-export const WhatToProvide = () => {
-  const rows = [];
-
-  for (let i = 0; i < VALUES.length; i += PARAMS.length) {
-    rows.push(VALUES.slice(i, i + PARAMS.length));
-  }
-
+const TableContainer = (props: { children: React.ReactNode }) => {
   return (
     <table className="table-auto border w-full border-teal-100">
       <thead>
@@ -31,27 +25,62 @@ export const WhatToProvide = () => {
           ))}
         </tr>
       </thead>
-      <tbody>
-        {rows.map((row, rowIndex) => (
-          <tr key={rowIndex} className="border border-teal-100">
-            {row.map((value, colIndex) => (
-              <>
-                {value.list ? (
-                  <TdElement col={colIndex}>
-                    <ul className="list-disc ml-6">
-                      {value.list.map((val) => (
-                        <li>{val}</li>
-                      ))}
-                    </ul>
-                  </TdElement>
-                ) : (
-                  <TdElement col={colIndex}>{value.placeholder}</TdElement>
-                )}
-              </>
-            ))}
-          </tr>
-        ))}
-      </tbody>
+      {props.children}
     </table>
+  );
+};
+
+export const WhatToProvide = (props: { endpoint: "generate" | "length" }) => {
+  const rowsGenerate = [];
+  const rowsLength = [];
+
+  for (let i = 0; i < VALUES_GENERATE.length; i += PARAMS.length) {
+    rowsGenerate.push(VALUES_GENERATE.slice(i, i + PARAMS.length));
+  }
+
+  for (let i = 0; i < VALUES_LENGTH.length; i += PARAMS.length) {
+    rowsLength.push(VALUES_LENGTH.slice(i, i + PARAMS.length));
+  }
+
+  return (
+    <>
+      {props.endpoint === "generate" ? (
+        <TableContainer>
+          <tbody>
+            {rowsGenerate.map((row, rowIndex) => (
+              <tr key={rowIndex} className="border border-teal-100">
+                {row.map((value, colIndex) => (
+                  <>
+                    {value.list ? (
+                      <TdElement col={colIndex}>
+                        <ul className="list-disc ml-4">
+                          {value.list.map((val) => (
+                            <li>{val}</li>
+                          ))}
+                        </ul>
+                      </TdElement>
+                    ) : (
+                      <TdElement col={colIndex}>{value.placeholder}</TdElement>
+                    )}
+                  </>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </TableContainer>
+      ) : (
+        <TableContainer>
+          <tbody>
+            {rowsLength.map((row, rowIndex) => (
+              <tr key={rowIndex} className="border border-teal-100">
+                {row.map((value, index) => (
+                  <TdElement col={index}>{value.placeholder}</TdElement>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </TableContainer>
+      )}
+    </>
   );
 };
