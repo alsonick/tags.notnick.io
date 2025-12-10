@@ -1,7 +1,7 @@
 import { Endpoint } from "@/types/documentation/endpoint";
 import { ENDPOINTS } from "@/lib/documentation/endpoints";
-import { Button } from "@/components/Button";
 import { ToastContainer, toast } from "react-toastify";
+import { Button } from "@/components/Button";
 import { FiCopy } from "react-icons/fi";
 import { Tag } from "@/components/Tag";
 import copy from "copy-to-clipboard";
