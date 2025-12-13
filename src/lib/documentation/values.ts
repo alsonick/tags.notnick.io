@@ -100,7 +100,15 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: "Lyrics",
   },
   {
-    list: ["Lyrics", "Bass Boosted", "Nightcore/Sped Up", "Slowed/Reverb", "Letra", "Phonk", "Testo"],
+    list: [
+      "Lyrics (lyrics)",
+      "Bass Boosted (bassboosted)",
+      "Nightcore/Sped Up (nightcore)",
+      "Slowed/Reverb (slowed)",
+      "Letra (letra)",
+      "Phonk (phonk)",
+      "Testo (testo)",
+    ],
   },
   // Shuffle
   {
@@ -127,7 +135,15 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: "None",
   },
   {
-    list: ["None", "Country", "Latin", "Phonk", "Pop", "Rap", "Italian"],
+    list: [
+      "None (none)",
+      "Country (country)",
+      "Latin (latin)",
+      "Phonk (phonk)",
+      "Pop (pop)",
+      "Rap (rap)",
+      "Italian (italian)",
+    ],
   },
   // Verse
   {
