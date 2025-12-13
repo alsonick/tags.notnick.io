@@ -31,7 +31,7 @@ export const VALUES_GENERATE: Value[] = [
   },
   {
     placeholder:
-      "Name of the artist. You can also provide both the artist and the title, for example: `Rex Orange County – Pluto Projector` or `The Chainsmokers, Daya - Don't Let Me Down`.",
+      "Name of the artist. You can provide both the `artist` and the `title` components in this field, e.g. `Rex Orange County – Pluto Projector` is appropriate.",
   },
   // Title
   {
@@ -45,7 +45,7 @@ export const VALUES_GENERATE: Value[] = [
   },
   {
     placeholder:
-      "Name of the song. Not required if both the artist and title components are provided in the artist parameter.",
+      "Name of the song. Not required if both the artist and title components are provided in the `artist` parameter.",
   },
   // Features
   {
@@ -59,7 +59,7 @@ export const VALUES_GENERATE: Value[] = [
   },
   {
     placeholder:
-      "Featured artists, if you provide more than 3 featuring artists, then only the first 3 features will be used when generating the tags.",
+      "Featured artists. If you provide more than 3 featuring artists, then only the first 3 features will be used when generating the tags.",
   },
   // TikTok
   {
@@ -73,7 +73,7 @@ export const VALUES_GENERATE: Value[] = [
   },
   {
     placeholder:
-      "Provides additional tags related to TikTok, It's recommended for songs that are performing well on TikTok. (`true` / `false`). You can also pass in the short form (`t` / `f`).",
+      "Provides additional tags related to TikTok, It's recommended for songs that are performing well on TikTok (`true` / `false`).",
   },
   // Channel
   {
@@ -86,8 +86,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: "None",
   },
   {
-    placeholder:
-      "The name of the YouTube channel you want featured in the generated tags. Example: `Polaris Lyrics` or `Aquila`.",
+    placeholder: "The name of the YouTube channel you want featured in the generated tags.",
   },
   // Format
   {
@@ -121,8 +120,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: "false",
   },
   {
-    placeholder:
-      "An option that shuffles the generated tags, the parameter value should either be `true` or `false`. You can also pass in the short form (`t` / `f`).",
+    placeholder: "The option to shuffle the generated tags (`true` or `false`).",
   },
   // Genre
   {
@@ -169,7 +167,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: "None",
   },
   {
-    placeholder: "The custom format string template that you want to use for your generated tags.",
+    placeholder: "The custom format string template that you want to use.",
   },
   // Log
   {
@@ -183,7 +181,7 @@ export const VALUES_GENERATE: Value[] = [
   },
   {
     placeholder:
-      "All request data is logged for debugging purposes, if you wish to not have your data logged, then provide `false` as the parameter value.",
+      "All request data (generated tags) is logged for debugging purposes, if you wish to not have your data logged, then provide `false` as the parameter value.",
   },
   // Webhook
   {
@@ -197,6 +195,6 @@ export const VALUES_GENERATE: Value[] = [
   },
   {
     placeholder:
-      "We use private Discord channels to log request data, if you'd like to have your data logged in your own private channel, then provide us with your webhook link. Don't worry, your provided webhook link is never logged or stored with us.",
+      "Request data is logged in private Discord channels. You may optionally provide a webhook link to log data in your own private channel. Your webhook link is never stored or logged.",
   },
 ];

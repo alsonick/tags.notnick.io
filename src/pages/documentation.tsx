@@ -1,5 +1,6 @@
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { DocumentationSection } from "@/components/documentation/DocumentationSection";
+import { AdditionalTags } from "@/components/documentation/sections/AdditionalTags";
 import { WhatToProvide } from "@/components/documentation/sections/WhatToProvide";
 import { Endpoints } from "@/components/documentation/sections/Endpoints";
 import { DevelopmentNav } from "@/components/DevelopmentNav";
@@ -35,6 +36,14 @@ export default function Documentation() {
               For the <b>`/v1/length`</b> endpoint, here's what you need to provide:
             </p>
             <WhatToProvide endpoint="length" />
+          </DocumentationSection>
+          <DocumentationSection heading="Additional Tags">
+            <p className="mb-4 text-gray-800">
+              We also provide the functionality that will allow you to generate additional tags based on seasonal
+              events. The only seasonal events we support are <b>Halloween</b> and <b>Christmas</b>. This is how you
+              generate additional tags:
+            </p>
+            <AdditionalTags />
           </DocumentationSection>
         </div>
         <Footer />
