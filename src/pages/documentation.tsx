@@ -1,3 +1,4 @@
+import { CustomStringTemplate } from "@/components/documentation/sections/CustomStringTemplate";
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { DocumentationSection } from "@/components/documentation/DocumentationSection";
 import { AdditionalTags } from "@/components/documentation/sections/AdditionalTags";
@@ -36,6 +37,13 @@ export default function Documentation() {
               For the <b>`/v1/length`</b> endpoint, here's what you need to provide:
             </p>
             <WhatToProvide endpoint="length" />
+          </DocumentationSection>
+          <DocumentationSection heading="Custom String Template">
+            <p className="mb-4 text-gray-800">
+              We also allow you to define your own custom string template for generated tags. Here's what a string
+              template typically looks like this:
+            </p>
+            <CustomStringTemplate />
           </DocumentationSection>
           <DocumentationSection heading="Additional Tags">
             <p className="mb-4 text-gray-800">

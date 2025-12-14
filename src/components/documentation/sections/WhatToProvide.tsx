@@ -15,7 +15,7 @@ const TdElement = (props: { children: React.ReactNode; col: number }) => {
 
 const TableContainer = (props: { children: React.ReactNode }) => {
   return (
-    <table className="table-auto border w-full border-teal-100">
+    <table className="table-auto border w-full border-teal-100 mb-4">
       <thead>
         <tr className="border border-teal-100">
           {PARAMS.map((param) => (
