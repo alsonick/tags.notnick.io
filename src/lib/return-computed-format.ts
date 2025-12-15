@@ -20,6 +20,8 @@ export const returnComputedFormat = (format: string) => {
       return "phonk";
     case "letra":
       return "letra";
+    case "none":
+      return "none";
     default:
       return "lyrics";
   }

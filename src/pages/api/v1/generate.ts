@@ -21,12 +21,14 @@ import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
 import { sendDiscordWebhook } from "@/lib/send-discord-webhook";
 import { computeTikTokValue } from "@/lib/compute-tiktok-value";
 import { testoTitles } from "@/lib/helpers/titles/testo-titles";
+import { noneTitles } from "@/lib/helpers/titles/none-titles";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
 import { testoTags } from "@/lib/helpers/tags/testo-lyrics";
 import { countTagsLength } from "@/lib/count-tags-length";
 import { letraTags } from "@/lib/helpers/tags/letra-tags";
 import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
+import { noneTags } from "@/lib/helpers/tags/none-tags";
 import { removeEmojis } from "@/lib/remove-emojis";
 import { shuffleTags } from "@/lib/shuffle-tags";
 import { urlBuilder } from "@/lib/url-builder";
@@ -243,9 +245,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .replace(/(\.|'|!|\(.*$)/g, "")
       .trim();
   }
+  console.log(`Format: ${formatText}`);
 
   // If format text was found, process it.
-  if (formatText.length && formatText.toLowerCase() !== "lyrics") {
+  if (formatText.length && formatText.toLowerCase() !== "lyrics" && !formatText.toLowerCase().includes("remix")) {
     // Get standardized format name and ensure it's lowercase for the API
     finalFormat = returnComputedFormat(formatText).toLowerCase();
   } else {
@@ -290,6 +293,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else if (formatPureFormat === FORMAT.lyrics) {
     // Lyrics
     tags = lyricsTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
+  } else if (formatPureFormat === FORMAT.none) {
+    tags = noneTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   }
 
   let customFormatString = "";
@@ -405,6 +410,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += `,letra,latin,latin music,trending latin`;
   } else if (genre === GENRE.italian) {
     tags += `,italian lyrics,italian music,trending italian`;
+  } else if (genre === GENRE.dance) {
+    tags += `,dance music,dance,trending dance,dance ${new Date().getFullYear()}`;
   }
 
   if (shuffle === "true") {
@@ -473,11 +480,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     titles += bassBoostedTitles(finalArtist, finalTitle, feats);
   }
 
+  if (formatPureFormat === FORMAT.none) {
+    if (feats.includes("None")) feats.pop();
+    titles += noneTitles(finalArtist, finalTitle, feats);
+  }
+
   const hashtags = [
     decodeURIComponent(finalArtist.replaceAll(" ", "")),
     decodeURIComponent(finalTitle.replaceAll(" ", "").replaceAll("'", "")),
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
+
+  // Removes the last hashtag if the format is none
+  if (hashtags[hashtags.length - 1] === "") {
+    hashtags.pop();
+  }
 
   const responseId = uuidv4();
 

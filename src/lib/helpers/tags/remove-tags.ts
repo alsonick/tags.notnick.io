@@ -6,6 +6,7 @@ import { testoTagsRemove } from "./remove/testo-tags-remove";
 import { letraTagsRemove } from "./remove/letra-tags-remove";
 import { phonkTagsRemove } from "./remove/phonk-tags-remove";
 import { FORMAT } from "@/lib/format";
+import { noneTagsRemove } from "./remove/none-tags-remove";
 
 export const removeTags = (
   title: string,
@@ -48,6 +49,11 @@ export const removeTags = (
   // Phonk
   if (format === FORMAT.phonk) {
     return phonkTagsRemove(title, artist, features, tiktok, tags);
+  }
+
+  // None
+  if (format === FORMAT.none) {
+    return noneTagsRemove(title, artist, features, tiktok, tags);
   }
 
   return "";
