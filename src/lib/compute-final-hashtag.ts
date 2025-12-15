@@ -14,6 +14,8 @@ export const computeFinalHashtags = (hashtag: string): string => {
       return "Nightcore";
     case "testo":
       return "Testo";
+    case "none":
+      return "";
     default:
       return "Lyrics";
   }

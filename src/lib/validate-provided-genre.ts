@@ -16,6 +16,8 @@ export const validateProvidedGenre = (genre: string): boolean => {
       return true;
     case GENRE.phonk:
       return true;
+    case GENRE.dance:
+      return true;
     case GENRE.latin:
       return true;
     case GENRE.italian:

@@ -542,6 +542,7 @@ export default function Home() {
                     { value: FORMAT.letra, text: "Letra" },
                     { value: FORMAT.testo, text: "Testo" },
                     { value: FORMAT.phonk, text: "Phonk" },
+                    { value: FORMAT.none, text: "None" },
                   ].map((option) => (
                     <option className="font-inter" key={option.value} value={option.value}>
                       {option.text}
@@ -573,6 +574,7 @@ export default function Home() {
                     { value: GENRE.country, text: "Country" },
                     { value: GENRE.latin, text: "Latin" },
                     { value: GENRE.italian, text: "Italian" },
+                    { value: GENRE.dance, text: "Dance" },
                     { value: GENRE.phonk, text: "Phonk" },
                     { value: GENRE.pop, text: "Pop" },
                     { value: GENRE.rap, text: "Rap" },
