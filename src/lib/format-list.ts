@@ -29,4 +29,8 @@ export const FORMAT_LIST: FormatList[] = [
     name: "Phonk",
     slug: "phonk",
   },
+  {
+    name: "None",
+    slug: "none"
+  }
 ];

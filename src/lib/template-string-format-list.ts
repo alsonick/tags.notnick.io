@@ -364,4 +364,55 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
       },
     ],
   },
+
+  {
+    id: generateRandomId(),
+    filter: "none",
+    formats: [
+      {
+        id: generateRandomId(),
+        constraint: "(none)::[default]",
+        template:
+          "{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(none)::[feature-1]",
+        template: "{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(none)::includes[default]&&[feature-1]",
+        template:
+          "{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(none)::[feature-2]",
+        template: "{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(none)::includes[default]&&[feature-1]&&[feature-2]",
+        template:
+          "{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(none)::[feature-3]",
+        template: "{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},{artist} {thirdFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(none)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]",
+        template:
+          "{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title},{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},{artist} {thirdFeature} {title}",
+      },
+      {
+        id: generateRandomId(),
+        constraint: "(none)::[@tiktok=true@]",
+        template: "tiktok,{title} tiktok,trending tiktok,tiktok songs",
+      },
+    ],
+  },
 ];
