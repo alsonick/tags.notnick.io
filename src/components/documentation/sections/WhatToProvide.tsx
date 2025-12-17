@@ -49,21 +49,21 @@ export const WhatToProvide = (props: { endpoint: "generate" | "length" }) => {
           <tbody>
             {rowsGenerate.map((row, rowIndex) => (
               <tr key={rowIndex} className="border border-teal-100">
-                {row.map((value, colIndex) => (
-                  <>
-                    {value.list ? (
-                      <TdElement col={colIndex}>
-                        <ul className="list-disc ml-4">
-                          {value.list.map((val) => (
-                            <li>{val}</li>
-                          ))}
-                        </ul>
-                      </TdElement>
-                    ) : (
-                      <TdElement col={colIndex}>{value.placeholder}</TdElement>
-                    )}
-                  </>
-                ))}
+                {row.map((value, index) =>
+                  value.list ? (
+                    <TdElement key={index} col={index}>
+                      <ul className="list-disc ml-4">
+                        {value.list.map((val) => (
+                          <li key={val}>{val}</li>
+                        ))}
+                      </ul>
+                    </TdElement>
+                  ) : (
+                    <TdElement key={index} col={index}>
+                      {value.placeholder}
+                    </TdElement>
+                  )
+                )}
               </tr>
             ))}
           </tbody>
@@ -74,7 +74,9 @@ export const WhatToProvide = (props: { endpoint: "generate" | "length" }) => {
             {rowsLength.map((row, rowIndex) => (
               <tr key={rowIndex} className="border border-teal-100">
                 {row.map((value, index) => (
-                  <TdElement col={index}>{value.placeholder}</TdElement>
+                  <TdElement key={index} col={index}>
+                    {value.placeholder}
+                  </TdElement>
                 ))}
               </tr>
             ))}
