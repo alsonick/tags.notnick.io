@@ -107,6 +107,7 @@ export const VALUES_GENERATE: Value[] = [
       "Letra (letra)",
       "Phonk (phonk)",
       "Testo (testo)",
+      "None (none)",
     ],
   },
   // Shuffle
@@ -138,6 +139,7 @@ export const VALUES_GENERATE: Value[] = [
       "Country (country)",
       "Latin (latin)",
       "Phonk (phonk)",
+      "Dance (dance)",
       "Pop (pop)",
       "Rap (rap)",
       "Italian (italian)",
