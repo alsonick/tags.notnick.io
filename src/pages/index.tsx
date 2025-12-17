@@ -611,8 +611,9 @@ export default function Home() {
           <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
             <div className="ml-auto flex justify-between w-full items-center">
               {" "}
-              <Button
-                title="Generate Example Response"
+              <div></div>
+              {/* <Button
+                title="Generate example response"
                 type="button"
                 onClick={async (e) => {
                   // Prevent the default form submission behavior
@@ -625,8 +626,8 @@ export default function Home() {
                   generate(true);
                 }}
               >
-                Generate Example Response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
-              </Button>
+                Generate example response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
+              </Button> */}
               <div className="flex">
                 <div className="mr-2">
                   <Button
