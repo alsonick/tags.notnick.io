@@ -444,46 +444,47 @@ export default function Home() {
       <DevelopmentNav />
       <Nav />
       <MainWrapper>
-        <Header />
-        <form onSubmit={submit} className="flex flex-col mt-6">
-          <div className="flex w-full gap-6 items-center">
-            <section className="flex flex-col w-full">
-              <Step step={1} text="Song" />
-              <Input
-                onChange={(e) => setArtist(e.target.value)}
-                placeholder="The Chainsmokers, Daya - Don't Let Me Down"
-                required={true}
-                ref={refs.artist}
-                value={artist}
-              />
-              <p className="text-xs text-gray-800 mt-1">
-                Any special characters are allowed except <b>commas</b>.{" "}
-                <span className="text-yellow-600 font-semibold">Required*</span>
-              </p>
-              <CharacterLimit
-                limit={
-                  artist.includes("-") || artist.includes(",")
-                    ? ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED
-                    : ARTIST_INPUT_FIELD_CHARACTER_LIMIT
-                }
-                text={artist}
-              />
-            </section>
-            <section className="flex flex-col w-full">
-              <Step step={2} text="Channel" />
-              <Input
-                onChange={(e) => setChannel(e.target.value)}
-                placeholder="Gold Coast Music"
-                ref={refs.channel}
-                value={channel}
-                required={false}
-              />
-              <p className="text-xs text-gray-800 mt-1">
-                Type the name of the <b>YouTube Channel</b>.
-              </p>
-              <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
-            </section>
-            {/* <section className="flex flex-col w-full">
+        <div className="mb-auto">
+          <Header />
+          <form onSubmit={submit} className="flex flex-col mt-6">
+            <div className="flex w-full gap-6 items-center">
+              <section className="flex flex-col w-full">
+                <Step step={1} text="Song" />
+                <Input
+                  onChange={(e) => setArtist(e.target.value)}
+                  placeholder="The Chainsmokers, Daya - Don't Let Me Down"
+                  required={true}
+                  ref={refs.artist}
+                  value={artist}
+                />
+                <p className="text-xs text-gray-800 mt-1">
+                  The full song. Inclusive of artists, features and title.{" "}
+                  <span className="text-yellow-600 font-semibold">Required*</span>
+                </p>
+                <CharacterLimit
+                  limit={
+                    artist.includes("-") || artist.includes(",")
+                      ? ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED
+                      : ARTIST_INPUT_FIELD_CHARACTER_LIMIT
+                  }
+                  text={artist}
+                />
+              </section>
+              <section className="flex flex-col w-full">
+                <Step step={2} text="Channel" />
+                <Input
+                  onChange={(e) => setChannel(e.target.value)}
+                  placeholder="Gold Coast Music"
+                  ref={refs.channel}
+                  value={channel}
+                  required={false}
+                />
+                <p className="text-xs text-gray-800 mt-1">
+                  Type the name of the <b>YouTube Channel</b>.
+                </p>
+                <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
+              </section>
+              {/* <section className="flex flex-col w-full">
               <Step step={2} text="Title" />
               <Input
                 onChange={(e) => setTitle(e.target.value)}
@@ -501,9 +502,9 @@ export default function Home() {
               </p>
               <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
             </section> */}
-          </div>
-          <div className="flex w-full gap-6 items-center">
-            {/* <section className="flex flex-col w-full">
+            </div>
+            <div className="flex w-full gap-6 items-center">
+              {/* <section className="flex flex-col w-full">
               <Step step={3} text="Features" />
               <Input
                 onChange={(e) => setFeatures(e.target.value)}
@@ -517,102 +518,107 @@ export default function Home() {
               </p>
               <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
             </section> */}
-          </div>
-          <div className="flex w-full gap-6 items-center">
-            <section className="flex flex-col w-full">
-              <Step step={3} text="TikTok" />
-              <Input onChange={(e) => setTiktok(e.target.value)} placeholder="false" required={false} value={tiktok} />
-              <p className="text-xs text-gray-800 mt-1">
-                Is the song popular on TikTok? Type <b>"true"</b> if so.{" "}
-              </p>
-            </section>
-            <section className="flex flex-col w-full">
-              <Step step={4} text="Format" />
-              <div className="relative w-full">
-                <select
-                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
-                  onChange={(e) => setFormat(e.target.value)}
-                  value={format}
-                >
-                  {[
-                    { value: FORMAT.lyrics, text: "Lyrics" },
-                    { value: FORMAT.bassboosted, text: "Bass Boosted" },
-                    { value: FORMAT.nightcore, text: "Nightcore/Sped Up" },
-                    { value: FORMAT.slowedreverb, text: "Slowed & Reverb" },
-                    { value: FORMAT.letra, text: "Letra" },
-                    { value: FORMAT.testo, text: "Testo" },
-                    { value: FORMAT.phonk, text: "Phonk" },
-                    { value: FORMAT.none, text: "None" },
-                  ].map((option) => (
-                    <option className="font-inter" key={option.value} value={option.value}>
-                      {option.text}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                  <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
-                    <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
-                  </svg>
+            </div>
+            <div className="flex w-full gap-6 items-center">
+              <section className="flex flex-col w-full">
+                <Step step={3} text="TikTok" />
+                <Input
+                  onChange={(e) => setTiktok(e.target.value)}
+                  placeholder="false"
+                  required={false}
+                  value={tiktok}
+                />
+                <p className="text-xs text-gray-800 mt-1">
+                  Is the song popular on TikTok? Type <b>"true"</b> if so.{" "}
+                </p>
+              </section>
+              <section className="flex flex-col w-full">
+                <Step step={4} text="Format" />
+                <div className="relative w-full">
+                  <select
+                    className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
+                    onChange={(e) => setFormat(e.target.value)}
+                    value={format}
+                  >
+                    {[
+                      { value: FORMAT.lyrics, text: "Lyrics" },
+                      { value: FORMAT.bassboosted, text: "Bass Boosted" },
+                      { value: FORMAT.nightcore, text: "Nightcore/Sped Up" },
+                      { value: FORMAT.slowedreverb, text: "Slowed & Reverb" },
+                      { value: FORMAT.letra, text: "Letra" },
+                      { value: FORMAT.testo, text: "Testo" },
+                      { value: FORMAT.phonk, text: "Phonk" },
+                      { value: FORMAT.none, text: "None" },
+                    ].map((option) => (
+                      <option className="font-inter" key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                    <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                      <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-              <p className="text-xs text-gray-800 mt-1">
-                Select the desired <b>format</b>.
-              </p>
-            </section>
-          </div>
-          <div className="flex w-full gap-6 items-center">
-            <section className="flex flex-col w-full">
-              <Step step={5} text="Genre" />
-              <div className="relative w-full">
-                <select
-                  className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
-                  onChange={(e) => setGenre(e.target.value)}
-                  value={genre}
-                >
-                  {[
-                    { value: GENRE.none, text: "None" },
-                    { value: GENRE.country, text: "Country" },
-                    { value: GENRE.latin, text: "Latin" },
-                    { value: GENRE.italian, text: "Italian" },
-                    { value: GENRE.dance, text: "Dance" },
-                    { value: GENRE.phonk, text: "Phonk" },
-                    { value: GENRE.pop, text: "Pop" },
-                    { value: GENRE.rap, text: "Rap" },
-                  ].map((option) => (
-                    <option className="font-inter" key={option.value} value={option.value}>
-                      {option.text}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                  <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
-                    <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
-                  </svg>
+                <p className="text-xs text-gray-800 mt-1">
+                  Select the desired <b>format</b>.
+                </p>
+              </section>
+            </div>
+            <div className="flex w-full gap-6 items-center">
+              <section className="flex flex-col w-full">
+                <Step step={5} text="Genre" />
+                <div className="relative w-full">
+                  <select
+                    className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
+                    onChange={(e) => setGenre(e.target.value)}
+                    value={genre}
+                  >
+                    {[
+                      { value: GENRE.none, text: "None" },
+                      { value: GENRE.country, text: "Country" },
+                      { value: GENRE.latin, text: "Latin" },
+                      { value: GENRE.italian, text: "Italian" },
+                      { value: GENRE.dance, text: "Dance" },
+                      { value: GENRE.phonk, text: "Phonk" },
+                      { value: GENRE.pop, text: "Pop" },
+                      { value: GENRE.rap, text: "Rap" },
+                    ].map((option) => (
+                      <option className="font-inter" key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                    <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                      <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-              <p className="text-xs text-gray-800 mt-1">
-                Select the desired <b>genre</b>.
-              </p>
-            </section>
-            <section className="flex flex-col w-full">
-              <Step step={6} text="Verse" />
-              <Input
-                onChange={(e) => setVerse(e.target.value)}
-                placeholder="dont let me down,said dont let me down"
-                required={false}
-                ref={refs.verse}
-                value={verse}
-              />
-              <p className="text-xs text-gray-800 mt-1">
-                Popular verse? Paste them in here. Limit is <b>3</b>, separate them by <b>commas</b>.
-              </p>
-            </section>
-          </div>
-          <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
-            <div className="ml-auto flex justify-between w-full items-center">
-              {" "}
-              <div></div>
-              {/* <Button
+                <p className="text-xs text-gray-800 mt-1">
+                  Select the desired <b>genre</b>.
+                </p>
+              </section>
+              <section className="flex flex-col w-full">
+                <Step step={6} text="Verse" />
+                <Input
+                  onChange={(e) => setVerse(e.target.value)}
+                  placeholder="dont let me down,said dont let me down"
+                  required={false}
+                  ref={refs.verse}
+                  value={verse}
+                />
+                <p className="text-xs text-gray-800 mt-1">
+                  Popular verse? Paste them in here. Limit is <b>3</b>, separate them by <b>commas</b>.
+                </p>
+              </section>
+            </div>
+            <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
+              <div className="ml-auto flex justify-between w-full items-center">
+                {" "}
+                <div></div>
+                {/* <Button
                 title="Generate example response"
                 type="button"
                 onClick={async (e) => {
@@ -628,299 +634,300 @@ export default function Home() {
               >
                 Generate example response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
               </Button> */}
-              <div className="flex">
-                <div className="mr-2">
-                  <Button
-                    type="button"
-                    title="Clear"
-                    onClick={(e) => {
-                      // Prevent the default form submission behavior
-                      e.preventDefault();
-
-                      // Check if there are any tags to clear
-                      if (!tags.length) {
-                        // If the tag list is already empty, show an error message and exit
-                        toast.error(error.message.nothingToClear);
-                        return;
-                      }
-
-                      // Hide the recommended tags deletion section
-                      setShowRecommendedTagsToBeDeleteSection(false);
-
-                      // Hide the custom format section when clearing
-                      setShowCustomFormatStringTemplateSection(false);
-
-                      // Reset example response state to allow the example button to be used again
-                      setUsedGenerateExampleResponse(false);
-
-                      // Show success message to user
-                      toast.success("Cleared.");
-
-                      // Clear all tags by setting the state to an empty array
-                      setTags([]);
-                    }}
-                  >
-                    Clear <FiTrash className="ml-2 hover:scale-110 duration-150" />
-                  </Button>
-                </div>
-                <Button type="submit" title="Generate">
-                  Generate <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
-                </Button>
-              </div>
-            </div>
-            {process.env.NODE_ENV === "development" || router.query.debug === "true" ? (
-              <div className="flex flex-col w-full text-gray-800 items-center border p-4 rounded-lg mt-8">
-                <p className="mb-4 border-b pb-1 text-black">
-                  A set of tools provided if you're in <b>[DEVELOPMENT]</b> or <b>[DEBUG]</b> mode to give you more
-                  functionality.
-                </p>
-                {toggles.map(({ label, state, setState }) => (
-                  <div key={label} className="flex items-center justify-between w-full">
-                    <p>
-                      [{environmentModeSetting}] {label}:
-                    </p>
-                    <Switch checked={state} onCheckedChange={() => setState(!state)} />
-                  </div>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </form>
-        {loading ? (
-          <div className="mt-6 flex justify-center items-center">
-            <div className="border w-full p-4 rounded-lg">
-              <div className="flex flex-wrap gap-4 my-4 mt-6">
-                {[340, 240, 140, 340, 220, 400, 240, 140, 540, 340, 300, 240, 340, 180, 400].map((width, index) => (
-                  <Skeleton key={index} className="h-[42px]" style={{ width }} />
-                ))}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col">
-            <div className="border p-4 mt-6 rounded-lg">
-              {tags.length > 0 && (
-                <h2 className="text-2xl text-left font-medium border-b pb-2">
-                  <i>{data?.title}</i> by <b>{data?.artist}</b>
-                </h2>
-              )}
-              <div className="flex flex-wrap gap-4 my-4 mt-6">
-                {tags.length ? (
-                  <>
-                    {tags.map((tag) => (
-                      <Tag deletable={true} setTags={setTags} tags={tags} tag={tag} />
-                    ))}
-                  </>
-                ) : (
-                  <h3 className="text-2xl font-light">
-                    Click the <b>"Generate"</b> button to generate your tags.
-                  </h3>
-                )}
-              </div>
-            </div>
-            {tags.length && displayResponse ? (
-              <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
-            ) : null}
-            {tags.length && showJSONView ? (
-              <div className="border p-4 mt-6 rounded-lg">
-                <p className="whitespace-normal break-all text-gray-800">{JSON.stringify(data)}</p>
-              </div>
-            ) : null}
-            {tags.length > 0 && (
-              <div className="flex items-center justify-center w-100 mt-6">
-                <Link
-                  className="text-sm text-center w-fit underline hover:no-underline text-gray-800"
-                  title="Click to view json representation data."
-                  href={data?.url ?? ""}
-                  target="_blank"
-                >
-                  Click to view json representation data.
-                </Link>
-              </div>
-            )}
-            <div className="flex w-full mt-6 items-center">
-              {tags.length ? <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} /> : null}
-              {tags.length ? (
-                <div className="flex items-center ml-auto">
+                <div className="flex">
                   <div className="mr-2">
                     <Button
-                      title="Shuffle"
                       type="button"
+                      title="Clear"
                       onClick={(e) => {
                         // Prevent the default form submission behavior
                         e.preventDefault();
 
-                        // If no tags exist, run validation checks
+                        // Check if there are any tags to clear
                         if (!tags.length) {
-                          // If no artist name is provided → show error and focus the artist input
-                          if (!artist.length) {
-                            // Show error toast for missing artist
-                            toast.error(error.message.provideArtist);
+                          // If the tag list is already empty, show an error message and exit
+                          toast.error(error.message.nothingToClear);
+                          return;
+                        }
 
-                            // Move cursor to the artist input field
-                            refs.artist.current?.focus();
+                        // Hide the recommended tags deletion section
+                        setShowRecommendedTagsToBeDeleteSection(false);
+
+                        // Hide the custom format section when clearing
+                        setShowCustomFormatStringTemplateSection(false);
+
+                        // Reset example response state to allow the example button to be used again
+                        setUsedGenerateExampleResponse(false);
+
+                        // Show success message to user
+                        toast.success("Cleared.");
+
+                        // Clear all tags by setting the state to an empty array
+                        setTags([]);
+                      }}
+                    >
+                      Clear <FiTrash className="ml-2 hover:scale-110 duration-150" />
+                    </Button>
+                  </div>
+                  <Button type="submit" title="Generate">
+                    Generate <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
+                  </Button>
+                </div>
+              </div>
+              {process.env.NODE_ENV === "development" || router.query.debug === "true" ? (
+                <div className="flex flex-col w-full text-gray-800 items-center border p-4 rounded-lg mt-8">
+                  <p className="mb-4 border-b pb-1 text-black">
+                    A set of tools provided if you're in <b>[DEVELOPMENT]</b> or <b>[DEBUG]</b> mode to give you more
+                    functionality.
+                  </p>
+                  {toggles.map(({ label, state, setState }) => (
+                    <div key={label} className="flex items-center justify-between w-full">
+                      <p>
+                        [{environmentModeSetting}] {label}:
+                      </p>
+                      <Switch checked={state} onCheckedChange={() => setState(!state)} />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </form>
+          {loading ? (
+            <div className="mt-6 flex justify-center items-center">
+              <div className="border w-full p-4 rounded-lg">
+                <div className="flex flex-wrap gap-4 my-4 mt-6">
+                  {[340, 240, 140, 340, 220, 400, 240, 140, 540, 340, 300, 240, 340, 180, 400].map((width, index) => (
+                    <Skeleton key={index} className="h-[42px]" style={{ width }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <div className="border p-4 mt-6 rounded-lg">
+                {tags.length > 0 && (
+                  <h2 className="text-2xl text-left font-medium border-b pb-2">
+                    <i>{data?.title}</i> by <b>{data?.artist}</b>
+                  </h2>
+                )}
+                <div className="flex flex-wrap gap-4 my-4 mt-6">
+                  {tags.length ? (
+                    <>
+                      {tags.map((tag) => (
+                        <Tag deletable={true} setTags={setTags} tags={tags} tag={tag} />
+                      ))}
+                    </>
+                  ) : (
+                    <h3 className="text-2xl font-light">
+                      Click the <b>"Generate"</b> button to generate your tags.
+                    </h3>
+                  )}
+                </div>
+              </div>
+              {tags.length && displayResponse ? (
+                <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
+              ) : null}
+              {tags.length && showJSONView ? (
+                <div className="border p-4 mt-6 rounded-lg">
+                  <p className="whitespace-normal break-all text-gray-800">{JSON.stringify(data)}</p>
+                </div>
+              ) : null}
+              {tags.length > 0 && (
+                <div className="flex items-center justify-center w-100 mt-6">
+                  <Link
+                    className="text-sm text-center w-fit underline hover:no-underline text-gray-800"
+                    title="Click to view json representation data."
+                    href={data?.url ?? ""}
+                    target="_blank"
+                  >
+                    Click to view json representation data.
+                  </Link>
+                </div>
+              )}
+              <div className="flex w-full mt-6 items-center">
+                {tags.length ? <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} /> : null}
+                {tags.length ? (
+                  <div className="flex items-center ml-auto">
+                    <div className="mr-2">
+                      <Button
+                        title="Shuffle"
+                        type="button"
+                        onClick={(e) => {
+                          // Prevent the default form submission behavior
+                          e.preventDefault();
+
+                          // If no tags exist, run validation checks
+                          if (!tags.length) {
+                            // If no artist name is provided → show error and focus the artist input
+                            if (!artist.length) {
+                              // Show error toast for missing artist
+                              toast.error(error.message.provideArtist);
+
+                              // Move cursor to the artist input field
+                              refs.artist.current?.focus();
+
+                              // Stop further execution
+                              return;
+                            }
+
+                            // If artist name doesn’t contain "-" or "," (meaning it's a single artist/band name),
+                            // then require a title to be provided as well
+                            if (!artist.includes("-") && !artist.includes(",")) {
+                              // If no title name is provided → show error and focus the title input
+                              if (!title.length) {
+                                // Show error toast for missing title
+                                toast.error(error.message.provideTitle);
+
+                                // Move cursor to the title input field
+                                refs.title.current?.focus();
+
+                                // Stop further execution
+                                return;
+                              }
+                            }
+
+                            // If we reach this point, tags are still missing → show generic error
+                            toast.error(error.message.generateTagsFirst);
 
                             // Stop further execution
                             return;
                           }
 
-                          // If artist name doesn’t contain "-" or "," (meaning it's a single artist/band name),
-                          // then require a title to be provided as well
-                          if (!artist.includes("-") && !artist.includes(",")) {
-                            // If no title name is provided → show error and focus the title input
-                            if (!title.length) {
-                              // Show error toast for missing title
-                              toast.error(error.message.provideTitle);
+                          // Copy current tags into a new array for shuffling
+                          const shuffled = [...tags];
 
-                              // Move cursor to the title input field
-                              refs.title.current?.focus();
+                          // Fisher–Yates shuffle algorithm: randomize array order
+                          for (let i = shuffled.length - 1; i > 0; i--) {
+                            // Generate a random index between 0 and i (inclusive)
+                            const j = Math.floor(Math.random() * (i + 1));
 
-                              // Stop further execution
-                              return;
-                            }
+                            // Swap elements at indices i and j to shuffle the array
+                            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                           }
 
-                          // If we reach this point, tags are still missing → show generic error
-                          toast.error(error.message.generateTagsFirst);
+                          // Update state with shuffled tags
+                          setTags(shuffled);
 
-                          // Stop further execution
+                          // Show success message after shuffle
+                          toast.success(success.message.shuffledSuccessfully);
+                        }}
+                      >
+                        Shuffle <FiRepeat className="ml-2 hover:scale-110 duration-150" />
+                      </Button>
+                    </div>
+                    <Button
+                      style={{ marginLeft: "auto" }}
+                      title="Copy generated tags"
+                      onClick={() => {
+                        // Check if there are any tags to copy
+                        if (!tags.length) {
+                          // If no tags exist, show an error message and stop execution
+                          toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
                           return;
                         }
 
-                        // Copy current tags into a new array for shuffling
-                        const shuffled = [...tags];
+                        // Join all tags into a single string separated by commas
+                        // Example: ["tag1", "tag2"] → "tag1,tag2"
+                        copy(tags.join(","));
 
-                        // Fisher–Yates shuffle algorithm: randomize array order
-                        for (let i = shuffled.length - 1; i > 0; i--) {
-                          // Generate a random index between 0 and i (inclusive)
-                          const j = Math.floor(Math.random() * (i + 1));
-
-                          // Swap elements at indices i and j to shuffle the array
-                          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-                        }
-
-                        // Update state with shuffled tags
-                        setTags(shuffled);
-
-                        // Show success message after shuffle
-                        toast.success(success.message.shuffledSuccessfully);
+                        // Show a success toast confirming the tags were copied to the clipboard
+                        toast.success(success.message.tagsCopiedToClipboard);
                       }}
                     >
-                      Shuffle <FiRepeat className="ml-2 hover:scale-110 duration-150" />
+                      Copy generated tags <FiCopy className="ml-2 hover:scale-110 duration-150" />
                     </Button>
                   </div>
-                  <Button
-                    style={{ marginLeft: "auto" }}
-                    title="Copy generated tags"
-                    onClick={() => {
-                      // Check if there are any tags to copy
-                      if (!tags.length) {
-                        // If no tags exist, show an error message and stop execution
-                        toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
-                        return;
-                      }
+                ) : null}
+              </div>
+              {showCustomFormatStringTemplateSection && data && tags.length ? <Custom data={data} /> : null}
+              {showCustomFormatStringTemplateSection && data && tags.length ? (
+                <div className="flex w-full mt-6 items-center">
+                  <div className="flex ml-auto">
+                    <div className="mr-2">
+                      <Button
+                        title="Copy custom format"
+                        onClick={() => {
+                          // If there is no custom format in the response data
+                          if (!data?.customFormat) {
+                            // Show an error toast (currently an empty string as the message)
+                            toast.error("");
+                            return; // Exit early so nothing else runs
+                          }
 
-                      // Join all tags into a single string separated by commas
-                      // Example: ["tag1", "tag2"] → "tag1,tag2"
-                      copy(tags.join(","));
+                          // Copy the custom format string to the clipboard
+                          copy(data?.customFormat);
 
-                      // Show a success toast confirming the tags were copied to the clipboard
-                      toast.success(success.message.tagsCopiedToClipboard);
-                    }}
-                  >
-                    Copy generated tags <FiCopy className="ml-2 hover:scale-110 duration-150" />
-                  </Button>
+                          // Show a success toast confirming the copy action
+                          toast.success(success.message.copied);
+                        }}
+                      >
+                        Copy custom format <FiCopy className="ml-2 hover:scale-110 duration-150" />
+                      </Button>
+                    </div>
+                    <Button title="Save custom format" onClick={saveCustomFormat}>
+                      Save custom format <FiSave className="ml-2 hover:scale-110 duration-150" />
+                    </Button>
+                  </div>
                 </div>
               ) : null}
-            </div>
-            {showCustomFormatStringTemplateSection && data && tags.length ? <Custom data={data} /> : null}
-            {showCustomFormatStringTemplateSection && data && tags.length ? (
-              <div className="flex w-full mt-6 items-center">
-                <div className="flex ml-auto">
-                  <div className="mr-2">
+              {countTagsLength(tags.join(",")) > 500 && (
+                <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
+              )}
+              {showRecommendedTagsToBeDeleteSection &&
+              data?.tagsToBeRemoved.length &&
+              countTagsLength(tags.join(",")) > 500 ? (
+                <>
+                  <div className="border p-4 mt-4 rounded-lg">
+                    <h2 className="text-2xl border-b font-medium pb-2">Recommended tags to delete</h2>
+                    <div className="flex flex-wrap gap-4 my-4 mt-6">
+                      {data?.tagsToBeRemoved.split(",").map((tag) => (
+                        <Tag deletable={false} tag={tag} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-6">
                     <Button
-                      title="Copy custom format"
+                      style={{ marginLeft: "auto" }}
                       onClick={() => {
-                        // If there is no custom format in the response data
-                        if (!data?.customFormat) {
-                          // Show an error toast (currently an empty string as the message)
-                          toast.error("");
-                          return; // Exit early so nothing else runs
+                        // Check if the response data contains tags that need to be removed
+                        if (data?.tagsToBeRemoved) {
+                          // Split the string of tags by comma, trim whitespace, and convert them to lowercase
+                          const tagsToRemove = data.tagsToBeRemoved.split(",").map((tag) => tag.trim().toLowerCase());
+
+                          // Create a new list of tags by filtering out the ones that should be removed
+                          // Compare in lowercase to ensure case-insensitive matching
+                          let newTags = tags.filter((tag) => !tagsToRemove.includes(tag.toLowerCase()));
+
+                          // Update state with the cleaned tag list
+                          setTags(newTags);
+
+                          // Show a toast depending on whether overflow tags were previously deleted
+                          if (!overflowTagsDeleted) {
+                            // First removal → success
+                            toast.success(success.message.tagsRemovedSuccessfully);
+                          } else {
+                            // Trying to remove again → error
+                            toast.error(error.message.tagsAlreadyRemoved);
+                          }
+
+                          // Mark that we've removed tags once (prevents multiple success toasts)
+                          setOverflowTagsDeleted(true);
                         }
-
-                        // Copy the custom format string to the clipboard
-                        copy(data?.customFormat);
-
-                        // Show a success toast confirming the copy action
-                        toast.success(success.message.copied);
                       }}
                     >
-                      Copy custom format <FiCopy className="ml-2 hover:scale-110 duration-150" />
+                      Delete tags <FiDelete className="ml-2" />
                     </Button>
                   </div>
-                  <Button title="Save custom format" onClick={saveCustomFormat}>
-                    Save custom format <FiSave className="ml-2 hover:scale-110 duration-150" />
-                  </Button>
-                </div>
-              </div>
-            ) : null}
-            {countTagsLength(tags.join(",")) > 500 && (
-              <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
-            )}
-            {showRecommendedTagsToBeDeleteSection &&
-            data?.tagsToBeRemoved.length &&
-            countTagsLength(tags.join(",")) > 500 ? (
-              <>
-                <div className="border p-4 mt-4 rounded-lg">
-                  <h2 className="text-2xl border-b font-medium pb-2">Recommended tags to delete</h2>
-                  <div className="flex flex-wrap gap-4 my-4 mt-6">
-                    {data?.tagsToBeRemoved.split(",").map((tag) => (
-                      <Tag deletable={false} tag={tag} />
-                    ))}
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mt-6">
-                  <Button
-                    style={{ marginLeft: "auto" }}
-                    onClick={() => {
-                      // Check if the response data contains tags that need to be removed
-                      if (data?.tagsToBeRemoved) {
-                        // Split the string of tags by comma, trim whitespace, and convert them to lowercase
-                        const tagsToRemove = data.tagsToBeRemoved.split(",").map((tag) => tag.trim().toLowerCase());
-
-                        // Create a new list of tags by filtering out the ones that should be removed
-                        // Compare in lowercase to ensure case-insensitive matching
-                        let newTags = tags.filter((tag) => !tagsToRemove.includes(tag.toLowerCase()));
-
-                        // Update state with the cleaned tag list
-                        setTags(newTags);
-
-                        // Show a toast depending on whether overflow tags were previously deleted
-                        if (!overflowTagsDeleted) {
-                          // First removal → success
-                          toast.success(success.message.tagsRemovedSuccessfully);
-                        } else {
-                          // Trying to remove again → error
-                          toast.error(error.message.tagsAlreadyRemoved);
-                        }
-
-                        // Mark that we've removed tags once (prevents multiple success toasts)
-                        setOverflowTagsDeleted(true);
-                      }
-                    }}
-                  >
-                    Delete tags <FiDelete className="ml-2" />
-                  </Button>
-                </div>
-              </>
-            ) : null}
-            {tags.length ? (
-              <SuggestedTitlesSection setTitles={setTitles} originalTitles={originalTitles} titles={titles} />
-            ) : null}
-            {tags.length ? <SeoKeywordsSection seoText={seoText} /> : null}
-            {tags.length ? <HashtagsSection hashtags={data ? data.hashtags : []} /> : null}
-          </div>
-        )}
+                </>
+              ) : null}
+              {tags.length ? (
+                <SuggestedTitlesSection setTitles={setTitles} originalTitles={originalTitles} titles={titles} />
+              ) : null}
+              {tags.length ? <SeoKeywordsSection seoText={seoText} /> : null}
+              {tags.length ? <HashtagsSection hashtags={data ? data.hashtags : []} /> : null}
+            </div>
+          )}
+        </div>
         <Footer />
       </MainWrapper>
       <ToastContainer />
