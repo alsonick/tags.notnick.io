@@ -34,8 +34,8 @@ export default function PrivacyPolicy() {
           >
             tags.notnick.io
           </Link>{" "}
-          (<b>“we”</b>, <b>“our”</b>, or <b>“us”</b>). Your privacy matters to us. This Privacy Policy outlines what
-          data we collect (if any), how it’s used, and your rights.
+          (Lyrics Tags Generator) (<b>“we”</b>, <b>“our”</b>, or <b>“us”</b>). Your privacy matters to us. This Privacy
+          Policy outlines what data we collect (if any), how it’s used, and your rights.
         </div>
         <section className="my-8">
           <h1 className="text-2xl font-bold">What We Collect</h1>
@@ -44,8 +44,8 @@ export default function PrivacyPolicy() {
               We do not collect, store, or process any <i>personal information</i>.
             </p>
             <p>
-              We do however collect generated tags data, If you do not wish to have your generated tags data collected
-              then set the 'log' query to 'false'. If you'd like access to logged data then please{" "}
+              We do however log generated metadata, If you do not wish to have your generated metadata logged then set
+              the 'log' query to 'false'. If you'd like access to logged data then please{" "}
               <Link
                 className="text-blue-500 font-semibold hover:underline"
                 href="mailto:hi@notnick.io"
@@ -85,20 +85,9 @@ export default function PrivacyPolicy() {
         <section className="mb-auto">
           <h1 className="text-2xl font-bold">Contact</h1>
           <div className="mt-4 text-gray-800">
-            <p className="mb-4">For any questions about this policy, feel free to reach out:</p>
+            <p className="mb-4">For any questions about this Privacy Policy, feel free to reach out:</p>
             <p>
-              Twitter:{" "}
-              <Link
-                className="text-blue-500 font-semibold hover:underline"
-                href="https://x.com/heynickn"
-                title="@heynickn on X"
-                target="_blank"
-              >
-                @heynickn on X
-              </Link>
-            </p>
-            <p>
-              Email:{" "}
+              Contact:{" "}
               <Link
                 className="text-blue-500 font-semibold hover:underline"
                 href="mailto:hi@notnick.io"
