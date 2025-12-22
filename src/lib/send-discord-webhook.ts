@@ -64,7 +64,7 @@ export const sendDiscordWebhook = async (
             },
             {
               name: "Features:",
-              value: features.length ? features : "none",
+              value: features.length ? features : "None",
               inline: true,
             },
             {
