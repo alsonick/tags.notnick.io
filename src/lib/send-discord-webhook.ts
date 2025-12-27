@@ -1,7 +1,8 @@
-import { NextApiResponse } from "next";
-import { error } from "./error";
+import { capitalizeFirstLetter } from "./capitalize-first-letter";
 import { computeFinalHashtags } from "./compute-final-hashtag";
 import { countTagsLength } from "./count-tags-length";
+import { NextApiResponse } from "next";
+import { error } from "./error";
 
 export const sendDiscordWebhook = async (
   customFormatString: string,
@@ -41,20 +42,22 @@ export const sendDiscordWebhook = async (
             },
             {
               name: "Tiktok:",
-              value: tiktok,
+              value: capitalizeFirstLetter(tiktok),
               inline: true,
             },
             {
               name: "Format:",
-              value: computeFinalHashtags(format)
-                .replace("SlowedReverb", "Slowed & Reverb")
-                .replace("", "None")
-                .replace("NoneLyrics", "Lyrics"),
+              value:
+                format.toLowerCase() === "none"
+                  ? "None"
+                  : computeFinalHashtags(format)
+                      .replace("SlowedReverb", "Slowed & Reverb")
+                      .replace("BassBoosted", "Bass Boosted"),
               inline: true,
             },
             {
               name: "Channel:",
-              value: channel,
+              value: channel.toLowerCase() === "none" ? "None" : channel,
               inline: true,
             },
             {
@@ -64,12 +67,12 @@ export const sendDiscordWebhook = async (
             },
             {
               name: "Features:",
-              value: features.length ? features : "None",
+              value: features.length ? (features.toLowerCase() === "none" ? "None" : features) : "None",
               inline: true,
             },
             {
               name: "Log:",
-              value: log,
+              value: capitalizeFirstLetter(log),
               inline: true,
             },
             {
@@ -87,11 +90,11 @@ export const sendDiscordWebhook = async (
             },
             {
               name: "Removed:",
-              value: tagsToBeRemoved.length ? tagsToBeRemoved : "none",
+              value: tagsToBeRemoved.length ? tagsToBeRemoved : "None",
             },
             {
               name: "Custom:",
-              value: customFormatString.length ? customFormatString : "none",
+              value: customFormatString.length ? customFormatString : "None",
             },
           ],
           footer: {

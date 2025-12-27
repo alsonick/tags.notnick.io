@@ -245,7 +245,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .replace(/(\.|'|!|\(.*$)/g, "")
       .trim();
   }
-  console.log(`Format: ${formatText}`);
 
   // If format text was found, process it.
   if (formatText.length && formatText.toLowerCase() !== "lyrics" && !formatText.toLowerCase().includes("remix")) {
