@@ -1,16 +1,18 @@
-import { CustomStringTemplate } from "@/components/documentation/sections/CustomStringTemplate";
-import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { DocumentationSection } from "@/components/documentation/DocumentationSection";
-import { AdditionalTags } from "@/components/documentation/sections/AdditionalTags";
-import { WhatToProvide } from "@/components/documentation/sections/WhatToProvide";
-import { Endpoints } from "@/components/documentation/sections/Endpoints";
-import { DevelopmentNav } from "@/components/DevelopmentNav";
-import { MainWrapper } from "@/components/MainWrapper";
-import { Container } from "@/components/Container";
-import { Footer } from "@/components/Footer";
-import { Nav } from "@/components/Nav";
-import { Seo } from "@/components/Seo";
-import { seo } from "@/lib/seo/seo";
+import { CustomStringTemplate } from '@/components/documentation/sections/CustomStringTemplate';
+import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
+import { DocumentationSection } from '@/components/documentation/DocumentationSection';
+import { AdditionalTags } from '@/components/documentation/sections/AdditionalTags';
+import { WhatToProvide } from '@/components/documentation/sections/WhatToProvide';
+import { Endpoints } from '@/components/documentation/sections/Endpoints';
+import { DevelopmentNav } from '@/components/DevelopmentNav';
+import { MainWrapper } from '@/components/MainWrapper';
+import { Container } from '@/components/Container';
+import { Badge } from '@/components/shadcn/badge';
+import { Footer } from '@/components/Footer';
+import { Nav } from '@/components/Nav';
+import { Seo } from '@/components/Seo';
+import { seo } from '@/lib/seo/seo';
+import Link from 'next/link';
 
 export default function Documentation() {
   return (
@@ -30,11 +32,12 @@ export default function Documentation() {
           <DocumentationSection heading="What To Provide">
             <p className="mb-4 text-gray-800">
               If you plan to consume our public Application Programming Interface (API) then here are some of the
-              available parameters that you can provide when making requests to our <b>`/v1/generate`</b> endpoint.
+              available parameters that you can provide when making requests to our{' '}
+              <Badge variant={'secondary'}>/v1/generate</Badge> endpoint.
             </p>
             <WhatToProvide endpoint="generate" />
             <p className="my-4 text-gray-800">
-              For the <b>`/v1/length`</b> endpoint, here's what you need to provide:
+              For the <Badge variant={'secondary'}>/v1/length</Badge> endpoint, here's what you need to provide:
             </p>
             <WhatToProvide endpoint="length" />
           </DocumentationSection>
@@ -48,10 +51,18 @@ export default function Documentation() {
           <DocumentationSection heading="Additional Tags">
             <p className="mb-4 text-gray-800">
               We also provide the functionality that will allow you to generate additional tags based on seasonal
-              events. The only seasonal events we support are <b>Halloween</b> and <b>Christmas</b>. This is how you
-              generate additional tags:
+              events. The only seasonal events we support are <Badge variant={'secondary'}>Halloween</Badge> and{' '}
+              <Badge variant={'secondary'}>Christmas</Badge>. This is how you generate additional tags:
             </p>
             <AdditionalTags />
+          </DocumentationSection>
+          <DocumentationSection heading="Further Assistance" border={false}>
+            <p className="text-gray-800">
+              If you have any questions or need further assistance, feel free to reach out to me at{' '}
+              <Link href="mailto:hi@notnick.io" className="text-blue-500 font-semibold hover:underline">
+                hi@notnick.io
+              </Link>
+            </p>
           </DocumentationSection>
         </div>
         <Footer />
