@@ -1,5 +1,6 @@
 import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
 import { ADDITIONAL_FORMAT_LIST } from '@/lib/additional-format-list';
+import { ADDITIONAL_FORMATS } from '@/lib/additional-formats';
 import { DevelopmentNav } from '@/components/DevelopmentNav';
 import { MainWrapper } from '@/components/MainWrapper';
 import { Container } from '@/components/Container';
@@ -10,7 +11,6 @@ import { Nav } from '@/components/Nav';
 import { Seo } from '@/components/Seo';
 import { seo } from '@/lib/seo/seo';
 import Link from 'next/link';
-import { ADDITIONAL_FORMATS } from '@/lib/additional-formats';
 
 export default function Format() {
   return (

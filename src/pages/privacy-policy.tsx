@@ -1,16 +1,16 @@
-import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { DevelopmentNav } from "@/components/DevelopmentNav";
-import { FiDownload, FiArrowLeft } from "react-icons/fi";
-import { MainWrapper } from "@/components/MainWrapper";
-import { Container } from "@/components/Container";
-import { Button } from "@/components/Button";
-import { Footer } from "@/components/Footer";
-import { Nav } from "@/components/Nav";
-import { Seo } from "@/components/Seo";
-import { seo } from "@/lib/seo/seo";
+import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
+import { DevelopmentNav } from '@/components/DevelopmentNav';
+import { FiDownload, FiArrowLeft } from 'react-icons/fi';
+import { MainWrapper } from '@/components/MainWrapper';
+import { Container } from '@/components/Container';
+import { Button } from '@/components/Button';
+import { Footer } from '@/components/Footer';
+import { Nav } from '@/components/Nav';
+import { Seo } from '@/components/Seo';
+import { seo } from '@/lib/seo/seo';
 
 // Next.js
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function PrivacyPolicy() {
   return (
@@ -20,20 +20,20 @@ export default function PrivacyPolicy() {
       <DevelopmentNav />
       <Nav />
       <MainWrapper>
-        <h1 className="text-4xl font-black tracking-tight mt-8">Privacy Policy</h1>
+        <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.privacyPolicy.heading}</h1>
         <div className="mt-8 text-gray-800">
           <p className="text-lg">Effective Date: 11 May 2025</p>
           <p className="text-lg">Last Updated: 28 Oct 2025</p>
         </div>
         <div className="text-gray-800 mt-8">
-          Thank you for visiting{" "}
+          Thank you for visiting{' '}
           <Link
             className="text-blue-500 font-semibold hover:underline"
             href="https://tags.notnick.io"
             title="tags.notnick.io"
           >
             tags.notnick.io
-          </Link>{" "}
+          </Link>{' '}
           (Lyrics Tags Generator) (<b>“we”</b>, <b>“our”</b>, or <b>“us”</b>). Your privacy matters to us. This Privacy
           Policy outlines what data we collect (if any), how it’s used, and your rights.
         </div>
@@ -45,14 +45,14 @@ export default function PrivacyPolicy() {
             </p>
             <p>
               We do however log generated metadata, If you do not wish to have your generated metadata logged then set
-              the 'log' query to 'false'. If you'd like access to logged data then please{" "}
+              the 'log' query to 'false'. If you'd like access to logged data then please{' '}
               <Link
                 className="text-blue-500 font-semibold hover:underline"
                 href="mailto:hi@notnick.io"
                 title="contact me"
               >
                 contact me
-              </Link>{" "}
+              </Link>{' '}
               for more information.
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function PrivacyPolicy() {
           <div className="mt-4 text-gray-800">
             <p className="mb-4">For any questions about this Privacy Policy, feel free to reach out:</p>
             <p>
-              Contact:{" "}
+              Contact:{' '}
               <Link
                 className="text-blue-500 font-semibold hover:underline"
                 href="mailto:hi@notnick.io"
@@ -107,9 +107,9 @@ export default function PrivacyPolicy() {
           <Button
             title="Download"
             onClick={() => {
-              const link = document.createElement("a");
+              const link = document.createElement('a');
               link.href = `/legal/privacy-policy/${new Date().getFullYear()}/privacy-policy.pdf`;
-              link.download = "privacy-policy.pdf";
+              link.download = 'privacy-policy.pdf';
               document.body.appendChild(link);
               link.click();
               document.body.removeChild(link);
