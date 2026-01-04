@@ -1,16 +1,16 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/accordion";
-import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { DevelopmentNav } from "@/components/DevelopmentNav";
-import { MainWrapper } from "@/components/MainWrapper";
-import { Container } from "@/components/Container";
-import { Badge } from "@/components/shadcn/badge";
-import { Footer } from "@/components/Footer";
-import { FiArrowLeft } from "react-icons/fi";
-import { Nav } from "@/components/Nav";
-import { Seo } from "@/components/Seo";
-import { Tag } from "@/components/Tag";
-import { seo } from "@/lib/seo/seo";
-import Link from "next/link";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/shadcn/accordion';
+import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
+import { DevelopmentNav } from '@/components/DevelopmentNav';
+import { MainWrapper } from '@/components/MainWrapper';
+import { Container } from '@/components/Container';
+import { Badge } from '@/components/shadcn/badge';
+import { Footer } from '@/components/Footer';
+import { FiArrowLeft } from 'react-icons/fi';
+import { Nav } from '@/components/Nav';
+import { Seo } from '@/components/Seo';
+import { Tag } from '@/components/Tag';
+import { seo } from '@/lib/seo/seo';
+import Link from 'next/link';
 
 export default function FAQ() {
   return (
@@ -20,7 +20,7 @@ export default function FAQ() {
       <DevelopmentNav />
       <Nav />
       <MainWrapper>
-        <h1 className="text-4xl font-black tracking-tight mt-8">FAQ</h1>
+        <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.faq.heading}</h1>
         <div className="mt-8 text-gray-800 mb-auto">
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
@@ -28,7 +28,7 @@ export default function FAQ() {
                 Do you provide an Application Programming Interface (API)?
               </AccordionTrigger>
               <AccordionContent className="text-lg text-gray-800">
-                Yes! Our{" "}
+                Yes! Our{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
                   title="Application Programming Interface"
@@ -36,10 +36,10 @@ export default function FAQ() {
                   target="_blank"
                 >
                   Application Programming Interface
-                </Link>{" "}
-                is completely free to use, Our available endpoints are:{" "}
-                <Badge variant={"secondary"}>GET /v1/generate</Badge> &{" "}
-                <Badge variant={"secondary"}>GET /v1/length</Badge>. Please refer to our official{" "}
+                </Link>{' '}
+                is completely free to use, Our available endpoints are:{' '}
+                <Badge variant={'secondary'}>GET /v1/generate</Badge> &{' '}
+                <Badge variant={'secondary'}>GET /v1/length</Badge>. Please refer to our official{' '}
                 <Link
                   href="https://github.com/alsonick/lyrics-tags-generator-docs"
                   className="text-blue-500 font-semibold hover:underline"
@@ -47,15 +47,15 @@ export default function FAQ() {
                   target="_blank"
                 >
                   documentation
-                </Link>{" "}
-                or{" "}
+                </Link>{' '}
+                or{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
                   href="mailto:hi@notnick.io"
                   title="contact me"
                 >
                   contact me
-                </Link>{" "}
+                </Link>{' '}
                 if you need any guidance in setting up or if you have any general questions.
               </AccordionContent>
             </AccordionItem>
@@ -64,7 +64,7 @@ export default function FAQ() {
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black">Does anyone use Lyrics Tags Generator?</AccordionTrigger>
               <AccordionContent className="text-lg text-gray-800">
-                Yes! The collective group{" "}
+                Yes! The collective group{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
                   href="https://earlyentry.io"
@@ -72,9 +72,9 @@ export default function FAQ() {
                   target="_blank"
                 >
                   earlyentry.io
-                </Link>{" "}
+                </Link>{' '}
                 are using Lyrics Tags Generator in their uploading automation system, they specifically use it to
-                generate metadata such as tags for some of their collective channels on{" "}
+                generate metadata such as tags for some of their collective channels on{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
                   href="https://www.youtube.com/"
@@ -110,7 +110,7 @@ export default function FAQ() {
                 >
                   Tags Deletion Algorithm
                 </Link>
-                ) which is under the{" "}
+                ) which is under the{' '}
                 <Link
                   href="https://github.com/alsonick/tags-py/blob/main/LICENSE"
                   className="text-blue-500 font-semibold hover:underline"
@@ -119,7 +119,7 @@ export default function FAQ() {
                 >
                   MIT License
                 </Link>
-                .{" "}
+                .{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
                   href="https://github.com/Lyrics-Tags-Generator"
@@ -127,7 +127,7 @@ export default function FAQ() {
                   target="_blank"
                 >
                   Click here
-                </Link>{" "}
+                </Link>{' '}
                 to view our open source software.
               </AccordionContent>
             </AccordionItem>
@@ -136,38 +136,38 @@ export default function FAQ() {
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black">How does it work?</AccordionTrigger>
               <AccordionContent className="text-lg text-gray-800">
-                When you provide us data about a song like:{" "}
-                <Badge variant={"secondary"}>Rex Orange County - Pluto Projector</Badge>, we basically break down the
+                When you provide us data about a song like:{' '}
+                <Badge variant={'secondary'}>Rex Orange County - Pluto Projector</Badge>, we basically break down the
                 entire string and split the component parts into fragments, we can also break down more complex strings
-                like with songs that feature other artists:{" "}
-                <Badge variant={"secondary"}>JVKE, Tilly Birds, John Michael Howell - colors</Badge>, or songs that are
-                remixes: <Badge variant={"secondary"}>Ro Ransom, Kensei Abbot - See Me Fall (Y2K Remix)</Badge>.
+                like with songs that feature other artists:{' '}
+                <Badge variant={'secondary'}>JVKE, Tilly Birds, John Michael Howell - colors</Badge>, or songs that are
+                remixes: <Badge variant={'secondary'}>Ro Ransom, Kensei Abbot - See Me Fall (Y2K Remix)</Badge>.
                 <br />
                 <br />
                 After the string is broken down into fragments, we basically replace the parts in our format string
-                template with the fragments, for example; our format string template might look like this:{" "}
+                template with the fragments, for example; our format string template might look like this:{' '}
                 <Badge
-                  variant={"secondary"}
-                >{`{artist} {title} lyrics,{title} lyrics,lyrics {title},{artist} {title}`}</Badge>{" "}
+                  variant={'secondary'}
+                >{`{artist} {title} lyrics,{title} lyrics,lyrics {title},{artist} {title}`}</Badge>{' '}
                 and if we take the first song example from above (
-                <Badge variant={"secondary"}>Rex Orange County - Pluto Projector</Badge>), then the{" "}
-                <Badge variant={"secondary"}>Rex Orange County</Badge> fragment will be placed in all the{" "}
-                <Badge variant={"secondary"}>{`{artist}`}</Badge> parts, and the{" "}
-                <Badge variant={"secondary"}>Pluto Projector</Badge> fragment will be placed in all the{" "}
-                <Badge variant={"secondary"}>{`{title}`}</Badge> parts, giving us this final result:
+                <Badge variant={'secondary'}>Rex Orange County - Pluto Projector</Badge>), then the{' '}
+                <Badge variant={'secondary'}>Rex Orange County</Badge> fragment will be placed in all the{' '}
+                <Badge variant={'secondary'}>{`{artist}`}</Badge> parts, and the{' '}
+                <Badge variant={'secondary'}>Pluto Projector</Badge> fragment will be placed in all the{' '}
+                <Badge variant={'secondary'}>{`{title}`}</Badge> parts, giving us this final result:
                 <br />
                 <div className="flex flex-wrap gap-4 my-4 mt-6">
                   {[
-                    "Rex Orange County Pluto Projector lyrics",
-                    "Pluto Projector lyrics",
-                    "lyrics Pluto Projector",
-                    "Rex Orange County Pluto Projector",
+                    'Rex Orange County Pluto Projector lyrics',
+                    'Pluto Projector lyrics',
+                    'lyrics Pluto Projector',
+                    'Rex Orange County Pluto Projector',
                   ].map((tag) => (
                     <Tag deletable={false} tag={tag.toLowerCase()} />
                   ))}
                 </div>
                 You can also create your own custom format string template, though this feature is only available on the
-                browser client. Please refer to the{" "}
+                browser client. Please refer to the{' '}
                 <Link
                   href="https://github.com/alsonick/lyrics-tags-generator-docs"
                   className="text-blue-500 font-semibold hover:underline"
@@ -175,7 +175,7 @@ export default function FAQ() {
                   target="_blank"
                 >
                   documentation
-                </Link>{" "}
+                </Link>{' '}
                 for more information.
               </AccordionContent>
             </AccordionItem>
@@ -185,7 +185,7 @@ export default function FAQ() {
               <AccordionTrigger className="text-xl text-black">Who is this for?</AccordionTrigger>
               <AccordionContent className="text-lg text-gray-800">
                 This tool is built for anyone running any type of promotional music channel (typically lyric channels)
-                on{" "}
+                on{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
                   href="https://www.youtube.com/"
