@@ -1,36 +1,10 @@
-import { VALUES_GENERATE, VALUES_LENGTH } from "@/lib/documentation/values";
-import { PARAMS } from "@/lib/documentation/params";
+import { VALUES_GENERATE, VALUES_LENGTH } from '@/lib/documentation/values';
+import { TableContainer } from '../ui/TableContainer';
+import { PARAMS } from '@/lib/documentation/params';
+import { Badge } from '@/components/shadcn/badge';
+import { TdElement } from '../ui/TdElement';
 
-const TdElement = (props: { children: React.ReactNode; col: number }) => {
-  return (
-    <td
-      className={`p-2 border border-teal-100 text-gray-800 marker:text-gray-800 ${
-        PARAMS[props.col].name === "Description" ? "text-left" : "text-center"
-      }`}
-    >
-      {props.children}
-    </td>
-  );
-};
-
-const TableContainer = (props: { children: React.ReactNode }) => {
-  return (
-    <table className="table-auto border w-full border-teal-100 mb-4">
-      <thead>
-        <tr className="border border-teal-100">
-          {PARAMS.map((param) => (
-            <th key={param.name} className="p-2 border border-teal-100">
-              {param.name}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      {props.children}
-    </table>
-  );
-};
-
-export const WhatToProvide = (props: { endpoint: "generate" | "length" }) => {
+export const WhatToProvide = (props: { endpoint: 'generate' | 'length' }) => {
   const rowsGenerate = [];
   const rowsLength = [];
 
@@ -44,22 +18,24 @@ export const WhatToProvide = (props: { endpoint: "generate" | "length" }) => {
 
   return (
     <>
-      {props.endpoint === "generate" ? (
-        <TableContainer>
+      {props.endpoint === 'generate' ? (
+        <TableContainer params={PARAMS}>
           <tbody>
             {rowsGenerate.map((row, rowIndex) => (
               <tr key={rowIndex} className="border border-teal-100">
                 {row.map((value, index) =>
                   value.list ? (
-                    <TdElement key={index} col={index}>
+                    <TdElement key={index} col={index} params={PARAMS}>
                       <ul className="list-disc ml-4">
                         {value.list.map((val) => (
-                          <li key={val}>{val}</li>
+                          <li key={val}>
+                            <Badge variant="secondary">{val}</Badge>
+                          </li>
                         ))}
                       </ul>
                     </TdElement>
                   ) : (
-                    <TdElement key={index} col={index}>
+                    <TdElement key={index} col={index} params={PARAMS}>
                       {value.placeholder}
                     </TdElement>
                   )
@@ -69,12 +45,12 @@ export const WhatToProvide = (props: { endpoint: "generate" | "length" }) => {
           </tbody>
         </TableContainer>
       ) : (
-        <TableContainer>
+        <TableContainer params={PARAMS}>
           <tbody>
             {rowsLength.map((row, rowIndex) => (
               <tr key={rowIndex} className="border border-teal-100">
                 {row.map((value, index) => (
-                  <TdElement key={index} col={index}>
+                  <TdElement key={index} col={index} params={PARAMS}>
                     {value.placeholder}
                   </TdElement>
                 ))}

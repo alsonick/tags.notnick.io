@@ -1,4 +1,4 @@
 export interface Value {
-  placeholder?: string;
+  placeholder?: string | React.ReactElement;
   list?: string[];
 }

@@ -1,16 +1,28 @@
-import { Param } from "@/types/documentation/param";
+import { Param } from '@/types/documentation/param';
 
 export const PARAMS: Param[] = [
   {
-    name: "Params",
+    name: 'Params',
   },
   {
-    name: "Required",
+    name: 'Required',
   },
   {
-    name: "Default",
+    name: 'Default',
   },
   {
-    name: "Description",
+    name: 'Description',
+  },
+];
+
+export const ADDITIONAL_PARAMS: Param[] = [
+  {
+    name: 'Variables',
+  },
+  {
+    name: 'Required',
+  },
+  {
+    name: 'Description',
   },
 ];

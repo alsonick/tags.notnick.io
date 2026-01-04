@@ -1,12 +1,12 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export const Footer = () => {
   return (
-    <footer className="bottom-0 left-0 mt-16 text-sm pb-1 border-t pt-4">
+    <footer className="bottom-0 left-0 mt-8 text-sm pb-1 border-t pt-4">
       <h1 className="font-bold text-lg text-black">Lyrics Tags Generator</h1>
       <p className="text-gray-800 text-xs">© {new Date().getFullYear()} | All rights reserved.</p>
       <p className="text-gray-800 text-xs">
-        Made with{" "}
+        Made with{' '}
         <Link
           className="font-bold hover:underline text-gray-950"
           href="https://nextjs.org/"
@@ -15,7 +15,7 @@ export const Footer = () => {
         >
           Next.js
         </Link>
-        ,{" "}
+        ,{' '}
         <Link
           className="font-bold hover:underline text-gray-950"
           href="https://tailwindcss.com/"
@@ -23,8 +23,8 @@ export const Footer = () => {
           title="Tailwind"
         >
           Tailwind
-        </Link>{" "}
-        &{" "}
+        </Link>{' '}
+        &{' '}
         <Link
           className="font-bold hover:underline text-gray-950"
           href="https://vercel.com/"
@@ -36,7 +36,7 @@ export const Footer = () => {
         .
       </p>
       <p className="text-gray-800 text-xs">
-        Built with ❤️ by{" "}
+        Built with ❤️ by{' '}
         <Link
           className="font-bold hover:underline text-gray-950"
           href="https://github.com/alsonick"
