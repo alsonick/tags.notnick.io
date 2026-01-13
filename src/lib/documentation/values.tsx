@@ -12,7 +12,7 @@ export const VALUES_LENGTH: Value[] = [
     placeholder: 'Yes',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: <p>The generated tags you want to find the length for.</p>,
@@ -28,7 +28,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'Yes',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: (
@@ -47,7 +47,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'Yes',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: (
@@ -65,7 +65,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: (
@@ -83,7 +83,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'False',
+    placeholder: 'false',
   },
   {
     placeholder: (
@@ -101,7 +101,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: <p>The name of the YouTube channel you want featured in the generated tags.</p>,
@@ -114,7 +114,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'Lyrics',
+    placeholder: 'lyrics',
   },
   {
     list: ['lyrics', 'bassboosted', 'nightcore', 'slowed', 'letra', 'phonk', 'testo', 'none'],
@@ -127,7 +127,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'False',
+    placeholder: 'false',
   },
   {
     placeholder: (
@@ -145,7 +145,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     list: ['none', 'country', 'latin', 'phonk', 'dance', 'pop', 'rap', 'italian'],
@@ -158,7 +158,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: <p>3 short verses. Each individual verse should be separated by a comma.</p>,
@@ -171,7 +171,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: <p>The custom format string template that you want to use.</p>,
@@ -184,7 +184,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'True',
+    placeholder: 'true',
   },
   {
     placeholder: (
@@ -202,7 +202,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'No',
   },
   {
-    placeholder: 'None',
+    placeholder: 'none',
   },
   {
     placeholder: (
@@ -220,7 +220,7 @@ export const VALUES_VARIABLES: Value[] = [
     placeholder: '{a}',
   },
   {
-    placeholder: 'Artist',
+    placeholder: 'artist',
   },
   {
     placeholder: <p>Artist component of a song.</p>,
@@ -230,7 +230,7 @@ export const VALUES_VARIABLES: Value[] = [
     placeholder: '{t}',
   },
   {
-    placeholder: 'Title',
+    placeholder: 'title',
   },
   {
     placeholder: <p>Title component of a song.</p>,
@@ -239,14 +239,14 @@ export const VALUES_VARIABLES: Value[] = [
   {
     placeholder: '{f1}',
   },
-  { placeholder: 'Feature 1' },
+  { placeholder: 'feature@{1}' },
   { placeholder: <p>First featured artist of a song.</p> },
   // {f2}
   { placeholder: '{f2}' },
-  { placeholder: 'Feature 2' },
+  { placeholder: 'feature@{2}' },
   { placeholder: <p>Second featured artist of a song.</p> },
   // {f3}
   { placeholder: '{f3}' },
-  { placeholder: 'Feature 3' },
+  { placeholder: 'feature@{3}' },
   { placeholder: <p>Third featured artist of a song.</p> },
 ];
