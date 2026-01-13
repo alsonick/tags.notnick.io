@@ -1,7 +1,8 @@
 import { ADDITIONAL_PARAMS } from '@/lib/documentation/params';
-import { Badge } from '@/components/shadcn/badge';
 import { VALUES_VARIABLES } from '@/lib/documentation/values';
 import { TableContainer } from '../ui/TableContainer';
+import { Badge } from '@/components/shadcn/badge';
+import { DocumentationNote } from '../ui/DocumentationNote';
 
 const TdElement = (props: { children: React.ReactNode; col: number }) => {
   const shouldWrapInBadge = ['Variables', 'Required'].includes(ADDITIONAL_PARAMS[props.col].name);
@@ -44,13 +45,13 @@ export const CustomStringTemplate = () => {
         provide the song followed by a forward slash which is then followed by the string template you want to use.
         Here's an example:
       </p>
-      <p className="text-gray-800">
+      <p className="text-gray-800 mb-4">
         <Badge variant={'secondary'}>
           {'Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}'}
         </Badge>
       </p>
-      <p className="text-gray-800 mt-4">Here are the available variables you can use in your custom string template:</p>
-      <div className="mt-6">
+      <p className="text-gray-800 mb-4">Here are the available variables you can use in your custom string template:</p>
+      <div className="mb-4">
         <TableContainer params={ADDITIONAL_PARAMS}>
           <tbody>
             {rowsVariables.map((row, rowIndex) => (
@@ -65,6 +66,9 @@ export const CustomStringTemplate = () => {
           </tbody>
         </TableContainer>
       </div>
+      <DocumentationNote>
+        We only support <b>three</b> features.
+      </DocumentationNote>
     </div>
   );
 };

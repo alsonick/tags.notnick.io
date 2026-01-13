@@ -1,7 +1,7 @@
 import { Badge } from '@/components/shadcn/badge';
 import { Tag } from '@/components/Tag';
 import Link from 'next/link';
-import { FiExternalLink } from 'react-icons/fi';
+import { DocumentationNote } from '../ui/DocumentationNote';
 
 export const AdditionalTags = () => {
   const resulting = [
@@ -17,14 +17,6 @@ export const AdditionalTags = () => {
     'christmas music',
     `christmas ${new Date().getFullYear()}`,
     'christmas playlist',
-  ];
-
-  const resultingAdditionalHalloweenTags = [
-    ...resulting,
-    'halloween songs',
-    'halloween music',
-    `halloween ${new Date().getFullYear()}`,
-    'halloween playlist',
   ];
 
   return (
@@ -43,21 +35,27 @@ export const AdditionalTags = () => {
         <Badge variant={'secondary'}>Rex Orange County – Pluto Projector\christmas</Badge>
       </p>
       <p className="text-gray-800 mb-4">Here's the resulting tags:</p>
-      <div className="flex flex-wrap gap-4 mb-4 mt-6">
+      <div className="flex flex-wrap gap-4 mb-4">
         {resultingAdditionalChristmasTags.map((additionalChristmasTag) => (
           <Tag key={additionalChristmasTag} tag={additionalChristmasTag} deletable={false} />
         ))}
       </div>
-      <p className="text-gray-800 mb-4">
-        For halloween, just append the <Badge variant={'secondary'}>\halloween</Badge> flag after the end of the song,
-        here's how it would look:
-      </p>
-      <p className="text-gray-800 mb-4">
-        <Badge variant={'secondary'}>Rex Orange County – Pluto Projector\halloween</Badge>
-      </p>
       <Link className="text-blue-500 w-fit font-semibold hover:underline" href="/format" target="_blank">
         Click here to see the available additional tags format
       </Link>
+      <div className="mt-6">
+        <DocumentationNote>
+          Propose new additional tags by{' '}
+          <Link
+            className="text-blue-500 font-semibold hover:underline"
+            href="https://github.com/Lyrics-Tags-Generator/formats/issues/new"
+            target="_blank"
+          >
+            creating an issue on GitHub
+          </Link>{' '}
+          with your suggestion.
+        </DocumentationNote>
+      </div>
     </div>
   );
 };
