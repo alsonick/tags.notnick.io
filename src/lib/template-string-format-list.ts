@@ -372,40 +372,43 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(none)::[default]',
         template:
-          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio',
+          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{title} full song,{artist} {title} full song,{title} official',
       },
       {
         id: generateRandomId(),
         constraint: '(none)::[feature-1]',
-        template: '{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title}',
+        template:
+          '{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{artist} {firstFeature} {title} official audio,{artist} {firstFeature} {title} track,{artist} {firstFeature} {title} song',
       },
       {
         id: generateRandomId(),
         constraint: '(none)::includes[default]&&[feature-1]',
         template:
-          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title}',
+          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{title} full song,{artist} {title} full song,{title} official,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{artist} {firstFeature} {title} official audio,{artist} {firstFeature} {title} track,{artist} {firstFeature} {title} song',
       },
       {
         id: generateRandomId(),
         constraint: '(none)::[feature-2]',
-        template: '{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title}',
+        template:
+          '{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title},{artist} {secondFeature} {title} official audio,{artist} {secondFeature} {title} track',
       },
       {
         id: generateRandomId(),
         constraint: '(none)::includes[default]&&[feature-1]&&[feature-2]',
         template:
-          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title}',
+          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{title} full song,{artist} {title} full song,{title} official,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{artist} {firstFeature} {title} official audio,{artist} {firstFeature} {title} track,{artist} {firstFeature} {title} song,{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title},{artist} {secondFeature} {title} official audio,{artist} {secondFeature} {title} track',
       },
       {
         id: generateRandomId(),
         constraint: '(none)::[feature-3]',
-        template: '{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},{artist} {thirdFeature} {title}',
+        template:
+          '{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},{artist} {thirdFeature} {title},{artist} {thirdFeature} {title} official audio',
       },
       {
         id: generateRandomId(),
         constraint: '(none)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]',
         template:
-          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title},{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},{artist} {thirdFeature} {title}',
+          '{artist} {title},{artist},{title},{title} {artist},{artist} - {title},{title} official audio,{artist} new song,{artist} music,{artist} {title} official audio,{artist} {title} song,{title} {artist} audio,{title} full song,{artist} {title} full song,{title} official,{firstFeature},{artist} {firstFeature},{firstFeature} {title},{artist} {firstFeature} {title},{artist} {firstFeature} {title} official audio,{artist} {firstFeature} {title} track,{artist} {firstFeature} {title} song,{secondFeature},{artist} {secondFeature},{secondFeature} {title},{artist} {secondFeature} {title},{artist} {secondFeature} {title} official audio,{artist} {secondFeature} {title} track,{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},{artist} {thirdFeature} {title},{artist} {thirdFeature} {title} official audio',
       },
       {
         id: generateRandomId(),

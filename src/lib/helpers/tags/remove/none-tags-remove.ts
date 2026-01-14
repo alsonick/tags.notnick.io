@@ -1,4 +1,4 @@
-import { tagsDeletionAlgorithm } from "./helpers/tags-deletion-algorithm";
+import { tagsDeletionAlgorithm } from './helpers/tags-deletion-algorithm';
 
 export const noneTagsRemove = (
   title: string,
@@ -7,16 +7,19 @@ export const noneTagsRemove = (
   tiktok: string,
   tags: string
 ): string => {
-  if (features === "none") {
+  if (features === 'none') {
     const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
       const patterns: string[] = [
         `${title} ${artist} audio`,
         `${artist} - ${title}`,
         `${artist} music`,
         `${title} ${artist}`,
+        `${title} official`,
         `${title} official audio`,
         `${artist} ${title} official audio`,
         `${artist} ${title} song`,
+        `${artist} ${title} full song`,
+        `${title} full song`,
         `${artist} new song`,
         `${artist} ${title}`,
         `${title}`,
@@ -31,9 +34,9 @@ export const noneTagsRemove = (
     return tagsDeletionAlgorithm(concreteLeastEfficientTags, tags.toLowerCase());
   }
 
-  if (features !== "none") {
+  if (features !== 'none') {
     const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
-      let feats = features.split(",").map((feat) => feat.trim());
+      let feats = features.split(',').map((feat) => feat.trim());
 
       const secondFeature = feats[1];
       const firstFeature = feats[0];
@@ -49,7 +52,13 @@ export const noneTagsRemove = (
           `${title} ${artist}`,
           `${title} official audio`,
           `${artist} ${title} official audio`,
+          `${artist} ${firstFeature} ${title} official audio`,
+          `${artist} ${firstFeature} ${title} track`,
+          `${artist} ${firstFeature} ${title} song`,
           `${artist} ${title} song`,
+          `${title} full song`,
+          `${artist} ${title} full song`,
+          `${title} official`,
           `${artist} new song`,
           `${firstFeature}`,
           `${artist} ${title}`,
@@ -72,7 +81,12 @@ export const noneTagsRemove = (
           `${title} ${artist}`,
           `${title} official audio`,
           `${artist} ${title} official audio`,
+          `${artist} ${secondFeature} ${title} official audio`,
+          `${artist} ${secondFeature} ${title} track`,
           `${artist} ${title} song`,
+          `${title} full song`,
+          `${artist} ${title} full song`,
+          `${title} official`,
           `${artist} new song`,
           `${secondFeature}`,
           `${firstFeature}`,
@@ -101,7 +115,16 @@ export const noneTagsRemove = (
           `${title} ${artist}`,
           `${title} official audio`,
           `${artist} ${title} official audio`,
+          `${artist} ${thirdFeature} ${title} official audio`,
+          `${artist} ${secondFeature} ${title} official audio`,
+          `${artist} ${secondFeature} ${title} track`,
+          `${artist} ${firstFeature} ${title} official audio`,
+          `${artist} ${firstFeature} ${title} track`,
+          `${artist} ${firstFeature} ${title} song`,
           `${artist} ${title} song`,
+          `${title} full song`,
+          `${artist} ${title} full song`,
+          `${title} official`,
           `${artist} new song`,
           `${thirdFeature}`,
           `${secondFeature}`,
@@ -122,5 +145,5 @@ export const noneTagsRemove = (
     return tagsDeletionAlgorithm(concreteLeastEfficientTags, tags.toLowerCase());
   }
 
-  return "";
+  return '';
 };
