@@ -4,53 +4,53 @@ import {
   FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
-} from "@/lib/constants";
-import { nightcoreSpedUpTags } from "@/lib/helpers/tags/nightcore-sped-up-tags";
-import { slowedReverbTitles } from "@/lib/helpers/titles/slowed-reverb-titles";
-import { bassBoostedTitles } from "@/lib/helpers/titles/bass-boosted-titles";
-import { slowedReverbTags } from "@/lib/helpers/tags/slowed-reverb-tags";
-import { bassBoostedTags } from "@/lib/helpers/tags/bass-boosted-tags";
-import { capitalizeFirstLetter } from "@/lib/capitalize-first-letter";
-import { validateProvidedGenre } from "@/lib/validate-provided-genre";
-import { removeTags } from "./../../../lib/helpers/tags/remove-tags";
-import { returnComputedFormat } from "@/lib/return-computed-format";
-import { computeFinalHashtags } from "@/lib/compute-final-hashtag";
-import { lyricsTitles } from "@/lib/helpers/titles/lyrics-titles";
-import { letraTitles } from "@/lib/helpers/titles/letra-titles";
-import { phonkTitles } from "@/lib/helpers/titles/phonk-titles";
-import { sendDiscordWebhook } from "@/lib/send-discord-webhook";
-import { computeTikTokValue } from "@/lib/compute-tiktok-value";
-import { testoTitles } from "@/lib/helpers/titles/testo-titles";
-import { noneTitles } from "@/lib/helpers/titles/none-titles";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { lyricsTags } from "@/lib/helpers/tags/lyrics-tags";
-import { testoTags } from "@/lib/helpers/tags/testo-lyrics";
-import { countTagsLength } from "@/lib/count-tags-length";
-import { letraTags } from "@/lib/helpers/tags/letra-tags";
-import { phonkTags } from "@/lib/helpers/tags/phonk-tags";
-import { noneTags } from "@/lib/helpers/tags/none-tags";
-import { removeEmojis } from "@/lib/remove-emojis";
-import { shuffleTags } from "@/lib/shuffle-tags";
-import { urlBuilder } from "@/lib/url-builder";
-import { FORMAT } from "@/lib/format";
-import { error } from "@/lib/error";
-import { GENRE } from "@/lib/genre";
-import { v4 as uuidv4 } from "uuid";
+} from '@/lib/constants';
+import { nightcoreSpedUpTags } from '@/lib/helpers/tags/nightcore-sped-up-tags';
+import { slowedReverbTitles } from '@/lib/helpers/titles/slowed-reverb-titles';
+import { bassBoostedTitles } from '@/lib/helpers/titles/bass-boosted-titles';
+import { slowedReverbTags } from '@/lib/helpers/tags/slowed-reverb-tags';
+import { bassBoostedTags } from '@/lib/helpers/tags/bass-boosted-tags';
+import { capitalizeFirstLetter } from '@/lib/capitalize-first-letter';
+import { validateProvidedGenre } from '@/lib/validate-provided-genre';
+import { removeTags } from './../../../lib/helpers/tags/remove-tags';
+import { returnComputedFormat } from '@/lib/return-computed-format';
+import { computeFinalHashtags } from '@/lib/compute-final-hashtag';
+import { lyricsTitles } from '@/lib/helpers/titles/lyrics-titles';
+import { letraTitles } from '@/lib/helpers/titles/letra-titles';
+import { phonkTitles } from '@/lib/helpers/titles/phonk-titles';
+import { sendDiscordWebhook } from '@/lib/send-discord-webhook';
+import { computeTikTokValue } from '@/lib/compute-tiktok-value';
+import { testoTitles } from '@/lib/helpers/titles/testo-titles';
+import { noneTitles } from '@/lib/helpers/titles/none-titles';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { lyricsTags } from '@/lib/helpers/tags/lyrics-tags';
+import { testoTags } from '@/lib/helpers/tags/testo-lyrics';
+import { countTagsLength } from '@/lib/count-tags-length';
+import { letraTags } from '@/lib/helpers/tags/letra-tags';
+import { phonkTags } from '@/lib/helpers/tags/phonk-tags';
+import { noneTags } from '@/lib/helpers/tags/none-tags';
+import { removeEmojis } from '@/lib/remove-emojis';
+import { shuffleTags } from '@/lib/shuffle-tags';
+import { urlBuilder } from '@/lib/url-builder';
+import { FORMAT } from '@/lib/format';
+import { error } from '@/lib/error';
+import { GENRE } from '@/lib/genre';
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
-  if (req.method !== "GET") {
+  if (req.method !== 'GET') {
     return res.status(405).json({ error: error.message.methodNotAllowed });
   }
 
   // Get the query parameters
-  const source: string = (req.query.source as string) || "unknown";
-  const example: string = (req.query.example as string) || "false";
-  const webhook: string = (req.query.webhook as string) || "none";
-  const genre: string = (req.query.genre as string) || "none";
-  const verse: string = (req.query.verse as string) || "none";
+  const source: string = (req.query.source as string) || 'unknown';
+  const example: string = (req.query.example as string) || 'false';
+  const webhook: string = (req.query.webhook as string) || 'none';
+  const genre: string = (req.query.genre as string) || 'none';
+  const verse: string = (req.query.verse as string) || 'none';
   const structure: string = req.query.structure as string;
-  const log: string = (req.query.log as string) || "true";
+  const log: string = (req.query.log as string) || 'true';
   const features: string = req.query.features as string;
   const channel: string = req.query.channel as string;
   const shuffle: string = req.query.shuffle as string;
@@ -83,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  if (typeof verse === "string" && !/^[a-zA-Z ,]*$/.test(verse)) {
+  if (typeof verse === 'string' && !/^[a-zA-Z ,]*$/.test(verse)) {
     return res.status(400).json({
       error: error.message.removeSpecialCharactersAndNumbersExceptCommasVerse,
       success: false,
@@ -162,16 +162,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Process and compute final values locally without immediately updating state
   let finalFeatures = features;
   let finalArtist = artist;
-  let extractedTitle = "";
+  let extractedTitle = '';
   let finalTitle = title;
-  let finalFormat = "";
-  let formatText = "";
-  let remix = "";
+  let finalFormat = '';
+  let formatText = '';
+  let remix = '';
 
   // Modified if statement to check for both standard hyphen and em dash
   if (/,|-/.test(artist)) {
     // Determine which separator to use for splitting (standard hyphen or em dash)
-    const separator = artist.includes("—") ? "—" : "-";
+    const separator = artist.includes('—') ? '—' : '-';
     const data = artist.split(separator);
 
     let mainPart = artist;
@@ -180,34 +180,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const titleFormatString = data[1].trim();
       mainPart = data[0].trim();
       // Extract title before any format indicators
-      if (titleFormatString.includes("(")) {
-        extractedTitle = removeEmojis(titleFormatString.split("(")[0].trim());
-      } else if (titleFormatString.includes("[")) {
-        extractedTitle = removeEmojis(titleFormatString.split("[")[0].trim());
+      if (titleFormatString.includes('(')) {
+        extractedTitle = removeEmojis(titleFormatString.split('(')[0].trim());
+      } else if (titleFormatString.includes('[')) {
+        extractedTitle = removeEmojis(titleFormatString.split('[')[0].trim());
       } else {
         extractedTitle = removeEmojis(titleFormatString);
       }
       // Process format from parentheses or brackets
-      if (titleFormatString.includes("(")) {
-        formatText = removeEmojis(titleFormatString.replace("(", ""))
-          .replace(extractedTitle, "")
-          .replace("(", "")
-          .replace(")", "")
+      if (titleFormatString.includes('(')) {
+        formatText = removeEmojis(titleFormatString.replace('(', ''))
+          .replace(extractedTitle, '')
+          .replace('(', '')
+          .replace(')', '')
           .trim();
 
         // Extract remix title
-        if (formatText.toLowerCase().includes("remix")) {
+        if (formatText.toLowerCase().includes('remix')) {
           remix = formatText.toLowerCase();
         }
-      } else if (titleFormatString.includes("[")) {
-        formatText = removeEmojis(titleFormatString.replace("[", ""))
-          .replace(extractedTitle, "")
-          .replace("[", "")
-          .replace("]", "")
+      } else if (titleFormatString.includes('[')) {
+        formatText = removeEmojis(titleFormatString.replace('[', ''))
+          .replace(extractedTitle, '')
+          .replace('[', '')
+          .replace(']', '')
           .trim();
 
         // Extract remix title
-        if (formatText.toLowerCase().includes("remix")) {
+        if (formatText.toLowerCase().includes('remix')) {
           remix = formatText.toLowerCase();
         }
       }
@@ -224,11 +224,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const [firstArtist, ...otherArtists] = artistsArray;
 
-    finalArtist = firstArtist.replaceAll("'", "") || "none"; // fallback if empty
-    finalFeatures = otherArtists.join(", ") || "none";
+    finalArtist = firstArtist.replaceAll("'", '') || 'none'; // fallback if empty
+    finalFeatures = otherArtists.join(', ') || 'none';
 
     // If features param is provided, override finalFeatures
-    if (features !== "none") {
+    if (features !== 'none') {
       finalFeatures = features;
     }
   }
@@ -237,17 +237,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (extractedTitle.length) {
     finalTitle = extractedTitle
       .trim()
-      .replace(/(\.|'|!|\(.*$)/g, "")
+      .replace(/(\.|'|!|\(.*$)/g, '')
       .trim();
   } else {
     finalTitle = title
       .trim()
-      .replace(/(\.|'|!|\(.*$)/g, "")
+      .replace(/(\.|'|!|\(.*$)/g, '')
       .trim();
   }
 
   // If format text was found, process it.
-  if (formatText.length && formatText.toLowerCase() !== "lyrics" && !formatText.toLowerCase().includes("remix")) {
+  if (formatText.length && formatText.toLowerCase() !== 'lyrics' && !formatText.toLowerCase().includes('remix')) {
     // Get standardized format name and ensure it's lowercase for the API
     finalFormat = returnComputedFormat(formatText).toLowerCase();
   } else {
@@ -256,7 +256,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // Error if artist includes separators but title is already specified
   if (/,|-/.test(artist)) {
-    if (title !== "none") {
+    if (title !== 'none') {
       return res.status(400).json({
         error: error.message.artistAndTitleAlreadyProvidedInTheArtistField,
         success: false,
@@ -265,9 +265,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   let formatPureFormat = finalFormat.trim().toLowerCase();
-  let tags: string = "";
+  let tags: string = '';
 
-  const slicedTitleString = finalTitle.split("\\");
+  const slicedTitleString = finalTitle.split('\\');
   const additionalFormat = slicedTitleString[1];
   finalTitle = slicedTitleString[0];
 
@@ -296,14 +296,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags = noneTags(finalArtist, finalTitle, finalFeatures, computeTikTokValue(tiktok));
   }
 
-  let customFormatString = "";
-  let tagsToBeRemoved = "";
-  let removedTags = "";
+  let customFormatString = '';
+  let tagsToBeRemoved = '';
+  let removedTags = '';
 
   // Checks for the '/' character in the artist field, if one was provided then we need to save it as a custom format
   if (/\//.test(artist)) {
-    const validVariablesStrict = ["{a}", "{t}", "{f1}", "{f2}", "{f3}", "/custom"];
-    const validVariables = ["a", "t", "f1", "f2", "f3"];
+    const validVariablesStrict = ['{a}', '{t}', '{f1}', '{f2}', '{f3}', '/custom'];
+    const validVariables = ['a', 't', 'f1', 'f2', 'f3'];
 
     // Check if any valid variable exists in the string.
     const hasValidVariable = validVariablesStrict.some((variable) => artist.includes(variable));
@@ -315,15 +315,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    if (artist.includes("/custom")) {
+    if (artist.includes('/custom')) {
       // TODO: Redis stuff goes here
     }
 
     // Example: Rex Orange County - Pluto Projector/{a},{t}
-    const customFormat = artist.split("/")[1];
-    const individualFormatSplit = customFormat.split(",");
+    const customFormat = artist.split('/')[1];
+    const individualFormatSplit = customFormat.split(',');
 
-    let customFormatTags = "";
+    let customFormatTags = '';
 
     for (const format of individualFormatSplit) {
       const containsValid = validVariables.some((v) => format.includes(v));
@@ -344,11 +344,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Store and assign tags
     customFormatString = customFormatTags;
 
-    finalTitle = finalTitle.split("/")[0];
+    finalTitle = finalTitle.split('/')[0];
 
-    removedTags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
+    // Parse featured artists for {f1}, {f2}, {f3} replacement
+    const featuredArtists = finalFeatures !== 'none' ? finalFeatures.split(',').map((f) => f.trim()) : [];
+    const f1 = featuredArtists[0] || '';
+    const f2 = featuredArtists[1] || '';
+    const f3 = featuredArtists[2] || '';
 
-    tags = customFormatTags.replaceAll("{a}", finalArtist).replaceAll("{t}", finalTitle);
+    removedTags = customFormatTags
+      .replaceAll('{a}', finalArtist)
+      .replaceAll('{t}', finalTitle)
+      .replaceAll('{f1}', f1)
+      .replaceAll('{f2}', f2)
+      .replaceAll('{f3}', f3)
+      .replace(/,+/g, ',')
+      .replace(/^,|,$/g, '');
+
+    tags = customFormatTags
+      .replaceAll('{a}', finalArtist)
+      .replaceAll('{t}', finalTitle)
+      .replaceAll('{f1}', f1)
+      .replaceAll('{f2}', f2)
+      .replaceAll('{f3}', f3)
+      .replace(/,+/g, ',')
+      .replace(/^,|,$/g, '');
   }
 
   if (remix.length) {
@@ -357,9 +377,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (additionalFormat != undefined) {
     // Christmas
-    const validAdditionalFormatTextListChristmas = ["christmas", "xmas", "noel", "yule", "christmastime"];
+    const validAdditionalFormatTextListChristmas = ['christmas', 'xmas', 'noel', 'yule', 'christmastime'];
     // Halloween
-    const validAdditionalFormatTextListHalloween = ["halloween", "spooky", "scary", "ghost"];
+    const validAdditionalFormatTextListHalloween = ['halloween', 'spooky', 'scary', 'ghost'];
 
     // Lower case the text
     const additionalFormatLowercase = additionalFormat.toLowerCase();
@@ -375,9 +395,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let verses = [];
 
-  if (typeof verse === "string" && verse !== "none" && /,/.test(verse)) {
+  if (typeof verse === 'string' && verse !== 'none' && /,/.test(verse)) {
     // Splits the verse up with the , character.
-    const verseSplit = verse.split(",");
+    const verseSplit = verse.split(',');
 
     // If there's more than 3 verses then send back a error response
     if (verseSplit.length > 3) {
@@ -389,12 +409,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Add each verse to the array
     verseSplit.forEach((verse) => verses.push(`,${verse}`));
-  } else if (verse && verse !== "none") {
+  } else if (verse && verse !== 'none') {
     verses.push(`,${verse}`);
   }
 
   if (verses.length) {
-    tags += verses.join("").toLowerCase();
+    tags += verses.join('').toLowerCase();
   }
 
   if (genre === GENRE.rap || genre === GENRE.hiphop) {
@@ -413,85 +433,85 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += `,dance music,dance,trending dance,dance ${new Date().getFullYear()}`;
   }
 
-  if (shuffle === "true") {
+  if (shuffle === 'true') {
     removedTags = shuffleTags(removedTags);
     tags = shuffleTags(tags);
   }
 
-  if (channel !== "none") {
+  if (channel !== 'none') {
     removedTags += `,${channel}`.toLowerCase();
-    tags += `,${channel.replaceAll(".", "")}`.toLowerCase();
+    tags += `,${channel.replaceAll('.', '')}`.toLowerCase();
   }
 
   tagsToBeRemoved = removeTags(finalTitle, finalArtist, finalFeatures, finalFormat.toLowerCase(), tiktok, tags);
 
   removedTags = tags
-    .split(",")
+    .split(',')
     .map((tag) => tag.trim())
     .filter((tag) => {
       if (!tag) return false;
 
-      const tagsToRemoveArray = tagsToBeRemoved.split(",").map((t) => t.trim().toLowerCase());
+      const tagsToRemoveArray = tagsToBeRemoved.split(',').map((t) => t.trim().toLowerCase());
 
       return !tagsToRemoveArray.includes(tag.toLowerCase());
     })
-    .join(",");
+    .join(',');
 
-  let titles: string = "";
+  let titles: string = '';
 
   const feats: string[] = finalFeatures.length
-    ? finalFeatures.split(",").map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`)
+    ? finalFeatures.split(',').map((feat) => `${feat[0].toUpperCase()}${feat.substring(1)}`)
     : [];
 
   // Lyrics
   if (formatPureFormat === FORMAT.lyrics) {
-    if (feats.includes("None")) feats.pop();
+    if (feats.includes('None')) feats.pop();
     titles += lyricsTitles(finalArtist, finalTitle, feats);
   }
 
   // Letra
   if (formatPureFormat === FORMAT.letra) {
-    if (feats.includes("None")) feats.pop();
+    if (feats.includes('None')) feats.pop();
     titles += letraTitles(finalArtist, finalTitle, feats);
   }
 
   // Testo
   if (formatPureFormat === FORMAT.testo) {
-    if (feats.includes("None")) feats.pop();
+    if (feats.includes('None')) feats.pop();
     titles += testoTitles(finalArtist, finalTitle, feats);
   }
 
   // Slowed & Reverb
   if (formatPureFormat === FORMAT.slowedreverb) {
-    if (feats.includes("None")) feats.pop();
+    if (feats.includes('None')) feats.pop();
     titles += slowedReverbTitles(finalArtist, finalTitle, feats);
   }
 
   // Phonk
   if (formatPureFormat === FORMAT.phonk) {
-    if (feats.includes("None")) feats.pop();
+    if (feats.includes('None')) feats.pop();
     titles += phonkTitles(finalArtist, finalTitle, feats);
   }
 
   // Bass Boosted
   if (formatPureFormat === FORMAT.bassboosted) {
-    if (feats.includes("None")) feats.pop();
+    if (feats.includes('None')) feats.pop();
     titles += bassBoostedTitles(finalArtist, finalTitle, feats);
   }
 
   if (formatPureFormat === FORMAT.none) {
-    if (feats.includes("None")) feats.pop();
+    if (feats.includes('None')) feats.pop();
     titles += noneTitles(finalArtist, finalTitle, feats);
   }
 
   const hashtags = [
-    decodeURIComponent(finalArtist.replaceAll(" ", "")),
-    decodeURIComponent(finalTitle.replaceAll(" ", "").replaceAll("'", "")),
+    decodeURIComponent(finalArtist.replaceAll(' ', '')),
+    decodeURIComponent(finalTitle.replaceAll(' ', '').replaceAll("'", '')),
     decodeURIComponent(computeFinalHashtags(finalFormat)),
   ];
 
   // Removes the last hashtag if the format is none
-  if (hashtags[hashtags.length - 1] === "") {
+  if (hashtags[hashtags.length - 1] === '') {
     hashtags.pop();
   }
 
@@ -514,9 +534,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     log
   );
 
-  const webhookUrl = webhook === "none" ? process.env.DISCORD_WEBHOOK_URL! : webhook;
+  const webhookUrl = webhook === 'none' ? process.env.DISCORD_WEBHOOK_URL! : webhook;
 
-  if (log.toLowerCase() === "true") {
+  if (log.toLowerCase() === 'true') {
     await sendDiscordWebhook(
       customFormatString,
       tagsToBeRemoved,
@@ -540,7 +560,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.status(200).json({
     success: true,
     tags: decodeURIComponent(tags.toLowerCase()),
-    tagsToBeRemoved: tagsToBeRemoved.length ? decodeURIComponent(tagsToBeRemoved.toLowerCase()) : "",
+    tagsToBeRemoved: tagsToBeRemoved.length ? decodeURIComponent(tagsToBeRemoved.toLowerCase()) : '',
     removedTags: decodeURIComponent(removedTags.toLowerCase()),
     removedTagsLength: countTagsLength(removedTags),
     title: decodeURIComponent(finalTitle.trim()),
@@ -548,7 +568,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     artist: decodeURIComponent(finalArtist.trim()),
     artistCustomFormat: customFormatString.length && `${decodeURIComponent(artist.trim())}`,
     customFormat: customFormatString,
-    features: finalFeatures !== "none" ? finalFeatures.split(", ") : [],
+    features: finalFeatures !== 'none' ? finalFeatures.split(', ') : [],
     hashtags,
     tiktok,
     channel,
@@ -557,7 +577,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       titles: decodeURIComponent(titles),
       seo: {
         text:
-          finalFeatures === "none"
+          finalFeatures === 'none'
             ? `${decodeURIComponent(finalArtist)}=${decodeURIComponent(finalTitle)}=${decodeURIComponent(
                 finalArtist
               )} ${decodeURIComponent(finalTitle)} ${computeFinalHashtags(finalFormat)}=${decodeURIComponent(
@@ -578,9 +598,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               )}`,
       },
       array: {
-        removedTags: decodeURIComponent(removedTags).toLowerCase().split(","),
-        titles: decodeURIComponent(titles).split("="),
-        tags: decodeURIComponent(tags).toLowerCase().split(","),
+        removedTags: decodeURIComponent(removedTags).toLowerCase().split(','),
+        titles: decodeURIComponent(titles).split('='),
+        tags: decodeURIComponent(tags).toLowerCase().split(','),
       },
     },
     url,
