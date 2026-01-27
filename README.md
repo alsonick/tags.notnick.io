@@ -18,14 +18,12 @@ A powerful YouTube tags generator specifically designed for lyric video creators
 - **Tag Shuffling** - Randomize tag order for variety
 - **Channel Branding** - Include your channel name in tags
 
-## Tech Stack
+## Stack
 
-- **Framework** - [Next.js 15](https://nextjs.org/) with React 19
-- **Styling** - [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components** - [Radix UI](https://www.radix-ui.com/)
-- **Icons** - [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
-- **Deployment** - [Vercel](https://vercel.com/)
-- **Analytics** - [Vercel Analytics](https://vercel.com/analytics)
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React.js](https://react.dev/)
+- [TailwindCSS](https://tailwindcss.com/)
 
 ## Getting Started
 
@@ -236,4 +234,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 <p align="center">Made with ❤️ for lyric video creators</p>
+
 
