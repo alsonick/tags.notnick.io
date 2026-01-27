@@ -54,6 +54,8 @@ yarn install
 DISCORD_WEBHOOK_URL=your_discord_webhook_url_here
 ```
 
+> This step is optional.
+
 4. Run the development server
 ```bash
 npm run dev
@@ -234,3 +236,4 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 <p align="center">Made with ❤️ for lyric video creators</p>
+
