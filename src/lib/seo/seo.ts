@@ -4,7 +4,7 @@ export const seo = {
   page: {
     home: {
       title: 'Lyrics Tags Generator',
-      description: 'Generate YouTube tags for your lyric videos.',
+      description: 'Generate YouTube metadata for your lyric videos.',
     },
     privacyPolicy: {
       title: 'Privacy Policy | Lyrics Tags Generator',
