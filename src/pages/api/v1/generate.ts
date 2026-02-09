@@ -439,8 +439,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (channel !== 'none') {
-    removedTags += `,${channel}`.toLowerCase();
-    tags += `,${channel.replaceAll('.', '')}`.toLowerCase();
+    removedTags += `,${channel}`.toLowerCase().trim();
+    tags += `,${channel.replaceAll('.', '')}`.toLowerCase().trim();
   }
 
   tagsToBeRemoved = removeTags(finalTitle, finalArtist, finalFeatures, finalFormat.toLowerCase(), tiktok, tags);
