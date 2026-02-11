@@ -267,7 +267,7 @@ export default function Home() {
     }
 
     // Checks if the artist field reaches the character limit
-    if (/[-,]/.test(artist)) {
+    if (/[-,&]/.test(artist)) {
       // Check if artist input exceeds formatted character limit
       if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
         // Show error toast when character limit is exceeded
@@ -463,7 +463,7 @@ export default function Home() {
                 </p>
                 <CharacterLimit
                   limit={
-                    artist.includes("-") || artist.includes(",")
+                    artist.includes("-") || artist.includes(",") || artist.includes("&")
                       ? ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED
                       : ARTIST_INPUT_FIELD_CHARACTER_LIMIT
                   }
