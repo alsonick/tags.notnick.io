@@ -105,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   //   });
   // }
 
-  if (/,|-/.test(artist)) {
+  if (/,|-|&/.test(artist)) {
     // Checks if the artist field reaches the character limit
     if (artist.length > ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED) {
       res.status(400).json({
@@ -169,7 +169,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let remix = '';
 
   // Modified if statement to check for both standard hyphen and em dash
-  if (/,|-/.test(artist)) {
+  if (/,|-|&/.test(artist)) {
     // Determine which separator to use for splitting (standard hyphen or em dash)
     const separator = artist.includes('—') ? '—' : '-';
     const data = artist.split(separator);
