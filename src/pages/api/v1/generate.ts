@@ -375,7 +375,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += `,${remix},${finalTitle} ${remix},${finalArtist} ${remix}`;
   }
 
-  if (additionalFormat != undefined) {
+  if (additionalFormat !== undefined) {
     // Christmas
     const validAdditionalFormatTextListChristmas = ['christmas', 'xmas', 'noel', 'yule', 'christmastime'];
     // Halloween
