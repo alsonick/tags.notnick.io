@@ -54,14 +54,16 @@ const NAV_LINKS = [
   },
 ];
 
-export const Nav = () => {
+export const Nav = ({ devViewEnabled = true }: { devViewEnabled?: boolean }) => {
   const router = useRouter();
   const scrolled = useScrolled();
 
+  const isDev = (process.env.NODE_ENV === 'development' || router.query.debug === 'true') && devViewEnabled;
+
   return (
     <nav
-      className={`xl:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden 
-        ${process.env.NODE_ENV === 'development' || router.query.debug === 'true' ? 'top-5' : 'top-0'} 
+      className={`xl:flex items-center fixed justify-between h-20 w-full px-20 bg-white hidden
+        ${isDev ? 'top-5' : 'top-0'}
         z-50 transition-shadow duration-500 ${scrolled ? 'shadow-md' : 'shadow-none'}`}
     >
       <Link href="/" className="flex items-center">
