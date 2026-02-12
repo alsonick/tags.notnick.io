@@ -4,40 +4,40 @@ import {
   FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
-} from "@/lib/constants";
-import { FiRepeat, FiTrash, FiDelete, FiSave, FiCornerDownRight } from "react-icons/fi";
-import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
-import { SuggestedTitlesSection } from "@/components/sections/SuggestedTitlesSection";
-import { SeoKeywordsSection } from "@/components/sections/SeoKeywordsSection";
-import { HashtagsSection } from "@/components/sections/HashtagsSection";
-import { CharacterLimit } from "@/components/CharacterLimit";
-import { DevelopmentNav } from "@/components/DevelopmentNav";
-import { countTagsLength } from "@/lib/count-tags-length";
-import { Skeleton } from "@/components/shadcn/skeleton";
-import { ToastContainer, toast } from "react-toastify";
-import { MainWrapper } from "@/components/MainWrapper";
-import { useState, useRef, useEffect } from "react";
-import { Switch } from "@/components/shadcn/switch";
-import { Container } from "@/components/Container";
-import { Button } from "../components/Button";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { Custom } from "@/components/Custom";
-import { Response } from "@/types/response";
-import { Input } from "@/components/Input";
-import { Step } from "../components/Step";
-import { FiCopy } from "react-icons/fi";
-import { success } from "@/lib/success";
-import { useRouter } from "next/router";
-import { Nav } from "@/components/Nav";
-import { Seo } from "@/components/Seo";
-import { Tag } from "@/components/Tag";
-import { FORMAT } from "@/lib/format";
-import copy from "copy-to-clipboard";
-import { error } from "@/lib/error";
-import { GENRE } from "@/lib/genre";
-import { seo } from "@/lib/seo/seo";
-import Link from "next/link";
+} from '@/lib/constants';
+import { FiRepeat, FiTrash, FiDelete, FiSave, FiCornerDownRight } from 'react-icons/fi';
+import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
+import { SuggestedTitlesSection } from '@/components/sections/SuggestedTitlesSection';
+import { SeoKeywordsSection } from '@/components/sections/SeoKeywordsSection';
+import { HashtagsSection } from '@/components/sections/HashtagsSection';
+import { CharacterLimit } from '@/components/CharacterLimit';
+import { DevelopmentNav } from '@/components/DevelopmentNav';
+import { countTagsLength } from '@/lib/count-tags-length';
+import { Skeleton } from '@/components/shadcn/skeleton';
+import { ToastContainer, toast } from 'react-toastify';
+import { MainWrapper } from '@/components/MainWrapper';
+import { useState, useRef, useEffect } from 'react';
+import { Switch } from '@/components/shadcn/switch';
+import { Container } from '@/components/Container';
+import { Button } from '../components/Button';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { Custom } from '@/components/Custom';
+import { Response } from '@/types/response';
+import { Input } from '@/components/Input';
+import { Step } from '../components/Step';
+import { FiCopy } from 'react-icons/fi';
+import { success } from '@/lib/success';
+import { useRouter } from 'next/router';
+import { Nav } from '@/components/Nav';
+import { Seo } from '@/components/Seo';
+import { Tag } from '@/components/Tag';
+import { FORMAT } from '@/lib/format';
+import copy from 'copy-to-clipboard';
+import { error } from '@/lib/error';
+import { GENRE } from '@/lib/genre';
+import { seo } from '@/lib/seo/seo';
+import Link from 'next/link';
 
 export default function Home() {
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
@@ -53,17 +53,18 @@ export default function Home() {
   const [showJSONView, setShowJSONView] = useState(true);
   const [titles, setTitles] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [format, setFormat] = useState("Lyrics");
+  const [format, setFormat] = useState('Lyrics');
   const [loading, setLoading] = useState(false);
-  const [features, setFeatures] = useState("");
+  const [features, setFeatures] = useState('');
   const [data, setData] = useState<Response>();
-  const [channel, setChannel] = useState("");
-  const [seoText, setSeoText] = useState("");
-  const [genre, setGenre] = useState("None");
-  const [artist, setArtist] = useState("");
-  const [tiktok, setTiktok] = useState("");
-  const [title, setTitle] = useState("");
-  const [verse, setVerse] = useState("");
+  const [channel, setChannel] = useState('');
+  const [seoText, setSeoText] = useState('');
+  const [genre, setGenre] = useState('None');
+  const [artist, setArtist] = useState('');
+  const [tiktok, setTiktok] = useState('');
+  const [title, setTitle] = useState('');
+  const [devViewEnabled, setDevViewEnabled] = useState(true);
+  const [verse, setVerse] = useState('');
 
   // References to input fields for focusing and validation
   const refs = {
@@ -79,7 +80,7 @@ export default function Home() {
 
   const generate = async (example: boolean) => {
     // Store custom format from localStorage if needed
-    let localStorageCustomFormat = "";
+    let localStorageCustomFormat = '';
 
     // Reset example state when generating real data
     if (example === false) {
@@ -97,9 +98,9 @@ export default function Home() {
     }
 
     // Checks if the artist field was given a custom format key
-    if (artist.includes("/custom") && !artist.includes("{")) {
+    if (artist.includes('/custom') && !artist.includes('{')) {
       // Extract the key from the artist string (format: "artist/key/custom")
-      const customFormatKey = artist.split("/")[1];
+      const customFormatKey = artist.split('/')[1];
       // Retrieve the saved custom format from localStorage using the key
       const customFormat = localStorage.getItem(customFormatKey);
 
@@ -119,27 +120,27 @@ export default function Home() {
     // Build query parameters for the API request
     const queryParams = new URLSearchParams({
       artist: example
-        ? "Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}"
+        ? 'Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}'
         : localStorageCustomFormat.length
-        ? `${artist.trim().split("/")[0]}/${localStorageCustomFormat}`
-        : artist.trim(),
-      log: process.env.NODE_ENV === "development" || router.query.debug === "true" ? `${enableLogging}` : "true",
-      features: features.trim().length ? features.trim() : "none",
-      channel: channel.trim().length ? channel.trim() : "none",
-      title: title.trim().length ? title.trim() : "none",
-      verse: verse.trim().length ? verse.trim() : "none",
-      tiktok: tiktok === "true" ? "true" : "false",
-      shuffle: autoShuffleTags ? "true" : "false",
+          ? `${artist.trim().split('/')[0]}/${localStorageCustomFormat}`
+          : artist.trim(),
+      log: process.env.NODE_ENV === 'development' || router.query.debug === 'true' ? `${enableLogging}` : 'true',
+      features: features.trim().length ? features.trim() : 'none',
+      channel: channel.trim().length ? channel.trim() : 'none',
+      title: title.trim().length ? title.trim() : 'none',
+      verse: verse.trim().length ? verse.trim() : 'none',
+      tiktok: tiktok === 'true' ? 'true' : 'false',
+      shuffle: autoShuffleTags ? 'true' : 'false',
       format: format.toLowerCase().trim(),
       genre: genre.toLowerCase().trim(),
-      source: "web",
+      source: 'web',
     });
 
     // Make API request to generate tags with the provided parameters
     const response = await fetch(`/api/v1/generate?${queryParams.toString()}`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
@@ -166,10 +167,10 @@ export default function Home() {
       // If auto-deleted tags mode is on, use the "removedTags" field
       if (useAutoDeletedTags) {
         // Split the comma-separated string into an array, trimming whitespace
-        separated = data.removedTags.split(",").map((tag) => tag.trim());
+        separated = data.removedTags.split(',').map((tag) => tag.trim());
       } else {
         // Otherwise, use the normal "tags" field
-        separated = data.tags.split(",").map((tag) => tag.trim());
+        separated = data.tags.split(',').map((tag) => tag.trim());
       }
 
       // Success
@@ -202,14 +203,14 @@ export default function Home() {
       // Reset state
       if (clearAfterResponse) {
         setOverflowTagsDeleted(false);
-        setFormat("Lyrics");
-        setGenre("None");
-        setFeatures("");
-        setChannel("");
-        setArtist("");
-        setTiktok("");
-        setVerse("");
-        setTitle("");
+        setFormat('Lyrics');
+        setGenre('None');
+        setFeatures('');
+        setChannel('');
+        setArtist('');
+        setTiktok('');
+        setVerse('');
+        setTitle('');
       }
     }
 
@@ -357,7 +358,7 @@ export default function Home() {
 
     // Checks if verse contains a comma, if does then we split the verses and check if there are more than 3 verses.
     if (verse.length && /,/.test(verse)) {
-      const verseSplit = verse.split(",");
+      const verseSplit = verse.split(',');
 
       // If there's more than 3 verses then send back a error response
       if (verseSplit.length > 3) {
@@ -403,11 +404,11 @@ export default function Home() {
   };
 
   const environmentModeSetting =
-    process.env.NODE_ENV === "development" ? process.env.NODE_ENV.toUpperCase() : `debug`.toUpperCase();
+    process.env.NODE_ENV === 'development' ? process.env.NODE_ENV.toUpperCase() : `debug`.toUpperCase();
 
   useEffect(() => {
     // Checks if the app is running in development mode
-    if (process.env.NODE_ENV === "development" || router.query.debug === "true") {
+    if (process.env.NODE_ENV === 'development' || router.query.debug === 'true') {
       // Don’t auto-clear after response when debugging
       // setClearAfterResponse(false);
 
@@ -420,6 +421,22 @@ export default function Home() {
   }, []); // Empty dependency array → run only once on mount
 
   useEffect(() => {
+    // Toggle development view with Cmd+D
+    const isDev = process.env.NODE_ENV === 'development' || router.query.debug === 'true';
+    if (!isDev) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey && e.key === 'd') {
+        e.preventDefault();
+        setDevViewEnabled((prev) => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [router.query.debug]);
+
+  useEffect(() => {
     // Run this effect whenever the tags array changes
     if (tags.length === 0) {
       // If there are no tags, reset example response usage
@@ -429,20 +446,21 @@ export default function Home() {
 
   // Toggle option for debug and development modes
   const toggles = [
-    { label: "Clear After Response", state: clearAfterResponse, setState: setClearAfterResponse },
-    { label: "Use Auto Deleted Tags", state: useAutoDeletedTags, setState: setUseAutoDeletedTags },
-    { label: "Auto Shuffle Tags", state: autoShuffleTags, setState: setAutoShuffleTags },
-    { label: "Enable Logging", state: enableLogging, setState: setEnableLogging },
-    { label: "Show JSON View", state: showJSONView, setState: setShowJSONView },
-    { label: "Display Response", state: displayResponse, setState: setDisplayResponse },
+    { label: 'Clear After Response', state: clearAfterResponse, setState: setClearAfterResponse },
+    { label: 'Use Auto Deleted Tags', state: useAutoDeletedTags, setState: setUseAutoDeletedTags },
+    { label: 'Auto Shuffle Tags', state: autoShuffleTags, setState: setAutoShuffleTags },
+    { label: 'Enable Logging', state: enableLogging, setState: setEnableLogging },
+    { label: 'Development View', state: !devViewEnabled, setState: () => setDevViewEnabled((prev) => !prev) },
+    { label: 'Show JSON View', state: showJSONView, setState: setShowJSONView },
+    { label: 'Display Response', state: displayResponse, setState: setDisplayResponse },
   ];
 
   return (
     <Container>
       <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
       <NoSupportedSizeScreenMessage />
-      <DevelopmentNav />
-      <Nav />
+      {devViewEnabled && <DevelopmentNav />}
+      <Nav devViewEnabled={devViewEnabled} />
       <MainWrapper>
         <div className="mb-auto">
           <Header />
@@ -458,12 +476,12 @@ export default function Home() {
                   value={artist}
                 />
                 <p className="text-xs text-gray-800 mt-1">
-                  The full song. Inclusive of artists, features and title.{" "}
+                  The full song. Inclusive of artists, features and title.{' '}
                   <span className="text-yellow-600 font-semibold">Required*</span>
                 </p>
                 <CharacterLimit
                   limit={
-                    artist.includes("-") || artist.includes(",") || artist.includes("&")
+                    artist.includes('-') || artist.includes(',') || artist.includes('&')
                       ? ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED
                       : ARTIST_INPUT_FIELD_CHARACTER_LIMIT
                   }
@@ -529,7 +547,7 @@ export default function Home() {
                   value={tiktok}
                 />
                 <p className="text-xs text-gray-800 mt-1">
-                  Is the song popular on TikTok? Type <b>"true"</b> if so.{" "}
+                  Is the song popular on TikTok? Type <b>"true"</b> if so.{' '}
                 </p>
               </section>
               <section className="flex flex-col w-full">
@@ -541,14 +559,14 @@ export default function Home() {
                     value={format}
                   >
                     {[
-                      { value: FORMAT.lyrics, text: "Lyrics" },
-                      { value: FORMAT.bassboosted, text: "Bass Boosted" },
-                      { value: FORMAT.nightcore, text: "Nightcore/Sped Up" },
-                      { value: FORMAT.slowedreverb, text: "Slowed & Reverb" },
-                      { value: FORMAT.letra, text: "Letra" },
-                      { value: FORMAT.testo, text: "Testo" },
-                      { value: FORMAT.phonk, text: "Phonk" },
-                      { value: FORMAT.none, text: "None" },
+                      { value: FORMAT.lyrics, text: 'Lyrics' },
+                      { value: FORMAT.bassboosted, text: 'Bass Boosted' },
+                      { value: FORMAT.nightcore, text: 'Nightcore/Sped Up' },
+                      { value: FORMAT.slowedreverb, text: 'Slowed & Reverb' },
+                      { value: FORMAT.letra, text: 'Letra' },
+                      { value: FORMAT.testo, text: 'Testo' },
+                      { value: FORMAT.phonk, text: 'Phonk' },
+                      { value: FORMAT.none, text: 'None' },
                     ].map((option) => (
                       <option className="font-inter" key={option.value} value={option.value}>
                         {option.text}
@@ -576,14 +594,14 @@ export default function Home() {
                     value={genre}
                   >
                     {[
-                      { value: GENRE.none, text: "None" },
-                      { value: GENRE.country, text: "Country" },
-                      { value: GENRE.latin, text: "Latin" },
-                      { value: GENRE.italian, text: "Italian" },
-                      { value: GENRE.dance, text: "Dance" },
-                      { value: GENRE.phonk, text: "Phonk" },
-                      { value: GENRE.pop, text: "Pop" },
-                      { value: GENRE.rap, text: "Rap" },
+                      { value: GENRE.none, text: 'None' },
+                      { value: GENRE.country, text: 'Country' },
+                      { value: GENRE.latin, text: 'Latin' },
+                      { value: GENRE.italian, text: 'Italian' },
+                      { value: GENRE.dance, text: 'Dance' },
+                      { value: GENRE.phonk, text: 'Phonk' },
+                      { value: GENRE.pop, text: 'Pop' },
+                      { value: GENRE.rap, text: 'Rap' },
                     ].map((option) => (
                       <option className="font-inter" key={option.value} value={option.value}>
                         {option.text}
@@ -616,7 +634,7 @@ export default function Home() {
             </div>
             <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
               <div className="ml-auto flex justify-between w-full items-center">
-                {" "}
+                {' '}
                 <div></div>
                 {/* <Button
                 title="Generate example response"
@@ -660,7 +678,7 @@ export default function Home() {
                         setUsedGenerateExampleResponse(false);
 
                         // Show success message to user
-                        toast.success("Cleared.");
+                        toast.success('Cleared.');
 
                         // Clear all tags by setting the state to an empty array
                         setTags([]);
@@ -674,11 +692,10 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
-              {process.env.NODE_ENV === "development" || router.query.debug === "true" ? (
+              {(process.env.NODE_ENV === 'development' || router.query.debug === 'true') && devViewEnabled ? (
                 <div className="flex flex-col w-full text-gray-800 items-center border p-4 rounded-lg mt-8">
                   <p className="mb-4 border-b pb-1 text-black">
-                    A set of tools provided if you're in <b>[DEVELOPMENT]</b> or <b>[DEBUG]</b> mode to give you more
-                    functionality.
+                    A set of tools provided if you're in {environmentModeSetting} mode to give you more functionality.
                   </p>
                   {toggles.map(({ label, state, setState }) => (
                     <div key={label} className="flex items-center justify-between w-full">
@@ -724,10 +741,10 @@ export default function Home() {
                   )}
                 </div>
               </div>
-              {tags.length && displayResponse ? (
+              {tags.length && displayResponse && devViewEnabled ? (
                 <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
               ) : null}
-              {tags.length && showJSONView ? (
+              {tags.length && showJSONView && devViewEnabled ? (
                 <div className="border p-4 mt-6 rounded-lg">
                   <p className="whitespace-normal break-all text-gray-800">{JSON.stringify(data)}</p>
                 </div>
@@ -737,7 +754,7 @@ export default function Home() {
                   <Link
                     className="text-sm text-center w-fit underline hover:no-underline text-gray-800"
                     title="Click to view json representation data."
-                    href={data?.url ?? ""}
+                    href={data?.url ?? ''}
                     target="_blank"
                   >
                     Click to view json representation data.
@@ -745,7 +762,7 @@ export default function Home() {
                 </div>
               )}
               <div className="flex w-full mt-6 items-center">
-                {tags.length ? <CharacterLimit count={countTagsLength(tags.join(","))} limit={500} /> : null}
+                {tags.length ? <CharacterLimit count={countTagsLength(tags.join(','))} limit={500} /> : null}
                 {tags.length ? (
                   <div className="flex items-center ml-auto">
                     <div className="mr-2">
@@ -772,7 +789,7 @@ export default function Home() {
 
                             // If artist name doesn’t contain "-" or "," (meaning it's a single artist/band name),
                             // then require a title to be provided as well
-                            if (!artist.includes("-") && !artist.includes(",")) {
+                            if (!artist.includes('-') && !artist.includes(',')) {
                               // If no title name is provided → show error and focus the title input
                               if (!title.length) {
                                 // Show error toast for missing title
@@ -816,7 +833,7 @@ export default function Home() {
                       </Button>
                     </div>
                     <Button
-                      style={{ marginLeft: "auto" }}
+                      style={{ marginLeft: 'auto' }}
                       title="Copy generated tags"
                       onClick={() => {
                         // Check if there are any tags to copy
@@ -828,7 +845,7 @@ export default function Home() {
 
                         // Join all tags into a single string separated by commas
                         // Example: ["tag1", "tag2"] → "tag1,tag2"
-                        copy(tags.join(","));
+                        copy(tags.join(','));
 
                         // Show a success toast confirming the tags were copied to the clipboard
                         toast.success(success.message.tagsCopiedToClipboard);
@@ -850,7 +867,7 @@ export default function Home() {
                           // If there is no custom format in the response data
                           if (!data?.customFormat) {
                             // Show an error toast (currently an empty string as the message)
-                            toast.error("");
+                            toast.error('');
                             return; // Exit early so nothing else runs
                           }
 
@@ -870,29 +887,29 @@ export default function Home() {
                   </div>
                 </div>
               ) : null}
-              {countTagsLength(tags.join(",")) > 500 && (
+              {countTagsLength(tags.join(',')) > 500 && (
                 <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
               )}
               {showRecommendedTagsToBeDeleteSection &&
               data?.tagsToBeRemoved.length &&
-              countTagsLength(tags.join(",")) > 500 ? (
+              countTagsLength(tags.join(',')) > 500 ? (
                 <>
                   <div className="border p-4 mt-4 rounded-lg">
                     <h2 className="text-2xl border-b font-medium pb-2">Recommended tags to delete</h2>
                     <div className="flex flex-wrap gap-4 my-4 mt-6">
-                      {data?.tagsToBeRemoved.split(",").map((tag) => (
+                      {data?.tagsToBeRemoved.split(',').map((tag) => (
                         <Tag deletable={false} tag={tag} />
                       ))}
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-6">
                     <Button
-                      style={{ marginLeft: "auto" }}
+                      style={{ marginLeft: 'auto' }}
                       onClick={() => {
                         // Check if the response data contains tags that need to be removed
                         if (data?.tagsToBeRemoved) {
                           // Split the string of tags by comma, trim whitespace, and convert them to lowercase
-                          const tagsToRemove = data.tagsToBeRemoved.split(",").map((tag) => tag.trim().toLowerCase());
+                          const tagsToRemove = data.tagsToBeRemoved.split(',').map((tag) => tag.trim().toLowerCase());
 
                           // Create a new list of tags by filtering out the ones that should be removed
                           // Compare in lowercase to ensure case-insensitive matching
