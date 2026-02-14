@@ -91,44 +91,16 @@ export default function FAQ() {
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black">Is Lyrics Tags Generator open source?</AccordionTrigger>
               <AccordionContent className="text-lg text-gray-800">
-                No. All our source code is proprietary software except for our Python script that interacts with Lyrics
-                Tags Generator (
+                Yes!{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
-                  href="https://github.com/alsonick/tags-py"
-                  title="tags.py"
+                  href="https://github.com/alsonick/tags.notnick.io"
+                  title="Click here to view our GitHub repository"
                   target="_blank"
                 >
-                  tags.py
+                  Click here to view our GitHub repository
                 </Link>
-                ), and the implementation our tags deletion algorithm (
-                <Link
-                  href="https://github.com/Lyrics-Tags-Generator/tags-deletion-algorithm"
-                  className="text-blue-500 font-semibold hover:underline"
-                  title="Tags Deletion Algorithm"
-                  target="_blank"
-                >
-                  Tags Deletion Algorithm
-                </Link>
-                ) which is under the{' '}
-                <Link
-                  href="https://github.com/alsonick/tags-py/blob/main/LICENSE"
-                  className="text-blue-500 font-semibold hover:underline"
-                  title="MIT License"
-                  target="_blank"
-                >
-                  MIT License
-                </Link>
-                .{' '}
-                <Link
-                  className="text-blue-500 font-semibold hover:underline"
-                  href="https://github.com/Lyrics-Tags-Generator"
-                  title="Our GitHub Page"
-                  target="_blank"
-                >
-                  Click here
-                </Link>{' '}
-                to view our open source software.
+                .
               </AccordionContent>
             </AccordionItem>
           </Accordion>
