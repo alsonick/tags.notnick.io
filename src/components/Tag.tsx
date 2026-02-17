@@ -1,5 +1,5 @@
 import { Key, SetStateAction } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { FiX } from "react-icons/fi";
 import { TagText } from "./TagText";
 

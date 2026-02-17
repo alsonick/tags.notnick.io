@@ -14,7 +14,7 @@ import { CharacterLimit } from '@/components/CharacterLimit';
 import { DevelopmentNav } from '@/components/DevelopmentNav';
 import { countTagsLength } from '@/lib/count-tags-length';
 import { Skeleton } from '@/components/shadcn/skeleton';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { MainWrapper } from '@/components/MainWrapper';
 import { useState, useRef, useEffect } from 'react';
 import { Switch } from '@/components/shadcn/switch';
@@ -678,7 +678,7 @@ export default function Home() {
                         setUsedGenerateExampleResponse(false);
 
                         // Show success message to user
-                        toast.success('Cleared.');
+                        toast.success(success.message.tagsClearedSuccessfully);
 
                         // Clear all tags by setting the state to an empty array
                         setTags([]);
@@ -947,7 +947,6 @@ export default function Home() {
         </div>
         <Footer />
       </MainWrapper>
-      <ToastContainer />
     </Container>
   );
 }

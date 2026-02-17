@@ -1,6 +1,6 @@
 import { success } from "@/lib/success";
 import { FiCopy } from "react-icons/fi";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import copy from "copy-to-clipboard";
 import { Button } from "../Button";
 
