@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/shadcn/sonner";
 import { Analytics } from "@vercel/analytics/next";
 import { useEffect, useRef } from "react";
 import "@/styles/globals.css";
@@ -30,6 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={inter.className}>
       <Component {...pageProps} />
+      <Toaster position="top-center" />
       <Analytics />
     </main>
   );

@@ -1,9 +1,9 @@
-import { FiCopy, FiEdit } from "react-icons/fi";
-import { success } from "@/lib/success";
-import { SetStateAction } from "react";
-import { toast } from "react-toastify";
-import copy from "copy-to-clipboard";
-import { Button } from "../Button";
+import { FiCopy, FiEdit } from 'react-icons/fi';
+import { success } from '@/lib/success';
+import { SetStateAction } from 'react';
+import { toast } from 'sonner';
+import copy from 'copy-to-clipboard';
+import { Button } from '../Button';
 
 interface Props {
   setTitles: (value: SetStateAction<string[]>) => void;
@@ -27,7 +27,7 @@ export const SuggestedTitlesSection = (props: Props) => {
               copy(title);
 
               // Show a success toast notification confirming the copy action
-              toast.success(success.message.copied);
+              toast.success(success.message.titleCopiedToClipboard);
             }}
           >
             Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
