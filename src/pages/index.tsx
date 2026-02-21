@@ -14,7 +14,6 @@ import { CharacterLimit } from '@/components/CharacterLimit';
 import { DevelopmentNav } from '@/components/DevelopmentNav';
 import { countTagsLength } from '@/lib/count-tags-length';
 import { Skeleton } from '@/components/shadcn/skeleton';
-import { toast } from 'sonner';
 import { MainWrapper } from '@/components/MainWrapper';
 import { useState, useRef, useEffect } from 'react';
 import { Switch } from '@/components/shadcn/switch';
@@ -37,6 +36,7 @@ import copy from 'copy-to-clipboard';
 import { error } from '@/lib/error';
 import { GENRE } from '@/lib/genre';
 import { seo } from '@/lib/seo/seo';
+import { toast } from 'sonner';
 import Link from 'next/link';
 
 export default function Home() {
@@ -49,6 +49,7 @@ export default function Home() {
   const [originalTitles, setOriginalTitles] = useState<string[]>([]);
   const [autoShuffleTags, setAutoShuffleTags] = useState(false);
   const [displayResponse, setDisplayResponse] = useState(true);
+  const [devViewEnabled, setDevViewEnabled] = useState(true);
   const [enableLogging, setEnableLogging] = useState(true);
   const [showJSONView, setShowJSONView] = useState(true);
   const [titles, setTitles] = useState<string[]>([]);
@@ -61,9 +62,8 @@ export default function Home() {
   const [seoText, setSeoText] = useState('');
   const [genre, setGenre] = useState('None');
   const [artist, setArtist] = useState('');
-  const [tiktok, setTiktok] = useState('');
+  const [tiktok, setTiktok] = useState('false');
   const [title, setTitle] = useState('');
-  const [devViewEnabled, setDevViewEnabled] = useState(true);
   const [verse, setVerse] = useState('');
 
   // References to input fields for focusing and validation
@@ -204,11 +204,11 @@ export default function Home() {
       if (clearAfterResponse) {
         setOverflowTagsDeleted(false);
         setFormat('Lyrics');
+        setTiktok('false');
         setGenre('None');
         setFeatures('');
         setChannel('');
         setArtist('');
-        setTiktok('');
         setVerse('');
         setTitle('');
       }
@@ -540,15 +540,28 @@ export default function Home() {
             <div className="flex w-full gap-6 items-center">
               <section className="flex flex-col w-full">
                 <Step step={3} text="TikTok" />
-                <Input
-                  onChange={(e) => setTiktok(e.target.value)}
-                  placeholder="false"
-                  required={false}
-                  value={tiktok}
-                />
-                <p className="text-xs text-gray-800 mt-1">
-                  Is the song popular on TikTok? Type <b>"true"</b> if so.{' '}
-                </p>
+                <div className="relative w-full">
+                  <select
+                    className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
+                    onChange={(e) => setTiktok(e.target.value)}
+                    value={tiktok}
+                  >
+                    {[
+                      { value: 'false', text: 'No' },
+                      { value: 'true', text: 'Yes' },
+                    ].map((option) => (
+                      <option className="font-inter" key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                    <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                      <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-800 mt-1">Is the song popular on TikTok?</p>
               </section>
               <section className="flex flex-col w-full">
                 <Step step={4} text="Format" />
