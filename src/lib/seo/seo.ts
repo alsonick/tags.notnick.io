@@ -21,6 +21,11 @@ export const seo = {
       description: 'Format',
       heading: 'Format',
     },
+    genre: {
+      title: 'Genre | Lyrics Tags Generator',
+      description: 'Genre',
+      heading: 'Genre',
+    },
     documentation: {
       title: 'Documentation | Lyrics Tags Generator',
       description: 'Documentation',
