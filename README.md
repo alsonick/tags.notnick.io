@@ -58,37 +58,64 @@ GET https://tags.notnick.io/api/v1/generate
 
 ### Parameters
 
-| Params     | Required | Default | Description                                                                            |
-| ---------- | -------- | ------- | -------------------------------------------------------------------------------------- |
-| `artist`   | Yes      | none    | Artist name and song title (format: `Artist - Title` or `Artist, Featured - Title`)    |
-| `tiktok`   | Yes      | none    | Whether the song is trending on TikTok                                                 |
-| `title`    | No       | none    | Song title (if not included in artist field)                                           |
-| `format`   | No       | none    | Video format (bassboosted, nightcore, slowedreverb, letra, testo, phonk, lyrics, none) |
-| `genre`    | No       | none    | Music genre (rap, hiphop, country, pop, funk, phonk, latin, italian, dance, none)      |
-| `features` | No       | none    | Featured artists (comma-separated)                                                     |
-| `channel`  | No       | none    | YouTube channel name                                                                   |
-| `verse`    | No       | none    | Popular verses (comma-separated, max 3)                                                |
-| `shuffle`  | No       | false   | Shuffle tag order                                                                      |
-| `log`      | No       | true    | Log to Discord webhook                                                                 |
-| `source`   | No       | unknown | Request source                                                                         |
-| `example`  | No       | false   | Example mode                                                                           |
-| `webhook`  | No       | none    | Custom Discord webhook URL                                                             |
+| Params     | Required | Default  | Description                                                                                                                                                                              |
+| ---------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `artist`   | `Yes`    | `none`   | Name of the artist. You can provide both the `artist` and the `title` components in this field, e.g. `Rex Orange County – Pluto Projector` is appropriate.                               |
+| `title`    | `No`     | `none`   | Name of the song. Not required if both the `artist` and `title` components are provided in the `artist` parameter.field)                                                                 |
+| `features` | `No`     | `none`   | Featured artists. If you provide more than 3 featuring artists, then only the first 3 features will be used when generating the tags. (comma-separated)                                  |
+| `tiktok`   | `No`     | `false`  | Provides additional tags related to TikTok, It's recommended for songs that are performing well on TikTok (`true` / `false`).                                                            |
+| `channel`  | `No`     | `none`   | The name of the YouTube channel you want featured in the generated tags.                                                                                                                 |
+| `format`   | `No`     | `lyrics` | - `lyrics`<br>- `bassboosted`<br>- `nightcore`<br>- `slowed`<br>- `letra`<br>- `phonk`<br>- `testo`<br>- `none`                                                                          |
+| `shuffle`  | No       | false    | The option to shuffle the generated tags (`true` or `false`).                                                                                                                            |
+| `genre`    | `No`     | `none`   | - `none`<br>- `country`<br>- `latin`<br>- `phonk`<br>- `dance`<br>- `pop`<br>- `rap`<br>- `italian`                                                                                      |
+| `verse`    | `No`     | `none`   | 3 short verses. Each individual verse should be separated by a comma.                                                                                                                    |
+| `custom`   | `No`     | `none`   | The custom format string template that you want to use.                                                                                                                                  |
+| `log`      | `No`     | `true`   | All request data (generated metadata) is logged for debugging purposes, if you wish to not have your data logged, then provide `false` as the parameter value.                           |
+| `webhook`  | `No`     | `none`   | Request data is logged in private Discord text channels. You may optionally provide a webhook link to log data in your own private channel. Your webhook link is never stored or logged. |
+
+### Endpoint
+
+```
+GET https://tags.notnick.io/api/v1/length
+```
+
+### Parameters
+
+| Params | Required | Default | Description                                                                                                                         |
+| ------ | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `tags` | `Yes`    | `none`  | The generated tags you want to find the length for. Pass the raw comma-separated tag string returned from the `/generate` endpoint. |
+
+---
 
 ### Custom Format Variables
 
-Use custom tag patterns by appending `/{pattern}` to the artist field:
+We also allow you to define your own custom string template for generated tags. Here's what a string template typically looks like this:
 
-| Variables | Required | Description            |
-| --------- | -------- | ---------------------- |
-| `{a}`     | artist   | Main artist name       |
-| `{t}`     | artist   | Song title             |
-| `{f1}`    | artist   | First featured artist  |
-| `{f2}`    | artist   | Second featured artist |
-| `{f3}`    | artist   | Third featured artist  |
+`{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}`
 
-This generates tags in the pattern: `Future,Drake,Tems,Young Thug,Wait For U`
+You might be wondering what the `{}` parts are, we call them _variables_, and the letters inside them signify where the components of a song belong to. Let's take this song for example:
 
-### JSON representation data
+`Rex Orange County – Pluto Projector`
+
+We break down the song into components and place them into their respective parts. `{a}` is for the 'artist' and `{b}` is for the 'title'. To use your custom string template, you must provide the song followed by a forward slash which is then followed by the string template you want to use. Here's an example:
+
+`Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}`
+
+Here are the available variables you can use in your custom string template:
+
+| Variables | Components    | Description                                                                                    |
+| --------- | ------------- | ---------------------------------------------------------------------------------------------- |
+| `{a}`     | `artist`      | The main artist's name. This is always required when using a custom format string.             |
+| `{t}`     | `title`       | The title of the song. Used to place the song title within your custom format string.          |
+| `{f1}`    | `feature@{1}` | The first featured artist. Used to place the first feature within your custom format string.   |
+| `{f2}`    | `feature@{2}` | The second featured artist. Used to place the second feature within your custom format string. |
+| `{f3}`    | `feature@{3}` | The third featured artist. Used to place the third feature within your custom format string.   |
+
+> We only support **three** features.
+
+---
+
+### JSON Representation Data
 
 ```json
 {

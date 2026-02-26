@@ -15,7 +15,12 @@ export const VALUES_LENGTH: Value[] = [
     placeholder: 'none',
   },
   {
-    placeholder: <p>The generated tags you want to find the length for.</p>,
+    placeholder: (
+      <p>
+        The generated tags you want to find the length for. Pass the raw comma-separated tag string returned from the
+        <Badge variant={'secondary'}>/generate</Badge> endpoint.
+      </p>
+    ),
   },
 ];
 
@@ -223,7 +228,7 @@ export const VALUES_VARIABLES: Value[] = [
     placeholder: 'artist',
   },
   {
-    placeholder: <p>Artist component of a song.</p>,
+    placeholder: <p>he main artist's name. This is always required when using a custom format string.</p>,
   },
   // {t}
   {
@@ -233,20 +238,22 @@ export const VALUES_VARIABLES: Value[] = [
     placeholder: 'title',
   },
   {
-    placeholder: <p>Title component of a song.</p>,
+    placeholder: <p>The title of the song. Used to place the song title within your custom format string.</p>,
   },
   // {f1}
   {
     placeholder: '{f1}',
   },
   { placeholder: 'feature@{1}' },
-  { placeholder: <p>First featured artist of a song.</p> },
+  { placeholder: <p>The first featured artist. Used to place the first feature within your custom format string.</p> },
   // {f2}
   { placeholder: '{f2}' },
   { placeholder: 'feature@{2}' },
-  { placeholder: <p>Second featured artist of a song.</p> },
+  {
+    placeholder: <p>The second featured artist. Used to place the second feature within your custom format string.</p>,
+  },
   // {f3}
   { placeholder: '{f3}' },
   { placeholder: 'feature@{3}' },
-  { placeholder: <p>Third featured artist of a song.</p> },
+  { placeholder: <p>The third featured artist. Used to place the third feature within your custom format string.</p> },
 ];
