@@ -4,17 +4,13 @@ export const lyricsTagsRemove = (
   title: string,
   artist: string,
   features: string,
-  tiktok: string,
+  _tiktok: string,
   tags: string
 ): string => {
   if (features === "none") {
     const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
       const patterns: string[] = [
-        `lyrics ${artist}`,
         `lyrics ${title}`,
-        `lyrics ${title} ${artist}`,
-        `lyrics ${artist} ${title}`,
-        `${artist} lyrics`,
         `${artist} lyrics ${title}`,
         `${title} ${artist} lyrics`,
         `${title} lyrics`,
@@ -43,12 +39,8 @@ export const lyricsTagsRemove = (
 
       if (feats.length === 1) {
         const patterns: string[] = [
-          `lyrics ${title} ${artist}`,
-          `lyrics ${artist} ${title}`,
           `lyrics ${firstFeature} ${title}`,
           `${firstFeature} lyrics`,
-          `lyrics ${artist}`,
-          `${artist} lyrics`,
           `${artist} lyrics ${title}`,
           `lyrics ${title}`,
           `${title} ${artist} lyrics`,
@@ -66,12 +58,8 @@ export const lyricsTagsRemove = (
         return patterns.map((pattern) => pattern.trim().toLowerCase());
       } else if (feats.length === 2) {
         const patterns: string[] = [
-          `lyrics ${title} ${artist}`,
-          `lyrics ${artist} ${title}`,
           `lyrics ${firstFeature} ${title}`,
           `${firstFeature} lyrics`,
-          `lyrics ${artist}`,
-          `${artist} lyrics`,
           `${artist} lyrics ${title}`,
           `lyrics ${title}`,
           `${title} ${artist} lyrics`,
@@ -93,14 +81,10 @@ export const lyricsTagsRemove = (
         const thirdFeature = feats[2];
 
         const patterns: string[] = [
-          `lyrics ${title} ${artist}`,
-          `lyrics ${artist} ${title}`,
           `${thirdFeature} ${title} lyrics`,
           `lyrics ${firstFeature} ${title}`,
           `${firstFeature} ${title} lyrics`,
           `${firstFeature} lyrics`,
-          `lyrics ${artist}`,
-          `${artist} lyrics`,
           `${artist} lyrics ${title}`,
           `lyrics ${title}`,
           `${title} ${artist} lyrics`,
