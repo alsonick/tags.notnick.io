@@ -11,6 +11,6 @@ export const success = {
     keywordsCopiedToClipboard: 'Keywords copied to the clipboard.',
     tagsClearedSuccessfully: 'Tags cleared successfully.',
     savedCustomKey: 'Saved custom key.',
-    copied: 'Copied!',
+    copied: 'Copied to the clipboard.',
   },
 };
