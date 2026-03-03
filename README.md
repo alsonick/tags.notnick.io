@@ -66,7 +66,7 @@ GET https://tags.notnick.io/api/v1/generate
 | `tiktok`   | `No`     | `false`  | Provides additional tags related to TikTok, It's recommended for songs that are performing well on TikTok (`true` / `false`).                                                            |
 | `channel`  | `No`     | `none`   | The name of the YouTube channel you want featured in the generated tags.                                                                                                                 |
 | `format`   | `No`     | `lyrics` | - `lyrics`<br>- `bassboosted`<br>- `nightcore`<br>- `slowed`<br>- `letra`<br>- `phonk`<br>- `testo`<br>- `none`                                                                          |
-| `shuffle`  | No       | false    | The option to shuffle the generated tags (`true` or `false`).                                                                                                                            |
+| `shuffle`  | No       | `false`    | The option to shuffle the generated tags (`true` or `false`).                                                                                                                            |
 | `genre`    | `No`     | `none`   | - `none`<br>- `country`<br>- `latin`<br>- `phonk`<br>- `dance`<br>- `pop`<br>- `rap`<br>- `italian`                                                                                      |
 | `verse`    | `No`     | `none`   | 3 short verses. Each individual verse should be separated by a comma.                                                                                                                    |
 | `custom`   | `No`     | `none`   | The custom format string template that you want to use.                                                                                                                                  |
@@ -157,3 +157,4 @@ Here are the available variables you can use in your custom string template:
 ## License
 
 [MIT License](LICENSE)
+
