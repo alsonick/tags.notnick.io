@@ -51,7 +51,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const webhook: string = (req.query.webhook as string) || 'none';
   const genre: string = (req.query.genre as string) || 'none';
   const verse: string = (req.query.verse as string) || 'none';
-  const structure: string = req.query.structure as string;
   const log: string = (req.query.log as string) || 'true';
   const features: string = req.query.features as string;
   const channel: string = req.query.channel as string;
