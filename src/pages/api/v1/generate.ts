@@ -36,6 +36,7 @@ import { FORMAT } from '@/lib/format';
 import { error } from '@/lib/error';
 import { GENRE } from '@/lib/genre';
 import { v4 as uuidv4 } from 'uuid';
+import Groq from 'groq-sdk';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check if the request method is GET
@@ -55,6 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const channel: string = req.query.channel as string;
   const shuffle: string = req.query.shuffle as string;
   const tiktok: string = req.query.tiktok as string;
+  const context: string = (req.query.context as string) || 'false';
   const format: string = req.query.format as string;
   const artist: string = req.query.artist as string;
   const title: string = req.query.title as string;
@@ -431,6 +433,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += `,italian lyrics,italian music,trending italian`;
   } else if (genre === GENRE.dance) {
     tags += `,dance music,dance,trending dance,dance ${new Date().getFullYear()}`;
+  }
+
+  // If context is enabled, call Groq to generate trending context tags
+  if (context === 'true') {
+    try {
+      const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+      const completion = await groq.chat.completions.create({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          {
+            role: 'system',
+            content:
+              'You are a YouTube tag generator. Given a song name and artist, generate 1 to 5 tags that describe why the song is currently trending on social media platforms like TikTok, Instagram Reels, or YouTube Shorts. Focus on viral trends, challenges, memes, or cultural moments associated with the song. Return ONLY the tags separated by commas with no spaces after commas. Do not include any other text, explanations, or formatting. Example output: viral tiktok sound,tiktok trend 2026,tiktok dance challenge',
+          },
+          {
+            role: 'user',
+            content: `Song: ${finalTitle} by ${finalArtist}`,
+          },
+        ],
+        max_tokens: 100,
+        temperature: 0.7,
+      });
+
+      const contextTags = completion.choices[0]?.message?.content?.trim();
+
+      if (contextTags && contextTags.length > 0) {
+        tags += `,${contextTags}`;
+      }
+    } catch (err) {
+      // If Groq fails, continue without context tags
+      console.error('Groq context tags error:', err);
+    }
   }
 
   if (shuffle === 'true') {
