@@ -56,13 +56,13 @@ export default function Home() {
   const [tags, setTags] = useState<string[]>([]);
   const [format, setFormat] = useState('Lyrics');
   const [loading, setLoading] = useState(false);
+  const [tiktok, setTiktok] = useState('false');
   const [features, setFeatures] = useState('');
   const [data, setData] = useState<Response>();
   const [channel, setChannel] = useState('');
   const [seoText, setSeoText] = useState('');
   const [genre, setGenre] = useState('None');
   const [artist, setArtist] = useState('');
-  const [tiktok, setTiktok] = useState('false');
   const [title, setTitle] = useState('');
   const [verse, setVerse] = useState('');
 
@@ -82,6 +82,15 @@ export default function Home() {
     // Store custom format from localStorage if needed
     let localStorageCustomFormat = '';
 
+    // Check if the /context flag was provided
+    let contextEnabled = false;
+    let artistInput = artist;
+
+    if (artistInput.includes('\\context')) {
+      contextEnabled = true;
+      artistInput = artistInput.replace('\\context', '').trim();
+    }
+
     // Reset example state when generating real data
     if (example === false) {
       // Allow example button to be used again
@@ -98,9 +107,9 @@ export default function Home() {
     }
 
     // Checks if the artist field was given a custom format key
-    if (artist.includes('/custom') && !artist.includes('{')) {
+    if (artistInput.includes('/custom') && !artistInput.includes('{')) {
       // Extract the key from the artist string (format: "artist/key/custom")
-      const customFormatKey = artist.split('/')[1];
+      const customFormatKey = artistInput.split('/')[1];
       // Retrieve the saved custom format from localStorage using the key
       const customFormat = localStorage.getItem(customFormatKey);
 
@@ -122,13 +131,14 @@ export default function Home() {
       artist: example
         ? 'Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}'
         : localStorageCustomFormat.length
-          ? `${artist.trim().split('/')[0]}/${localStorageCustomFormat}`
-          : artist.trim(),
+          ? `${artistInput.trim().split('/')[0]}/${localStorageCustomFormat}`
+          : artistInput.trim(),
       log: process.env.NODE_ENV === 'development' || router.query.debug === 'true' ? `${enableLogging}` : 'true',
       features: features.trim().length ? features.trim() : 'none',
       channel: channel.trim().length ? channel.trim() : 'none',
       title: title.trim().length ? title.trim() : 'none',
       verse: verse.trim().length ? verse.trim() : 'none',
+      context: contextEnabled ? 'true' : 'false',
       tiktok: tiktok === 'true' ? 'true' : 'false',
       shuffle: autoShuffleTags ? 'true' : 'false',
       format: format.toLowerCase().trim(),
