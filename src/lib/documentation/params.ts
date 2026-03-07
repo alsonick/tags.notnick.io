@@ -20,7 +20,7 @@ export const ADDITIONAL_PARAMS: Param[] = [
     name: 'Variables',
   },
   {
-    name: 'Required',
+    name: 'Components',
   },
   {
     name: 'Description',
