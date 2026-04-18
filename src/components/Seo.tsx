@@ -1,7 +1,7 @@
-import { seoKeywords } from "@/lib/seo/seo-keywords";
+import { seoKeywords } from '@/lib/seo/seo-keywords';
 
 // Next.js
-import Head from "next/head";
+import Head from 'next/head';
 
 interface Props {
   seoDescription: string;
@@ -9,15 +9,15 @@ interface Props {
 }
 
 export const Seo = (props: Props) => {
-  const imageUrl = "https://tags.notnick.io/tags.png";
-  const siteUrl = "https://tags.notnick.io";
+  const imageUrl = 'https://tags.notnick.io/tags.png';
+  const siteUrl = 'https://tags.notnick.io';
 
   return (
     <Head>
       <title>{props.seoTitle}</title>
       <meta name="description" content={props.seoDescription} key="desc" />
       <meta property="og:title" content={`${props.seoTitle} | YouTube`} />
-      <meta name="theme-color" content="#f54bff" />
+      <meta name="theme-color" content="#30D158" />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black" />
       <meta name="twitter:title" content={`${props.seoTitle} | YouTube`} />
