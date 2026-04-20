@@ -26,6 +26,7 @@ export const sendDiscordWebhook = async (
     body: JSON.stringify({
       embeds: [
         {
+          color: 0x30d158,
           author: {
             name: `${decodeURIComponent(artist)} - ${decodeURIComponent(title)}`,
           },
