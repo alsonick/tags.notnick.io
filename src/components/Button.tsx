@@ -1,11 +1,16 @@
+import { cn } from "@/lib/utils";
+
 export const Button = (
   props: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 ) => {
   return (
     <button
       {...props}
-      className="flex items-center justify-center font-medium text-white
-      bg-black p-2 px-4 rounded-lg focus:outline-2"
+      className={cn(
+        `flex items-center justify-center font-medium text-white
+      bg-black p-2 px-4 rounded-lg focus:outline-2`,
+        props.className
+      )}
     >
       {props.children}
     </button>
