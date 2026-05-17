@@ -55,6 +55,10 @@
     "**/@jest/reporters/glob": "^10.5.0",
     "**/jest-config/glob": "^10.5.0",
     "**/jest-runtime/glob": "^10.5.0",
-    "**/next/postcss": "^8.5.10"
+    "**/next/postcss": "^8.5.10",
+    "**/jest-util/picomatch": "^4.0.4",
+    "**/micromatch/picomatch": "^2.3.2",
+    "**/anymatch/picomatch": "^2.3.2",
+    "**/readdirp/picomatch": "^2.3.2"
   }
 }
