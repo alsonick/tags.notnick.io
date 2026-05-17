@@ -54,6 +54,7 @@
     "**/sucrase/glob": "^10.5.0",
     "**/@jest/reporters/glob": "^10.5.0",
     "**/jest-config/glob": "^10.5.0",
-    "**/jest-runtime/glob": "^10.5.0"
+    "**/jest-runtime/glob": "^10.5.0",
+    "**/next/postcss": "^8.5.10"
   }
 }
