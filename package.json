@@ -50,6 +50,10 @@
   "resolutions": {
     "**/test-exclude/minimatch": "^3.1.4",
     "**/test-exclude/glob/minimatch": "^3.1.4",
-    "**/glob/minimatch": "^9.0.7"
+    "**/glob/minimatch": "^9.0.7",
+    "**/sucrase/glob": "^10.5.0",
+    "**/@jest/reporters/glob": "^10.5.0",
+    "**/jest-config/glob": "^10.5.0",
+    "**/jest-runtime/glob": "^10.5.0"
   }
 }
