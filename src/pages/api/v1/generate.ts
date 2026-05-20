@@ -57,7 +57,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const shuffle: string = req.query.shuffle as string;
   const tiktok: string = req.query.tiktok as string;
   const format: string = req.query.format as string;
-  const artist: string = req.query.artist as string;
+  const rawArtist = req.query.artist;
+  if (typeof rawArtist !== 'string') {
+    return res.status(400).json({
+      error: error.message.badRequest,
+      success: false,
+    });
+  }
+  const artist: string = rawArtist;
   const title: string = req.query.title as string;
 
   // Check if the artist field ends with ",-" which means the title wasn't provided.
