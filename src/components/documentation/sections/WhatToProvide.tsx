@@ -22,13 +22,13 @@ export const WhatToProvide = (props: { endpoint: 'generate' | 'length' }) => {
         <TableContainer params={PARAMS}>
           <tbody>
             {rowsGenerate.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-teal-100">
+              <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70">
                 {row.map((value, index) =>
                   value.list ? (
                     <TdElement key={index} col={index} params={PARAMS}>
-                      <ul className="list-disc ml-4">
+                      <ul className="ml-4 list-disc">
                         {value.list.map((val) => (
-                          <li key={val}>
+                          <li key={val} className="mb-2 last:mb-0">
                             <Badge variant="secondary">{val}</Badge>
                           </li>
                         ))}
@@ -48,7 +48,7 @@ export const WhatToProvide = (props: { endpoint: 'generate' | 'length' }) => {
         <TableContainer params={PARAMS}>
           <tbody>
             {rowsLength.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-teal-100">
+              <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70">
                 {row.map((value, index) => (
                   <TdElement key={index} col={index} params={PARAMS}>
                     {value.placeholder}

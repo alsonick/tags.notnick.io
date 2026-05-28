@@ -1,5 +1,8 @@
+import { cn } from '@/lib/utils';
+
 interface Props {
   children?: React.ReactNode;
+  description?: string;
   border?: boolean;
   heading: string;
 }
@@ -12,12 +15,20 @@ export const DocumentationSection = (props: Props) => {
     .replace(/[^a-z0-9-]/g, '');
 
   return (
-    <section id={headingId} className={`mt-8 scroll-mt-32 ${showBorder ? 'border-b border-teal-200 pb-4' : ''}`}>
-      <h2 className="text-2xl font-semibold mb-4">
-        <a href={`#${headingId}`} className="hover:text-teal-600 transition-colors">
+    <section id={headingId} className={cn('scroll-mt-32 pt-12', showBorder && 'border-b border-gray-100 pb-12')}>
+      <h2 className="group flex items-center text-2xl font-bold tracking-tight text-gray-900">
+        <a href={`#${headingId}`} className="transition-colors hover:text-teal-600">
           {props.heading}
         </a>
+        <a
+          href={`#${headingId}`}
+          aria-label={`Link to ${props.heading}`}
+          className="ml-2 text-gray-300 opacity-0 transition-opacity hover:text-teal-500 group-hover:opacity-100"
+        >
+          #
+        </a>
       </h2>
+      {props.description ? <p className="mb-6 mt-2 text-gray-600">{props.description}</p> : <div className="mb-6" />}
       {props.children}
     </section>
   );

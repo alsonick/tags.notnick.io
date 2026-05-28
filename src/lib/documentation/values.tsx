@@ -17,7 +17,7 @@ export const VALUES_LENGTH: Value[] = [
   {
     placeholder: (
       <p>
-        The generated tags you want to find the length for. Pass the raw comma-separated tag string returned from the
+        The generated tags you want to find the length for. Pass the raw comma-separated tag string returned from the{' '}
         <Badge variant={'secondary'}>/generate</Badge> endpoint.
       </p>
     ),
