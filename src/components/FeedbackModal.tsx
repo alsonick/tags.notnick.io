@@ -1,5 +1,5 @@
 import { FEEDBACK_OPTIONS } from '@/lib/feedback/feedback-options';
-import { FiChevronDown, FiSend } from 'react-icons/fi';
+import { FiChevronDown, FiSend, FiCheck } from 'react-icons/fi';
 import { CharacterLimit } from './CharacterLimit';
 import { useState } from 'react';
 import { Button } from './Button';
@@ -24,9 +24,16 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
   const [category, setCategory] = useState(FEEDBACK_OPTIONS[0].label);
   const [body, setBody] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const canSubmit = isValidEmail && body.trim().length > 0 && !submitting;
+
+  // Reset back to the form whenever the modal is reopened.
+  const handleOpenChange = (next: boolean) => {
+    if (next) setSuccess(false);
+    onOpenChange(next);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,11 +53,10 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
         throw new Error(data.error);
       }
 
-      toast.success('Thanks for the feedback!');
       setEmail('');
       setCategory(FEEDBACK_OPTIONS[0].label);
       setBody('');
-      onOpenChange(false);
+      setSuccess(true);
     } catch {
       toast.error('Something went wrong. Please try again.');
     } finally {
@@ -59,14 +65,27 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="tracking-tight">Share your feedback</DialogTitle>
-          <DialogDescription>Found a bug or have an idea? Let us know — we read everything.</DialogDescription>
-        </DialogHeader>
+        {success ? (
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+              <FiCheck className="text-3xl text-green-600" />
+            </div>
+            <DialogTitle className="tracking-tight">Thanks for the feedback!</DialogTitle>
+            <DialogDescription>We&apos;ve received your message.</DialogDescription>
+            <Button type="button" onClick={() => onOpenChange(false)} className="mt-3">
+              Done
+            </Button>
+          </div>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle className="tracking-tight">Share your feedback</DialogTitle>
+              <DialogDescription>Found a bug or have an idea? Let us know, we read everything.</DialogDescription>
+            </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <label className="flex flex-col gap-1.5">
             <span className="text-sm font-medium text-gray-800">Email</span>
             <input
@@ -128,7 +147,9 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
               </>
             )}
           </Button>
-        </form>
+            </form>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );

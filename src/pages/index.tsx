@@ -129,13 +129,13 @@ export default function Home() {
     // Build query parameters for the API request
     const queryParams = new URLSearchParams({
       artist: example
-        ? 'Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}'
+        ? 'The Chainsmokers, Daya - Dont Let Me Down'
         : localStorageCustomFormat.length
           ? `${artistInput.trim().split('/')[0]}/${localStorageCustomFormat}`
           : artistInput.trim(),
       log: process.env.NODE_ENV === 'development' || router.query.debug === 'true' ? `${enableLogging}` : 'true',
       features: features.trim().length ? features.trim() : 'none',
-      channel: channel.trim().length ? channel.trim() : 'none',
+      channel: example ? 'Gold Coast Music' : channel.trim().length ? channel.trim() : 'none',
       title: title.trim().length ? title.trim() : 'none',
       verse: verse.trim().length ? verse.trim() : 'none',
       context: contextEnabled ? 'true' : 'false',
@@ -658,23 +658,22 @@ export default function Home() {
             <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
               <div className="ml-auto flex justify-between w-full items-center">
                 {' '}
-                <div></div>
-                {/* <Button
-                title="Generate example response"
-                type="button"
-                onClick={async (e) => {
-                  // Prevent the default form submission behavior
-                  e.preventDefault();
+                <Button
+                  title="Generate example response"
+                  type="button"
+                  onClick={async (e) => {
+                    // Prevent the default form submission behavior
+                    e.preventDefault();
 
-                  // Mark example button as used
-                  setUsedGenerateExampleResponse(true);
+                    // Mark example button as used
+                    setUsedGenerateExampleResponse(true);
 
-                  // Generates the example response tags
-                  generate(true);
-                }}
-              >
-                Generate example response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
-              </Button> */}
+                    // Generates the example response tags
+                    generate(true);
+                  }}
+                >
+                  Generate Example Response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
+                </Button>
                 <div className="flex">
                   <div className="mr-2">
                     <Button

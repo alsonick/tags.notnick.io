@@ -40,7 +40,7 @@ export const VALUES_GENERATE: Value[] = [
       <p>
         Name of the artist. You can provide both the <Badge variant={'secondary'}>artist</Badge> and the{' '}
         <Badge variant={'secondary'}>title</Badge> components in this field, e.g.{' '}
-        <Badge variant={'secondary'}>Rex Orange County – Pluto Projector</Badge> is appropriate.
+        <Badge variant={'secondary'}>Rex Orange County - Pluto Projector</Badge> is appropriate.
       </p>
     ),
   },
