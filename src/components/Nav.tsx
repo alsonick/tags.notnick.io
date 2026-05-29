@@ -30,11 +30,11 @@ const NAV_LINKS: NavLink[] = [
     href: 'https://github.com/alsonick/lyrics-tags-generator-docs/issues/new',
     external: true,
   },
-  {
-    label: 'Discord Bot',
-    href: 'https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot',
-    external: true,
-  },
+  // {
+  //   label: 'Discord Bot',
+  //   href: 'https://discord.com/oauth2/authorize?client_id=1338567480834265193&permissions=2147534848&integration_type=0&scope=bot',
+  //   external: true,
+  // },
   {
     label: 'Documentation',
     href: '/documentation',

@@ -43,7 +43,7 @@ export const CustomStringTemplate = () => {
         song for example:
       </p>
       <p className="mb-4 text-gray-700">
-        <Badge variant={'secondary'}>Rex Orange County – Pluto Projector</Badge>
+        <Badge variant={'secondary'}>Rex Orange County - Pluto Projector</Badge>
       </p>
       <p className="mb-4 text-gray-700">
         We break down the song into components and place them into their respective parts.{' '}

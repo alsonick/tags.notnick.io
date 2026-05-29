@@ -3,6 +3,8 @@ import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreen
 import { DocumentationSection } from '@/components/documentation/DocumentationSection';
 import { AdditionalTags } from '@/components/documentation/sections/AdditionalTags';
 import { DocsSidebar, DocsSection } from '@/components/documentation/DocsSidebar';
+import { DiscordBot } from '@/components/documentation/sections/DiscordBot';
+import { FormatTemplates } from '@/components/documentation/sections/FormatTemplates';
 import { Endpoints } from '@/components/documentation/sections/Endpoints';
 import { WhatToProvide } from '@/components/documentation/sections/WhatToProvide';
 import { FiServer, FiUnlock, FiCode } from 'react-icons/fi';
@@ -22,12 +24,14 @@ const SECTIONS: DocsSection[] = [
   { id: 'length-parameters', label: 'Length Parameters' },
   { id: 'custom-string-template', label: 'Custom String Template' },
   { id: 'additional-tags', label: 'Additional Tags' },
+  { id: 'discord-bot', label: 'Discord Bot' },
+  { id: 'format-templates', label: 'Format Templates' },
   { id: 'further-assistance', label: 'Further Assistance' },
 ];
 
 const INFO_CARDS = [
   { icon: FiServer, label: 'Base URL', value: 'tags.notnick.io/api' },
-  { icon: FiUnlock, label: 'Authentication', value: 'None required' },
+  { icon: FiUnlock, label: 'Authentication', value: 'None' },
   { icon: FiCode, label: 'Response', value: 'JSON' },
 ];
 
@@ -48,8 +52,8 @@ export default function Documentation() {
                 {seo.page.documentation.heading}
               </h1>
               <p className="mt-3 max-w-2xl text-lg text-gray-600">
-                A free, public API for generating YouTube metadata — tags, titles, hashtags, and SEO keywords — for your
-                lyric videos.
+                A free, public API that generates SEO-optimized YouTube metadata for your lyric videos, including tags,
+                titles, hashtags, and keywords.
               </p>
               <div className="mt-6 grid grid-cols-3 gap-4">
                 {INFO_CARDS.map(({ icon: Icon, label, value }) => (
@@ -108,6 +112,20 @@ export default function Documentation() {
               description="Append seasonal tags for events like Halloween and Christmas."
             >
               <AdditionalTags />
+            </DocumentationSection>
+
+            <DocumentationSection
+              heading="Discord Bot"
+              description="Generate tags directly from your Discord server."
+            >
+              <DiscordBot />
+            </DocumentationSection>
+
+            <DocumentationSection
+              heading="Format Templates"
+              description="The format string templates we use for every supported and additional format."
+            >
+              <FormatTemplates />
             </DocumentationSection>
 
             <DocumentationSection heading="Further Assistance" border={false}>
