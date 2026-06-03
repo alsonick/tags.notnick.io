@@ -4,6 +4,7 @@ import {
   FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
+  VERSE_INPUT_FIELD_CHARACTER_LIMIT,
 } from '@/lib/constants';
 import { FiRepeat, FiTrash, FiDelete, FiSave, FiCornerDownRight } from 'react-icons/fi';
 import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
@@ -381,6 +382,18 @@ export default function Home() {
         // Stop further execution
         return;
       }
+    }
+
+    // Checks if any individual verse reaches the character limit.
+    if (verse.length && verse.split(',').some((v) => v.trim().length > VERSE_INPUT_FIELD_CHARACTER_LIMIT)) {
+      // Show error toast when an individual verse exceeds the character limit
+      toast.error(error.message.characterLimitExceeded);
+
+      // Move cursor to the verse input field
+      refs.verse.current?.focus();
+
+      // Stop further execution
+      return;
     }
 
     // Generates the example response tags

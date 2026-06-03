@@ -4,6 +4,7 @@ import {
   FEATURES_INPUT_FIELD_CHARACTER_LIMIT,
   ARTIST_INPUT_FIELD_CHARACTER_LIMIT,
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
+  VERSE_INPUT_FIELD_CHARACTER_LIMIT,
 } from '@/lib/constants';
 import { nightcoreSpedUpTags } from '@/lib/helpers/tags/nightcore-sped-up-tags';
 import { slowedReverbTitles } from '@/lib/helpers/titles/slowed-reverb-titles';
@@ -408,9 +409,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
+    // Checks if any individual verse reaches the character limit
+    if (verseSplit.some((verse) => verse.trim().length > VERSE_INPUT_FIELD_CHARACTER_LIMIT)) {
+      return res.status(400).json({
+        error: error.message.characterLimitExceeded,
+        success: false,
+      });
+    }
+
     // Add each verse to the array
     verseSplit.forEach((verse) => verses.push(`,${verse}`));
   } else if (verse && verse !== 'none') {
+    // Checks if the single verse reaches the character limit
+    if (verse.trim().length > VERSE_INPUT_FIELD_CHARACTER_LIMIT) {
+      return res.status(400).json({
+        error: error.message.characterLimitExceeded,
+        success: false,
+      });
+    }
+
     verses.push(`,${verse}`);
   }
 
