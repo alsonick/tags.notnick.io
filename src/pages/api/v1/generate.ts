@@ -46,20 +46,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Get the query parameters
+  const features: string = (req.query.features as string) || 'none';
   const source: string = (req.query.source as string) || 'unknown';
   const example: string = (req.query.example as string) || 'false';
   const context: string = (req.query.context as string) || 'false';
+  const shuffle: string = (req.query.shuffle as string) || 'false';
   const webhook: string = (req.query.webhook as string) || 'none';
+  const format: string = (req.query.format as string) || 'lyrics';
+  const channel: string = (req.query.channel as string) || 'none';
+  const tiktok: string = (req.query.tiktok as string) || 'none';
+  const artist: string = (req.query.artist as string) || 'none';
   const genre: string = (req.query.genre as string) || 'none';
   const verse: string = (req.query.verse as string) || 'none';
+  const title: string = (req.query.title as string) || 'none';
   const log: string = (req.query.log as string) || 'true';
-  const features: string = req.query.features as string;
-  const channel: string = req.query.channel as string;
-  const shuffle: string = req.query.shuffle as string;
-  const tiktok: string = req.query.tiktok as string;
-  const format: string = req.query.format as string;
-  const artist: string = req.query.artist as string;
-  const title: string = req.query.title as string;
 
   // Check if the artist field ends with ",-" which means the title wasn't provided.
   if (/,-$/.test(artist)) {
