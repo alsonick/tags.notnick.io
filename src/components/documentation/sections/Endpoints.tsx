@@ -37,12 +37,60 @@ const data = await res.json();`,
     ],
     response: `{
   "success": true,
-  "artist": "Rex Orange County",
+  "tags": "rex orange county pluto projector,rex orange county pluto projector lyrics,pluto projector lyrics,pluto projector rex orange county lyrics,lyrics pluto projector,rex orange county lyrics pluto projector,pluto projector,rex orange county,pluto projector rex orange county,lyrics",
+  "tagsToBeRemoved": "",
+  "removedTags": "rex orange county pluto projector,rex orange county pluto projector lyrics,pluto projector lyrics,pluto projector rex orange county lyrics,lyrics pluto projector,rex orange county lyrics pluto projector,pluto projector,rex orange county,pluto projector rex orange county,lyrics",
+  "removedTagsLength": 295,
   "title": "Pluto Projector",
-  "tags": "rex orange county pluto projector lyrics,pluto projector lyrics,lyrics pluto projector,rex orange county pluto projector",
-  "length": 117,
-  "hashtags": ["#rexorangecounty", "#plutoprojector", "#lyrics"],
-  "responseId": "f3a9c1e2"
+  "genre": "None",
+  "artist": "Rex Orange County",
+  "artistCustomFormat": 0,
+  "customFormat": "",
+  "features": [],
+  "hashtags": ["RexOrangeCounty", "PlutoProjector", "Lyrics"],
+  "tiktok": "none",
+  "channel": "none",
+  "log": "true",
+  "extras": {
+    "titles": "Rex Orange County - Pluto Projector (Lyrics)=Rex Orange County - Pluto Projector [Lyrics]=Rex Orange County - Pluto Projector",
+    "seo": {
+      "text": "Rex Orange County=Pluto Projector=Rex Orange County Pluto Projector Lyrics=Pluto Projector Lyrics=Pluto Projector Rex Orange County=Rex Orange County Pluto Projector"
+    },
+    "array": {
+      "removedTags": [
+        "rex orange county pluto projector",
+        "rex orange county pluto projector lyrics",
+        "pluto projector lyrics",
+        "pluto projector rex orange county lyrics",
+        "lyrics pluto projector",
+        "rex orange county lyrics pluto projector",
+        "pluto projector",
+        "rex orange county",
+        "pluto projector rex orange county",
+        "lyrics"
+      ],
+      "titles": [
+        "Rex Orange County - Pluto Projector (Lyrics)",
+        "Rex Orange County - Pluto Projector [Lyrics]",
+        "Rex Orange County - Pluto Projector"
+      ],
+      "tags": [
+        "rex orange county pluto projector",
+        "rex orange county pluto projector lyrics",
+        "pluto projector lyrics",
+        "pluto projector rex orange county lyrics",
+        "lyrics pluto projector",
+        "rex orange county lyrics pluto projector",
+        "pluto projector",
+        "rex orange county",
+        "pluto projector rex orange county",
+        "lyrics"
+      ]
+    }
+  },
+  "url": "/api/v1/generate?title=Pluto%20Projector&artist=Rex%20Orange%20County&features=none&tiktok=false&format=lyrics&channel=none&shuffle=false&genre=none&verse=none&custom=false&log=true&response=415c9517-81cd-4164-a3bd-6c1dafeeb147&example=false&source=unknown",
+  "responseId": "415c9517-81cd-4164-a3bd-6c1dafeeb147",
+  "length": 295
 }`,
   },
   'https://tags.notnick.io/api/v1/length': {
@@ -67,7 +115,7 @@ const data = await res.json();`,
     ],
     response: `{
   "success": true,
-  "length": 41
+  "length": 49
 }`,
   },
 };

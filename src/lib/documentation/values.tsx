@@ -228,7 +228,7 @@ export const VALUES_VARIABLES: Value[] = [
     placeholder: 'artist',
   },
   {
-    placeholder: <p>he main artist's name. This is always required when using a custom format string.</p>,
+    placeholder: <p>This is always required when using a custom format string.</p>,
   },
   // {t}
   {
@@ -238,22 +238,22 @@ export const VALUES_VARIABLES: Value[] = [
     placeholder: 'title',
   },
   {
-    placeholder: <p>The title of the song. Used to place the song title within your custom format string.</p>,
+    placeholder: <p>Used to place the song title within your custom format string.</p>,
   },
   // {f1}
   {
     placeholder: '{f1}',
   },
-  { placeholder: 'feature@{1}' },
-  { placeholder: <p>The first featured artist. Used to place the first feature within your custom format string.</p> },
+  { placeholder: 'feature-1' },
+  { placeholder: <p>Used to place the first feature within your custom format string.</p> },
   // {f2}
   { placeholder: '{f2}' },
-  { placeholder: 'feature@{2}' },
+  { placeholder: 'feature-2' },
   {
-    placeholder: <p>The second featured artist. Used to place the second feature within your custom format string.</p>,
+    placeholder: <p>Used to place the second feature within your custom format string.</p>,
   },
   // {f3}
   { placeholder: '{f3}' },
-  { placeholder: 'feature@{3}' },
-  { placeholder: <p>The third featured artist. Used to place the third feature within your custom format string.</p> },
+  { placeholder: 'feature-3' },
+  { placeholder: <p>Used to place the third feature within your custom format string.</p> },
 ];
