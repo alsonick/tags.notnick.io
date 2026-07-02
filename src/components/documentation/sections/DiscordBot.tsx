@@ -4,7 +4,7 @@ import { FaDiscord } from 'react-icons/fa6';
 import { TableContainer } from '../ui/TableContainer';
 import { DocumentationNote } from '../ui/DocumentationNote';
 import { TdElement } from '../ui/TdElement';
-import Image from 'next/image';
+import { DocumentationVideo } from '../ui/DocumentationVideo';
 import Link from 'next/link';
 
 const DISCORD_BOT_INVITE_URL =
@@ -14,9 +14,54 @@ const COMMAND_PARAMS: Param[] = [{ name: 'Command' }, { name: 'Description' }];
 
 const COMMANDS = [
   { command: '/feedback', description: 'Send feedback, suggestions, or report an issue to the developer.' },
+  { command: '/generate', description: 'YouTube metadata, only tags and hashtags data is included.' },
   { command: '/length', description: 'Check the total character length of a generated tag string.' },
-  { command: '/generate', description: 'Generate YouTube metadata for a song.' },
 ];
+
+const OPTION_PARAMS: Param[] = [{ name: 'Option' }, { name: 'Required' }, { name: 'Default' }];
+
+type CommandOption = {
+  option: string;
+  required: boolean;
+  default: string;
+};
+
+const GENERATE_OPTIONS: CommandOption[] = [
+  { option: 'artist', required: true, default: '—' },
+  { option: 'format', required: false, default: 'Lyrics' },
+  { option: 'genre', required: false, default: 'None' },
+  { option: 'title', required: false, default: 'None' },
+  { option: 'features', required: false, default: 'None' },
+  { option: 'channel', required: false, default: 'None' },
+  { option: 'shuffle', required: false, default: 'Yes' },
+  { option: 'verse', required: false, default: 'None' },
+  { option: 'tiktok', required: false, default: 'No' },
+  { option: 'context', required: false, default: 'No' },
+];
+
+const LENGTH_OPTIONS: CommandOption[] = [{ option: 'tags', required: true, default: '—' }];
+
+const OptionsTable = ({ options }: { options: CommandOption[] }) => {
+  return (
+    <TableContainer params={OPTION_PARAMS}>
+      <tbody>
+        {options.map(({ option, required, default: defaultValue }) => (
+          <tr key={option} className="transition-colors hover:bg-gray-50/70">
+            <TdElement col={0} params={OPTION_PARAMS}>
+              <Badge variant={'secondary'}>{option}</Badge>
+            </TdElement>
+            <TdElement col={1} params={OPTION_PARAMS}>
+              {required ? 'Yes' : 'No'}
+            </TdElement>
+            <TdElement col={2} params={OPTION_PARAMS}>
+              {defaultValue}
+            </TdElement>
+          </tr>
+        ))}
+      </tbody>
+    </TableContainer>
+  );
+};
 
 export const DiscordBot = () => {
   return (
@@ -32,7 +77,7 @@ export const DiscordBot = () => {
         className="mt-6 inline-flex w-fit items-center gap-2 rounded-xl bg-[#5865F2] px-5 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-[#4752c4]"
       >
         <FaDiscord className="text-xl" />
-        Add to Discord
+        Add Lyrics Tags Generator Bot
       </Link>
 
       <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900">Installing the bot</h3>
@@ -53,7 +98,6 @@ export const DiscordBot = () => {
         <li>
           Review the requested permissions and click <b>Authorize</b>.
         </li>
-        <li>Complete the captcha if prompted.</li>
         <li>The bot will appear in your server's member list, ready to use.</li>
       </ol>
 
@@ -77,40 +121,55 @@ export const DiscordBot = () => {
       </TableContainer>
       <div className="mt-2">
         <DocumentationNote>
-          For <Badge variant={'secondary'}>/generate</Badge>, <b>artist</b> is required, while <b>title</b> is not
-          required if both the artist and title are provided in the <b>artist</b> field.
+          For the <Badge variant={'secondary'}>/generate</Badge> endpoint route, the <b>artist</b> component is
+          required, the <b>title</b> component is not required if both the <b>artist</b> and <b>title</b> components are
+          provided in the <b>artist</b> field.
         </DocumentationNote>
       </div>
 
-      <figure className="mt-6">
-        <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-          <Image
-            src="/documentation/discord-bot-usage-example.png"
-            alt="Running the /generate command with the Lyrics Tags Generator Discord bot, showing the generated tags, hashtags, length, and a downloadable tags.txt file."
-            width={1768}
-            height={1596}
-            className="h-auto w-full"
-          />
-        </div>
-        <figcaption className="mt-3 text-center text-xs text-gray-500">
-          Generating tags for a song with the <Badge variant={'secondary'}>/generate</Badge> command.
-        </figcaption>
-      </figure>
+      <DocumentationVideo
+        className="mt-6"
+        src="/documentation/generate.mp4"
+        poster="/documentation/generate-poster.jpg"
+        label="Running the /generate command with the Lyrics Tags Generator Discord bot, showing the generated tags, hashtags, length, and a downloadable tags.txt file."
+        width={1746}
+        height={1816}
+        caption={
+          <>
+            Generating tags for a song with the <Badge variant={'secondary'}>/generate</Badge> command.
+          </>
+        }
+      />
 
-      <figure className="mt-8">
-        <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-          <Image
-            src="/documentation/length-usage-example.png"
-            alt="Running the /length command with the Lyrics Tags Generator Discord bot, which replies with the character length of the generated tags."
-            width={792}
-            height={176}
-            className="h-auto w-full"
-          />
-        </div>
-        <figcaption className="mt-3 text-center text-xs text-gray-500">
-          Checking the length of tags with the <Badge variant={'secondary'}>/length</Badge> command.
-        </figcaption>
-      </figure>
+      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900">
+        <Badge variant={'secondary'}>/generate</Badge> options
+      </h3>
+      <p className="mt-2 mb-4 text-gray-700">
+        The <Badge variant={'secondary'}>/generate</Badge> command accepts the following options:
+      </p>
+      <OptionsTable options={GENERATE_OPTIONS} />
+
+      <DocumentationVideo
+        className="mt-8"
+        src="/documentation/length.mp4"
+        poster="/documentation/length-poster.jpg"
+        label="Running the /length command with the Lyrics Tags Generator Discord bot, which replies with the character length of the generated tags."
+        width={1746}
+        height={558}
+        caption={
+          <>
+            Checking the length of tags with the <Badge variant={'secondary'}>/length</Badge> command.
+          </>
+        }
+      />
+
+      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900">
+        <Badge variant={'secondary'}>/length</Badge> options
+      </h3>
+      <p className="mt-2 mb-4 text-gray-700">
+        The <Badge variant={'secondary'}>/length</Badge> command accepts the following options:
+      </p>
+      <OptionsTable options={LENGTH_OPTIONS} />
     </div>
   );
 };

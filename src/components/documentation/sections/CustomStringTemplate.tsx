@@ -13,7 +13,7 @@ const TdElement = (props: { children: React.ReactNode; col: number }) => {
   return (
     <td
       className={cn(
-        'border-b border-r border-gray-200 p-3 align-top text-gray-700 marker:text-gray-700 last:border-r-0',
+        'border-b border-r border-gray-200 p-3 align-top text-gray-700 marker:text-gray-700 last:border-r-0 [tr:last-child>&]:border-b-0',
         isDescription ? 'text-left' : 'whitespace-nowrap text-center'
       )}
     >
@@ -47,15 +47,18 @@ export const CustomStringTemplate = () => {
       </p>
       <p className="mb-4 text-gray-700">
         We break down the song into components and place them into their respective parts.{' '}
-        <Badge variant={'secondary'}>{'{a}'}</Badge> is for the 'artist' and <Badge variant={'secondary'}>{'{b}'}</Badge>{' '}
-        is for the 'title'. To use your custom string template, you must provide the song followed by a forward slash
-        which is then followed by the string template you want to use. Here's an example:
+        <Badge variant={'secondary'}>{'{a}'}</Badge> is for the 'artist' and{' '}
+        <Badge variant={'secondary'}>{'{b}'}</Badge> is for the 'title'. To use your custom string template, you must
+        provide the song followed by a forward slash which is then followed by the string template you want to use.
+        Here's an example:
       </p>
       <CodeBlock
         language="template"
         code={'Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}'}
       />
-      <p className="mb-4 mt-6 text-gray-700">Here are the available variables you can use in your custom string template:</p>
+      <p className="mb-4 mt-6 text-gray-700">
+        Here are the available variables you can use in your custom string template:
+      </p>
       <TableContainer params={ADDITIONAL_PARAMS}>
         <tbody>
           {rowsVariables.map((row, rowIndex) => (
@@ -70,7 +73,9 @@ export const CustomStringTemplate = () => {
         </tbody>
       </TableContainer>
       <DocumentationNote>
-        We only support <b>three</b> features.
+        We only support up to <b>three</b> features. Supporting more wouldn't help with ranking optimization, since the
+        first 2-3 features on a song typically carry the most ranking weight, and the most well-known features are
+        usually listed first. Viewers rarely search for a song using its full feature list.
       </DocumentationNote>
     </div>
   );

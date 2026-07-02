@@ -30,7 +30,7 @@ const SECTIONS: DocsSection[] = [
 ];
 
 const INFO_CARDS = [
-  { icon: FiServer, label: 'Base URL', value: 'tags.notnick.io/api' },
+  { icon: FiServer, label: 'Base URL', value: 'tags.notnick.io' },
   { icon: FiUnlock, label: 'Authentication', value: 'None' },
   { icon: FiCode, label: 'Response', value: 'JSON' },
 ];
@@ -114,10 +114,7 @@ export default function Documentation() {
               <AdditionalTags />
             </DocumentationSection>
 
-            <DocumentationSection
-              heading="Discord Bot"
-              description="Generate tags directly from your Discord server."
-            >
+            <DocumentationSection heading="Discord Bot" description="Generate tags directly from your Discord server.">
               <DiscordBot />
             </DocumentationSection>
 
