@@ -12,9 +12,9 @@ An entry is a `short-slug.md` file in [`changelogs/`](./changelogs), where the f
 ---
 title: Introducing Changelog
 date: 2026-07-03
-description: A short summary used for SEO.
-contributors: Nicholas(https://www.linkedin.com/in/heynickn/), Sam
-commit: s4dfg
+description: The site now has a changelog so you can see what's new.
+contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
+commit: 7a2c3f2
 ---
 ```
 
