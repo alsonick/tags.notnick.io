@@ -1,3 +1,4 @@
+export const GITHUB_REPOSITORY_URL = 'https://github.com/alsonick/tags.notnick.io';
 export const ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED = 100;
 export const CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT = 30;
 export const FEATURES_INPUT_FIELD_CHARACTER_LIMIT = 45;

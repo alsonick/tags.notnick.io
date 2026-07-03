@@ -31,5 +31,10 @@ export const seo = {
       description: 'Documentation',
       heading: 'Documentation',
     },
+    changelog: {
+      title: 'Changelog | Lyrics Tags Generator',
+      description: 'New features, improvements and fixes to Lyrics Tags Generator.',
+      heading: 'Changelog',
+    },
   },
 };

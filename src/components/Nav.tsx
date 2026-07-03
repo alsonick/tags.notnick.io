@@ -57,6 +57,11 @@ const NAV_LINKS: NavLink[] = [
   //   external: false,
   // },
   {
+    label: 'Changelog',
+    href: '/changelog',
+    external: false,
+  },
+  {
     label: 'FAQ',
     href: '/faq',
     external: false,
