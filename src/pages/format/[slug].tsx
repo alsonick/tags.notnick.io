@@ -31,8 +31,8 @@ const Slug: NextPage<{ slug: string }> = ({ slug }) => {
             ? templates.formats.map((format) => (
                 <div className="mb-8">
                   <h1 className="text-2xl mb-4 tracking-tight">{format.constraint}</h1>
-                  <div className="bg-gray-100 p-3 rounded-lg">
-                    <p className="text-xl whitespace-nowrap overflow-x-auto text-gray-800"> {format.template}</p>
+                  <div className="bg-gray-100 dark:bg-neutral-800 p-3 rounded-lg">
+                    <p className="text-xl whitespace-nowrap overflow-x-auto text-gray-800 dark:text-gray-300"> {format.template}</p>
                   </div>
                 </div>
               ))

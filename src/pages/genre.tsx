@@ -18,7 +18,7 @@ export default function Genre() {
       <Nav />
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.genre.heading}</h1>
-        <p className="mt-4 text-gray-800">All supported genres.</p>
+        <p className="mt-4 text-gray-800 dark:text-gray-300">All supported genres.</p>
         <div className="grid items-center gap-4 mt-8 grid-cols-2 mb-auto">
           {GENRE_LIST.map((genre) => (
             <div className="flex items-center border p-2 px-4 rounded-lg w-full duration-300" key={genre.slug}>

@@ -50,7 +50,7 @@ function DialogContent({
         <DialogPrimitive.Content
           data-slot="dialog-content"
           className={cn(
-            'pointer-events-auto relative grid w-full max-w-lg gap-5 rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-black/10 duration-200 ease-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+            'pointer-events-auto relative grid w-full max-w-lg gap-5 rounded-2xl bg-white dark:bg-neutral-900 p-6 shadow-2xl ring-1 ring-black/10 dark:ring-white/10 duration-200 ease-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
             className
           )}
           {...props}
@@ -59,7 +59,7 @@ function DialogContent({
           {showCloseButton && (
             <DialogPrimitive.Close
               data-slot="dialog-close"
-              className="absolute right-4 top-4 rounded-md p-1 text-gray-500 opacity-70 transition-opacity hover:opacity-100 focus:outline-2 disabled:pointer-events-none"
+              className="absolute right-4 top-4 rounded-md p-1 text-gray-500 dark:text-gray-400 opacity-70 transition-opacity hover:opacity-100 focus:outline-2 disabled:pointer-events-none"
             >
               <XIcon className="size-5" />
               <span className="sr-only">Close</span>
@@ -89,7 +89,7 @@ function DialogTitle({ className, ...props }: React.ComponentProps<typeof Dialog
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn('text-xl font-bold tracking-tighter text-black', className)}
+      className={cn('text-xl font-bold tracking-tighter text-black dark:text-white', className)}
       {...props}
     />
   );
@@ -99,7 +99,7 @@ function DialogDescription({ className, ...props }: React.ComponentProps<typeof 
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn('text-sm text-gray-600', className)}
+      className={cn('text-sm text-gray-500 dark:text-gray-400', className)}
       {...props}
     />
   );

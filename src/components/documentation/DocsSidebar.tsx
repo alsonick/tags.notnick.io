@@ -34,8 +34,8 @@ export const DocsSidebar = ({ sections }: { sections: DocsSection[] }) => {
 
   return (
     <aside className="sticky top-32 hidden h-fit w-56 shrink-0 xl:block">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">On this page</p>
-      <nav className="flex flex-col border-l border-gray-200">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">On this page</p>
+      <nav className="flex flex-col border-l border-gray-200 dark:border-neutral-800">
         {sections.map((section) => (
           <a
             key={section.id}
@@ -43,8 +43,8 @@ export const DocsSidebar = ({ sections }: { sections: DocsSection[] }) => {
             className={cn(
               '-ml-px border-l-2 py-1.5 pl-4 text-sm transition-colors',
               active === section.id
-                ? 'border-teal-500 font-medium text-teal-600'
-                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-900'
+                ? 'border-teal-500 font-medium text-teal-600 dark:text-teal-400'
+                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-900 dark:text-gray-400 dark:hover:border-neutral-600 dark:hover:text-gray-100'
             )}
           >
             {section.label}

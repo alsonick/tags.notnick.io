@@ -498,9 +498,9 @@ export default function Home() {
                   ref={refs.artist}
                   value={artist}
                 />
-                <p className="text-xs text-gray-800 mt-1">
+                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
                   The full song. Inclusive of artists, features and title.{' '}
-                  <span className="text-yellow-600 font-semibold">Required*</span>
+                  <span className="text-yellow-600 dark:text-yellow-500 font-semibold">Required*</span>
                 </p>
                 <CharacterLimit
                   limit={
@@ -520,7 +520,7 @@ export default function Home() {
                   value={channel}
                   required={false}
                 />
-                <p className="text-xs text-gray-800 mt-1">
+                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
                   Type the name of the <b>YouTube Channel</b>.
                 </p>
                 <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
@@ -535,10 +535,10 @@ export default function Home() {
                 value={title}
               />
 
-              <p className="text-xs text-gray-800 mt-1">
+              <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
                 Please remove any <b>commas</b> if there are any.{" "}
                 {artist.length && artist.includes("-") ? null : (
-                  <span className="text-yellow-600 font-semibold">Required*</span>
+                  <span className="text-yellow-600 dark:text-yellow-500 font-semibold">Required*</span>
                 )}
               </p>
               <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
@@ -554,7 +554,7 @@ export default function Home() {
                 value={features}
                 required={false}
               />
-              <p className="text-xs text-gray-800 mt-1">
+              <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
                 Please use <b>commas</b> to separate feature artists.
               </p>
               <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
@@ -565,7 +565,7 @@ export default function Home() {
                 <Step step={3} text="TikTok" />
                 <div className="relative w-full">
                   <select
-                    className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
+                    className="appearance-none bg-white dark:bg-neutral-900 border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
                     onChange={(e) => setTiktok(e.target.value)}
                     value={tiktok}
                   >
@@ -579,18 +579,18 @@ export default function Home() {
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" stroke="currentColor" viewBox="0 0 24 24" fill="none">
                       <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
                     </svg>
                   </div>
                 </div>
-                <p className="text-xs text-gray-800 mt-1">Is the song popular on TikTok?</p>
+                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">Is the song popular on TikTok?</p>
               </section>
               <section className="flex flex-col w-full">
                 <Step step={4} text="Format" />
                 <div className="relative w-full">
                   <select
-                    className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
+                    className="appearance-none bg-white dark:bg-neutral-900 border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
                     onChange={(e) => setFormat(e.target.value)}
                     value={format}
                   >
@@ -610,12 +610,12 @@ export default function Home() {
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" stroke="currentColor" viewBox="0 0 24 24" fill="none">
                       <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
                     </svg>
                   </div>
                 </div>
-                <p className="text-xs text-gray-800 mt-1">
+                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
                   Select the desired <b>format</b>.
                 </p>
               </section>
@@ -625,7 +625,7 @@ export default function Home() {
                 <Step step={5} text="Genre" />
                 <div className="relative w-full">
                   <select
-                    className="appearance-none bg-white border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
+                    className="appearance-none bg-white dark:bg-neutral-900 border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
                     onChange={(e) => setGenre(e.target.value)}
                     value={genre}
                   >
@@ -645,12 +645,12 @@ export default function Home() {
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg className="w-4 h-4 text-gray-600" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" stroke="currentColor" viewBox="0 0 24 24" fill="none">
                       <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
                     </svg>
                   </div>
                 </div>
-                <p className="text-xs text-gray-800 mt-1">
+                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
                   Select the desired <b>genre</b>.
                 </p>
               </section>
@@ -663,7 +663,7 @@ export default function Home() {
                   ref={refs.verse}
                   value={verse}
                 />
-                <p className="text-xs text-gray-800 mt-1">
+                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
                   Popular verse? Paste them in here. Limit is <b>3</b>, separate them by <b>commas</b>.
                 </p>
               </section>
@@ -728,8 +728,8 @@ export default function Home() {
                 </div>
               </div>
               {(process.env.NODE_ENV === 'development' || router.query.debug === 'true') && devViewEnabled ? (
-                <div className="flex flex-col w-full text-gray-800 items-center border p-4 rounded-lg mt-8">
-                  <p className="mb-4 border-b pb-1 text-black">
+                <div className="flex flex-col w-full text-gray-800 dark:text-gray-300 items-center border p-4 rounded-lg mt-8">
+                  <p className="mb-4 border-b pb-1 text-black dark:text-white">
                     A set of tools provided if you're in {environmentModeSetting} mode to give you more functionality.
                   </p>
                   {toggles.map(({ label, state, setState }) => (
@@ -777,17 +777,17 @@ export default function Home() {
                 </div>
               </div>
               {tags.length && displayResponse && devViewEnabled ? (
-                <p className="text-xs ml-auto mt-1 text-gray-400">Response: {data?.responseId}</p>
+                <p className="text-xs ml-auto mt-1 text-gray-400 dark:text-gray-500">Response: {data?.responseId}</p>
               ) : null}
               {tags.length && showJSONView && devViewEnabled ? (
                 <div className="border p-4 mt-6 rounded-lg">
-                  <p className="whitespace-normal break-all text-gray-800">{JSON.stringify(data)}</p>
+                  <p className="whitespace-normal break-all text-gray-800 dark:text-gray-300">{JSON.stringify(data)}</p>
                 </div>
               ) : null}
               {tags.length > 0 && (
                 <div className="flex items-center justify-center w-100 mt-6">
                   <Link
-                    className="text-sm text-center w-fit underline hover:no-underline text-gray-800"
+                    className="text-sm text-center w-fit underline hover:no-underline text-gray-800 dark:text-gray-300"
                     title="Click to view json representation data."
                     href={data?.url ?? ''}
                     target="_blank"

@@ -23,6 +23,19 @@ commit: 7a2c3f2
 - `commit` is the hash of the commit that shipped the change. It's shown as a chip linking to the commit on GitHub.
 - `##` headings in the body get an icon based on their text: headings mentioning "fix" or "improve" get a bug icon, "breaking" gets an alert icon, and everything else gets a sparkles icon.
 
+## 2026-07-05: Dark Mode Support
+
+### Added
+
+- Dark mode across the whole site. It follows your system theme by default.
+- A theme toggle in the nav that remembers your choice in the browser.
+- Toasts, dialogs, dropdowns and form controls switch along with the rest of the site.
+
+### Improved
+
+- The nav's scroll shadow was basically invisible in dark mode, so it now gets a stronger shadow and a thin border there.
+- Cleaned up a bunch of text colors that were slightly off from each other, so everything reads the same in both themes.
+
 ## 2026-07-03: Introducing Changelog
 
 ### Added

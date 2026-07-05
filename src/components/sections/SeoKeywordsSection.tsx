@@ -12,7 +12,7 @@ export const SeoKeywordsSection = (props: Props) => {
   return (
     <section className="mt-4 flex flex-col border-t pt-4">
       <h3 className="text-2xl font-medium">Seo keywords:</h3>
-      <p className="mb-6 text-gray-800">Typically added at the end of your YouTube description.</p>
+      <p className="mb-6 text-gray-800 dark:text-gray-300">Typically added at the end of your YouTube description.</p>
       <div className="flex items-center justify-between w-full">
         <div className="flex flex-col">
           {props.seoText.split('=').map((text) => (

@@ -136,16 +136,16 @@ export const Endpoints = () => {
         const path = endpoint.endpoint.replace('https://tags.notnick.io', '');
 
         return (
-          <div key={endpoint.endpoint} className="overflow-hidden rounded-xl border border-gray-200">
-            <div className="flex items-center justify-between gap-4 border-b border-gray-100 bg-gray-50/70 px-4 py-3">
+          <div key={endpoint.endpoint} className="overflow-hidden rounded-xl border border-gray-200 dark:border-neutral-800">
+            <div className="flex items-center justify-between gap-4 border-b border-gray-100 bg-gray-50/70 dark:border-neutral-800 dark:bg-neutral-900/70 px-4 py-3">
               <div className="flex items-center gap-3">
                 <MethodBadge method={endpoint.method} />
-                <code className="font-mono text-sm font-semibold text-gray-900">{path}</code>
+                <code className="font-mono text-sm font-semibold text-gray-900 dark:text-gray-100">{path}</code>
               </div>
               <button
                 type="button"
                 onClick={() => handleCopy(endpoint.endpoint, index)}
-                className="flex shrink-0 items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1 text-xs font-medium text-gray-600 transition-colors hover:text-gray-900"
+                className="flex shrink-0 items-center gap-1.5 rounded-md border border-gray-200 bg-white text-gray-700 hover:text-gray-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-gray-300 dark:hover:text-white px-2.5 py-1 text-xs font-medium transition-colors"
                 title="Copy endpoint URL"
               >
                 {copiedIndex === index ? <FiCheck className="text-emerald-500" /> : <FiCopy />}
@@ -155,13 +155,13 @@ export const Endpoints = () => {
             <div className="flex flex-col gap-4 p-4">
               {example ? (
                 <>
-                  <p className="text-gray-700">{example.description}</p>
+                  <p className="text-gray-700 dark:text-gray-300">{example.description}</p>
                   <div>
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">Example request</p>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Example request</p>
                     <CodeBlock tabs={example.request} />
                   </div>
                   <div>
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                       Example response
                     </p>
                     <CodeBlock language="json" code={example.response} />
