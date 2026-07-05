@@ -46,7 +46,7 @@ const OptionsTable = ({ options }: { options: CommandOption[] }) => {
     <TableContainer params={OPTION_PARAMS}>
       <tbody>
         {options.map(({ option, required, default: defaultValue }) => (
-          <tr key={option} className="transition-colors hover:bg-gray-50/70">
+          <tr key={option} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
             <TdElement col={0} params={OPTION_PARAMS}>
               <Badge variant={'secondary'}>{option}</Badge>
             </TdElement>
@@ -66,7 +66,7 @@ const OptionsTable = ({ options }: { options: CommandOption[] }) => {
 export const DiscordBot = () => {
   return (
     <div className="flex flex-col">
-      <p className="text-gray-700">
+      <p className="text-gray-700 dark:text-gray-300">
         Prefer to stay in Discord? The Lyrics Tags Generator is also available as a Discord bot, so you and your members
         can generate YouTube metadata with a few slash commands.
       </p>
@@ -80,11 +80,11 @@ export const DiscordBot = () => {
         Add Lyrics Tags Generator Bot
       </Link>
 
-      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900">Installing the bot</h3>
-      <p className="mt-2 text-gray-700">
+      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">Installing the bot</h3>
+      <p className="mt-2 text-gray-700 dark:text-gray-300">
         You'll need the <b>Manage Server</b> permission on the server you want to add the bot to.
       </p>
-      <ol className="mt-4 ml-6 list-decimal space-y-2 text-gray-700">
+      <ol className="mt-4 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300">
         <li>
           Open the{' '}
           <Link href={DISCORD_BOT_INVITE_URL} target="_blank" className="font-semibold text-blue-500 hover:underline">
@@ -101,14 +101,14 @@ export const DiscordBot = () => {
         <li>The bot will appear in your server's member list, ready to use.</li>
       </ol>
 
-      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900">Using the bot</h3>
-      <p className="mt-2 mb-4 text-gray-700">
+      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">Using the bot</h3>
+      <p className="mt-2 mb-4 text-gray-700 dark:text-gray-300">
         In any channel the bot can access, you can run the following slash commands:
       </p>
       <TableContainer params={COMMAND_PARAMS}>
         <tbody>
           {COMMANDS.map(({ command, description }) => (
-            <tr key={command} className="transition-colors hover:bg-gray-50/70">
+            <tr key={command} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
               <TdElement col={0} params={COMMAND_PARAMS}>
                 <Badge variant={'secondary'}>{command}</Badge>
               </TdElement>
@@ -141,10 +141,10 @@ export const DiscordBot = () => {
         }
       />
 
-      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900">
+      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">
         <Badge variant={'secondary'}>/generate</Badge> options
       </h3>
-      <p className="mt-2 mb-4 text-gray-700">
+      <p className="mt-2 mb-4 text-gray-700 dark:text-gray-300">
         The <Badge variant={'secondary'}>/generate</Badge> command accepts the following options:
       </p>
       <OptionsTable options={GENERATE_OPTIONS} />
@@ -163,10 +163,10 @@ export const DiscordBot = () => {
         }
       />
 
-      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900">
+      <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">
         <Badge variant={'secondary'}>/length</Badge> options
       </h3>
-      <p className="mt-2 mb-4 text-gray-700">
+      <p className="mt-2 mb-4 text-gray-700 dark:text-gray-300">
         The <Badge variant={'secondary'}>/length</Badge> command accepts the following options:
       </p>
       <OptionsTable options={LENGTH_OPTIONS} />

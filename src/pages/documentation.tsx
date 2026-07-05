@@ -46,23 +46,23 @@ export default function Documentation() {
         <div className="mb-auto flex items-start gap-12">
           <DocsSidebar sections={SECTIONS} />
           <div className="min-w-0 flex-1">
-            <header className="border-b border-gray-100 pb-8">
-              <Badge className="border-teal-100 bg-teal-50 text-teal-700">API Reference</Badge>
-              <h1 className="mt-3 text-4xl font-black tracking-tight text-gray-900">
+            <header className="border-b border-gray-100 dark:border-neutral-800 pb-8">
+              <Badge className="border-teal-100 bg-teal-50 text-teal-700 dark:border-teal-900 dark:bg-teal-950 dark:text-teal-400">API Reference</Badge>
+              <h1 className="mt-3 text-4xl font-black tracking-tight text-gray-900 dark:text-gray-100">
                 {seo.page.documentation.heading}
               </h1>
-              <p className="mt-3 max-w-2xl text-lg text-gray-600">
+              <p className="mt-3 max-w-2xl text-lg text-gray-700 dark:text-gray-300">
                 A free, public API that generates SEO-optimized YouTube metadata for your lyric videos, including tags,
                 titles, hashtags, and keywords.
               </p>
               <div className="mt-6 grid grid-cols-3 gap-4">
                 {INFO_CARDS.map(({ icon: Icon, label, value }) => (
-                  <div key={label} className="rounded-xl border border-gray-200 p-4">
-                    <div className="flex items-center gap-2 text-gray-400">
+                  <div key={label} className="rounded-xl border border-gray-200 dark:border-neutral-800 p-4">
+                    <div className="flex items-center gap-2 text-gray-400 dark:text-gray-500">
                       <Icon className="text-base" />
                       <span className="text-xs font-semibold uppercase tracking-wider">{label}</span>
                     </div>
-                    <p className="mt-1.5 font-mono text-sm font-medium text-gray-900">{value}</p>
+                    <p className="mt-1.5 font-mono text-sm font-medium text-gray-900 dark:text-gray-100">{value}</p>
                   </div>
                 ))}
               </div>
@@ -72,7 +72,7 @@ export default function Documentation() {
               heading="Introduction"
               description="Everything you need to start generating metadata programmatically."
             >
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-gray-300">
                 The Lyrics Tags Generator API is completely free and requires no API key. Send a{' '}
                 <Badge variant={'secondary'}>GET</Badge> request to one of the endpoints below and you'll receive a JSON
                 response. All parameters are passed as query string values.
@@ -126,7 +126,7 @@ export default function Documentation() {
             </DocumentationSection>
 
             <DocumentationSection heading="Further Assistance" border={false}>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-gray-300">
                 If you have any questions or need further assistance, feel free to reach out to me at{' '}
                 <Link href="mailto:hi@notnick.io" className="font-semibold text-blue-500 hover:underline">
                   hi@notnick.io

@@ -13,7 +13,7 @@ const TdElement = (props: { children: React.ReactNode; col: number }) => {
   return (
     <td
       className={cn(
-        'border-b border-r border-gray-200 p-3 align-top text-gray-700 marker:text-gray-700 last:border-r-0 [tr:last-child>&]:border-b-0',
+        'border-b border-r border-gray-200 dark:border-neutral-800 p-3 align-top text-gray-700 marker:text-gray-700 dark:text-gray-300 dark:marker:text-gray-300 last:border-r-0 [tr:last-child>&]:border-b-0',
         isDescription ? 'text-left' : 'whitespace-nowrap text-center'
       )}
     >
@@ -37,15 +37,15 @@ export const CustomStringTemplate = () => {
   return (
     <div className="flex flex-col">
       <CodeBlock language="template" code={'{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}'} />
-      <p className="my-4 text-gray-700">
+      <p className="my-4 text-gray-700 dark:text-gray-300">
         You might be wondering what the <Badge variant={'secondary'}>{'{}'}</Badge> parts are, we call them{' '}
         <i>variables</i>, and the letters inside them signify where the components of a song belong to. Let's take this
         song for example:
       </p>
-      <p className="mb-4 text-gray-700">
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
         <Badge variant={'secondary'}>Rex Orange County - Pluto Projector</Badge>
       </p>
-      <p className="mb-4 text-gray-700">
+      <p className="mb-4 text-gray-700 dark:text-gray-300">
         We break down the song into components and place them into their respective parts.{' '}
         <Badge variant={'secondary'}>{'{a}'}</Badge> is for the 'artist' and{' '}
         <Badge variant={'secondary'}>{'{b}'}</Badge> is for the 'title'. To use your custom string template, you must
@@ -56,13 +56,13 @@ export const CustomStringTemplate = () => {
         language="template"
         code={'Rex Orange County - Pluto Projector/{a} {t} lyrics,{t} lyrics,lyrics {t},{a} {t}'}
       />
-      <p className="mb-4 mt-6 text-gray-700">
+      <p className="mb-4 mt-6 text-gray-700 dark:text-gray-300">
         Here are the available variables you can use in your custom string template:
       </p>
       <TableContainer params={ADDITIONAL_PARAMS}>
         <tbody>
           {rowsVariables.map((row, rowIndex) => (
-            <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70">
+            <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
               {row.map((value, index) => (
                 <TdElement key={index} col={index}>
                   {value.placeholder}

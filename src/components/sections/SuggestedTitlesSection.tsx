@@ -15,7 +15,7 @@ export const SuggestedTitlesSection = (props: Props) => {
   return (
     <section className="flex flex-col mt-4 border-t pt-4">
       <h3 className="text-2xl font-medium">Suggested titles:</h3>
-      <p className="mb-6 text-gray-800">Titles in different formats you can use.</p>
+      <p className="mb-6 text-gray-800 dark:text-gray-300">Titles in different formats you can use.</p>
       {props.titles.map((title) => (
         <div className="flex items-center justify-between w-full mt-4" key={title}>
           <h4 className="text-xl">{title}</h4>

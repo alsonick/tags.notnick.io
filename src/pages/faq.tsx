@@ -21,13 +21,13 @@ export default function FAQ() {
       <Nav />
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.faq.heading}</h1>
-        <div className="mt-8 text-gray-800 mb-auto">
+        <div className="mt-8 text-gray-800 dark:text-gray-300 mb-auto">
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-xl text-black">
+              <AccordionTrigger className="text-xl text-black dark:text-white">
                 Do you provide an Application Programming Interface (API)?
               </AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800">
+              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
                 Yes! Our{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
@@ -62,8 +62,8 @@ export default function FAQ() {
           </Accordion>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-xl text-black">Does anyone use Lyrics Tags Generator?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800">
+              <AccordionTrigger className="text-xl text-black dark:text-white">Does anyone use Lyrics Tags Generator?</AccordionTrigger>
+              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
                 Yes! The collective group{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
@@ -89,8 +89,8 @@ export default function FAQ() {
           </Accordion>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-xl text-black">Is Lyrics Tags Generator open source?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800">
+              <AccordionTrigger className="text-xl text-black dark:text-white">Is Lyrics Tags Generator open source?</AccordionTrigger>
+              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
                 Yes!{' '}
                 <Link
                   className="text-blue-500 font-semibold hover:underline"
@@ -106,8 +106,8 @@ export default function FAQ() {
           </Accordion>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-xl text-black">How does it work?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800">
+              <AccordionTrigger className="text-xl text-black dark:text-white">How does it work?</AccordionTrigger>
+              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
                 When you provide us data about a song like:{' '}
                 <Badge variant={'secondary'}>Rex Orange County - Pluto Projector</Badge>, we basically break down the
                 entire string and split the component parts into fragments, we can also break down more complex strings
@@ -154,8 +154,8 @@ export default function FAQ() {
           </Accordion>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-xl text-black">Who is this for?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800">
+              <AccordionTrigger className="text-xl text-black dark:text-white">Who is this for?</AccordionTrigger>
+              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
                 This tool is built for anyone running any type of promotional music channel (typically lyric channels)
                 on{' '}
                 <Link

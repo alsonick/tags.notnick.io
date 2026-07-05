@@ -69,8 +69,8 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
       <DialogContent>
         {success ? (
           <div className="flex flex-col items-center gap-3 py-4 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
-              <FiCheck className="text-3xl text-green-600" />
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/40">
+              <FiCheck className="text-3xl text-green-600 dark:text-green-400" />
             </div>
             <DialogTitle className="tracking-tight">Thanks for the feedback!</DialogTitle>
             <DialogDescription>We&apos;ve received your message.</DialogDescription>
@@ -87,7 +87,7 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-gray-800">Email</span>
+            <span className="text-sm font-medium text-gray-800 dark:text-gray-300">Email</span>
             <input
               type="email"
               value={email}
@@ -95,17 +95,17 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
               placeholder="you@example.com"
               autoComplete="email"
               required
-              className="flex border items-center p-2 rounded-lg focus:outline-2 px-4"
+              className="flex border items-center p-2 rounded-lg focus:outline-2 px-4 bg-white dark:bg-neutral-900"
             />
           </label>
 
           <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-gray-800">What&apos;s this about?</span>
+            <span className="text-sm font-medium text-gray-800 dark:text-gray-300">What&apos;s this about?</span>
             <div className="relative">
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full appearance-none border p-2 rounded-lg focus:outline-2 px-4 pr-10 bg-white cursor-pointer"
+                className="w-full appearance-none border p-2 rounded-lg focus:outline-2 px-4 pr-10 bg-white dark:bg-neutral-900 cursor-pointer"
               >
                 {FEEDBACK_OPTIONS.map(({ label }) => (
                   <option key={label} value={label}>
@@ -113,13 +113,13 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
                   </option>
                 ))}
               </select>
-              <FiChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-lg text-gray-500" />
+              <FiChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-lg text-gray-500 dark:text-gray-400" />
             </div>
           </label>
 
           <label className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-gray-800">Feedback</span>
+              <span className="text-sm font-medium text-gray-800 dark:text-gray-300">Feedback</span>
               <CharacterLimit count={body.length} limit={FEEDBACK_BODY_CHARACTER_LIMIT} />
             </div>
             <textarea
@@ -129,7 +129,7 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
               maxLength={FEEDBACK_BODY_CHARACTER_LIMIT}
               rows={5}
               required
-              className="flex border p-2 rounded-lg focus:outline-2 px-4 resize-none"
+              className="flex border p-2 rounded-lg focus:outline-2 px-4 resize-none bg-white dark:bg-neutral-900"
             />
           </label>
 

@@ -22,7 +22,7 @@ export const WhatToProvide = (props: { endpoint: 'generate' | 'length' }) => {
         <TableContainer params={PARAMS}>
           <tbody>
             {rowsGenerate.map((row, rowIndex) => (
-              <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70">
+              <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
                 {row.map((value, index) =>
                   value.list ? (
                     <TdElement key={index} col={index} params={PARAMS}>
@@ -48,7 +48,7 @@ export const WhatToProvide = (props: { endpoint: 'generate' | 'length' }) => {
         <TableContainer params={PARAMS}>
           <tbody>
             {rowsLength.map((row, rowIndex) => (
-              <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70">
+              <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
                 {row.map((value, index) => (
                   <TdElement key={index} col={index} params={PARAMS}>
                     {value.placeholder}

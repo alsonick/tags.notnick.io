@@ -6,7 +6,7 @@ interface Props {
 
 export const CharacterLimit = (props: Props) => {
   const currentCount = props.text?.length ?? props.count ?? 0;
-  const color = currentCount > props.limit ? "text-red-500" : "text-gray-600";
+  const color = currentCount > props.limit ? "text-red-500" : "text-gray-500 dark:text-gray-400";
   const fontWeight = currentCount > props.limit ? "500" : "normal";
 
   return (

@@ -8,7 +8,7 @@ export const Button = (
       {...props}
       className={cn(
         `flex items-center justify-center font-medium text-white
-      bg-black p-2 px-4 rounded-lg focus:outline-2`,
+      bg-black dark:bg-white dark:text-black p-2 px-4 rounded-lg focus:outline-2`,
         props.className
       )}
     >

@@ -21,7 +21,7 @@ export default function Format() {
       <Nav />
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.format.heading}</h1>
-        <p className="mt-4 text-gray-800">Our format string templates for all the supported formats.</p>
+        <p className="mt-4 text-gray-800 dark:text-gray-300">Our format string templates for all the supported formats.</p>
         <div className="grid items-center gap-4 mt-8 grid-cols-2">
           {FORMAT_LIST.filter((format) => !ADDITIONAL_FORMATS.includes(format.slug)).map((format) => (
             <Link

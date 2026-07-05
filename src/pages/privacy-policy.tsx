@@ -21,11 +21,11 @@ export default function PrivacyPolicy() {
       <Nav />
       <MainWrapper>
         <h1 className="text-4xl font-black tracking-tight mt-8">{seo.page.privacyPolicy.heading}</h1>
-        <div className="mt-8 text-gray-800">
+        <div className="mt-8 text-gray-800 dark:text-gray-300">
           <p className="text-lg">Effective Date: 11 May 2025</p>
           <p className="text-lg">Last Updated: 28 Oct 2025</p>
         </div>
-        <div className="text-gray-800 mt-8">
+        <div className="text-gray-800 dark:text-gray-300 mt-8">
           Thank you for visiting{' '}
           <Link
             className="text-blue-500 font-semibold hover:underline"
@@ -39,7 +39,7 @@ export default function PrivacyPolicy() {
         </div>
         <section className="my-8">
           <h1 className="text-2xl font-bold">What We Collect</h1>
-          <div className="mt-4 text-gray-800 ">
+          <div className="mt-4 text-gray-800 dark:text-gray-300 ">
             <p className="mb-4">
               We do not collect, store, or process any <i>personal information</i>.
             </p>
@@ -59,7 +59,7 @@ export default function PrivacyPolicy() {
         </section>
         <section className="mb-8">
           <h1 className="text-2xl font-bold">Analytics and Cookies</h1>
-          <div className="mt-4 text-gray-800">
+          <div className="mt-4 text-gray-800 dark:text-gray-300">
             <p className="mb-4">We may collect anonymous usage data.</p>
             <p className="mb-1">This may include:</p>
             <ul className="list-disc ml-8">
@@ -72,7 +72,7 @@ export default function PrivacyPolicy() {
         </section>
         <section className="mb-8">
           <h1 className="text-2xl font-bold">Changes To This Policy</h1>
-          <div className="mt-4 text-gray-800">
+          <div className="mt-4 text-gray-800 dark:text-gray-300">
             <p>
               This Privacy Policy may be updated or revised from time to time to reflect changes in our practices,
               technology, legal requirements, or for other operational reasons. When we make changes, we will update the
@@ -84,7 +84,7 @@ export default function PrivacyPolicy() {
         </section>
         <section className="mb-auto">
           <h1 className="text-2xl font-bold">Contact</h1>
-          <div className="mt-4 text-gray-800">
+          <div className="mt-4 text-gray-800 dark:text-gray-300">
             <p className="mb-4">For any questions about this Privacy Policy, feel free to reach out:</p>
             <p>
               Contact:{' '}
