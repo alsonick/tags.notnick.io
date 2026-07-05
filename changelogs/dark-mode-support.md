@@ -3,6 +3,7 @@ title: Dark Mode Support
 date: 2026-07-05
 description: The site now supports dark mode, with a toggle in the nav to switch between light, dark and your system theme.
 contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
+commit: 3ac67b2
 ---
 
 The site finally has dark mode. It follows your system theme by default, and if you'd rather pick one yourself there's a sun/moon button in the nav. Whatever you choose is saved in your browser, so it sticks around next time you visit.
