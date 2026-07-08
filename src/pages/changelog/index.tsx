@@ -49,7 +49,7 @@ export default function Changelog({ entries }: { entries: ChangelogEntry[] }) {
                 </Link>
                 {entry.date && <span className="text-gray-500 dark:text-gray-400"> ({formatChangelogDate(entry.date)})</span>}
               </h2>
-              <div className="border-l-2 border-blue-600 pl-8 ml-1 mt-6 text-gray-800 dark:text-gray-300">
+              <div className="border-l-2 border-brand-600 pl-8 ml-1 mt-6 text-gray-800 dark:text-gray-300">
                 <ChangelogMarkdown content={entry.content} />
               </div>
             </section>
@@ -57,7 +57,7 @@ export default function Changelog({ entries }: { entries: ChangelogEntry[] }) {
         </div>
         <div className="mt-16 flex items-center justify-between">
           <Link
-            className="text-blue-500 font-semibold hover:underline flex items-center"
+            className="text-brand-500 font-semibold hover:underline flex items-center"
             title="Go back home"
             href="/"
           >

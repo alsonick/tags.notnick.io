@@ -18,7 +18,7 @@ const SectionIcon = ({ heading }: { heading: string }) => {
     : Sparkles;
 
   return (
-    <span className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 shrink-0">
+    <span className="bg-brand-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 shrink-0">
       <Icon className="w-4 h-4" />
     </span>
   );
@@ -43,7 +43,7 @@ export const ChangelogMarkdown = ({ content }: { content: string }) => {
           <code className="bg-gray-100 dark:bg-neutral-800 rounded px-1.5 py-0.5 text-sm font-mono">{children}</code>
         ),
         a: ({ href, children }) => (
-          <Link className="text-blue-500 font-semibold hover:underline" href={href ?? '#'}>
+          <Link className="text-brand-500 font-semibold hover:underline" href={href ?? '#'}>
             {children}
           </Link>
         ),

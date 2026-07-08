@@ -47,7 +47,7 @@ export default function Documentation() {
           <DocsSidebar sections={SECTIONS} />
           <div className="min-w-0 flex-1">
             <header className="border-b border-gray-100 dark:border-neutral-800 pb-8">
-              <Badge className="border-teal-100 bg-teal-50 text-teal-700 dark:border-teal-900 dark:bg-teal-950 dark:text-teal-400">API Reference</Badge>
+              <Badge className="border-brand-100 bg-brand-50 text-brand-700 dark:border-brand-900 dark:bg-brand-950 dark:text-brand-400">API Reference</Badge>
               <h1 className="mt-3 text-4xl font-black tracking-tight text-gray-900 dark:text-gray-100">
                 {seo.page.documentation.heading}
               </h1>
@@ -128,7 +128,7 @@ export default function Documentation() {
             <DocumentationSection heading="Further Assistance" border={false}>
               <p className="text-gray-700 dark:text-gray-300">
                 If you have any questions or need further assistance, feel free to reach out to me at{' '}
-                <Link href="mailto:hi@notnick.io" className="font-semibold text-blue-500 hover:underline">
+                <Link href="mailto:hi@notnick.io" className="font-semibold text-brand-500 hover:underline">
                   hi@notnick.io
                 </Link>
                 .

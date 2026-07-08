@@ -46,7 +46,7 @@ export default function ChangelogDetail({ entry }: { entry: ChangelogEntry }) {
                 {index > 0 && ', '}
                 {contributor.url ? (
                   <Link
-                    className="text-blue-500 hover:underline"
+                    className="text-brand-500 hover:underline"
                     href={contributor.url}
                     title={contributor.name}
                     target="_blank"
@@ -68,7 +68,7 @@ export default function ChangelogDetail({ entry }: { entry: ChangelogEntry }) {
               Lyrics Tags Generator is open source, and contributions of any kind are welcome. Add a feature, fix a
               bug or tidy something up, and you'll get a mention here along with a link to your socials. Head over to{' '}
               <Link
-                className="text-blue-500 font-semibold hover:underline"
+                className="text-brand-500 font-semibold hover:underline"
                 href={GITHUB_REPOSITORY_URL}
                 title="Lyrics Tags Generator on GitHub"
                 target="_blank"
@@ -81,7 +81,7 @@ export default function ChangelogDetail({ entry }: { entry: ChangelogEntry }) {
         </div>
         <div className="mt-16 flex items-center justify-between">
           <Link
-            className="text-blue-500 font-semibold hover:underline flex items-center"
+            className="text-brand-500 font-semibold hover:underline flex items-center"
             title="Go back to the changelog"
             href="/changelog"
           >

@@ -23,6 +23,20 @@ commit: 7a2c3f2
 - `commit` is the hash of the commit that shipped the change. It's shown as a chip linking to the commit on GitHub.
 - `##` headings in the body get an icon based on their text: headings mentioning "fix" or "improve" get a bug icon, "breaking" gets an alert icon, and everything else gets a sparkles icon.
 
+## 2026-07-08: Primary Accent Color
+
+### Changed
+
+- The accent color across the site is now green (`#30D158`) instead of blue, so all my services share the same theme color.
+- The documentation page uses it too, in the "On this page" highlight, the API Reference badge and the heading anchors.
+- Sharing the site on Discord, Twitter/X or elsewhere now produces a slightly nicer card, with proper image alt text and corrected Twitter tags.
+
+### Fixed
+
+- The toggles were nearly invisible in dark mode and had a gray knob when switched on. They now have a visible track and a white knob in both themes.
+- The FAQ answers were a size bigger than the rest of the site's text, they now match the site's default text size.
+- Removed the two demo videos from the documentation page.
+
 ## 2026-07-05: Dark Mode Support
 
 ### Added

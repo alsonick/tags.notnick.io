@@ -27,10 +27,10 @@ export default function FAQ() {
               <AccordionTrigger className="text-xl text-black dark:text-white">
                 Do you provide an Application Programming Interface (API)?
               </AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
+              <AccordionContent className="text-base text-gray-800 dark:text-gray-300">
                 Yes! Our{' '}
                 <Link
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   title="Application Programming Interface"
                   href="https://en.wikipedia.org/wiki/API"
                   target="_blank"
@@ -42,7 +42,7 @@ export default function FAQ() {
                 <Badge variant={'secondary'}>GET /v1/length</Badge>. Please refer to our official{' '}
                 <Link
                   href="https://github.com/alsonick/lyrics-tags-generator-docs"
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   title="documentation"
                   target="_blank"
                 >
@@ -50,7 +50,7 @@ export default function FAQ() {
                 </Link>{' '}
                 or{' '}
                 <Link
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   href="mailto:hi@notnick.io"
                   title="contact me"
                 >
@@ -63,10 +63,10 @@ export default function FAQ() {
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black dark:text-white">Does anyone use Lyrics Tags Generator?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
+              <AccordionContent className="text-base text-gray-800 dark:text-gray-300">
                 Yes! The collective group{' '}
                 <Link
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   href="https://earlyentry.io"
                   title="earlyentry.io"
                   target="_blank"
@@ -76,7 +76,7 @@ export default function FAQ() {
                 are using Lyrics Tags Generator in their uploading automation system, they specifically use it to
                 generate metadata such as tags for some of their collective channels on{' '}
                 <Link
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   href="https://www.youtube.com/"
                   title="YouTube"
                   target="_blank"
@@ -90,10 +90,10 @@ export default function FAQ() {
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black dark:text-white">Is Lyrics Tags Generator open source?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
+              <AccordionContent className="text-base text-gray-800 dark:text-gray-300">
                 Yes!{' '}
                 <Link
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   href="https://github.com/alsonick/tags.notnick.io"
                   title="Click here to view our GitHub repository"
                   target="_blank"
@@ -107,7 +107,7 @@ export default function FAQ() {
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black dark:text-white">How does it work?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
+              <AccordionContent className="text-base text-gray-800 dark:text-gray-300">
                 When you provide us data about a song like:{' '}
                 <Badge variant={'secondary'}>Rex Orange County - Pluto Projector</Badge>, we basically break down the
                 entire string and split the component parts into fragments, we can also break down more complex strings
@@ -142,7 +142,7 @@ export default function FAQ() {
                 browser client. Please refer to the{' '}
                 <Link
                   href="https://github.com/alsonick/lyrics-tags-generator-docs"
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   title="documentation"
                   target="_blank"
                 >
@@ -155,11 +155,11 @@ export default function FAQ() {
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-xl text-black dark:text-white">Who is this for?</AccordionTrigger>
-              <AccordionContent className="text-lg text-gray-800 dark:text-gray-300">
+              <AccordionContent className="text-base text-gray-800 dark:text-gray-300">
                 This tool is built for anyone running any type of promotional music channel (typically lyric channels)
                 on{' '}
                 <Link
-                  className="text-blue-500 font-semibold hover:underline"
+                  className="text-brand-500 font-semibold hover:underline"
                   href="https://www.youtube.com/"
                   title="YouTube"
                   target="_blank"
@@ -174,7 +174,7 @@ export default function FAQ() {
           </Accordion>
           <div className="mt-16 flex items-center justify-between">
             <Link
-              className="text-blue-500 font-semibold hover:underline flex items-center"
+              className="text-brand-500 font-semibold hover:underline flex items-center"
               title="Go back home"
               href="/"
             >

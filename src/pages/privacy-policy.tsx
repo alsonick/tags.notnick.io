@@ -28,7 +28,7 @@ export default function PrivacyPolicy() {
         <div className="text-gray-800 dark:text-gray-300 mt-8">
           Thank you for visiting{' '}
           <Link
-            className="text-blue-500 font-semibold hover:underline"
+            className="text-brand-500 font-semibold hover:underline"
             href="https://tags.notnick.io"
             title="tags.notnick.io"
           >
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
               We do however log generated metadata, If you do not wish to have your generated metadata logged then set
               the 'log' query to 'false'. If you'd like access to logged data then please{' '}
               <Link
-                className="text-blue-500 font-semibold hover:underline"
+                className="text-brand-500 font-semibold hover:underline"
                 href="mailto:hi@notnick.io"
                 title="contact me"
               >
@@ -89,7 +89,7 @@ export default function PrivacyPolicy() {
             <p>
               Contact:{' '}
               <Link
-                className="text-blue-500 font-semibold hover:underline"
+                className="text-brand-500 font-semibold hover:underline"
                 href="mailto:hi@notnick.io"
                 title="hi@notnick.io"
                 target="_blank"
@@ -100,7 +100,7 @@ export default function PrivacyPolicy() {
           </div>
         </section>
         <div className="mt-16 flex items-center justify-between">
-          <Link className="text-blue-500 font-semibold hover:underline flex items-center" href="/" title="Go back home">
+          <Link className="text-brand-500 font-semibold hover:underline flex items-center" href="/" title="Go back home">
             <FiArrowLeft className="mr-1 text-xl" />
             Go back home
           </Link>
