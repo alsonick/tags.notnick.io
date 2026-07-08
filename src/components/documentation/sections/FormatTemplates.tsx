@@ -55,7 +55,7 @@ export const FormatTemplates = () => {
       <h3 className="mb-4 mt-8 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">Additional Format Templates</h3>
       <FormatAccordion formats={additionalFormats} />
 
-      <Link className="mt-6 w-fit font-semibold text-blue-500 hover:underline" href="/format" target="_blank">
+      <Link className="mt-6 w-fit font-semibold text-brand-500 hover:underline" href="/format" target="_blank">
         View the full format reference
       </Link>
     </div>

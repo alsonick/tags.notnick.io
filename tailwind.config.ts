@@ -11,6 +11,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        brand: {
+          DEFAULT: "#30D158",
+          50: "#effcf1",
+          100: "#d9f9e0",
+          200: "#b4f2c3",
+          300: "#82e69e",
+          400: "#4fdc75",
+          500: "#30D158",
+          600: "#22b046",
+          700: "#1e8a3b",
+          800: "#1d6d33",
+          900: "#1a592c",
+          950: "#093216",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         border: "hsl(var(--border))",

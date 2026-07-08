@@ -43,7 +43,7 @@ export const DocsSidebar = ({ sections }: { sections: DocsSection[] }) => {
             className={cn(
               '-ml-px border-l-2 py-1.5 pl-4 text-sm transition-colors',
               active === section.id
-                ? 'border-teal-500 font-medium text-teal-600 dark:text-teal-400'
+                ? 'border-brand-500 font-medium text-brand-600 dark:text-brand-400'
                 : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-900 dark:text-gray-400 dark:hover:border-neutral-600 dark:hover:text-gray-100'
             )}
           >

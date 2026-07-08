@@ -40,14 +40,14 @@ export const AdditionalTags = () => {
           <Tag key={additionalChristmasTag} tag={additionalChristmasTag} deletable={false} />
         ))}
       </div>
-      <Link className="text-blue-500 w-fit font-semibold hover:underline" href="/format" target="_blank">
+      <Link className="text-brand-500 w-fit font-semibold hover:underline" href="/format" target="_blank">
         Click here to see the available additional tags format
       </Link>
       <div className="mt-6">
         <DocumentationNote>
           Propose new additional tags by{' '}
           <Link
-            className="text-blue-500 font-semibold hover:underline"
+            className="text-brand-500 font-semibold hover:underline"
             href="https://github.com/Lyrics-Tags-Generator/formats/issues/new"
             target="_blank"
           >

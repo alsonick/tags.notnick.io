@@ -4,7 +4,6 @@ import { FaDiscord } from 'react-icons/fa6';
 import { TableContainer } from '../ui/TableContainer';
 import { DocumentationNote } from '../ui/DocumentationNote';
 import { TdElement } from '../ui/TdElement';
-import { DocumentationVideo } from '../ui/DocumentationVideo';
 import Link from 'next/link';
 
 const DISCORD_BOT_INVITE_URL =
@@ -87,7 +86,7 @@ export const DiscordBot = () => {
       <ol className="mt-4 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300">
         <li>
           Open the{' '}
-          <Link href={DISCORD_BOT_INVITE_URL} target="_blank" className="font-semibold text-blue-500 hover:underline">
+          <Link href={DISCORD_BOT_INVITE_URL} target="_blank" className="font-semibold text-brand-500 hover:underline">
             bot invite link
           </Link>
           .
@@ -127,20 +126,6 @@ export const DiscordBot = () => {
         </DocumentationNote>
       </div>
 
-      <DocumentationVideo
-        className="mt-6"
-        src="/documentation/generate.mp4"
-        poster="/documentation/generate-poster.jpg"
-        label="Running the /generate command with the Lyrics Tags Generator Discord bot, showing the generated tags, hashtags, length, and a downloadable tags.txt file."
-        width={1746}
-        height={1816}
-        caption={
-          <>
-            Generating tags for a song with the <Badge variant={'secondary'}>/generate</Badge> command.
-          </>
-        }
-      />
-
       <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">
         <Badge variant={'secondary'}>/generate</Badge> options
       </h3>
@@ -148,20 +133,6 @@ export const DiscordBot = () => {
         The <Badge variant={'secondary'}>/generate</Badge> command accepts the following options:
       </p>
       <OptionsTable options={GENERATE_OPTIONS} />
-
-      <DocumentationVideo
-        className="mt-8"
-        src="/documentation/length.mp4"
-        poster="/documentation/length-poster.jpg"
-        label="Running the /length command with the Lyrics Tags Generator Discord bot, which replies with the character length of the generated tags."
-        width={1746}
-        height={558}
-        caption={
-          <>
-            Checking the length of tags with the <Badge variant={'secondary'}>/length</Badge> command.
-          </>
-        }
-      />
 
       <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">
         <Badge variant={'secondary'}>/length</Badge> options
