@@ -3,6 +3,7 @@ title: Primary Accent Color
 date: 2026-07-08
 description: The accent color across the site is now green instead of blue, along with a few small fixes.
 contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
+commit: 9ba2c44
 ---
 
 The accent color across the site is now green (`#30D158`) instead of blue, so all my services share the same theme color. A few small things got fixed along the way.
