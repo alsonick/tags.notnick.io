@@ -17,7 +17,7 @@ import Link from 'next/link';
 export default function Changelog({ entries }: { entries: ChangelogEntry[] }) {
   return (
     <Container>
-      <Seo seoTitle={seo.page.changelog.title} seoDescription={seo.page.changelog.description} />
+      <Seo seoTitle={seo.page.changelog.title} seoDescription={seo.page.changelog.description} path="/changelog" />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />

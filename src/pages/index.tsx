@@ -480,7 +480,29 @@ export default function Home() {
 
   return (
     <Container>
-      <Seo seoTitle={seo.page.home.title} seoDescription={seo.page.home.description} />
+      <Seo
+        seoTitle={seo.page.home.title}
+        seoDescription={seo.page.home.description}
+        path="/"
+        structuredData={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            name: 'Lyrics Tags Generator',
+            url: 'https://tags.notnick.io/',
+            description: seo.page.home.description,
+            applicationCategory: 'MultimediaApplication',
+            operatingSystem: 'Web',
+            offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Lyrics Tags Generator',
+            url: 'https://tags.notnick.io/',
+          },
+        ]}
+      />
       <NoSupportedSizeScreenMessage />
       {devViewEnabled && <DevelopmentNav />}
       <Nav devViewEnabled={devViewEnabled} />

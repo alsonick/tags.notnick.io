@@ -12,7 +12,7 @@ import { seo } from '@/lib/seo/seo';
 export default function Genre() {
   return (
     <Container>
-      <Seo seoTitle={seo.page.genre.title} seoDescription={seo.page.genre.description} />
+      <Seo seoTitle={seo.page.genre.title} seoDescription={seo.page.genre.description} path="/genre" />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />

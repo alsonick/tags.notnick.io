@@ -1,6 +1,7 @@
 import { NoSupportedSizeScreenMessage } from "@/components/NoSupportedSizeScreenMessage";
 import { TEMPLATE_STRING_FORMAT_LIST } from "@/lib/template-string-format-list";
 import { returnComputedFormatText } from "@/lib/return-computed-format-text";
+import { FORMAT_LIST } from "@/lib/format-list";
 import { DevelopmentNav } from "@/components/DevelopmentNav";
 import { MainWrapper } from "@/components/MainWrapper";
 import { Container } from "@/components/Container";
@@ -18,7 +19,11 @@ const Slug: NextPage<{ slug: string }> = ({ slug }) => {
 
   return (
     <Container>
-      <Seo seoTitle={`${computedFormatTextLyricsTemplateTitle} Format | Lyrics Tags Generator`} seoDescription="" />
+      <Seo
+        seoTitle={`${computedFormatTextLyricsTemplateTitle} Format | Lyrics Tags Generator`}
+        seoDescription={`YouTube tag format string templates for ${computedFormatTextLyricsTemplateTitle} videos. See the exact templates Lyrics Tags Generator uses to build tags for this format.`}
+        path={`/format/${slug}`}
+      />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />
@@ -56,6 +61,7 @@ const Slug: NextPage<{ slug: string }> = ({ slug }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params!;
+  if (!FORMAT_LIST.some((format) => format.slug === slug)) return { notFound: true };
   return { props: { slug } };
 };
 

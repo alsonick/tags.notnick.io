@@ -15,7 +15,59 @@ import Link from 'next/link';
 export default function FAQ() {
   return (
     <Container>
-      <Seo seoTitle={seo.page.faq.title} seoDescription={seo.page.faq.description} />
+      <Seo
+        seoTitle={seo.page.faq.title}
+        seoDescription={seo.page.faq.description}
+        path="/faq"
+        structuredData={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'Do you provide an Application Programming Interface (API)?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes! Our Application Programming Interface is completely free to use. Our available endpoints are GET /v1/generate and GET /v1/length. Please refer to our official documentation or contact us if you need any guidance in setting up or if you have any general questions.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Does anyone use Lyrics Tags Generator?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes! The collective group earlyentry.io are using Lyrics Tags Generator in their uploading automation system, they specifically use it to generate metadata such as tags for some of their collective channels on YouTube.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Is Lyrics Tags Generator open source?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes! The full source code is available on GitHub at https://github.com/alsonick/tags.notnick.io.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'How does it work?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'When you provide data about a song like "Rex Orange County - Pluto Projector", the string is broken down into fragments (artist, title, features) and those fragments are placed into a format string template to produce a ready-to-use list of YouTube tags. You can also create your own custom format string template on the browser client.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Who is this for?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'This tool is built for anyone running any type of promotional music channel (typically lyric channels) on YouTube, whether you are managing a single channel or an entire collective. Provide the necessary metadata about a song and the tool handles the rest.',
+                },
+              },
+            ],
+          },
+        ]}
+      />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />

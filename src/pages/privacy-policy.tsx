@@ -15,7 +15,11 @@ import Link from 'next/link';
 export default function PrivacyPolicy() {
   return (
     <Container>
-      <Seo seoTitle={seo.page.privacyPolicy.title} seoDescription={seo.page.privacyPolicy.description} />
+      <Seo
+        seoTitle={seo.page.privacyPolicy.title}
+        seoDescription={seo.page.privacyPolicy.description}
+        path="/privacy-policy"
+      />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />

@@ -16,7 +16,24 @@ import Link from 'next/link';
 export default function ChangelogDetail({ entry }: { entry: ChangelogEntry }) {
   return (
     <Container>
-      <Seo seoTitle={`${entry.title} | Lyrics Tags Generator`} seoDescription={entry.description} />
+      <Seo
+        seoTitle={`${entry.title} | Lyrics Tags Generator`}
+        seoDescription={entry.description}
+        path={`/changelog/${entry.slug}`}
+        structuredData={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: entry.title,
+            description: entry.description,
+            ...(entry.date ? { datePublished: entry.date } : {}),
+            ...(entry.contributors.length
+              ? { author: entry.contributors.map((c) => ({ '@type': 'Person', name: c.name, ...(c.url ? { url: c.url } : {}) })) }
+              : {}),
+            mainEntityOfPage: `https://tags.notnick.io/changelog/${entry.slug}`,
+          },
+        ]}
+      />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />

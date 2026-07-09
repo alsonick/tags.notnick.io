@@ -38,7 +38,11 @@ const INFO_CARDS = [
 export default function Documentation() {
   return (
     <Container>
-      <Seo seoTitle={seo.page.documentation.title} seoDescription={seo.page.documentation.description} />
+      <Seo
+        seoTitle={seo.page.documentation.title}
+        seoDescription={seo.page.documentation.description}
+        path="/documentation"
+      />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />

@@ -15,7 +15,7 @@ import Link from 'next/link';
 export default function Format() {
   return (
     <Container>
-      <Seo seoTitle={seo.page.format.title} seoDescription={seo.page.format.description} />
+      <Seo seoTitle={seo.page.format.title} seoDescription={seo.page.format.description} path="/format" />
       <NoSupportedSizeScreenMessage />
       <DevelopmentNav />
       <Nav />
