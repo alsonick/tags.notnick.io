@@ -1,6 +1,7 @@
 import { Badge } from '@/components/shadcn/badge';
 import { Param } from '@/types/documentation/param';
 import { FaDiscord } from 'react-icons/fa6';
+import { FiExternalLink } from 'react-icons/fi';
 import { TableContainer } from '../ui/TableContainer';
 import { DocumentationNote } from '../ui/DocumentationNote';
 import { TdElement } from '../ui/TdElement';
@@ -77,6 +78,7 @@ export const DiscordBot = () => {
       >
         <FaDiscord className="text-xl" />
         Add Lyrics Tags Generator Bot
+        <FiExternalLink className="text-lg hover:scale-110 duration-150" />
       </Link>
 
       <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">Installing the bot</h3>

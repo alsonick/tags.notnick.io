@@ -142,6 +142,7 @@ export default function Home() {
       context: contextEnabled ? 'true' : 'false',
       tiktok: tiktok === 'true' ? 'true' : 'false',
       shuffle: autoShuffleTags ? 'true' : 'false',
+      example: example ? 'true' : 'false',
       format: format.toLowerCase().trim(),
       genre: genre.toLowerCase().trim(),
       source: 'web',
@@ -601,7 +602,12 @@ export default function Home() {
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
                       <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
                     </svg>
                   </div>
@@ -632,7 +638,12 @@ export default function Home() {
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
                       <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
                     </svg>
                   </div>
@@ -667,7 +678,12 @@ export default function Home() {
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" stroke="currentColor" viewBox="0 0 24 24" fill="none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
                       <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
                     </svg>
                   </div>
@@ -793,7 +809,7 @@ export default function Home() {
                     </>
                   ) : (
                     <h3 className="text-2xl font-light">
-                      Click the <b>"Generate"</b> button to generate your tags.
+                      Click the <b>"Generate"</b> button to generate your metadata.
                     </h3>
                   )}
                 </div>

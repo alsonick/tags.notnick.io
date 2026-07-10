@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Seo = (props: Props) => {
-  const imageUrl = `${SITE_URL}/tags-v2.png`;
+  const imageUrl = `${SITE_URL}/tags.png`;
   const pageUrl = new URL(props.path ?? '/', SITE_URL).toString();
 
   return (
@@ -37,8 +37,8 @@ export const Seo = (props: Props) => {
       <meta property="og:locale" content="en_US" />
       <meta property="og:image" content={imageUrl} />
       <meta property="og:image:alt" content="Lyrics Tags Generator — free YouTube tags for lyric videos" />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      <meta property="og:image:width" content="5600" />
+      <meta property="og:image:height" content="3200" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />

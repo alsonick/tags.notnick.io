@@ -20,7 +20,7 @@ const EXAMPLES: Record<string, EndpointExample> = {
       {
         label: 'cURL',
         code: `curl "https://tags.notnick.io/api/v1/generate?\\
-artist=Rex%20Orange%20County%20-%20Pluto%20Projector&format=lyrics"`,
+artist=Rex%20Orange%20County%20-%20Pluto%20Projector&format=lyrics&source=curl"`,
       },
       {
         label: 'JavaScript',
@@ -32,6 +32,7 @@ artist=Rex%20Orange%20County%20-%20Pluto%20Projector&format=lyrics"`,
 const res = await fetch(
   \`https://tags.notnick.io/api/v1/generate?\${params}\`
 );
+
 const data = await res.json();`,
       },
     ],
@@ -57,35 +58,9 @@ const data = await res.json();`,
       "text": "Rex Orange County=Pluto Projector=Rex Orange County Pluto Projector Lyrics=Pluto Projector Lyrics=Pluto Projector Rex Orange County=Rex Orange County Pluto Projector"
     },
     "array": {
-      "removedTags": [
-        "rex orange county pluto projector",
-        "rex orange county pluto projector lyrics",
-        "pluto projector lyrics",
-        "pluto projector rex orange county lyrics",
-        "lyrics pluto projector",
-        "rex orange county lyrics pluto projector",
-        "pluto projector",
-        "rex orange county",
-        "pluto projector rex orange county",
-        "lyrics"
-      ],
-      "titles": [
-        "Rex Orange County - Pluto Projector (Lyrics)",
-        "Rex Orange County - Pluto Projector [Lyrics]",
-        "Rex Orange County - Pluto Projector"
-      ],
-      "tags": [
-        "rex orange county pluto projector",
-        "rex orange county pluto projector lyrics",
-        "pluto projector lyrics",
-        "pluto projector rex orange county lyrics",
-        "lyrics pluto projector",
-        "rex orange county lyrics pluto projector",
-        "pluto projector",
-        "rex orange county",
-        "pluto projector rex orange county",
-        "lyrics"
-      ]
+      "removedTags": [...],
+      "titles": [...],
+      "tags": [...]
     }
   },
   "url": "/api/v1/generate?title=Pluto%20Projector&artist=Rex%20Orange%20County&features=none&tiktok=false&format=lyrics&channel=none&shuffle=false&genre=none&verse=none&custom=false&log=true&response=415c9517-81cd-4164-a3bd-6c1dafeeb147&example=false&source=unknown",
@@ -99,7 +74,7 @@ const data = await res.json();`,
       {
         label: 'cURL',
         code: `curl "https://tags.notnick.io/api/v1/length?\\
-tags=pluto%20projector%20lyrics,lyrics%20pluto%20projector"`,
+tags=pluto%20projector%20lyrics,lyrics%20pluto%20projector&source=curl"`,
       },
       {
         label: 'JavaScript',
@@ -110,6 +85,7 @@ tags=pluto%20projector%20lyrics,lyrics%20pluto%20projector"`,
 const res = await fetch(
   \`https://tags.notnick.io/api/v1/length?\${params}\`
 );
+
 const data = await res.json();`,
       },
     ],
@@ -136,7 +112,10 @@ export const Endpoints = () => {
         const path = endpoint.endpoint.replace('https://tags.notnick.io', '');
 
         return (
-          <div key={endpoint.endpoint} className="overflow-hidden rounded-xl border border-gray-200 dark:border-neutral-800">
+          <div
+            key={endpoint.endpoint}
+            className="overflow-hidden rounded-xl border border-gray-200 dark:border-neutral-800"
+          >
             <div className="flex items-center justify-between gap-4 border-b border-gray-100 bg-gray-50/70 dark:border-neutral-800 dark:bg-neutral-900/70 px-4 py-3">
               <div className="flex items-center gap-3">
                 <MethodBadge method={endpoint.method} />
@@ -157,7 +136,9 @@ export const Endpoints = () => {
                 <>
                   <p className="text-gray-700 dark:text-gray-300">{example.description}</p>
                   <div>
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Example request</p>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                      Example request
+                    </p>
                     <CodeBlock tabs={example.request} />
                   </div>
                   <div>
