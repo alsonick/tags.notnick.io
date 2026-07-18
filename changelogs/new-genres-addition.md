@@ -3,6 +3,7 @@ title: New Genres Addition
 date: 2026-07-18
 description: Six new genres are available when generating tags, alternative, emo, rock, EDM, trap and electronic.
 contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
+commit: 39bcf41
 ---
 
 Six new genres have been added: alternative, emo, rock, EDM, trap and electronic. Picking one adds a few genre tags to the generated set, the same way the existing genres do.
