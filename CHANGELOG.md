@@ -23,6 +23,13 @@ commit: 7a2c3f2
 - `commit` is the hash of the commit that shipped the change. It's shown as a chip linking to the commit on GitHub.
 - `##` headings in the body get an icon based on their text: headings mentioning "fix" or "improve" get a bug icon, "breaking" gets an alert icon, and everything else gets a sparkles icon.
 
+## 2026-07-18: New Genres Addition
+
+### Added
+
+- Six new genres: alternative, emo, rock, EDM, trap and electronic. Picking one adds a few genre tags to the generated set, the same way the existing genres do.
+- They're available in the genre dropdown, through the API's `genre` parameter, on the genre page and in the documentation.
+
 ## 2026-07-08: Primary Accent Color
 
 ### Changed
