@@ -22,6 +22,18 @@ export const validateProvidedGenre = (genre: string): boolean => {
       return true;
     case GENRE.italian:
       return true;
+    case GENRE.alternative:
+      return true;
+    case GENRE.emo:
+      return true;
+    case GENRE.rock:
+      return true;
+    case GENRE.edm:
+      return true;
+    case GENRE.trap:
+      return true;
+    case GENRE.electronic:
+      return true;
     default:
       return false;
   }

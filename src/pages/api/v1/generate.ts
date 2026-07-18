@@ -449,6 +449,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += `,italian lyrics,italian music,trending italian`;
   } else if (genre === GENRE.dance) {
     tags += `,dance music,dance,trending dance,dance ${new Date().getFullYear()}`;
+  } else if (genre === GENRE.alternative) {
+    tags += `,alternative,alternative ${currentYear},alternative music,alternative rock`;
+  } else if (genre === GENRE.emo) {
+    tags += `,emo,emo ${currentYear},emo music,emo rap`;
+  } else if (genre === GENRE.rock) {
+    tags += `,rock,rock ${currentYear},rock music,rock lyrics`;
+  } else if (genre === GENRE.edm) {
+    tags += `,edm,edm ${currentYear},edm music,electronic dance music`;
+  } else if (genre === GENRE.trap) {
+    tags += `,trap,trap ${currentYear},trap music,new trap`;
+  } else if (genre === GENRE.electronic) {
+    tags += `,electronic,electronic ${currentYear},electronic music,trending electronic`;
   }
 
   // If context is enabled, call Groq to generate trending context tags
