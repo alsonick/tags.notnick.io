@@ -1,4 +1,6 @@
 export const GENRE = {
+  alternative: "alternative",
+  electronic: "electronic",
   country: "country",
   italian: "italian",
   hiphop: "hiphop",
@@ -7,6 +9,10 @@ export const GENRE = {
   latin: "latin",
   funk: "funk",
   none: "none",
+  rock: "rock",
+  trap: "trap",
   pop: "pop",
   rap: "rap",
+  edm: "edm",
+  emo: "emo",
 };

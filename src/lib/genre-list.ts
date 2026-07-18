@@ -33,4 +33,28 @@ export const GENRE_LIST: FormatList[] = [
     name: 'Rap',
     slug: 'rap',
   },
+  {
+    name: 'Alternative',
+    slug: 'alternative',
+  },
+  {
+    name: 'Emo',
+    slug: 'emo',
+  },
+  {
+    name: 'Rock',
+    slug: 'rock',
+  },
+  {
+    name: 'EDM',
+    slug: 'edm',
+  },
+  {
+    name: 'Trap',
+    slug: 'trap',
+  },
+  {
+    name: 'Electronic',
+    slug: 'electronic',
+  },
 ];

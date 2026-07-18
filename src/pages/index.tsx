@@ -671,6 +671,12 @@ export default function Home() {
                       { value: GENRE.phonk, text: 'Phonk' },
                       { value: GENRE.pop, text: 'Pop' },
                       { value: GENRE.rap, text: 'Rap' },
+                      { value: GENRE.alternative, text: 'Alternative' },
+                      { value: GENRE.emo, text: 'Emo' },
+                      { value: GENRE.rock, text: 'Rock' },
+                      { value: GENRE.edm, text: 'EDM' },
+                      { value: GENRE.trap, text: 'Trap' },
+                      { value: GENRE.electronic, text: 'Electronic' },
                     ].map((option) => (
                       <option className="font-inter" key={option.value} value={option.value}>
                         {option.text}
