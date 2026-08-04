@@ -3,7 +3,7 @@ title: Context Tags on Gemini
 date: 2026-08-04
 description: The context tags feature now runs on Google's Gemini instead of Groq.
 contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
-commit:
+commit: bfe6676
 ---
 
 The context tags feature, the one you get by adding `\context` to the artist field, now runs on Google's Gemini instead of Groq. Nothing changes in how you use it, it's the same flag and the same handful of tags about why a song is going around on TikTok or Reels. The model behind it is just a newer one, so the tags it comes back with should be a little sharper.
