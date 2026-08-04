@@ -26,6 +26,7 @@ import { noneTitles } from '@/lib/helpers/titles/none-titles';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { lyricsTags } from '@/lib/helpers/tags/lyrics-tags';
 import { testoTags } from '@/lib/helpers/tags/testo-lyrics';
+import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import { countTagsLength } from '@/lib/count-tags-length';
 import { letraTags } from '@/lib/helpers/tags/letra-tags';
 import { phonkTags } from '@/lib/helpers/tags/phonk-tags';
@@ -36,7 +37,6 @@ import { urlBuilder } from '@/lib/url-builder';
 import { FORMAT } from '@/lib/format';
 import { error } from '@/lib/error';
 import { GENRE } from '@/lib/genre';
-import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
