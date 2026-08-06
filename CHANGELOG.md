@@ -23,6 +23,18 @@ commit: 7a2c3f2
 - `commit` is the hash of the commit that shipped the change. It's shown as a chip linking to the commit on GitHub.
 - `##` headings in the body get an icon based on their text: headings mentioning "fix" or "improve" get a bug icon, "breaking" gets an alert icon, and everything else gets a sparkles icon.
 
+## 2026-08-06: Remove low ranking tags
+
+### Removed
+
+- Tags that put the format word between the artist and the title, like `{artist} lyrics {title}`, are no longer generated. vidIQ scored them as low ranking and they used up part of the 500 character budget.
+- Affected formats are lyrics, letra, testo, bass boosted and nightcore/sped up. Slowed & reverb, phonk and none already kept the format word at the end.
+- Shorter tags like `lyrics {title}` and `testo {artist}` are unchanged.
+
+### Changed
+
+- The tag templates listed in the documentation now match what's generated.
+
 ## 2026-08-04: Context Tags on Gemini
 
 ### Changed

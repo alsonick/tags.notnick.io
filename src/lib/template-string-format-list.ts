@@ -10,19 +10,19 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(lyrics)::[default]',
         template:
-          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{artist} lyrics {title},{title},{artist},{title} {artist},lyrics',
+          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{title},{artist},{title} {artist},lyrics',
       },
       {
         id: generateRandomId(),
         constraint: '(lyrics)::[feature-1]',
         template:
-          '{firstFeature},{firstFeature} {title} lyrics,lyrics {firstFeature} {title},{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature}',
+          '{firstFeature},{firstFeature} {title} lyrics,{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature}',
       },
       {
         id: generateRandomId(),
         constraint: '(lyrics)::includes[default]&&[feature-1]',
         template:
-          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{artist} lyrics {title},{title},{artist},{title} {artist},lyrics,{firstFeature},{firstFeature} {title} lyrics,lyrics {firstFeature} {title},{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature}',
+          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{title},{artist},{title} {artist},lyrics,{firstFeature},{firstFeature} {title} lyrics,{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature}',
       },
       {
         id: generateRandomId(),
@@ -34,7 +34,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(lyrics)::includes[default]&&[feature-1]&&[feature-2]',
         template:
-          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{artist} lyrics {title},{title},{artist},{title} {artist},lyrics,{firstFeature},{firstFeature} {title} lyrics,lyrics {firstFeature} {title},{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature},{secondFeature},{secondFeature} {title} lyrics,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}',
+          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{title},{artist},{title} {artist},lyrics,{firstFeature},{firstFeature} {title} lyrics,{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature},{secondFeature},{secondFeature} {title} lyrics,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}',
       },
       {
         id: generateRandomId(),
@@ -46,7 +46,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(lyrics)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]',
         template:
-          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{artist} lyrics {title},{title},{artist},{title} {artist},lyrics,{firstFeature},{firstFeature} {title} lyrics,lyrics {firstFeature} {title},{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature},{secondFeature},{secondFeature} {title} lyrics,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} lyrics,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}',
+          '{artist} {title},{artist} {title} lyrics,{title} lyrics,{title} {artist} lyrics,lyrics {title},{title},{artist},{title} {artist},lyrics,{firstFeature},{firstFeature} {title} lyrics,{firstFeature} lyrics,{firstFeature} {title},{artist} {firstFeature},{title} {firstFeature},{secondFeature},{secondFeature} {title} lyrics,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} lyrics,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}',
       },
       {
         id: generateRandomId(),
@@ -63,7 +63,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(bassboosted)::[default]',
         template:
-          '{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist',
+          '{artist},{title},{title} bass boosted,{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist',
       },
       {
         id: generateRandomId(),
@@ -74,7 +74,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(bassboosted)::includes[default]&&[feature-1]',
         template:
-          '{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted',
+          '{artist},{title},{title} bass boosted,{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted',
       },
       {
         id: generateRandomId(),
@@ -85,7 +85,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(bassboosted)::includes[default]&&[feature-1]&&[feature-2]',
         template:
-          '{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted,{secondFeature},{secondFeature} {title} bass boosted',
+          '{artist},{title},{title} bass boosted,{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted,{secondFeature},{secondFeature} {title} bass boosted',
       },
       {
         id: generateRandomId(),
@@ -96,7 +96,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(bassboosted)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]',
         template:
-          '{artist},{title},{title} bass boosted,{title} bass boosted {artist},{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted,{secondFeature},{secondFeature} {title} bass boosted,{thirdFeature},{thirdFeature} {title} bass boosted',
+          '{artist},{title},{title} bass boosted,{title} {artist},{title} {artist} bass boosted,{artist} {title} bass boosted,{artist} {title},{artist} - {title},{artist} - {title} bass boosted,{title} {artist} bass boost,{artist} bass boosted,{title} bass boost,bass boost,bass boosted,bass boosted car playlist,bass boost car playlist,{firstFeature},{firstFeature} {title} bass boosted,{secondFeature},{secondFeature} {title} bass boosted,{thirdFeature},{thirdFeature} {title} bass boosted',
       },
       {
         id: generateRandomId(),
@@ -113,7 +113,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(nightcore)::[default]',
         template:
-          '{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore',
+          '{artist},{title},{title} nightcore,{title} sped up,{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore',
       },
       {
         id: generateRandomId(),
@@ -124,7 +124,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(nightcore)::includes[default]&&[feature-1]',
         template:
-          '{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature}',
+          '{artist},{title},{title} nightcore,{title} sped up,{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature}',
       },
       {
         id: generateRandomId(),
@@ -135,7 +135,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(nightcore)::includes[default]&&[feature-1]&&[feature-2]',
         template:
-          '{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature}',
+          '{artist},{title},{title} nightcore,{title} sped up,{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature}',
       },
       {
         id: generateRandomId(),
@@ -146,7 +146,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(nightcore)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]',
         template:
-          '{artist},{title},{title} nightcore,{title} sped up,{title} sped up {artist},{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature},{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},title {thirdFeature}',
+          '{artist},{title},{title} nightcore,{title} sped up,{artist} {title},{artist} {title} sped up,{artist} nightcore,{artist} sped up,nightcore,{firstFeature},{artist} {firstFeature},{firstFeature} {title},title {firstFeature},{secondFeature},{artist} {secondFeature},{secondFeature} {title},title {secondFeature},{thirdFeature},{artist} {thirdFeature},{thirdFeature} {title},title {thirdFeature}',
       },
       {
         id: generateRandomId(),
@@ -213,7 +213,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(letra)::[default]',
         template:
-          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title}',
+          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},{artist} letra,letra {artist},{artist} - {title},{artist} - {title}',
       },
       {
         id: generateRandomId(),
@@ -225,7 +225,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(letra)::includes[default]&&[feature-1]',
         template:
-          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}',
+          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},{artist} letra,letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}',
       },
       {
         id: generateRandomId(),
@@ -238,7 +238,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(letra)::includes[default]&&[feature-1]&&[feature-2]',
         template:
-          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} letra,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}',
+          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},{artist} letra,letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} letra,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}',
       },
       {
         id: generateRandomId(),
@@ -250,7 +250,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(letra)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]',
         template:
-          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},letra {title} {artist},{artist} letra,{artist} letra {title},{title} letra {artist},letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} letra,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} letra,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}',
+          '{artist},{title},{artist} {title} letra,{artist} {title},{title} {artist},{title} letra,letra {title},{artist} letra,letra {artist},{artist} - {title},{artist} - {title},{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} letra,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} letra,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} letra,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}',
       },
       {
         id: generateRandomId(),
@@ -267,7 +267,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(testo)::[default]',
         template:
-          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo',
+          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},{artist} testo,testo {artist},{artist} - {title},{artist} - {title} testo,testo',
       },
       {
         id: generateRandomId(),
@@ -279,7 +279,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(testo)::includes[default]&&[feature-1]',
         template:
-          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}',
+          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},{artist} testo,testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature}',
       },
       {
         id: generateRandomId(),
@@ -291,7 +291,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(testo)::includes[default]&&[feature-1]&&[feature-2]',
         template:
-          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} testo,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}',
+          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},{artist} testo,testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} testo,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature}',
       },
       {
         id: generateRandomId(),
@@ -303,7 +303,7 @@ export const TEMPLATE_STRING_FORMAT_LIST: TemplateStringFormatList[] = [
         id: generateRandomId(),
         constraint: '(testo)::includes[default]&&[feature-1]&&[feature-2]&&[feature-3]',
         template:
-          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},testo {title} {artist},{artist} testo,{artist} testo {title},{title} testo {artist},testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} testo,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} testo,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}',
+          '{artist},{title},{artist} {title} testo,{artist} {title},{title} {artist},{title} testo,testo {title},{artist} testo,testo {artist},{artist} - {title},{artist} - {title} testo,testo,{firstFeature} {title},{artist} {firstFeature} {title},{firstFeature} {title} testo,{title} {firstFeature},{artist} {firstFeature},{firstFeature} {artist},{firstFeature},{secondFeature},{secondFeature} {title} testo,{secondFeature} {title},{artist} {secondFeature},{title} {secondFeature},{thirdFeature},{thirdFeature} {title} testo,{thirdFeature} {title},{artist} {thirdFeature},{title} {thirdFeature}',
       },
       {
         id: generateRandomId(),

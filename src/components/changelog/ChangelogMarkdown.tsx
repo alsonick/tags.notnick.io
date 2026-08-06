@@ -47,6 +47,10 @@ export const ChangelogMarkdown = ({ content }: { content: string }) => {
             {children}
           </Link>
         ),
+        // eslint-disable-next-line @next/next/no-img-element
+        img: ({ src, alt }) => (
+          <img className="shadow-md mt-4 w-full h-auto" src={typeof src === 'string' ? src : ''} alt={alt ?? ''} />
+        ),
       }}
     >
       {content}

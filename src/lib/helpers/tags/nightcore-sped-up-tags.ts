@@ -1,6 +1,6 @@
 export const nightcoreSpedUpTags = (artist: string, title: string, features: string, tiktok: string): string => {
   // Tags
-  let tags = `${artist},${title},${title} nightcore,${title} sped up,${title} sped up ${artist},${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
+  let tags = `${artist},${title},${title} nightcore,${title} sped up,${artist} ${title},${artist} ${title} sped up,${artist} nightcore,${artist} sped up,nightcore`;
 
   // Features
   let feats = features.split(",").map((feat) => feat.trim());
