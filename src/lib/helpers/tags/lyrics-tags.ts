@@ -1,6 +1,6 @@
 export const lyricsTags = (artist: string, title: string, features: string, tiktok: string): string => {
   // Tags
-  let tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},${artist} lyrics ${title},${title},${artist},${title} ${artist},lyrics`;
+  let tags = `${artist} ${title},${artist} ${title} lyrics,${title} lyrics,${title} ${artist} lyrics,lyrics ${title},${title},${artist},${title} ${artist},lyrics`;
 
   // Features
   let feats = features.split(",").map((feat) => feat.trim());
@@ -10,7 +10,7 @@ export const lyricsTags = (artist: string, title: string, features: string, tikt
 
   // Features
   if (features !== "none" && (tiktok === "false" || tiktok === "" || tiktok !== "true")) {
-    tags += `,${firstFeature},${firstFeature} ${title} lyrics,lyrics ${firstFeature} ${title},${firstFeature} lyrics,${firstFeature} ${title},${artist} ${firstFeature},${title} ${firstFeature}`;
+    tags += `,${firstFeature},${firstFeature} ${title} lyrics,${firstFeature} lyrics,${firstFeature} ${title},${artist} ${firstFeature},${title} ${firstFeature}`;
 
     // Second feature
     if (feats.length === 2) {

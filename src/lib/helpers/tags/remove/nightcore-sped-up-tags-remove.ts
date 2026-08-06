@@ -10,7 +10,6 @@ export const nightcoreSpedUpTagsRemove = (
   if (features === "none") {
     const generateConcreteLeastEfficientTags = (artist: string, title: string) => {
       const patterns: string[] = [
-        `${title} sped up ${artist}`,
         `${title} sped up`,
         `${artist} ${title}`,
         `${title} nightcore`,
@@ -42,7 +41,6 @@ export const nightcoreSpedUpTagsRemove = (
           `title ${firstFeature}`,
           `${firstFeature} ${title}`,
           `${artist} ${firstFeature}`,
-          `${title} sped up ${artist}`,
           `${title} sped up`,
           `${artist} ${title}`,
           `${title} nightcore`,
@@ -64,7 +62,6 @@ export const nightcoreSpedUpTagsRemove = (
           `title ${firstFeature}`,
           `${firstFeature} ${title}`,
           `${artist} ${firstFeature}`,
-          `${title} sped up ${artist}`,
           `${title} sped up`,
           `${artist} ${title}`,
           `${title} nightcore`,
@@ -92,7 +89,6 @@ export const nightcoreSpedUpTagsRemove = (
           `title ${firstFeature}`,
           `${firstFeature} ${title}`,
           `${artist} ${firstFeature}`,
-          `${title} sped up ${artist}`,
           `${title} sped up`,
           `${artist} ${title}`,
           `${title} nightcore`,

@@ -1,6 +1,6 @@
 export const testoTags = (artist: string, title: string, features: string, tiktok: string): string => {
   // Tags
-  let tags = `${artist},${title},${artist} ${title} testo,${artist} ${title},${title} ${artist},${title} testo,testo ${title},testo ${title} ${artist},${artist} testo,${artist} testo ${title},${title} testo ${artist},testo ${artist},${artist} - ${title},${artist} - ${title} testo,testo`;
+  let tags = `${artist},${title},${artist} ${title} testo,${artist} ${title},${title} ${artist},${title} testo,testo ${title},${artist} testo,testo ${artist},${artist} - ${title},${artist} - ${title} testo,testo`;
 
   // Features
   let feats = features.split(",").map((feat) => feat.trim());
