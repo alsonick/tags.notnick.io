@@ -3,6 +3,7 @@ title: Remove low ranking tags
 date: 2026-08-06
 description: Tags that vidIQ scored as low ranking are no longer generated.
 contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
+commit: 46a4e9a
 ---
 
 A handful of the generated tags were coming back as low ranking on vidIQ, so they're no longer generated. They all shared the same shape, the format word wedged between the artist and the title, so you'd get something like "drake lyrics god's plan". Dropping them also frees up part of the 500 character budget for tags that actually rank.
