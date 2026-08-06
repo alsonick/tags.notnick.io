@@ -58,6 +58,7 @@
     "**/jest-config/glob": "^10.5.0",
     "**/jest-runtime/glob": "^10.5.0",
     "**/next/postcss": "^8.5.10",
+    "**/next/sharp": "^0.35.0",
     "**/jest-util/picomatch": "^4.0.4",
     "**/micromatch/picomatch": "^2.3.2",
     "**/anymatch/picomatch": "^2.3.2",
