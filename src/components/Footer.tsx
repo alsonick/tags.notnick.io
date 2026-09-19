@@ -4,7 +4,7 @@ export const Footer = () => {
   return (
     <footer className="bottom-0 left-0 mt-8 text-sm pb-1 border-t pt-4">
       <h1 className="font-bold text-lg text-black dark:text-white">Lyrics Tags Generator</h1>
-      <p className="text-gray-800 dark:text-gray-300 text-xs">© {new Date().getFullYear()} | All rights reserved.</p>
+      <p className="text-gray-800 dark:text-gray-300 text-xs">© {new Date().getFullYear()} | Nicholas Njoki | MIT.</p>
       <p className="text-gray-800 dark:text-gray-300 text-xs">
         Made with{' '}
         <Link
