@@ -26,13 +26,14 @@ export const WhatToProvide = (props: { endpoint: 'generate' | 'length' }) => {
                 {row.map((value, index) =>
                   value.list ? (
                     <TdElement key={index} col={index} params={PARAMS}>
-                      <ul className="ml-4 list-disc">
+                      <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">Accepted values:</p>
+                      <div className="flex flex-wrap gap-1.5">
                         {value.list.map((val) => (
-                          <li key={val} className="mb-2 last:mb-0">
-                            <Badge variant="secondary">{val}</Badge>
-                          </li>
+                          <Badge key={val} variant="secondary">
+                            {val}
+                          </Badge>
                         ))}
-                      </ul>
+                      </div>
                     </TdElement>
                   ) : (
                     <TdElement key={index} col={index} params={PARAMS}>

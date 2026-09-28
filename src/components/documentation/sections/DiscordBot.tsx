@@ -5,6 +5,8 @@ import { FiExternalLink } from 'react-icons/fi';
 import { TableContainer } from '../ui/TableContainer';
 import { DocumentationNote } from '../ui/DocumentationNote';
 import { TdElement } from '../ui/TdElement';
+import { buttonVariants } from '@/components/Button';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
 const DISCORD_BOT_INVITE_URL =
@@ -48,7 +50,7 @@ const OptionsTable = ({ options }: { options: CommandOption[] }) => {
         {options.map(({ option, required, default: defaultValue }) => (
           <tr key={option} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
             <TdElement col={0} params={OPTION_PARAMS}>
-              <Badge variant={'secondary'}>{option}</Badge>
+              {option}
             </TdElement>
             <TdElement col={1} params={OPTION_PARAMS}>
               {required ? 'Yes' : 'No'}
@@ -74,32 +76,41 @@ export const DiscordBot = () => {
       <Link
         href={DISCORD_BOT_INVITE_URL}
         target="_blank"
-        className="mt-6 inline-flex w-fit items-center gap-2 rounded-xl bg-[#5865F2] px-5 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-[#4752c4]"
+        className={cn(buttonVariants(), 'mt-6 w-fit')}
       >
-        <FaDiscord className="text-xl" />
+        <FaDiscord />
         Add Lyrics Tags Generator Bot
-        <FiExternalLink className="text-lg hover:scale-110 duration-150" />
+        <FiExternalLink />
       </Link>
 
       <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">Installing the bot</h3>
       <p className="mt-2 text-gray-700 dark:text-gray-300">
         You'll need the <b>Manage Server</b> permission on the server you want to add the bot to.
       </p>
-      <ol className="mt-4 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300">
-        <li>
-          Open the{' '}
-          <Link href={DISCORD_BOT_INVITE_URL} target="_blank" className="font-semibold text-brand-500 hover:underline">
-            bot invite link
-          </Link>
-          .
-        </li>
-        <li>
-          Pick your server from the <b>Add to Server</b> dropdown.
-        </li>
-        <li>
-          Review the requested permissions and click <b>Authorize</b>.
-        </li>
-        <li>The bot will appear in your server's member list, ready to use.</li>
+      <ol className="mt-4 space-y-3 text-gray-700 dark:text-gray-300">
+        {[
+          <>
+            Open the{' '}
+            <Link href={DISCORD_BOT_INVITE_URL} target="_blank" className="link">
+              bot invite link
+            </Link>
+            .
+          </>,
+          <>
+            Pick your server from the <b>Add to Server</b> dropdown.
+          </>,
+          <>
+            Review the requested permissions and click <b>Authorize</b>.
+          </>,
+          <>The bot will appear in your server's member list, ready to use.</>,
+        ].map((step, index) => (
+          <li className="flex items-start gap-3" key={index}>
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-black text-xs font-semibold text-white dark:bg-white dark:text-black">
+              {index + 1}
+            </span>
+            <span className="pt-0.5">{step}</span>
+          </li>
+        ))}
       </ol>
 
       <h3 className="mt-10 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">Using the bot</h3>
@@ -111,7 +122,7 @@ export const DiscordBot = () => {
           {COMMANDS.map(({ command, description }) => (
             <tr key={command} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
               <TdElement col={0} params={COMMAND_PARAMS}>
-                <Badge variant={'secondary'}>{command}</Badge>
+                {command}
               </TdElement>
               <TdElement col={1} params={COMMAND_PARAMS}>
                 {description}

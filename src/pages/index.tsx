@@ -6,15 +6,27 @@ import {
   TITLE_INPUT_FIELD_CHARACTER_LIMIT,
   VERSE_INPUT_FIELD_CHARACTER_LIMIT,
 } from '@/lib/constants';
-import { FiRepeat, FiTrash, FiDelete, FiSave, FiCornerDownRight } from 'react-icons/fi';
+import {
+  FiAlertTriangle,
+  FiCornerDownRight,
+  FiRepeat,
+  FiDelete,
+  FiTrash,
+  FiCode,
+  FiSave,
+  FiTool,
+  FiTag,
+  FiZap,
+} from 'react-icons/fi';
 import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
 import { SuggestedTitlesSection } from '@/components/sections/SuggestedTitlesSection';
 import { SeoKeywordsSection } from '@/components/sections/SeoKeywordsSection';
 import { HashtagsSection } from '@/components/sections/HashtagsSection';
+import { ResultSection } from '@/components/sections/ResultSection';
 import { CharacterLimit } from '@/components/CharacterLimit';
-import { DevelopmentNav } from '@/components/DevelopmentNav';
 import { countTagsLength } from '@/lib/count-tags-length';
 import { Skeleton } from '@/components/shadcn/skeleton';
+import { DocumentationNote } from '@/components/documentation/ui/DocumentationNote';
 import { MainWrapper } from '@/components/MainWrapper';
 import { useState, useRef, useEffect } from 'react';
 import { Switch } from '@/components/shadcn/switch';
@@ -24,6 +36,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Custom } from '@/components/Custom';
 import { Response } from '@/types/response';
+import { Select } from '@/components/Select';
 import { Input } from '@/components/Input';
 import { Step } from '../components/Step';
 import { FiCopy } from 'react-icons/fi';
@@ -39,6 +52,17 @@ import { GENRE } from '@/lib/genre';
 import { seo } from '@/lib/seo/seo';
 import { toast } from 'sonner';
 import Link from 'next/link';
+
+// localStorage key for the developer tool options shown in development and ?debug=true mode.
+const DEV_TOOLS_STORAGE_KEY = 'dev-tools-settings';
+
+// Key caps used in the developer tools shortcut hint.
+const kbdClassName =
+  'inline-block rounded-md border bg-white px-1.5 font-sans text-base font-medium leading-6 text-gray-700 shadow-sm dark:bg-neutral-900 dark:text-gray-300';
+
+// Helper text shown under each form field.
+const helperClassName =
+  'text-xs text-gray-500 dark:text-gray-400 [&_b]:font-semibold [&_b]:text-gray-700 dark:[&_b]:text-gray-300';
 
 export default function Home() {
   const [showCustomFormatStringTemplateSection, setShowCustomFormatStringTemplateSection] = useState(false);
@@ -444,6 +468,67 @@ export default function Home() {
     }
   }, []); // Empty dependency array → run only once on mount
 
+  const isDevOrDebug = process.env.NODE_ENV === 'development' || router.query.debug === 'true';
+  const [devToolSettingsRestored, setDevToolSettingsRestored] = useState(false);
+
+  // Setters for the developer tool options that are remembered between visits.
+  const devToolSetters: Record<string, (value: boolean) => void> = {
+    clearAfterResponse: setClearAfterResponse,
+    useAutoDeletedTags: setUseAutoDeletedTags,
+    autoShuffleTags: setAutoShuffleTags,
+    enableLogging: setEnableLogging,
+    devViewEnabled: setDevViewEnabled,
+    showJSONView: setShowJSONView,
+    displayResponse: setDisplayResponse,
+  };
+
+  useEffect(() => {
+    // Restore the saved developer tool options once the router knows about ?debug=true
+    if (!router.isReady || !isDevOrDebug || devToolSettingsRestored) return;
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(DEV_TOOLS_STORAGE_KEY) ?? '{}');
+      Object.entries(devToolSetters).forEach(([key, set]) => {
+        if (typeof saved[key] === 'boolean') set(saved[key]);
+      });
+    } catch {
+      // Storage can be unavailable (e.g. private mode); fall back to the defaults.
+    }
+
+    setDevToolSettingsRestored(true);
+  }, [router.isReady, isDevOrDebug]);
+
+  useEffect(() => {
+    // Save the developer tool options whenever one changes, but only after they've been restored
+    if (!devToolSettingsRestored || !isDevOrDebug) return;
+
+    try {
+      localStorage.setItem(
+        DEV_TOOLS_STORAGE_KEY,
+        JSON.stringify({
+          clearAfterResponse,
+          useAutoDeletedTags,
+          autoShuffleTags,
+          enableLogging,
+          devViewEnabled,
+          showJSONView,
+          displayResponse,
+        })
+      );
+    } catch {
+      // Ignore storage errors; the options just won't be remembered.
+    }
+  }, [
+    devToolSettingsRestored,
+    clearAfterResponse,
+    useAutoDeletedTags,
+    autoShuffleTags,
+    enableLogging,
+    devViewEnabled,
+    showJSONView,
+    displayResponse,
+  ]);
+
   useEffect(() => {
     // Toggle development view with Cmd+D
     const isDev = process.env.NODE_ENV === 'development' || router.query.debug === 'true';
@@ -474,7 +559,7 @@ export default function Home() {
     { label: 'Use Auto Deleted Tags', state: useAutoDeletedTags, setState: setUseAutoDeletedTags },
     { label: 'Auto Shuffle Tags', state: autoShuffleTags, setState: setAutoShuffleTags },
     { label: 'Enable Logging', state: enableLogging, setState: setEnableLogging },
-    { label: 'Development View', state: !devViewEnabled, setState: () => setDevViewEnabled((prev) => !prev) },
+    { label: 'Show Development Tools', state: devViewEnabled, setState: setDevViewEnabled },
     { label: 'Show JSON View', state: showJSONView, setState: setShowJSONView },
     { label: 'Display Response', state: displayResponse, setState: setDisplayResponse },
   ];
@@ -505,15 +590,14 @@ export default function Home() {
         ]}
       />
       <NoSupportedSizeScreenMessage />
-      {devViewEnabled && <DevelopmentNav />}
-      <Nav devViewEnabled={devViewEnabled} />
+      <Nav />
       <MainWrapper>
         <div className="mb-auto">
           <Header />
-          <form onSubmit={submit} className="flex flex-col mt-6">
-            <div className="flex w-full gap-6 items-center">
+          <form onSubmit={submit} className="surface flex flex-col mt-10 p-6">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-6">
               <section className="flex flex-col w-full">
-                <Step step={1} text="Song" />
+                <Step step={1} text="Song" required />
                 <Input
                   onChange={(e) => setArtist(e.target.value)}
                   placeholder="The Chainsmokers, Daya - Don't Let Me Down"
@@ -521,18 +605,17 @@ export default function Home() {
                   ref={refs.artist}
                   value={artist}
                 />
-                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
-                  The full song. Inclusive of artists, features and title.{' '}
-                  <span className="text-yellow-600 dark:text-yellow-500 font-semibold">Required*</span>
-                </p>
-                <CharacterLimit
-                  limit={
-                    artist.includes('-') || artist.includes(',') || artist.includes('&')
-                      ? ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED
-                      : ARTIST_INPUT_FIELD_CHARACTER_LIMIT
-                  }
-                  text={artist}
-                />
+                <div className="flex items-start justify-between gap-4 mt-1.5">
+                  <p className={helperClassName}>The full song. Inclusive of artists, features and title.</p>
+                  <CharacterLimit
+                    limit={
+                      artist.includes('-') || artist.includes(',') || artist.includes('&')
+                        ? ARTIST_INPUT_FIELD_CHARACTER_LIMIT_FORMATTED
+                        : ARTIST_INPUT_FIELD_CHARACTER_LIMIT
+                    }
+                    text={artist}
+                  />
+                </div>
               </section>
               <section className="flex flex-col w-full">
                 <Step step={2} text="Channel" />
@@ -543,158 +626,100 @@ export default function Home() {
                   value={channel}
                   required={false}
                 />
-                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
-                  Type the name of the <b>YouTube Channel</b>.
-                </p>
-                <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
+                <div className="flex items-start justify-between gap-4 mt-1.5">
+                  <p className={helperClassName}>
+                    Type the name of the <b>YouTube Channel</b>.
+                  </p>
+                  <CharacterLimit limit={CHANNEL_NAME_INPUT_FIELD_CHARACTER_LIMIT} text={channel} />
+                </div>
               </section>
               {/* <section className="flex flex-col w-full">
-              <Step step={2} text="Title" />
-              <Input
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Don't Let Me Down"
-                required={artist.length && artist.includes("-") ? false : true}
-                ref={refs.title}
-                value={title}
-              />
-
-              <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
-                Please remove any <b>commas</b> if there are any.{" "}
-                {artist.length && artist.includes("-") ? null : (
-                  <span className="text-yellow-600 dark:text-yellow-500 font-semibold">Required*</span>
-                )}
-              </p>
-              <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
-            </section> */}
-            </div>
-            <div className="flex w-full gap-6 items-center">
+                <Step step={2} text="Title" required={artist.length && artist.includes('-') ? false : true} />
+                <Input
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Don't Let Me Down"
+                  required={artist.length && artist.includes('-') ? false : true}
+                  ref={refs.title}
+                  value={title}
+                />
+                <div className="flex items-start justify-between gap-4 mt-1.5">
+                  <p className={helperClassName}>
+                    Please remove any <b>commas</b> if there are any.
+                  </p>
+                  <CharacterLimit limit={TITLE_INPUT_FIELD_CHARACTER_LIMIT} text={title} />
+                </div>
+              </section> */}
               {/* <section className="flex flex-col w-full">
-              <Step step={3} text="Features" />
-              <Input
-                onChange={(e) => setFeatures(e.target.value)}
-                placeholder="Daya"
-                ref={refs.features}
-                value={features}
-                required={false}
-              />
-              <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
-                Please use <b>commas</b> to separate feature artists.
-              </p>
-              <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
-            </section> */}
-            </div>
-            <div className="flex w-full gap-6 items-center">
+                <Step step={3} text="Features" />
+                <Input
+                  onChange={(e) => setFeatures(e.target.value)}
+                  placeholder="Daya"
+                  ref={refs.features}
+                  value={features}
+                  required={false}
+                />
+                <div className="flex items-start justify-between gap-4 mt-1.5">
+                  <p className={helperClassName}>
+                    Please use <b>commas</b> to separate feature artists.
+                  </p>
+                  <CharacterLimit limit={FEATURES_INPUT_FIELD_CHARACTER_LIMIT} text={features} />
+                </div>
+              </section> */}
               <section className="flex flex-col w-full">
                 <Step step={3} text="TikTok" />
-                <div className="relative w-full">
-                  <select
-                    className="appearance-none bg-white dark:bg-neutral-900 border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
-                    onChange={(e) => setTiktok(e.target.value)}
-                    value={tiktok}
-                  >
-                    {[
-                      { value: 'false', text: 'No' },
-                      { value: 'true', text: 'Yes' },
-                    ].map((option) => (
-                      <option className="font-inter" key={option.value} value={option.value}>
-                        {option.text}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
-                    </svg>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">Is the song popular on TikTok?</p>
+                <Select
+                  onChange={setTiktok}
+                  value={tiktok}
+                  options={[
+                    { value: 'false', text: 'No' },
+                    { value: 'true', text: 'Yes' },
+                  ]}
+                />
+                <p className={`${helperClassName} mt-1.5`}>Is the song popular on TikTok?</p>
               </section>
               <section className="flex flex-col w-full">
                 <Step step={4} text="Format" />
-                <div className="relative w-full">
-                  <select
-                    className="appearance-none bg-white dark:bg-neutral-900 border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
-                    onChange={(e) => setFormat(e.target.value)}
-                    value={format}
-                  >
-                    {[
-                      { value: FORMAT.lyrics, text: 'Lyrics' },
-                      { value: FORMAT.bassboosted, text: 'Bass Boosted' },
-                      { value: FORMAT.nightcore, text: 'Nightcore/Sped Up' },
-                      { value: FORMAT.slowedreverb, text: 'Slowed & Reverb' },
-                      { value: FORMAT.letra, text: 'Letra' },
-                      { value: FORMAT.testo, text: 'Testo' },
-                      { value: FORMAT.phonk, text: 'Phonk' },
-                      { value: FORMAT.none, text: 'None' },
-                    ].map((option) => (
-                      <option className="font-inter" key={option.value} value={option.value}>
-                        {option.text}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
-                    </svg>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
+                <Select
+                  onChange={setFormat}
+                  value={format}
+                  options={[
+                    { value: FORMAT.lyrics, text: 'Lyrics' },
+                    { value: FORMAT.bassboosted, text: 'Bass Boosted' },
+                    { value: FORMAT.nightcore, text: 'Nightcore/Sped Up' },
+                    { value: FORMAT.slowedreverb, text: 'Slowed & Reverb' },
+                    { value: FORMAT.letra, text: 'Letra' },
+                    { value: FORMAT.testo, text: 'Testo' },
+                    { value: FORMAT.phonk, text: 'Phonk' },
+                    { value: FORMAT.none, text: 'None' },
+                  ]}
+                />
+                <p className={`${helperClassName} mt-1.5`}>
                   Select the desired <b>format</b>.
                 </p>
               </section>
-            </div>
-            <div className="flex w-full gap-6 items-center">
               <section className="flex flex-col w-full">
                 <Step step={5} text="Genre" />
-                <div className="relative w-full">
-                  <select
-                    className="appearance-none bg-white dark:bg-neutral-900 border w-full p-2 px-4 pr-10 flex items-center rounded-lg focus:outline-2"
-                    onChange={(e) => setGenre(e.target.value)}
-                    value={genre}
-                  >
-                    {[
-                      { value: GENRE.none, text: 'None' },
-                      { value: GENRE.country, text: 'Country' },
-                      { value: GENRE.latin, text: 'Latin' },
-                      { value: GENRE.italian, text: 'Italian' },
-                      { value: GENRE.dance, text: 'Dance' },
-                      { value: GENRE.phonk, text: 'Phonk' },
-                      { value: GENRE.pop, text: 'Pop' },
-                      { value: GENRE.rap, text: 'Rap' },
-                      { value: GENRE.alternative, text: 'Alternative' },
-                      { value: GENRE.emo, text: 'Emo' },
-                      { value: GENRE.rock, text: 'Rock' },
-                      { value: GENRE.edm, text: 'EDM' },
-                      { value: GENRE.trap, text: 'Trap' },
-                      { value: GENRE.electronic, text: 'Electronic' },
-                    ].map((option) => (
-                      <option className="font-inter" key={option.value} value={option.value}>
-                        {option.text}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <svg
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path strokeLinejoin="round" strokeLinecap="round" d="M19 9l-7 7-7-7" strokeWidth={2} />
-                    </svg>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
+                <Select
+                  onChange={setGenre}
+                  value={genre}
+                  options={[
+                    { value: GENRE.none, text: 'None' },
+                    { value: GENRE.country, text: 'Country' },
+                    { value: GENRE.latin, text: 'Latin' },
+                    { value: GENRE.italian, text: 'Italian' },
+                    { value: GENRE.dance, text: 'Dance' },
+                    { value: GENRE.phonk, text: 'Phonk' },
+                    { value: GENRE.pop, text: 'Pop' },
+                    { value: GENRE.rap, text: 'Rap' },
+                    { value: GENRE.alternative, text: 'Alternative' },
+                    { value: GENRE.emo, text: 'Emo' },
+                    { value: GENRE.rock, text: 'Rock' },
+                    { value: GENRE.edm, text: 'EDM' },
+                    { value: GENRE.trap, text: 'Trap' },
+                    { value: GENRE.electronic, text: 'Electronic' },
+                  ]}
+                />
+                <p className={`${helperClassName} mt-1.5`}>
                   Select the desired <b>genre</b>.
                 </p>
               </section>
@@ -707,147 +732,138 @@ export default function Home() {
                   ref={refs.verse}
                   value={verse}
                 />
-                <p className="text-xs text-gray-800 dark:text-gray-300 mt-1">
+                <p className={`${helperClassName} mt-1.5`}>
                   Popular verse? Paste them in here. Limit is <b>3</b>, separate them by <b>commas</b>.
                 </p>
               </section>
             </div>
-            <div className="w-full justify-between items-center flex flex-col mt-6 border-b pb-4">
-              <div className="ml-auto flex justify-between w-full items-center">
-                {' '}
+            <div className="flex items-center justify-between mt-6 pt-6 border-t">
+              <Button
+                title="Generate example response"
+                type="button"
+                variant="secondary"
+                onClick={async (e) => {
+                  // Prevent the default form submission behavior
+                  e.preventDefault();
+
+                  // Mark example button as used
+                  setUsedGenerateExampleResponse(true);
+
+                  // Generates the example response tags
+                  generate(true);
+                }}
+              >
+                <FiZap /> Generate Example Response
+              </Button>
+              <div className="flex items-center gap-2">
                 <Button
-                  title="Generate example response"
                   type="button"
-                  onClick={async (e) => {
+                  title="Clear"
+                  variant="secondary"
+                  onClick={(e) => {
                     // Prevent the default form submission behavior
                     e.preventDefault();
 
-                    // Mark example button as used
-                    setUsedGenerateExampleResponse(true);
+                    // Check if there are any tags to clear
+                    if (!tags.length) {
+                      // If the tag list is already empty, show an error message and exit
+                      toast.error(error.message.nothingToClear);
+                      return;
+                    }
 
-                    // Generates the example response tags
-                    generate(true);
+                    // Hide the recommended tags deletion section
+                    setShowRecommendedTagsToBeDeleteSection(false);
+
+                    // Hide the custom format section when clearing
+                    setShowCustomFormatStringTemplateSection(false);
+
+                    // Reset example response state to allow the example button to be used again
+                    setUsedGenerateExampleResponse(false);
+
+                    // Show success message to user
+                    toast.success(success.message.tagsClearedSuccessfully);
+
+                    // Clear all tags by setting the state to an empty array
+                    setTags([]);
                   }}
                 >
-                  Generate Example Response <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
+                  Clear <FiTrash />
                 </Button>
-                <div className="flex">
-                  <div className="mr-2">
-                    <Button
-                      type="button"
-                      title="Clear"
-                      onClick={(e) => {
-                        // Prevent the default form submission behavior
-                        e.preventDefault();
-
-                        // Check if there are any tags to clear
-                        if (!tags.length) {
-                          // If the tag list is already empty, show an error message and exit
-                          toast.error(error.message.nothingToClear);
-                          return;
-                        }
-
-                        // Hide the recommended tags deletion section
-                        setShowRecommendedTagsToBeDeleteSection(false);
-
-                        // Hide the custom format section when clearing
-                        setShowCustomFormatStringTemplateSection(false);
-
-                        // Reset example response state to allow the example button to be used again
-                        setUsedGenerateExampleResponse(false);
-
-                        // Show success message to user
-                        toast.success(success.message.tagsClearedSuccessfully);
-
-                        // Clear all tags by setting the state to an empty array
-                        setTags([]);
-                      }}
-                    >
-                      Clear <FiTrash className="ml-2 hover:scale-110 duration-150" />
-                    </Button>
-                  </div>
-                  <Button type="submit" title="Generate">
-                    Generate <FiCornerDownRight className="ml-2 hover:scale-110 duration-150" />
-                  </Button>
-                </div>
+                <Button type="submit" title="Generate">
+                  Generate <FiCornerDownRight />
+                </Button>
               </div>
-              {(process.env.NODE_ENV === 'development' || router.query.debug === 'true') && devViewEnabled ? (
-                <div className="flex flex-col w-full text-gray-800 dark:text-gray-300 items-center border p-4 rounded-lg mt-8">
-                  <p className="mb-4 border-b pb-1 text-black dark:text-white">
-                    A set of tools provided if you're in {environmentModeSetting} mode to give you more functionality.
-                  </p>
-                  {toggles.map(({ label, state, setState }) => (
-                    <div key={label} className="flex items-center justify-between w-full">
-                      <p>
-                        [{environmentModeSetting}] {label}:
-                      </p>
-                      <Switch checked={state} onCheckedChange={() => setState(!state)} />
-                    </div>
-                  ))}
-                </div>
-              ) : null}
             </div>
           </form>
+          {(process.env.NODE_ENV === 'development' || router.query.debug === 'true') && devViewEnabled ? (
+            <div className="mt-6 rounded-xl border border-dashed p-5">
+              <div className="flex items-center gap-2">
+                <FiTool className="text-gray-500 dark:text-gray-400" />
+                <p className="text-base font-semibold text-black dark:text-white">Developer tools</p>
+                <span className="rounded-full bg-brand-100 px-1.5 py-px text-[10px] font-semibold uppercase tracking-wide text-brand-800 dark:bg-brand-500/15 dark:text-brand-400">
+                  {environmentModeSetting}
+                </span>
+              </div>
+              <p className="mt-1 text-base text-gray-500 dark:text-gray-400">
+                A set of tools provided if you're in {environmentModeSetting} mode to give you more functionality.
+              </p>
+              <div className="mt-4">
+                <DocumentationNote>
+                  Press <kbd className={kbdClassName}>⌘</kbd> + <kbd className={kbdClassName}>D</kbd> at any time to
+                  show or hide the development tools.
+                </DocumentationNote>
+              </div>
+              <div className="grid grid-cols-2 gap-x-10 gap-y-3 mt-4">
+                {toggles.map(({ label, state, setState }) => (
+                  <div key={label} className="flex items-center justify-between text-base text-gray-700 dark:text-gray-300">
+                    <p>{label}</p>
+                    <Switch checked={state} onCheckedChange={() => setState(!state)} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
           {loading ? (
-            <div className="mt-6 flex justify-center items-center">
-              <div className="border w-full p-4 rounded-lg">
-                <div className="flex flex-wrap gap-4 my-4 mt-6">
-                  {[340, 240, 140, 340, 220, 400, 240, 140, 540, 340, 300, 240, 340, 180, 400].map((width, index) => (
-                    <Skeleton key={index} className="h-[42px]" style={{ width }} />
-                  ))}
-                </div>
+            <div className="surface mt-6 overflow-hidden">
+              <div className="border-b px-5 py-4">
+                <Skeleton className="h-7 w-80" />
+              </div>
+              <div className="flex flex-wrap gap-2 p-5">
+                {[260, 190, 120, 260, 170, 300, 190, 110, 380, 250, 230, 180, 260, 140, 300].map((width, index) => (
+                  <Skeleton key={index} className="h-9" style={{ width }} />
+                ))}
               </div>
             </div>
           ) : (
             <div className="flex flex-col">
-              <div className="border p-4 mt-6 rounded-lg">
-                {tags.length > 0 && (
-                  <h2 className="text-2xl text-left font-medium border-b pb-2">
-                    <i>{data?.title}</i> by <b>{data?.artist}</b>
-                  </h2>
-                )}
-                <div className="flex flex-wrap gap-4 my-4 mt-6">
-                  {tags.length ? (
-                    <>
-                      {tags.map((tag) => (
-                        <Tag deletable={true} setTags={setTags} tags={tags} tag={tag} />
-                      ))}
-                    </>
-                  ) : (
-                    <h3 className="text-2xl font-light">
-                      Click the <b>"Generate"</b> button to generate your metadata.
-                    </h3>
-                  )}
-                </div>
-              </div>
-              {tags.length && displayResponse && devViewEnabled ? (
-                <p className="text-xs ml-auto mt-1 text-gray-400 dark:text-gray-500">Response: {data?.responseId}</p>
-              ) : null}
-              {tags.length && showJSONView && devViewEnabled ? (
-                <div className="border p-4 mt-6 rounded-lg">
-                  <p className="whitespace-normal break-all text-gray-800 dark:text-gray-300">{JSON.stringify(data)}</p>
-                </div>
-              ) : null}
-              {tags.length > 0 && (
-                <div className="flex items-center justify-center w-100 mt-6">
-                  <Link
-                    className="text-sm text-center w-fit underline hover:no-underline text-gray-800 dark:text-gray-300"
-                    title="Click to view json representation data."
-                    href={data?.url ?? ''}
-                    target="_blank"
-                  >
-                    Click to view json representation data.
-                  </Link>
-                </div>
-              )}
-              <div className="flex w-full mt-6 items-center">
-                {tags.length ? <CharacterLimit count={countTagsLength(tags.join(','))} limit={500} /> : null}
-                {tags.length ? (
-                  <div className="flex items-center ml-auto">
-                    <div className="mr-2">
+              {tags.length > 0 ? (
+                <div className="surface mt-6 overflow-hidden">
+                  <div className="flex items-center justify-between gap-4 border-b px-5 py-4">
+                    <h2 className="text-xl font-medium text-gray-500 dark:text-gray-400">
+                      <i className="text-black dark:text-white">{data?.title}</i> by{' '}
+                      <b className="text-black dark:text-white">{data?.artist}</b>
+                    </h2>
+                    <Link
+                      className="flex shrink-0 items-center gap-1.5 text-base font-medium text-gray-500 transition-colors hover:text-black dark:text-gray-400 dark:hover:text-white"
+                      title="Click to view json representation data."
+                      href={data?.url ?? ''}
+                      target="_blank"
+                    >
+                      <FiCode /> View JSON
+                    </Link>
+                  </div>
+                  <div className="flex flex-wrap gap-2 p-5">
+                    {tags.map((tag, index) => (
+                      <Tag key={`${index}-${tag}`} deletable={true} setTags={setTags} tags={tags} tag={tag} />
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between gap-4 border-t bg-gray-50/70 px-5 py-3 dark:bg-neutral-900/50">
+                    <CharacterLimit bar count={countTagsLength(tags.join(','))} limit={500} />
+                    <div className="flex items-center gap-2">
                       <Button
                         title="Shuffle"
                         type="button"
+                        variant="secondary"
                         onClick={(e) => {
                           // Prevent the default form submission behavior
                           e.preventDefault();
@@ -908,40 +924,63 @@ export default function Home() {
                           toast.success(success.message.shuffledSuccessfully);
                         }}
                       >
-                        Shuffle <FiRepeat className="ml-2 hover:scale-110 duration-150" />
+                        Shuffle <FiRepeat />
+                      </Button>
+                      <Button
+                        title="Copy generated tags"
+                        onClick={() => {
+                          // Check if there are any tags to copy
+                          if (!tags.length) {
+                            // If no tags exist, show an error message and stop execution
+                            toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
+                            return;
+                          }
+
+                          // Join all tags into a single string separated by commas
+                          // Example: ["tag1", "tag2"] → "tag1,tag2"
+                          copy(tags.join(','));
+
+                          // Show a success toast confirming the tags were copied to the clipboard
+                          toast.success(success.message.tagsCopiedToClipboard);
+                        }}
+                      >
+                        Copy generated tags <FiCopy />
                       </Button>
                     </div>
-                    <Button
-                      style={{ marginLeft: 'auto' }}
-                      title="Copy generated tags"
-                      onClick={() => {
-                        // Check if there are any tags to copy
-                        if (!tags.length) {
-                          // If no tags exist, show an error message and stop execution
-                          toast.error(error.message.generateTagsBeforeYouCopyToClipboard);
-                          return;
-                        }
-
-                        // Join all tags into a single string separated by commas
-                        // Example: ["tag1", "tag2"] → "tag1,tag2"
-                        copy(tags.join(','));
-
-                        // Show a success toast confirming the tags were copied to the clipboard
-                        toast.success(success.message.tagsCopiedToClipboard);
-                      }}
-                    >
-                      Copy generated tags <FiCopy className="ml-2 hover:scale-110 duration-150" />
-                    </Button>
                   </div>
-                ) : null}
-              </div>
-              {showCustomFormatStringTemplateSection && data && tags.length ? <Custom data={data} /> : null}
+                </div>
+              ) : (
+                <div className="mt-6 flex flex-col items-center rounded-xl border border-dashed px-6 py-14 text-center">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border bg-background shadow-sm">
+                    <FiTag className="text-lg text-gray-500 dark:text-gray-400" />
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold text-black dark:text-white">No tags yet</h3>
+                  <p className="mt-1 max-w-md text-base text-gray-500 dark:text-gray-400">
+                    Click the <b className="font-semibold text-gray-700 dark:text-gray-300">"Generate"</b> button to
+                    generate your metadata. Your tags, suggested titles, SEO keywords and hashtags will show up here.
+                  </p>
+                </div>
+              )}
+              {tags.length && displayResponse && devViewEnabled ? (
+                <p className="text-xs ml-auto mt-2 font-mono text-gray-400 dark:text-gray-500">
+                  Response: {data?.responseId}
+                </p>
+              ) : null}
+              {tags.length && showJSONView && devViewEnabled ? (
+                <div className="mt-4 rounded-xl border bg-gray-50 p-4 dark:bg-neutral-900/50">
+                  <p className="whitespace-normal break-all font-mono text-xs leading-relaxed text-gray-700 dark:text-gray-300">
+                    {JSON.stringify(data)}
+                  </p>
+                </div>
+              ) : null}
               {showCustomFormatStringTemplateSection && data && tags.length ? (
-                <div className="flex w-full mt-6 items-center">
-                  <div className="flex ml-auto">
-                    <div className="mr-2">
+                <Custom
+                  data={data}
+                  actions={
+                    <>
                       <Button
                         title="Copy custom format"
+                        variant="secondary"
                         onClick={() => {
                           // If there is no custom format in the response data
                           if (!data?.customFormat) {
@@ -957,33 +996,28 @@ export default function Home() {
                           toast.success(success.message.copied);
                         }}
                       >
-                        Copy custom format <FiCopy className="ml-2 hover:scale-110 duration-150" />
+                        Copy custom format <FiCopy />
                       </Button>
-                    </div>
-                    <Button title="Save custom format" onClick={saveCustomFormat}>
-                      Save custom format <FiSave className="ml-2 hover:scale-110 duration-150" />
-                    </Button>
-                  </div>
-                </div>
+                      <Button title="Save custom format" onClick={saveCustomFormat}>
+                        Save custom format <FiSave />
+                      </Button>
+                    </>
+                  }
+                />
               ) : null}
               {countTagsLength(tags.join(',')) > 500 && (
-                <p className="mt-4 text-sm text-red-500">Please delete the least suitable tags for your case.</p>
+                <div className="mt-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-base text-red-700 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-400">
+                  <FiAlertTriangle className="shrink-0" />
+                  Please delete the least suitable tags for your case.
+                </div>
               )}
               {showRecommendedTagsToBeDeleteSection &&
               data?.tagsToBeRemoved.length &&
               countTagsLength(tags.join(',')) > 500 ? (
-                <>
-                  <div className="border p-4 mt-4 rounded-lg">
-                    <h2 className="text-2xl border-b font-medium pb-2">Recommended tags to delete</h2>
-                    <div className="flex flex-wrap gap-4 my-4 mt-6">
-                      {data?.tagsToBeRemoved.split(',').map((tag) => (
-                        <Tag deletable={false} tag={tag} />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mt-6">
+                <ResultSection
+                  title="Recommended tags to delete"
+                  actions={
                     <Button
-                      style={{ marginLeft: 'auto' }}
                       onClick={() => {
                         // Check if the response data contains tags that need to be removed
                         if (data?.tagsToBeRemoved) {
@@ -1011,10 +1045,16 @@ export default function Home() {
                         }
                       }}
                     >
-                      Delete tags <FiDelete className="ml-2" />
+                      Delete tags <FiDelete />
                     </Button>
+                  }
+                >
+                  <div className="flex flex-wrap gap-2">
+                    {data?.tagsToBeRemoved.split(',').map((tag, index) => (
+                      <Tag key={`${index}-${tag}`} deletable={false} tag={tag} />
+                    ))}
                   </div>
-                </>
+                </ResultSection>
               ) : null}
               {tags.length ? (
                 <SuggestedTitlesSection setTitles={setTitles} originalTitles={originalTitles} titles={titles} />

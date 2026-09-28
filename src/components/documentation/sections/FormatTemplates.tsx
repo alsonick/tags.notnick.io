@@ -5,6 +5,7 @@ import { ADDITIONAL_FORMATS } from '@/lib/additional-formats';
 import { Badge } from '@/components/shadcn/badge';
 import { FORMAT_LIST } from '@/lib/format-list';
 import { CodeBlock } from '../ui/CodeBlock';
+import { FiArrowRight } from 'react-icons/fi';
 import Link from 'next/link';
 
 const nameFor = (filter: string) => FORMAT_LIST.find((format) => format.slug === filter)?.name ?? filter;
@@ -13,12 +14,19 @@ const supportedFormats = TEMPLATE_STRING_FORMAT_LIST.filter((format) => !ADDITIO
 const additionalFormats = TEMPLATE_STRING_FORMAT_LIST.filter((format) => ADDITIONAL_FORMATS.includes(format.filter));
 
 const FormatAccordion = ({ formats }: { formats: TemplateStringFormatList[] }) => (
-  <div className="rounded-xl border border-gray-200 dark:border-neutral-800 px-4">
+  <div className="surface px-4">
     <Accordion type="multiple">
       {formats.map((format) => (
         <AccordionItem key={format.filter} value={format.filter}>
           <AccordionTrigger className="text-base">{nameFor(format.filter)}</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-4">
+            <Link
+              className="group flex w-fit items-center gap-1 text-base font-medium text-gray-500 transition-colors hover:text-black dark:text-gray-400 dark:hover:text-white"
+              href={`/format/${format.filter}`}
+            >
+              Open the {nameFor(format.filter)} format page
+              <FiArrowRight className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
             {format.formats.map((entry) => (
               <div key={entry.constraint}>
                 <p className="mb-1.5 font-mono text-xs text-gray-500 dark:text-gray-400">{entry.constraint}</p>
@@ -55,7 +63,7 @@ export const FormatTemplates = () => {
       <h3 className="mb-4 mt-8 text-lg font-bold tracking-tight text-gray-900 dark:text-gray-100">Additional Format Templates</h3>
       <FormatAccordion formats={additionalFormats} />
 
-      <Link className="mt-6 w-fit font-semibold text-brand-500 hover:underline" href="/format" target="_blank">
+      <Link className="mt-6 w-fit link" href="/format" target="_blank">
         View the full format reference
       </Link>
     </div>

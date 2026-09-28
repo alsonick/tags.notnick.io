@@ -11,8 +11,7 @@ export const AdditionalTags = () => {
     'rex orange county pluto projector',
   ];
 
-  const resultingAdditionalChristmasTags = [
-    ...resulting,
+  const additionalChristmasTags = [
     'christmas songs',
     'christmas music',
     `christmas ${new Date().getFullYear()}`,
@@ -35,19 +34,28 @@ export const AdditionalTags = () => {
         <Badge variant={'secondary'}>Rex Orange County - Pluto Projector\christmas</Badge>
       </p>
       <p className="text-gray-700 dark:text-gray-300 mb-4">Here's the resulting tags:</p>
-      <div className="flex flex-wrap gap-4 mb-4">
-        {resultingAdditionalChristmasTags.map((additionalChristmasTag) => (
-          <Tag key={additionalChristmasTag} tag={additionalChristmasTag} deletable={false} />
-        ))}
+      <div className="surface mb-4 p-4">
+        <div className="flex flex-wrap gap-2">
+          {resulting.map((tag) => (
+            <Tag key={tag} tag={tag} deletable={false} />
+          ))}
+          {additionalChristmasTags.map((additionalChristmasTag) => (
+            <Tag key={additionalChristmasTag} tag={additionalChristmasTag} deletable={false} highlighted />
+          ))}
+        </div>
+        <p className="mt-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <span className="h-2.5 w-2.5 rounded-sm border border-brand-200 bg-brand-50 dark:border-brand-900 dark:bg-brand-500/10" />
+          Added by the <code className="font-mono">\christmas</code> flag
+        </p>
       </div>
-      <Link className="text-brand-500 w-fit font-semibold hover:underline" href="/format" target="_blank">
+      <Link className="link w-fit" href="/format" target="_blank">
         Click here to see the available additional tags format
       </Link>
       <div className="mt-6">
         <DocumentationNote>
           Propose new additional tags by{' '}
           <Link
-            className="text-brand-500 font-semibold hover:underline"
+            className="link"
             href="https://github.com/Lyrics-Tags-Generator/formats/issues/new"
             target="_blank"
           >

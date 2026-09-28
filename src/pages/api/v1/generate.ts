@@ -36,7 +36,7 @@ import { shuffleTags } from '@/lib/shuffle-tags';
 import { urlBuilder } from '@/lib/url-builder';
 import { FORMAT } from '@/lib/format';
 import { error } from '@/lib/error';
-import { GENRE } from '@/lib/genre';
+import { genreTags } from '@/lib/genre-tags';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -435,32 +435,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     tags += verses.join('').toLowerCase();
   }
 
-  if (genre === GENRE.rap || genre === GENRE.hiphop) {
-    tags += `,rap,hiphop,rap ${currentYear},rap music,rap lyrics`;
-  } else if (genre === GENRE.country) {
-    tags += `,country,country ${currentYear},country music,country lyrics`;
-  } else if (genre === GENRE.pop) {
-    tags += `,pop,pop ${currentYear},pop music,trending pop`;
-  } else if (genre === GENRE.funk || genre === GENRE.phonk) {
-    tags += `,phonk,funk,phonk music,phonk ${currentYear},new phonk`;
-  } else if (genre === GENRE.latin) {
-    tags += `,letra,latin,latin music,trending latin`;
-  } else if (genre === GENRE.italian) {
-    tags += `,italian lyrics,italian music,trending italian`;
-  } else if (genre === GENRE.dance) {
-    tags += `,dance music,dance,trending dance,dance ${new Date().getFullYear()}`;
-  } else if (genre === GENRE.alternative) {
-    tags += `,alternative,alternative ${currentYear},alternative music,alternative rock`;
-  } else if (genre === GENRE.emo) {
-    tags += `,emo,emo ${currentYear},emo music,emo rap`;
-  } else if (genre === GENRE.rock) {
-    tags += `,rock,rock ${currentYear},rock music,rock lyrics`;
-  } else if (genre === GENRE.edm) {
-    tags += `,edm,edm ${currentYear},edm music,electronic dance music`;
-  } else if (genre === GENRE.trap) {
-    tags += `,trap,trap ${currentYear},trap music,new trap`;
-  } else if (genre === GENRE.electronic) {
-    tags += `,electronic,electronic ${currentYear},electronic music,trending electronic`;
+  const extraGenreTags = genreTags(genre, currentYear);
+
+  if (extraGenreTags.length) {
+    tags += `,${extraGenreTags.join(',')}`;
   }
 
   // If context is enabled, call Gemini to generate trending context tags

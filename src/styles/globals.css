@@ -30,7 +30,7 @@
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
+    --card: 0 0% 6.5%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 98%;
@@ -57,6 +57,33 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-brand-950;
+  }
+}
+
+@layer components {
+  /* Inline text link used in body copy across the site. */
+  .link {
+    @apply font-semibold text-brand-700 underline-offset-4 transition-colors hover:underline dark:text-brand-400;
+  }
+
+  /* Shared surface for cards and panels. */
+  .surface {
+    @apply rounded-xl border bg-card shadow-sm;
+  }
+}
+
+/* Slower, eased cross-fade when switching themes (started in ThemeToggle). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-sonner-toaster] {

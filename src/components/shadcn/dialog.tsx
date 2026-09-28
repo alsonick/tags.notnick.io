@@ -99,7 +99,7 @@ function DialogDescription({ className, ...props }: React.ComponentProps<typeof 
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn('text-sm text-gray-500 dark:text-gray-400', className)}
+      className={cn('text-base text-gray-500 dark:text-gray-400', className)}
       {...props}
     />
   );

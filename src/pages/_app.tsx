@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <main className={inter.className}>
         <Component {...pageProps} />
-        <Toaster position="top-center" />
+        <Toaster position="bottom-right" />
         <Analytics />
       </main>
     </ThemeProvider>

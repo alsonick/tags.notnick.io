@@ -18,7 +18,7 @@ const SectionIcon = ({ heading }: { heading: string }) => {
     : Sparkles;
 
   return (
-    <span className="bg-brand-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 shrink-0">
+    <span className="bg-brand-100 text-brand-700 dark:bg-brand-500/15 dark:text-brand-400 rounded-full w-8 h-8 flex items-center justify-center mr-4 shrink-0">
       <Icon className="w-4 h-4" />
     </span>
   );
@@ -40,16 +40,16 @@ export const ChangelogMarkdown = ({ content }: { content: string }) => {
         ol: ({ children }) => <ol className="list-decimal mt-3 ml-16">{children}</ol>,
         li: ({ children }) => <li className="mt-1">{children}</li>,
         code: ({ children }) => (
-          <code className="bg-gray-100 dark:bg-neutral-800 rounded px-1.5 py-0.5 text-sm font-mono">{children}</code>
+          <code className="bg-gray-100 dark:bg-neutral-800 rounded px-1.5 py-0.5 text-base font-mono">{children}</code>
         ),
         a: ({ href, children }) => (
-          <Link className="text-brand-500 font-semibold hover:underline" href={href ?? '#'}>
+          <Link className="link" href={href ?? '#'}>
             {children}
           </Link>
         ),
         // eslint-disable-next-line @next/next/no-img-element
         img: ({ src, alt }) => (
-          <img className="shadow-md mt-4 w-full h-auto" src={typeof src === 'string' ? src : ''} alt={alt ?? ''} />
+          <img className="mt-4 w-full h-auto rounded-lg border shadow-sm" src={typeof src === 'string' ? src : ''} alt={alt ?? ''} />
         ),
       }}
     >
