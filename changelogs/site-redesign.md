@@ -3,6 +3,7 @@ title: Site Redesign
 date: 2026-09-29
 description: A refreshed look across the whole site, with cleaner pages, a new footer, better docs and a smoother theme switch.
 contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
+commit: 6204627
 ---
 
 The whole site got a fresh coat of paint. The layout, colors and font are the same as before, it just looks a lot cleaner now, and most pages picked up a few small things that make them nicer to use along the way. Nothing changes in how tags are generated, this one's purely about how the site looks and feels.
