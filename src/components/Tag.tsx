@@ -16,6 +16,8 @@ interface Props {
   setTags?: (value: SetStateAction<string[]>) => void;
   key?: Key | null | undefined;
   deletable: boolean;
+  // Brand-tinted, used in examples to show which tags were added.
+  highlighted?: boolean;
   tags?: string[];
   tag: string;
 }
@@ -52,14 +54,14 @@ export const Tag = (props: Props) => {
         <DropdownMenu open={open} onOpenChange={handleOpenChange}>
           <DropdownMenuTrigger asChild>
             <div
-              className="flex items-center border p-2 px-4 rounded-lg hover:cursor-pointer w-fit duration-300 hover:shadow-lg select-none"
-              title="Right-click for options"
+              className="group flex items-center gap-1.5 w-fit select-none rounded-lg border bg-gray-50 py-1.5 pl-3 pr-2 transition-colors duration-150 hover:cursor-pointer hover:border-red-200 hover:bg-red-50 dark:bg-neutral-900 dark:hover:border-red-900/60 dark:hover:bg-red-950/30"
+              title="Click to delete, right-click for options"
               onClick={handleDelete}
               onContextMenu={handleContextMenu}
             >
               <TagText text={props.tag} />
               <FiX
-                className="text-lg ml-1 hover:scale-110 duration-150"
+                className="text-base text-gray-400 transition-colors duration-150 group-hover:text-red-500 dark:text-neutral-500"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDelete();
@@ -78,7 +80,13 @@ export const Tag = (props: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <div className="flex items-center border p-2 px-4 rounded-lg w-fit">
+        <div
+          className={
+            props.highlighted
+              ? 'flex items-center w-fit rounded-lg border border-brand-200 bg-brand-50 px-3 py-1.5 text-brand-800 dark:border-brand-900 dark:bg-brand-500/10 [&_p]:text-brand-800 dark:[&_p]:text-brand-300'
+              : 'flex items-center w-fit rounded-lg border bg-gray-50 px-3 py-1.5 dark:bg-neutral-900'
+          }
+        >
           <TagText text={props.tag} />
         </div>
       )}

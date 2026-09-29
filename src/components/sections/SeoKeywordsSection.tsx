@@ -1,3 +1,4 @@
+import { ResultSection } from './ResultSection';
 import { success } from '@/lib/success';
 import { FiCopy } from 'react-icons/fi';
 import { toast } from 'sonner';
@@ -10,20 +11,14 @@ interface Props {
 
 export const SeoKeywordsSection = (props: Props) => {
   return (
-    <section className="mt-4 flex flex-col border-t pt-4">
-      <h3 className="text-2xl font-medium">Seo keywords:</h3>
-      <p className="mb-6 text-gray-800 dark:text-gray-300">Typically added at the end of your YouTube description.</p>
-      <div className="flex items-center justify-between w-full">
-        <div className="flex flex-col">
-          {props.seoText.split('=').map((text) => (
-            <p className="text-xl mb-2">{text}</p>
-          ))}
-        </div>
-      </div>
-      <div className="ml-auto">
+    <ResultSection
+      title="SEO keywords"
+      description="Typically added at the end of your YouTube description."
+      actions={
         <Button
           type="button"
           title="Copy"
+          variant="secondary"
           onClick={() => {
             // Copy the SEO text to the clipboard
             // Replace all "=" characters with line breaks ("\n")
@@ -34,9 +29,17 @@ export const SeoKeywordsSection = (props: Props) => {
             toast.success(success.message.keywordsCopiedToClipboard);
           }}
         >
-          Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
+          Copy <FiCopy />
         </Button>
+      }
+    >
+      <div className="flex flex-col gap-1.5 rounded-lg bg-gray-50 px-4 py-3 dark:bg-neutral-900">
+        {props.seoText.split('=').map((text, index) => (
+          <p className="text-base text-gray-800 dark:text-gray-200" key={index}>
+            {text}
+          </p>
+        ))}
       </div>
-    </section>
+    </ResultSection>
   );
 };

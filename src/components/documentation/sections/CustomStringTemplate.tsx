@@ -4,29 +4,7 @@ import { DocumentationNote } from '../ui/DocumentationNote';
 import { TableContainer } from '../ui/TableContainer';
 import { Badge } from '@/components/shadcn/badge';
 import { CodeBlock } from '../ui/CodeBlock';
-import { cn } from '@/lib/utils';
-
-const TdElement = (props: { children: React.ReactNode; col: number }) => {
-  const shouldWrapInBadge = ['Variables', 'Required'].includes(ADDITIONAL_PARAMS[props.col].name);
-  const isDescription = ADDITIONAL_PARAMS[props.col].name === 'Description';
-
-  return (
-    <td
-      className={cn(
-        'border-b border-r border-gray-200 dark:border-neutral-800 p-3 align-top text-gray-700 marker:text-gray-700 dark:text-gray-300 dark:marker:text-gray-300 last:border-r-0 [tr:last-child>&]:border-b-0',
-        isDescription ? 'text-left' : 'whitespace-nowrap text-center'
-      )}
-    >
-      {shouldWrapInBadge ? (
-        <div className="flex justify-center">
-          <Badge variant="secondary">{props.children}</Badge>
-        </div>
-      ) : (
-        props.children
-      )}
-    </td>
-  );
-};
+import { TdElement } from '../ui/TdElement';
 
 export const CustomStringTemplate = () => {
   const rowsVariables = [];
@@ -48,7 +26,7 @@ export const CustomStringTemplate = () => {
       <p className="mb-4 text-gray-700 dark:text-gray-300">
         We break down the song into components and place them into their respective parts.{' '}
         <Badge variant={'secondary'}>{'{a}'}</Badge> is for the 'artist' and{' '}
-        <Badge variant={'secondary'}>{'{b}'}</Badge> is for the 'title'. To use your custom string template, you must
+        <Badge variant={'secondary'}>{'{t}'}</Badge> is for the 'title'. To use your custom string template, you must
         provide the song followed by a forward slash which is then followed by the string template you want to use.
         Here's an example:
       </p>
@@ -64,7 +42,7 @@ export const CustomStringTemplate = () => {
           {rowsVariables.map((row, rowIndex) => (
             <tr key={rowIndex} className="transition-colors hover:bg-gray-50/70 dark:hover:bg-neutral-800/50">
               {row.map((value, index) => (
-                <TdElement key={index} col={index}>
+                <TdElement key={index} col={index} params={ADDITIONAL_PARAMS}>
                   {value.placeholder}
                 </TdElement>
               ))}

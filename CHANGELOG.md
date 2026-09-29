@@ -23,6 +23,43 @@ commit: 7a2c3f2
 - `commit` is the hash of the commit that shipped the change. It's shown as a chip linking to the commit on GitHub.
 - `##` headings in the body get an icon based on their text: headings mentioning "fix" or "improve" get a bug icon, "breaking" gets an alert icon, and everything else gets a sparkles icon.
 
+## 2026-09-29: Site Redesign
+
+### Added
+
+- A new footer with links to every page, including the format and genre pages, plus GitHub, X and email.
+- The genre page shows the exact tags each genre adds to the generated set.
+- Format pages show each template as a card, with the tags split out, the `{variables}` highlighted, a copy button and a switcher between formats.
+- The changelog is a timeline, and each entry links to the one before and after it.
+- The documentation has a quick start snippet, shortcut cards to the main sections and a grouped sidebar.
+- A "Still have questions?" box at the bottom of the FAQ.
+- A custom 404 page.
+
+### Changed
+
+- A refreshed look across the whole site, keeping the same layout, colors and font.
+- The generator form, generated tags, suggested titles, SEO keywords and hashtags each sit in their own card. The tag card shows how much of the 500 character budget is used.
+- Every button on the site shares one size, either black or white with a border.
+- The nav highlights the current page and no longer has link icons next to each item.
+- Every page shares the same header style as the documentation.
+- Text across the site is a size bigger.
+- The feedback form validates your email as you type, shows errors inline and can be sent with ⌘/Ctrl + Enter.
+- Toasts have a new look with colored icons and a close button, and show up in the bottom right.
+- The home page title is now "Lyrics Tags Generator - Free YouTube Metadata Generator".
+
+### Improved
+
+- Switching themes fades smoothly instead of snapping.
+- Code blocks in the documentation follow the theme and have syntax highlighting.
+- The documentation's parameter tables are more compact, and notes use regular gray text instead of green on green.
+- Links are a slightly darker green so they're easier to read.
+- The development tools box remembers its settings between visits and has a ⌘ + D note. The development mode banner is gone.
+
+### Fixed
+
+- The custom string template section in the documentation said `{b}` is for the title, it's actually `{t}`.
+- The privacy policy was missing a space before "Effective Date".
+
 ## 2026-08-06: Remove low ranking tags
 
 ### Removed

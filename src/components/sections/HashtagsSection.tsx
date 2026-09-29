@@ -1,8 +1,9 @@
-import { success } from "@/lib/success";
-import { FiCopy } from "react-icons/fi";
-import { toast } from "sonner";
-import copy from "copy-to-clipboard";
-import { Button } from "../Button";
+import { ResultSection } from './ResultSection';
+import { success } from '@/lib/success';
+import { FiCopy } from 'react-icons/fi';
+import { toast } from 'sonner';
+import copy from 'copy-to-clipboard';
+import { Button } from '../Button';
 
 interface Props {
   hashtags: string[];
@@ -10,19 +11,13 @@ interface Props {
 
 export const HashtagsSection = (props: Props) => {
   return (
-    <section className="mt-4 flex flex-col border-t pt-4">
-      <h3 className="text-2xl font-medium">Hashtags:</h3>
-      <div className="flex items-center justify-between w-full">
-        <div className="flex">
-          {props.hashtags.map((hashtag) => (
-            <p key={hashtag} className="text-xl mr-4">
-              #{hashtag}
-            </p>
-          ))}
-        </div>
+    <ResultSection
+      title="Hashtags"
+      actions={
         <Button
           type="button"
-          title="Copy "
+          title="Copy"
+          variant="secondary"
           onClick={() => {
             // Take the list of hashtags from the API response (if available)
             // and prepend "#" to each one
@@ -30,7 +25,7 @@ export const HashtagsSection = (props: Props) => {
 
             // Join the hashtags into a single string separated by spaces
             // Example: ["#music", "#lyrics"] → "#music #lyrics"
-            const textToCopy = `${hashtagArray?.join(" ")}`;
+            const textToCopy = `${hashtagArray?.join(' ')}`;
 
             // Copy the final hashtag string to the clipboard
             copy(textToCopy);
@@ -39,9 +34,20 @@ export const HashtagsSection = (props: Props) => {
             toast.success(success.message.hashtagsCopiedToClipboard);
           }}
         >
-          Copy <FiCopy className="ml-2 hover:scale-110 duration-150" />
+          Copy <FiCopy />
         </Button>
+      }
+    >
+      <div className="flex flex-wrap gap-2">
+        {props.hashtags.map((hashtag) => (
+          <p
+            key={hashtag}
+            className="rounded-full bg-brand-50 px-3 py-1 text-base font-medium text-brand-800 dark:bg-brand-500/10 dark:text-brand-400"
+          >
+            #{hashtag}
+          </p>
+        ))}
       </div>
-    </section>
+    </ResultSection>
   );
 };
