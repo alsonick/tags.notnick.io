@@ -18,7 +18,6 @@ export default function Genre() {
       <Nav />
       <MainWrapper>
         <PageHeader
-          eyebrow="Reference"
           title={seo.page.genre.heading}
           description="All supported genres. Picking one adds a few genre tags to the generated set."
         />

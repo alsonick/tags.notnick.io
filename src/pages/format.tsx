@@ -41,7 +41,6 @@ export default function Format() {
       <Nav />
       <MainWrapper>
         <PageHeader
-          eyebrow="Reference"
           title={seo.page.format.heading}
           description="Our format string templates for all the supported formats."
         />

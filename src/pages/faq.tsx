@@ -88,7 +88,6 @@ export default function FAQ() {
       <Nav />
       <MainWrapper>
         <PageHeader
-          eyebrow="Help"
           title={seo.page.faq.heading}
           description="Answers to common questions about Lyrics Tags Generator."
         />

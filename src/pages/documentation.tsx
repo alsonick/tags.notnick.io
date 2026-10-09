@@ -25,9 +25,9 @@ const SECTIONS: DocsSection[] = [
   { id: 'generate-parameters', label: 'Generate Parameters', group: 'API reference' },
   { id: 'length-parameters', label: 'Length Parameters', group: 'API reference' },
   { id: 'custom-string-template', label: 'Custom String Template', group: 'Guides' },
+  { id: 'format-templates', label: 'Format Templates', group: 'Guides' },
   { id: 'additional-tags', label: 'Additional Tags', group: 'Guides' },
   { id: 'discord-bot', label: 'Discord Bot', group: 'Guides' },
-  { id: 'format-templates', label: 'Format Templates', group: 'Guides' },
   { id: 'further-assistance', label: 'Further Assistance', group: 'Help' },
 ];
 
@@ -83,10 +83,7 @@ export default function Documentation() {
           <DocsSidebar sections={SECTIONS} />
           <div className="min-w-0 flex-1">
             <header className="border-b border-gray-100 dark:border-neutral-800 pb-8">
-              <Badge className="border-brand-100 bg-brand-50 text-brand-700 dark:border-brand-900 dark:bg-brand-950 dark:text-brand-400">
-                API Reference
-              </Badge>
-              <h1 className="mt-3 text-4xl font-black tracking-tight text-gray-900 dark:text-gray-100">
+              <h1 className="text-4xl font-black tracking-tight text-gray-900 dark:text-gray-100">
                 {seo.page.documentation.heading}
               </h1>
               <p className="mt-3 max-w-2xl text-lg text-gray-700 dark:text-gray-300">
@@ -170,6 +167,13 @@ export default function Documentation() {
             </DocumentationSection>
 
             <DocumentationSection
+              heading="Format Templates"
+              description="The format string templates we use for every supported and additional format."
+            >
+              <FormatTemplates />
+            </DocumentationSection>
+
+            <DocumentationSection
               heading="Additional Tags"
               description="Append seasonal tags for events like Halloween and Christmas."
             >
@@ -178,13 +182,6 @@ export default function Documentation() {
 
             <DocumentationSection heading="Discord Bot" description="Generate tags directly from your Discord server.">
               <DiscordBot />
-            </DocumentationSection>
-
-            <DocumentationSection
-              heading="Format Templates"
-              description="The format string templates we use for every supported and additional format."
-            >
-              <FormatTemplates />
             </DocumentationSection>
 
             <DocumentationSection heading="Further Assistance" border={false}>

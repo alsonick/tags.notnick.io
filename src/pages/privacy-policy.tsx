@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
       <NoSupportedSizeScreenMessage />
       <Nav />
       <MainWrapper>
-        <PageHeader eyebrow="Legal" title={seo.page.privacyPolicy.heading}>
+        <PageHeader title={seo.page.privacyPolicy.heading}>
           <div className="mt-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 text-base text-gray-500 dark:text-gray-400">
               <p>

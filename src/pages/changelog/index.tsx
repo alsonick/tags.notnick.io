@@ -23,7 +23,6 @@ export default function Changelog({ entries }: { entries: ChangelogEntry[] }) {
       <Nav />
       <MainWrapper>
         <PageHeader
-          eyebrow="What's new"
           title={seo.page.changelog.heading}
           description="New features, improvements and fixes to Lyrics Tags Generator."
         />

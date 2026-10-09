@@ -38,7 +38,6 @@ const Slug: NextPage<{ slug: string }> = ({ slug }) => {
       <Nav />
       <MainWrapper>
         <PageHeader
-          eyebrow={isAdditional ? "Additional Format" : "Format"}
           title={computedFormatTextLyricsTemplateTitle.length ? computedFormatTextLyricsTemplateTitle : "None"}
           description={
             isAdditional ? (
@@ -49,9 +48,7 @@ const Slug: NextPage<{ slug: string }> = ({ slug }) => {
                 </code>{" "}
                 flag after the song.
               </>
-            ) : (
-              "Each format has several templates. The one used depends on how many featured artists are present and whether TikTok tags are enabled."
-            )
+            ) : undefined
           }
         >
           <div className="mt-6 flex flex-wrap gap-1.5">

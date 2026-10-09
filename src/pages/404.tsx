@@ -23,10 +23,7 @@ export default function NotFound() {
             aria-hidden
             className="pointer-events-none absolute top-16 left-1/2 -z-10 h-48 w-[32rem] -translate-x-1/2 rounded-full bg-brand-400/15 blur-3xl dark:bg-brand-500/[0.07]"
           />
-          <p className="rounded-full border bg-background/70 px-3 py-1 font-mono text-xs text-gray-500 shadow-sm dark:text-gray-400">
-            404
-          </p>
-          <h1 className="mt-5 text-5xl font-bold tracking-tighter">404 - Page Not Found</h1>
+          <h1 className="text-5xl font-bold tracking-tighter">404 - Page Not Found</h1>
           <p className="mt-3 max-w-lg text-lg text-gray-600 dark:text-gray-400">
             The page you&apos;re looking for doesn&apos;t exist.
           </p>

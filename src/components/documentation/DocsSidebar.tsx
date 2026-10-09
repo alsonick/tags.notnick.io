@@ -1,6 +1,6 @@
 'use client';
 
-import { FiArrowUp, FiArrowUpRight } from 'react-icons/fi';
+import { FiArrowUp } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -10,8 +10,6 @@ export interface DocsSection {
   // Sections sharing a group are listed under one heading.
   group: string;
 }
-
-const SUGGESTION_URL = 'https://github.com/alsonick/lyrics-tags-generator-docs/issues/new';
 
 export const DocsSidebar = ({ sections }: { sections: DocsSection[] }) => {
   const [active, setActive] = useState<string | undefined>(sections[0]?.id);
@@ -71,7 +69,7 @@ export const DocsSidebar = ({ sections }: { sections: DocsSection[] }) => {
           </div>
         ))}
       </div>
-      <div className="mt-8 flex flex-col gap-2 border-t pt-5 text-base">
+      <div className="mt-8 border-t pt-5 text-base">
         <a
           href="#top"
           onClick={(e) => {
@@ -81,13 +79,6 @@ export const DocsSidebar = ({ sections }: { sections: DocsSection[] }) => {
           className="flex w-fit items-center gap-1.5 text-gray-500 transition-colors hover:text-black dark:text-gray-400 dark:hover:text-white"
         >
           <FiArrowUp /> Back to top
-        </a>
-        <a
-          href={SUGGESTION_URL}
-          target="_blank"
-          className="flex w-fit items-center gap-1.5 text-gray-500 transition-colors hover:text-black dark:text-gray-400 dark:hover:text-white"
-        >
-          <FiArrowUpRight /> Suggest an edit
         </a>
       </div>
     </aside>

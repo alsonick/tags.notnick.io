@@ -1,8 +1,8 @@
-import { FiAlertCircle, FiCheck, FiLoader, FiMail, FiMessageSquare, FiSend } from 'react-icons/fi';
+import { FiAlertCircle, FiCheck, FiLoader, FiMail, FiSend } from 'react-icons/fi';
 import { FEEDBACK_OPTIONS } from '@/lib/feedback/feedback-options';
 import { CharacterLimit } from './CharacterLimit';
 import { Input, fieldClassName } from './Input';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './Button';
 import { Select } from './Select';
@@ -16,6 +16,9 @@ import {
 } from './shadcn/dialog';
 
 export const FEEDBACK_BODY_CHARACTER_LIMIT = 500;
+
+// How long the thank-you screen stays up before the dialog closes itself.
+const SUCCESS_DISMISS_DELAY = 3000;
 
 interface Props {
   open: boolean;
@@ -38,14 +41,24 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
   const showEmailError = emailTouched && email.length > 0 && !isValidEmail;
   const canSubmit = isValidEmail && body.trim().length > 0 && !submitting;
 
-  // Reset back to the form whenever the modal is reopened.
-  const handleOpenChange = (next: boolean) => {
-    if (next) {
+  useEffect(() => {
+    // Close the thank-you screen on its own after a few seconds.
+    if (!open || !success) return;
+
+    const timeout = setTimeout(() => onOpenChange(false), SUCCESS_DISMISS_DELAY);
+    return () => clearTimeout(timeout);
+  }, [open, success, onOpenChange]);
+
+  useEffect(() => {
+    // Go back to the form once the closing animation has finished, so the next open starts fresh.
+    if (open) return;
+
+    const timeout = setTimeout(() => {
       setSuccess(false);
       setError('');
-    }
-    onOpenChange(next);
-  };
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,8 +92,8 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className={cn('max-h-[calc(100dvh-2rem)] overflow-y-auto', success && 'w-fit px-10')}>
         {success ? (
           <div className="flex flex-col items-center py-4 text-center">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-100 dark:bg-brand-500/15">
@@ -88,25 +101,12 @@ export const FeedbackModal = ({ open, onOpenChange }: Props) => {
             </div>
             <DialogTitle className="mt-4 tracking-tight">Thanks for the feedback!</DialogTitle>
             <DialogDescription className="mt-1">We&apos;ve received your message.</DialogDescription>
-            <div className="mt-6 flex items-center gap-2">
-              <Button type="button" variant="secondary" onClick={() => setSuccess(false)}>
-                Send another
-              </Button>
-              <Button type="button" onClick={() => onOpenChange(false)}>
-                Done
-              </Button>
-            </div>
           </div>
         ) : (
           <>
-            <DialogHeader className="flex-row items-center gap-3 pr-8">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-500/15 dark:text-brand-400">
-                <FiMessageSquare className="text-lg" />
-              </div>
-              <div>
-                <DialogTitle className="tracking-tight">Share your feedback</DialogTitle>
-                <DialogDescription>Found a bug or have an idea?</DialogDescription>
-              </div>
+            <DialogHeader className="pr-8">
+              <DialogTitle className="tracking-tight">Share your feedback</DialogTitle>
+              <DialogDescription>Found a bug or have an idea?</DialogDescription>
             </DialogHeader>
 
             <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-5">

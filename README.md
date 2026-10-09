@@ -205,6 +205,14 @@ Here are the available variables you can use in your custom string template:
 
 > We only support up to **three** features. Supporting more wouldn't help with ranking optimization, since the first 2-3 features on a song typically carry the most ranking weight, and the most well-known features are usually listed first. Viewers rarely search for a song using its full feature list.
 
+### Format Templates
+
+Every format is built from a **format string template**: a comma-separated list of tag patterns where variables are swapped out for the song's components. The available variables are `{artist}`, `{title}`, `{firstFeature}`, `{secondFeature}`, and `{thirdFeature}`.
+
+Each format has several templates, chosen based on a constraint. The constraint reflects how many featured artists are present (`feature-1`, `feature-2`, `feature-3`) and whether TikTok tags are enabled (`@tiktok=true@`).
+
+View the [full format reference](https://tags.notnick.io/format) for every supported and additional format.
+
 ### Additional Tags
 
 Append seasonal tags for events like Halloween and Christmas. Let's say you want to generate Christmas additional tags for the following song:
@@ -270,14 +278,6 @@ In any channel the bot can access, you can run the following slash commands:
 | Option | Required | Default |
 | ------ | -------- | ------- |
 | `tags` | `Yes`    | —       |
-
-### Format Templates
-
-Every format is built from a **format string template**: a comma-separated list of tag patterns where variables are swapped out for the song's components. The available variables are `{artist}`, `{title}`, `{firstFeature}`, `{secondFeature}`, and `{thirdFeature}`.
-
-Each format has several templates, chosen based on a constraint. The constraint reflects how many featured artists are present (`feature-1`, `feature-2`, `feature-3`) and whether TikTok tags are enabled (`@tiktok=true@`).
-
-View the [full format reference](https://tags.notnick.io/format) for every supported and additional format.
 
 ### Further Assistance
 
