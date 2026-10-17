@@ -32,14 +32,13 @@ export default function ChangelogDetail({
     <Container>
       <Seo
         seoTitle={`${entry.title} | Lyrics Tags Generator`}
-        seoDescription={entry.description}
+        seoDescription=""
         path={`/changelog/${entry.slug}`}
         structuredData={[
           {
             '@context': 'https://schema.org',
             '@type': 'Article',
             headline: entry.title,
-            description: entry.description,
             ...(entry.date ? { datePublished: entry.date } : {}),
             ...(entry.contributors.length
               ? { author: entry.contributors.map((c) => ({ '@type': 'Person', name: c.name, ...(c.url ? { url: c.url } : {}) })) }
