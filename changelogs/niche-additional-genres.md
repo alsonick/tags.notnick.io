@@ -3,6 +3,7 @@ title: Niche Additional Genres
 date: 2026-10-17
 description: Four niche genres are available when generating tags, angelcore, house, wave and hardtekk.
 contributors: Nicholas(https://www.linkedin.com/in/heynickn/)
+commit: 89fd2c0
 ---
 
 Four more genres have been added, this time from the more niche side of things: angelcore, house, wave and hardtekk. They work the same way as the existing genres, picking one adds a few genre tags to the generated set.
