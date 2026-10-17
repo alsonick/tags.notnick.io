@@ -1,11 +1,11 @@
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from './shadcn/dropdown-menu';
-import { Key, SetStateAction, useState } from 'react';
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from './shadcn/context-menu';
+import { Key, SetStateAction } from 'react';
 import { FiCopy, FiTrash2, FiX } from 'react-icons/fi';
 import { success } from '@/lib/success';
 import copy from 'copy-to-clipboard';
@@ -23,20 +23,6 @@ interface Props {
 }
 
 export const Tag = (props: Props) => {
-  const [open, setOpen] = useState(false);
-
-  const handleContextMenu = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setOpen(true);
-  };
-
-  // Only allow closing via onOpenChange — opening is handled exclusively
-  // by handleContextMenu calling setOpen(true) directly, so we ignore
-  // any open attempts from the trigger's click handler here.
-  const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen) setOpen(false);
-  };
-
   const handleCopy = () => {
     copy(props.tag);
     toast.success(success.message.copied);
@@ -51,13 +37,13 @@ export const Tag = (props: Props) => {
   return (
     <>
       {props.deletable ? (
-        <DropdownMenu open={open} onOpenChange={handleOpenChange}>
-          <DropdownMenuTrigger asChild>
+        // ContextMenu opens on right-click at the cursor; a left-click still deletes the tag.
+        <ContextMenu>
+          <ContextMenuTrigger asChild>
             <div
               className="group flex items-center gap-1.5 w-fit select-none rounded-lg border bg-gray-50 py-1.5 pl-3 pr-2 transition-colors duration-150 hover:cursor-pointer hover:border-red-200 hover:bg-red-50 dark:bg-neutral-900 dark:hover:border-red-900/60 dark:hover:bg-red-950/30"
               title="Click to delete, right-click for options"
               onClick={handleDelete}
-              onContextMenu={handleContextMenu}
             >
               <TagText text={props.tag} />
               <FiX
@@ -68,17 +54,17 @@ export const Tag = (props: Props) => {
                 }}
               />
             </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onSelect={handleCopy}>
-              <FiCopy className="transition-transform duration-150 group-hover:scale-110" /> Copy
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" onSelect={handleDelete}>
-              <FiTrash2 className="transition-transform duration-150 group-hover:scale-110" /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </ContextMenuTrigger>
+          <ContextMenuContent className="min-w-0">
+            <ContextMenuItem onSelect={handleCopy}>
+              Copy <FiCopy className="ml-auto" />
+            </ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem variant="destructive" onSelect={handleDelete}>
+              Delete <FiTrash2 className="ml-auto" />
+            </ContextMenuItem>
+          </ContextMenuContent>
+        </ContextMenu>
       ) : (
         <div
           className={

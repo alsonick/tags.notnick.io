@@ -76,9 +76,9 @@ export const DocsSidebar = ({ sections }: { sections: DocsSection[] }) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex w-fit items-center gap-1.5 text-gray-500 transition-colors hover:text-black dark:text-gray-400 dark:hover:text-white"
+          className="group flex w-fit items-center gap-1.5 text-gray-500 transition-colors hover:text-black dark:text-gray-400 dark:hover:text-white"
         >
-          <FiArrowUp /> Back to top
+          <FiArrowUp className="transition-transform group-hover:-translate-y-0.5" /> Back to top
         </a>
       </div>
     </aside>

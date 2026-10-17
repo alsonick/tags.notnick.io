@@ -8,7 +8,9 @@ export const Header = () => {
       <h1 className="text-6xl font-bold tracking-tighter justify-center flex items-center bg-gradient-to-b from-black to-neutral-600 bg-clip-text text-transparent pb-3 dark:from-white dark:to-neutral-400">
         Lyrics Tags Generator
       </h1>
-      <p className="text-gray-600 dark:text-gray-400 mt-1 text-lg">Generate YouTube metadata for your lyric videos.</p>
+      <p className="text-gray-600 dark:text-gray-400 mt-1 font-medium text-xl">
+        Generate YouTube metadata for your lyric videos.
+      </p>
     </header>
   );
 };

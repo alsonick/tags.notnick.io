@@ -16,7 +16,6 @@ import {
   FiSave,
   FiTool,
   FiTag,
-  FiZap,
 } from 'react-icons/fi';
 import { NoSupportedSizeScreenMessage } from '@/components/NoSupportedSizeScreenMessage';
 import { SuggestedTitlesSection } from '@/components/sections/SuggestedTitlesSection';
@@ -753,7 +752,7 @@ export default function Home() {
                   generate(true);
                 }}
               >
-                <FiZap /> Generate Example Response
+                Generate Example Response <FiCornerDownRight />
               </Button>
               <div className="flex items-center gap-2">
                 <Button
@@ -815,7 +814,10 @@ export default function Home() {
               </div>
               <div className="grid grid-cols-2 gap-x-10 gap-y-3 mt-4">
                 {toggles.map(({ label, state, setState }) => (
-                  <div key={label} className="flex items-center justify-between text-base text-gray-700 dark:text-gray-300">
+                  <div
+                    key={label}
+                    className="flex items-center justify-between text-base text-gray-700 dark:text-gray-300"
+                  >
                     <p>{label}</p>
                     <Switch checked={state} onCheckedChange={() => setState(!state)} />
                   </div>
@@ -956,8 +958,9 @@ export default function Home() {
                   </div>
                   <h3 className="mt-4 text-base font-semibold text-black dark:text-white">No tags yet</h3>
                   <p className="mt-1 max-w-md text-base text-gray-500 dark:text-gray-400">
-                    Click the <b className="font-semibold text-gray-700 dark:text-gray-300">"Generate"</b> button to
-                    generate your metadata. Your tags, suggested titles, SEO keywords and hashtags will show up here.
+                    Click the <b className="font-semibold text-gray-700 dark:text-gray-300">"Generate"</b> button to{' '}
+                    <br />
+                    generate your metadata.
                   </p>
                 </div>
               )}

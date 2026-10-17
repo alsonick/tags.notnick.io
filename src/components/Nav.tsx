@@ -110,14 +110,16 @@ export const Nav = () => {
             </button>
           ) : (
             <Link
-              className={linkClassName(!external && router.pathname.startsWith(href))}
+              className={cn('group', linkClassName(!external && router.pathname.startsWith(href)))}
               target={external ? '_blank' : undefined}
               title={label}
               key={label}
               href={href}
             >
               {label}
-              {external ? <FiArrowUpRight className="ml-0.5 text-base opacity-60" /> : null}
+              {external ? (
+                <FiArrowUpRight className="ml-0.5 text-base opacity-60 transition-transform group-hover:-translate-y-px group-hover:translate-x-px" />
+              ) : null}
             </Link>
           )
         )}
