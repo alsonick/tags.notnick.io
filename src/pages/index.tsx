@@ -716,6 +716,10 @@ export default function Home() {
                     { value: GENRE.edm, text: 'EDM' },
                     { value: GENRE.trap, text: 'Trap' },
                     { value: GENRE.electronic, text: 'Electronic' },
+                    { value: GENRE.angelcore, text: 'Angelcore' },
+                    { value: GENRE.house, text: 'House' },
+                    { value: GENRE.wave, text: 'Wave' },
+                    { value: GENRE.hardtekk, text: 'Hardtekk' },
                   ]}
                 />
                 <p className={`${helperClassName} mt-1.5`}>

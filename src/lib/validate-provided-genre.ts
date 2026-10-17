@@ -34,6 +34,14 @@ export const validateProvidedGenre = (genre: string): boolean => {
       return true;
     case GENRE.electronic:
       return true;
+    case GENRE.angelcore:
+      return true;
+    case GENRE.house:
+      return true;
+    case GENRE.wave:
+      return true;
+    case GENRE.hardtekk:
+      return true;
     default:
       return false;
   }
