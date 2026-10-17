@@ -153,7 +153,7 @@ export const VALUES_GENERATE: Value[] = [
     placeholder: 'none',
   },
   {
-    list: ['none', 'country', 'latin', 'phonk', 'dance', 'pop', 'rap', 'italian', 'alternative', 'emo', 'rock', 'edm', 'trap', 'electronic'],
+    list: ['none', 'country', 'latin', 'phonk', 'dance', 'pop', 'rap', 'italian', 'alternative', 'emo', 'rock', 'edm', 'trap', 'electronic', 'angelcore', 'house', 'wave', 'hardtekk'],
   },
   // Verse
   {

@@ -32,6 +32,14 @@ export const genreTags = (genre: string, year: number = new Date().getFullYear()
       return ['trap', `trap ${year}`, 'trap music', 'new trap'];
     case GENRE.electronic:
       return ['electronic', `electronic ${year}`, 'electronic music', 'trending electronic'];
+    case GENRE.angelcore:
+      return ['angelcore', `angelcore ${year}`, 'angelcore music', 'angelic music'];
+    case GENRE.house:
+      return ['house', `house ${year}`, 'house music', 'deep house'];
+    case GENRE.wave:
+      return ['wave', `wave ${year}`, 'wave music', 'hard wave'];
+    case GENRE.hardtekk:
+      return ['hardtekk', `hardtekk ${year}`, 'hardtekk music', 'tekk'];
     default:
       return [];
   }

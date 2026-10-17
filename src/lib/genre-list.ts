@@ -57,4 +57,20 @@ export const GENRE_LIST: FormatList[] = [
     name: 'Electronic',
     slug: 'electronic',
   },
+  {
+    name: 'Angelcore',
+    slug: 'angelcore',
+  },
+  {
+    name: 'House',
+    slug: 'house',
+  },
+  {
+    name: 'Wave',
+    slug: 'wave',
+  },
+  {
+    name: 'Hardtekk',
+    slug: 'hardtekk',
+  },
 ];

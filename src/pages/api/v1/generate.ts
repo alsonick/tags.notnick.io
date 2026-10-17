@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const channel: string = (req.query.channel as string) || 'none';
   const tiktok: string = (req.query.tiktok as string) || 'none';
   const artist: string = (req.query.artist as string) || 'none';
-  const genre: string = (req.query.genre as string) || 'none';
+  const genre: string = ((req.query.genre as string) || 'none').toLowerCase();
   const verse: string = (req.query.verse as string) || 'none';
   const title: string = (req.query.title as string) || 'none';
   const log: string = (req.query.log as string) || 'true';

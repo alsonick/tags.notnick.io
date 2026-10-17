@@ -23,6 +23,18 @@ commit: 7a2c3f2
 - `commit` is the hash of the commit that shipped the change. It's shown as a chip linking to the commit on GitHub.
 - `##` headings in the body get an icon based on their text: headings mentioning "fix" or "improve" get a bug icon, "breaking" gets an alert icon, and everything else gets a sparkles icon.
 
+## 2026-10-17: Niche Additional Genres
+
+### Added
+
+- Four new niche genres: angelcore, house, wave and hardtekk. Picking one adds a few genre tags to the generated set, the same way the existing genres do.
+- Each one adds the genre, the genre with the current year, `{genre} music`, and one related tag: `angelic music`, `deep house`, `hard wave` and `tekk` respectively.
+- They're available in the genre dropdown, through the API's `genre` parameter, on the genre page and in the documentation.
+
+### Fixed
+
+- The API accepted genres in any casing, like `genre=Rock`, but only added the genre tags when the genre was lowercase. Every casing now gets the genre tags.
+
 ## 2026-09-29: Site Redesign
 
 ### Added
