@@ -60,7 +60,7 @@ const EXPLORE_CARDS = [
 ];
 
 const QUICK_START = `curl "https://tags.notnick.io/api/v1/generate?\\
-artist=Rex%20Orange%20County%20-%20Pluto%20Projector"`;
+artist=Rex%20Orange%20County%20-%20Pluto%20Projector&source=curl"`;
 
 const INFO_CARDS = [
   { icon: FiServer, label: 'Base URL', value: 'tags.notnick.io' },
