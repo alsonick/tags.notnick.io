@@ -57,7 +57,7 @@ commit: 7a2c3f2
 - Text across the site is a size bigger.
 - The feedback form validates your email as you type, shows errors inline and can be sent with ⌘/Ctrl + Enter.
 - Toasts have a new look with colored icons and a close button, and show up in the bottom right.
-- The home page title is now "Lyrics Tags Generator - Free YouTube Metadata Generator".
+- The home page title is now "Lyrics Tags Generator - Free Metadata Generator".
 
 ### Improved
 

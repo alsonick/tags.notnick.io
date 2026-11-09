@@ -29,7 +29,7 @@ The whole site got a fresh coat of paint. The layout, colors and font are the sa
 - Text across the site is a size bigger so it's easier to read.
 - The feedback form checks your email as you go, shows errors inside the form instead of a toast, and you can send with ⌘/Ctrl + Enter.
 - Toasts have a new look with colored icons and a close button, and they show up in the bottom right so they don't cover the nav.
-- The home page title is now "Lyrics Tags Generator - Free YouTube Metadata Generator".
+- The home page title is now "Lyrics Tags Generator - Free Metadata Generator".
 
 ## Improvements
 

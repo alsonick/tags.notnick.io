@@ -3,7 +3,7 @@ export const seoTitle = 'Lyrics Tags Generator';
 export const seo = {
   page: {
     home: {
-      title: 'Lyrics Tags Generator - Free YouTube Metadata Generator',
+      title: 'Lyrics Tags Generator - Free Metadata Generator',
       description: 'Generate YouTube metadata for your lyric videos.',
     },
     privacyPolicy: {
